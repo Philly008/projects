@@ -1,0 +1,68 @@
+
+.tablebox_02 .tablelist table{
+	width:100%;
+	table-layout:fixed; 
+	word-wrap:break-word; 
+	word-break:break-all;
+}
+.ico_unlock {
+	background-image: url(../images/ico_lock_2.jpg);
+	background-repeat: no-repeat;
+	background-position: left center;
+	height: 12px;
+	padding-left: 12px;
+}
+.has_history {
+	text-decoration:  underline;
+}
+#----------------------------------------------------------
+
+
+
+#--------------------------寮圭獥涓撶敤鏍峰紡---------------------------------
+.alertWindowNew{
+	top:0px;
+	left:0px;
+	background-color:#DCECFF;
+	position: absolute;
+	width: 100%;
+	height:100%;
+	border:1px #A4BED4 solid;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)"; 
+    filter:alpha(opacity=30);
+    opacity: .3;
+    z-index: -1;
+}
+.tablebox_02 td.tdUp{
+	background-color:red;
+}
+.tablebox_02 td.tdDown{
+	background-color:green;
+}
+.tablebox_02 td.noElement{
+/* 	结果无参考范围或单位，则灰显 */
+	background-color:#A9A9A9;
+}
+tr,li{
+/* 	给所有的tr加一个鼠标样式，鼠标移上去仍然要显示箭头 */
+	cursor:default;
+}
+.delayOne{
+/* 	迟发一次 */
+	background-color: #8B0000;
+}
+.delayMore{
+/* 	迟发多次 */
+	background-color: #EE82EE;
+}
+
+.resultForce{
+/* 	结果违反强制类型 */
+	background-color: #FFA806;
+}
+
+#popup_ok,#popup_cancel {
+/* 	通用提示框按钮大小（有的按钮样式被覆盖，按钮变小） */
+width: 75px;
+height: 25px;
+}

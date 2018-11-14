@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<link href="/NIP/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" />
+<link href="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" rel="stylesheet" type="text/css"  />
+<link rel="stylesheet" href="/NIP/css/style_notContainCombo.css" type="text/css" />
+<title>样本分发</title>
+<script src="/NIP/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/NIP/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<script src="/NIP/scripts/jquery.blockUI.js" type="text/javascript"></script>
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nip_common.js" type="text/javascript"></script>
+<script src="/NIP/scripts/common.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nipDhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlxGrid/ext/dhtmlxgrid_srnd.js" type="text/javascript"></script>
+<script src="/NIP/scripts/specimenDispatch/input_common_dispatch.js" type="text/javascript"></script>
+<script type="text/javascript" src="/NIP/scripts/dhtmlxSuite/dhtmlxcommon.js"></script>    
+<script type="text/javascript" src="/NIP/scripts/dhtmlxSuite/dhtmlxGrid/dhtmlxgrid.js" ></script> 
+<script type="text/javascript" src="/NIP/scripts/dhtmlxSuite/dhtmlxGrid/dhtmlxgridcell.js"></script>  
+<script type="text/javascript" src="/NIP/scripts/dhtmlxSuite/dhtmlxGrid/dhtmlxtreegrid.js"></script>
+<script type="text/javascript" src="/NIP/scripts/nip_print_barcode.js"></script>
+
+<title>样本分发</title>
+<script type="text/javascript">
+$(document).ready(function () { 
+		var tabbar = new dhtmlXTabBar({
+		parent: "a_tabbar",
+		image_path: "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/",
+		skin: "dhx_skyblue",
+		tabs: [{
+			id: "a1",
+			label: "分发",
+			width: "90px",
+			active: true
+		}
+		/*
+		, {
+			id: "a2",
+			label: "分发跟踪",
+			width: "90px"
+		}
+		*/
+		]
+		});
+		
+		tabbar.setHrefMode("ajax-html");
+		tabbar.enableAutoReSize(true);
+		tabbar.setContentHref("a1", "/NIP/dis/specimenDispatchInfo.action?time="+new Date().getTime());
+		//tabbar.setContentHref("a2", "/NIP/pages/dis/specimenDistributeTrace.jsp");
+		/**
+		tabbar.attachEvent("onSelect", function() {
+			if (tabbar.getActiveTab() == 'a2') {
+			} else if (tabbar.getActiveTab() == 'a1') {
+			}
+			return true;
+		});
+		*/
+		
+});
+
+//处理Session失效时执行LoadXMl报"Incorrect XML"
+dhtmlxError.catchError("LoadXML",function(a,b,data){
+    var str = data[0].responseText;
+    if(str.indexOf("parent.location.href")>-1){
+   	  parent.location.href = ctx+"/login.action";
+    }
+});
+</script>
+</head>
+<body>
+<div style="width:100%;height:100%;">
+	<div id="a_tabbar" style="width:100%;height:100%;float:left;"></div>
+	
+</div> 
+</body>
+</html>

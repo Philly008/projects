@@ -1,0 +1,11 @@
+[t140]
+FileName1=t140.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getRegionByCity.action
+Total=1
+RequestHeaderFile=t140_RequestHeader.txt
+RequestBodyFile=t140_RequestBody.txt
+ResponseHeaderFile=t140_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_140.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

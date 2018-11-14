@@ -1,0 +1,159 @@
+Virtual User Script started at : 2018/11/12 17:52:58
+Starting action vuser_init.
+Web Turbo Replay of LoadRunner 12.0.0 for Windows 8; build 2739 (Nov 30 2014 23:13:05)  	[MsgId: MMSG-27143]
+Run mode: HTML  	[MsgId: MMSG-26993]
+Run-Time Settings file: "D:\HP\exercises\PG001\PG001\\default.cfg"  	[MsgId: MMSG-27141]
+vuser_init.c(12): web_url("home.action") started  	[MsgId: MMSG-26355]
+vuser_init.c(12): web_url("home.action") was successful, 56 body bytes, 339 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(21): web_url("login.action") started  	[MsgId: MMSG-26355]
+vuser_init.c(21): Found resource "http://192.168.14.35/PG/css/master.css" in HTML "http://192.168.14.35/PG/login.action"  	[MsgId: MMSG-26659]
+vuser_init.c(21): Found resource "http://192.168.14.35/PG/scripts/jquery-1.11.0.min.js" in HTML "http://192.168.14.35/PG/login.action"  	[MsgId: MMSG-26659]
+vuser_init.c(21): Found resource "http://192.168.14.35/PG/scripts/common.js" in HTML "http://192.168.14.35/PG/login.action"  	[MsgId: MMSG-26659]
+vuser_init.c(21): Found resource "http://192.168.14.35/PG/validateCode.img" in HTML "http://192.168.14.35/PG/login.action"  	[MsgId: MMSG-26659]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_login_01.png" (specified by argument number 9)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/btn_login_go_over.jpg" (specified by argument number 12)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_login_pad_bg.jpg" (specified by argument number 15)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/btn_login_go.jpg" (specified by argument number 18)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/btn_login_go1.jpg" (specified by argument number 21)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_top_bg.gif" (specified by argument number 24)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_top_meue_left.png" (specified by argument number 27)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_top_meue_right.png" (specified by argument number 30)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_login.png" (specified by argument number 33)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_cent_02.jpg" (specified by argument number 36)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_top_bg1.jpg" (specified by argument number 39)  	[MsgId: MMSG-26577]
+vuser_init.c(21): Downloading resource "http://192.168.14.35/PG/images/pic_logo1.png" (specified by argument number 42)  	[MsgId: MMSG-26577]
+vuser_init.c(21): web_url("login.action") was successful, 739271 body bytes, 5474 header bytes, 23 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(43): web_set_sockets_option started  	[MsgId: MMSG-26355]
+vuser_init.c(43): web_set_sockets_option was successful  	[MsgId: MMSG-26392]
+vuser_init.c(45): web_url("seed") started  	[MsgId: MMSG-26355]
+vuser_init.c(45): HTML parsing not performed for Content-Type "application/octet-stream" ("ParseHtmlContentType" Run-Time Setting is "TEXT"). URL="http://clientservices.googleapis.com/chrome-variations/seed?osname=win&channel=stable&milestone=68"  	[MsgId: MMSG-26548]
+vuser_init.c(45): web_url("seed") was successful, 70718 body bytes, 350 header bytes, 14 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(53): Notify: Transaction "登录" started.
+vuser_init.c(55): web_submit_data("login.action_2") started  	[MsgId: MMSG-26355]
+vuser_init.c(55): Redirecting "http://192.168.14.35/PG/login.action" (redirection depth is 0)  	[MsgId: MMSG-26694]
+vuser_init.c(55): To location "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26693]
+vuser_init.c(55): Resource "http://192.168.14.35/PG/scripts/jquery-1.11.0.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/jquery-migrate-1.2.1.min.js" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Resource "http://192.168.14.35/PG/scripts/common.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/qcm_common.js" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Resource "http://192.168.14.35/PG/css/master.css" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/css/easyUI.css" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/jquery.easyui.min.js" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/css/topmenu.css" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/jalert/jquery.alerts.css" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/topmenu/superfish.js" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/topmenu/custom.js" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/jquery.blockUI.js" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Found resource "http://192.168.14.35/PG/scripts/jalert/jquery.alerts.js" in HTML "http://192.168.14.35/PG/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(55): Downloading resource "http://192.168.14.35/PG/images/pic_top_menu_bg.png" (specified by argument number 19)  	[MsgId: MMSG-26577]
+vuser_init.c(55): Downloading resource "http://192.168.14.35/PG/css/images/tabs_icons.png" (specified by argument number 22)  	[MsgId: MMSG-26577]
+vuser_init.c(55): Downloading resource "http://192.168.14.35/PG/images/top_menu_over.png" (specified by argument number 25)  	[MsgId: MMSG-26577]
+vuser_init.c(55): Downloading resource "http://192.168.14.35/PG/images/submenu_shadow.png" (specified by argument number 28)  	[MsgId: MMSG-26577]
+vuser_init.c(55): web_submit_data("login.action_2") was successful, 468145 body bytes, 5139 header bytes, 28 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(73): Notify: Transaction "登录" ended with a "Pass" status (Duration: 0.1581 Wasted Time: 0.0129).
+Ending action vuser_init.
+Running Vuser...
+Starting iteration 1.
+Warning -27077: The "vuser_init" section contains web function(s) when the "Simulate a new user on each iteration" Run-Time Setting is ON.  This may produce unpredictable results with multiple iterations  	[MsgId: MWAR-27077]
+Maximum number of concurrent connections per server: 6  	[MsgId: MMSG-26989]
+Starting action lingliaosq.
+lingliaosq.c(6): Notify: Transaction "打开领料申请页面" started.
+lingliaosq.c(10): web_url("salesorder.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/scripts/jquery-1.11.0.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/scripts/jquery-migrate-1.2.1.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/scripts/jquery.blockUI.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/scripts/common.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/scripts/input_common.js" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/scripts/qcm_common.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/scripts/jalert/jquery.alerts.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/scripts/datepicker/WdatePicker.js" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/scripts/aa.js" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/scripts/jquery-easyui-1.3.6/jquery.easyui.min.js" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/css/master.css" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/scripts/jalert/jquery.alerts.css" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/pages/test/css/style.css" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/pages/test/css/text_style.css" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/pages/test/css/text_grid.css" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/pages/test/css/newStyle.css" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/scripts/jquery-easyui-1.3.6/themes/default/easyui.css" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/scripts/jquery-easyui-1.3.6/themes/icon.css" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Found resource "http://192.168.14.35/PG/css/tree/zTreeStyle.css" in HTML "http://192.168.14.35/PG/spe/salesorder.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(10): Resource "http://192.168.14.35/PG/css/easyUI.css" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/scripts/datepicker/skin/WdatePicker.css" (specified by argument number 9)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/images/div_bg.png" (specified by argument number 11)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/images/busy.gif" (specified by argument number 14)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/test/images/loading.gif" (specified by argument number 16)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/test/images/clear-basic.jpg" (specified by argument number 19)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/test/images/select-basic.jpg" (specified by argument number 22)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/spe/salesorder/scripts/plansEdit.js?_=1542010310039" (specified by argument number 25)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/test/images/ico_01.jpg" (specified by argument number 27)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/test/images/select-hover.jpg" (specified by argument number 30)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/test/images/select-click.jpg" (specified by argument number 33)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/pages/test/images/clear-hover.jpg" (specified by argument number 36)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): Downloading resource "http://192.168.14.35/PG/images/dd.jpg" (specified by argument number 39)  	[MsgId: MMSG-26577]
+lingliaosq.c(10): web_url("salesorder.action") was successful, 527515 body bytes, 7733 header bytes, 37 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(32): web_url("outBoundDetail.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(32): web_url("outBoundDetail.action") was successful, 3833 body bytes, 305 header bytes  	[MsgId: MMSG-26386]
+lingliaosq.c(41): web_url("salesorderList.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(41): Downloading resource "http://192.168.14.35/PG/images/group_2.png" (specified by argument number 9)  	[MsgId: MMSG-26577]
+lingliaosq.c(41): Downloading resource "http://192.168.14.35/PG/images/group_1.png" (specified by argument number 12)  	[MsgId: MMSG-26577]
+lingliaosq.c(41): web_url("salesorderList.action") was successful, 86139 body bytes, 951 header bytes, 85 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(53): web_url("salesorderInfo.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(53): Found resource "http://192.168.14.35/PG/pages/spe/salesorder/scripts/plansEdit.js" in HTML "http://192.168.14.35/PG/spe/salesorderInfo.action"  	[MsgId: MMSG-26659]
+lingliaosq.c(53): Downloading resource "http://192.168.14.35/PG/images/group_5.png" (specified by argument number 9)  	[MsgId: MMSG-26577]
+lingliaosq.c(53): Downloading resource "http://192.168.14.35/PG/images/group_3.png" (specified by argument number 12)  	[MsgId: MMSG-26577]
+lingliaosq.c(53): Downloading resource "http://192.168.14.35/PG/scripts/datepicker/skin/datePicker.gif" (specified by argument number 15)  	[MsgId: MMSG-26577]
+lingliaosq.c(53): web_url("salesorderInfo.action") was successful, 432157 body bytes, 1604 header bytes, 421 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(66): web_url("findSalesOrderByConditions.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(66): web_url("findSalesOrderByConditions.action") was successful, 44281 body bytes, 311 header bytes, 52 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(75): Notify: Transaction "打开领料申请页面" ended with a "Pass" status (Duration: 1.2715 Wasted Time: 0.0321).
+lingliaosq.c(79): Notify: Transaction "新增" started.
+lingliaosq.c(81): Notify: Saving Parameter "timenow = 2018-11-12 17:53:00".
+lingliaosq.c(83): web_reg_save_param_ex started  	[MsgId: MMSG-26355]
+lingliaosq.c(83): Registering web_reg_save_param_ex was successful  	[MsgId: MMSG-26390]
+lingliaosq.c(91): web_custom_request("getApplyNumber.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(91): Notify: Saving Parameter "apply_number = 201811120020".
+lingliaosq.c(91): web_custom_request("getApplyNumber.action") was successful, 12 body bytes, 228 header bytes, 10 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(102): web_submit_data("PlansComJson.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(102): web_submit_data("PlansComJson.action") was successful, 177 body bytes, 228 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(114): web_submit_data("saveSalesOrder.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(114): Notify: Parameter Substitution: parameter "timenow" =  "2018-11-12 17:53:00"
+lingliaosq.c(114): Notify: Parameter Substitution: parameter "lingliaohao" =  "201811124400"
+lingliaosq.c(114): Notify: Parameter Substitution: parameter "apply_number" =  "201811120020"
+lingliaosq.c(114): web_submit_data("saveSalesOrder.action") was successful, 1 body bytes, 228 header bytes, 10 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(137): web_reg_save_param_ex started  	[MsgId: MMSG-26355]
+lingliaosq.c(137): Registering web_reg_save_param_ex was successful  	[MsgId: MMSG-26390]
+lingliaosq.c(145): web_url("findSalesOrderByConditions.action_2") started  	[MsgId: MMSG-26355]
+lingliaosq.c(145): Notify: Parameter Substitution: parameter "lingliaohao" =  "201811124400"
+lingliaosq.c(145): Notify: Saving Parameter "search_id = ff80808166ce634001670758f3140376".
+lingliaosq.c(145): web_url("findSalesOrderByConditions.action_2") was successful, 5401 body bytes, 305 header bytes  	[MsgId: MMSG-26386]
+lingliaosq.c(154): Notify: Transaction "新增" ended with a "Pass" status (Duration: 0.3256 Wasted Time: 0.0042).
+lingliaosq.c(160): Notify: Transaction "财务审核" started.
+lingliaosq.c(162): web_submit_data("findOrderStatusByIds.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(162): Notify: Parameter Substitution: parameter "timenow" =  "2018-11-12 17:53:00"
+lingliaosq.c(162): Notify: Parameter Substitution: parameter "search_id" =  "ff80808166ce634001670758f3140376"
+lingliaosq.c(162): web_submit_data("findOrderStatusByIds.action") was successful, 0 body bytes, 228 header bytes, 5 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(173): web_submit_data("FinancialAudit.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(173): Notify: Parameter Substitution: parameter "timenow" =  "2018-11-12 17:53:00"
+lingliaosq.c(173): Notify: Parameter Substitution: parameter "search_id" =  "ff80808166ce634001670758f3140376"
+lingliaosq.c(173): web_submit_data("FinancialAudit.action") was successful, 1 body bytes, 228 header bytes, 10 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(184): web_url("findSalesOrderByConditions.action_3") started  	[MsgId: MMSG-26355]
+lingliaosq.c(184): web_url("findSalesOrderByConditions.action_3") was successful, 44330 body bytes, 311 header bytes, 52 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(195): web_submit_data("findSetmealDetailbyId.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(195): Notify: Parameter Substitution: parameter "search_id" =  "ff80808166ce634001670758f3140376"
+lingliaosq.c(195): Resource "http://192.168.14.35/PG/images/dd.jpg" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+lingliaosq.c(195): web_submit_data("findSetmealDetailbyId.action") was successful, 2660 body bytes, 305 header bytes  	[MsgId: MMSG-26386]
+lingliaosq.c(206): web_url("findOutBoundDetail.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(206): Notify: Parameter Substitution: parameter "search_id" =  "ff80808166ce634001670758f3140376"
+lingliaosq.c(206): web_url("findOutBoundDetail.action") was successful, 3597 body bytes, 305 header bytes  	[MsgId: MMSG-26386]
+lingliaosq.c(216): web_submit_data("loadSalesOrderMessage.action") started  	[MsgId: MMSG-26355]
+lingliaosq.c(216): Notify: Parameter Substitution: parameter "search_id" =  "ff80808166ce634001670758f3140376"
+lingliaosq.c(216): web_submit_data("loadSalesOrderMessage.action") was successful, 590 body bytes, 228 header bytes, 12 chunking overhead bytes  	[MsgId: MMSG-26385]
+lingliaosq.c(227): Notify: Transaction "财务审核" ended with a "Pass" status (Duration: 0.4873 Wasted Time: 0.0066).
+Ending action lingliaosq.
+Ending iteration 1.
+Ending Vuser...
+Starting action vuser_end.
+Ending action vuser_end.
+Vuser Terminated.
+Vuser 0 (thread 6632), ended OK."

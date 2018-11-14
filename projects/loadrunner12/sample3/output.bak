@@ -1,0 +1,158 @@
+Virtual User Script started at : 2018/11/9 17:15:40
+Starting action vuser_init.
+Web Turbo Replay of LoadRunner 12.0.0 for Windows 8; build 2739 (Nov 30 2014 23:13:05)  	[MsgId: MMSG-27143]
+Run mode: HTML  	[MsgId: MMSG-26993]
+Run-Time Settings file: "D:\HP\exercises\sample3\\default.cfg"  	[MsgId: MMSG-27141]
+vuser_init.c(12): web_url("login.action") started  	[MsgId: MMSG-26355]
+vuser_init.c(12): Found resource "http://202.116.104.161/NIP/scripts/pdfobject.js" in HTML "http://202.116.104.161/NIP/login.action"  	[MsgId: MMSG-26659]
+vuser_init.c(12): Found resource "http://202.116.104.161/NIP/css/css.css" in HTML "http://202.116.104.161/NIP/login.action"  	[MsgId: MMSG-26659]
+vuser_init.c(12): Found resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" in HTML "http://202.116.104.161/NIP/login.action"  	[MsgId: MMSG-26659]
+vuser_init.c(12): Downloading resource "http://202.116.104.161/NIP/images/new/bgd_login_2.jpg" (specified by argument number 9)  	[MsgId: MMSG-26577]
+vuser_init.c(12): Downloading resource "http://202.116.104.161/NIP/images/new/bgd_login3_0.jpg" (specified by argument number 11)  	[MsgId: MMSG-26577]
+vuser_init.c(12): Downloading resource "http://202.116.104.161/NIP/images/new/input.gif" (specified by argument number 13)  	[MsgId: MMSG-26577]
+vuser_init.c(12): Downloading resource "http://202.116.104.161/NIP/images/new/btn_login.png" (specified by argument number 15)  	[MsgId: MMSG-26577]
+vuser_init.c(12): web_url("login.action") was successful, 368618 body bytes, 2473 header bytes, 24 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(26): web_submit_form("login.action_2") started  	[MsgId: MMSG-26355]
+vuser_init.c(26): Submitting form to "http://202.116.104.161/NIP/login.action", Target Frame=""  	[MsgId: MMSG-27978]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/pdfobject.js?_=1541395994665" (specified by argument number 11)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js?_=1541395994666" (specified by argument number 14)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/pdfobject.js?_=1541395994667" (specified by argument number 17)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js?_=1541395994668" (specified by argument number 20)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/jquery.blockUI.js?_=1541395994669" (specified by argument number 23)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/common.js?_=1541395994670" (specified by argument number 26)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js?_=1541395994671" (specified by argument number 29)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/images/new/main_top_bgd.jpg" (specified by argument number 32)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/images/new/main_top.jpg" (specified by argument number 35)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/iconUncheckAll.gif" (specified by argument number 38)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line3.gif" (specified by argument number 41)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line2.gif" (specified by argument number 44)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus3.gif" (specified by argument number 47)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus2.gif" (specified by argument number 50)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus4.gif" (specified by argument number 53)  	[MsgId: MMSG-26577]
+vuser_init.c(26): Redirecting "http://202.116.104.161/NIP/login.action" (redirection depth is 0)  	[MsgId: MMSG-26694]
+vuser_init.c(26): To location "http://202.116.104.161/NIP/home.action"  	[MsgId: MMSG-26693]
+vuser_init.c(26): Resource "http://202.116.104.161/NIP/scripts/pdfobject.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(26): Resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(26): Found resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" in HTML "http://202.116.104.161/NIP/home.action"  	[MsgId: MMSG-26659]
+vuser_init.c(26): web_submit_form("login.action_2") was successful, 2713988 body bytes, 5193 header bytes, 23 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(49): web_url("welcome.jsp") started  	[MsgId: MMSG-26355]
+vuser_init.c(49): Resource "http://202.116.104.161/NIP/scripts/pdfobject.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(49): Resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(49): web_url("welcome.jsp") was successful, 2834 body bytes, 299 header bytes, 12 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(58): web_url("top.jsp") started  	[MsgId: MMSG-26355]
+vuser_init.c(58): Resource "http://202.116.104.161/NIP/scripts/pdfobject.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(58): Resource "http://202.116.104.161/NIP/css/css.css" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(58): Resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(58): web_url("top.jsp") was successful, 10533 body bytes, 299 header bytes, 13 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(67): web_url("left.jsp") started  	[MsgId: MMSG-26355]
+vuser_init.c(67): Resource "http://202.116.104.161/NIP/scripts/pdfobject.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(67): Found resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" in HTML "http://202.116.104.161/NIP/pages/common/left.jsp"  	[MsgId: MMSG-26659]
+vuser_init.c(67): Resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(67): Found resource "http://202.116.104.161/NIP/scripts/jquery.blockUI.js" in HTML "http://202.116.104.161/NIP/pages/common/left.jsp"  	[MsgId: MMSG-26659]
+vuser_init.c(67): Found resource "http://202.116.104.161/NIP/scripts/common.js" in HTML "http://202.116.104.161/NIP/pages/common/left.jsp"  	[MsgId: MMSG-26659]
+vuser_init.c(67): Resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+vuser_init.c(67): web_url("left.jsp") was successful, 67282 body bytes, 1144 header bytes, 26 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(76): web_custom_request("searchdanger.action") started  	[MsgId: MMSG-26355]
+vuser_init.c(76): web_custom_request("searchdanger.action") was successful, 21 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(87): web_custom_request("noticeNewSearch.action") started  	[MsgId: MMSG-26355]
+vuser_init.c(87): web_custom_request("noticeNewSearch.action") was successful, 115 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(98): web_custom_request("searchdelay.action") started  	[MsgId: MMSG-26355]
+vuser_init.c(98): web_custom_request("searchdelay.action") was successful, 21 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+vuser_init.c(109): web_custom_request("rateMatured.action") started  	[MsgId: MMSG-26355]
+vuser_init.c(109): web_custom_request("rateMatured.action") was successful, 23 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+Ending action vuser_init.
+Running Vuser...
+Starting iteration 1.
+Warning -27077: The "vuser_init" section contains web function(s) when the "Simulate a new user on each iteration" Run-Time Setting is ON.  This may produce unpredictable results with multiple iterations  	[MsgId: MWAR-27077]
+Maximum number of concurrent connections per server: 2  	[MsgId: MMSG-26989]
+Starting action sample_add.
+sample_add.c(6): web_url("minus3.gif") started  	[MsgId: MMSG-26355]
+sample_add.c(6): web_url("minus3.gif") was successful, 225 body bytes, 309 header bytes  	[MsgId: MMSG-26386]
+sample_add.c(14): web_url("line1.gif") started  	[MsgId: MMSG-26355]
+sample_add.c(14): web_url("line1.gif") was successful, 169 body bytes, 309 header bytes  	[MsgId: MMSG-26386]
+sample_add.c(22): web_url("sky_blue_sel_tree.png") started  	[MsgId: MMSG-26355]
+sample_add.c(22): web_url("sky_blue_sel_tree.png") was successful, 114 body bytes, 309 header bytes  	[MsgId: MMSG-26386]
+sample_add.c(30): web_url("speInput.action") started  	[MsgId: MMSG-26355]
+sample_add.c(30): Resource "http://202.116.104.161/NIP/scripts/pdfobject.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/pages/test/css/style.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/pages/test/css/text_style.css?v=0.1.3" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/pages/test/css/input_style.css?v=0.3.6" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/pages/test/css/text_grid.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/pages/test/css/newStyle.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/css/inputTips.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/scripts/jalert/jquery.alerts.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_add.c(30): Resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/scripts/input_common.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Resource "http://202.116.104.161/NIP/scripts/common.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/scripts/jalert/jquery.alerts.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/scripts/specimenInput/specimenInput.js?v=1.2.84" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Resource "http://202.116.104.161/NIP/scripts/jquery.blockUI.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_add.c(30): Resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_add.c(30): Found resource "http://202.116.104.161/NIP/scripts/nipDhtmlx.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button01a.jpg" (specified by argument number 9)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button02a.jpg" (specified by argument number 11)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/line_01.jpg" (specified by argument number 13)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button_bg1a.jpg" (specified by argument number 15)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/ico_lock_2.jpg" (specified by argument number 17)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/select-basic.jpg" (specified by argument number 19)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/clear-basic.jpg" (specified by argument number 21)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/loading.gif" (specified by argument number 23)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/dhtmlxcalendar_dhx_skyblue/bg_main.png" (specified by argument number 25)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/ico_01.jpg" (specified by argument number 27)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/select-hover.jpg" (specified by argument number 29)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/select-click.jpg" (specified by argument number 31)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button_bg1b.jpg" (specified by argument number 33)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/pages/test/images/clear-hover.jpg" (specified by argument number 35)  	[MsgId: MMSG-26577]
+sample_add.c(30): Downloading resource "http://202.116.104.161/NIP/images/busy.gif" (specified by argument number 37)  	[MsgId: MMSG-26577]
+sample_add.c(30): web_url("speInput.action") was successful, 690153 body bytes, 8085 header bytes, 189 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_add.c(59): Notify: Saving Parameter "barCode_add1 = 1100".
+sample_add.c(61): Notify: Parameter Substitution: parameter "barCode_add2" =  "00000053"
+sample_add.c(61): Notify: Parameter Substitution: parameter "barCode_add1" =  "1100"
+sample_add.c(61): Notify: Saving Parameter "barCode_add = 000000531100".
+sample_add.c(62): Notify: Parameter Substitution: parameter "barCode_add" =  "000000531100"
+sample_add.c(62): 000000531100
+sample_add.c(64): Notify: Parameter Substitution: parameter "barCode_add" =  "000000531100"
+sample_add.c(64): Notify: Saving Parameter "barCode_add = 000000531100".
+sample_add.c(68): Notify: Transaction "保存" started.
+sample_add.c(70): web_submit_data("speInputLoadDetailByBarCode.action") started  	[MsgId: MMSG-26355]
+sample_add.c(70): Warning: The string 'ctx' with parameter delimiters is not a parameter.
+sample_add.c(70): Notify: Parameter Substitution: parameter "barCode_add" =  "000000531100"
+sample_add.c(70): web_submit_data("speInputLoadDetailByBarCode.action") was successful, 1301 body bytes, 216 header bytes, 12 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_add.c(81): web_submit_data("speInputCustomerInputTips.action") started  	[MsgId: MMSG-26355]
+sample_add.c(81): web_submit_data("speInputCustomerInputTips.action") was successful, 20 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_add.c(92): web_submit_data("speInputLocation.action") started  	[MsgId: MMSG-26355]
+sample_add.c(92): web_submit_data("speInputLocation.action") was successful, 713 body bytes, 216 header bytes, 12 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_add.c(103): web_submit_data("speInputDoctor.action") started  	[MsgId: MMSG-26355]
+sample_add.c(103): web_submit_data("speInputDoctor.action") was successful, 511 body bytes, 216 header bytes, 12 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_add.c(114): web_submit_data("speInputItem.action") started  	[MsgId: MMSG-26355]
+sample_add.c(114): web_submit_data("speInputItem.action") was successful, 94867 body bytes, 216 header bytes, 37 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_add.c(127): web_submit_data("speInputInfoTestItem.action") started  	[MsgId: MMSG-26355]
+sample_add.c(127): Warning: The string 'ctx' with parameter delimiters is not a parameter.
+sample_add.c(127): web_submit_data("speInputInfoTestItem.action") was successful, 24 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_add.c(142): web_reg_save_param_ex started  	[MsgId: MMSG-26355]
+sample_add.c(142): Registering web_reg_save_param_ex was successful  	[MsgId: MMSG-26390]
+sample_add.c(150): web_reg_save_param_ex started  	[MsgId: MMSG-26355]
+sample_add.c(150): Registering web_reg_save_param_ex was successful  	[MsgId: MMSG-26390]
+sample_add.c(158): Notify: Saving Parameter "time1 = 2018-11-09 17:15:56".
+sample_add.c(159): Notify: Saving Parameter "time2 = 2018-11-08 17:15:56".
+sample_add.c(163): web_submit_data("speInputValidateSetLab.action") started  	[MsgId: MMSG-26355]
+sample_add.c(163): Warning: The string 'ctx' with parameter delimiters is not a parameter.
+sample_add.c(163): Notify: Parameter Substitution: parameter "barCode_add" =  "000000531100"
+sample_add.c(163): Notify: Parameter Substitution: parameter "time1" =  "2018-11-09 17:15:56"
+sample_add.c(163): Notify: Parameter Substitution: parameter "time2" =  "2018-11-08 17:15:56"
+sample_add.c(163): Error -26377: No match found for the requested parameter "spe_id". Check whether the requested boundaries exist in the response data. Also, if the data you want to save exceeds 256 bytes, use web_set_max_html_param_len to increase the parameter size  	[MsgId: MERR-26377]
+sample_add.c(163): Notify: Saving Parameter "spe_id = ".
+sample_add.c(163): Error -26377: No match found for the requested parameter "bar_code". Check whether the requested boundaries exist in the response data. Also, if the data you want to save exceeds 256 bytes, use web_set_max_html_param_len to increase the parameter size  	[MsgId: MERR-26377]
+sample_add.c(163): Notify: Saving Parameter "bar_code = ".
+sample_add.c(163): web_submit_data("speInputValidateSetLab.action") highest severity level was "ERROR", 93 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26387]
+sample_add.c(163): Notify: Transaction "保存" ended with a "Fail" status (Duration: 5.6125 Wasted Time: 0.0232).
+sample_add.c(163): Notify: Transaction "保存" has 2 error message(s).
+sample_add.c(163): Notify: The 1st error message associated with transaction "保存" is "Error -26377: No match found for the requested parameter "spe_id". Check whether the requested boundaries exist in the response data. Also, if the data you want to save exceeds 256 bytes, use web_set_max_html_param_len to increase the parameter size"
+sample_add.c(163): Notify: The 2nd error message associated with transaction "保存" is "Error -26377: No match found for the requested parameter "bar_code". Check whether the requested boundaries exist in the response data. Also, if the data you want to save exceeds 256 bytes, use web_set_max_html_param_len to increase the parameter size"
+Ending action sample_add.
+Ending iteration 1.
+Ending Vuser...
+Starting action vuser_end.
+Ending action vuser_end.
+Vuser Terminated.

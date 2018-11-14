@@ -1,0 +1,11 @@
+[t125]
+FileName1=t125.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansComJson.action
+Total=1
+RequestHeaderFile=t125_RequestHeader.txt
+RequestBodyFile=t125_RequestBody.txt
+ResponseHeaderFile=t125_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_125.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

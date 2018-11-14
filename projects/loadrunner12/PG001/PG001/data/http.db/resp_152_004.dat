@@ -1,0 +1,1110 @@
+/**
+ * 采购订单维护相关js
+ */
+$(document).ready(function(){
+	$("#leftPageDiv").load("${ctx}/spe/purchaseOrderLeft.action");
+	$("#infoPageDiv").load("${ctx}/spe/purchaseOrderInfo.action");	
+});
+var canSaveApply = true;
+//列表行选中
+function rowSelected(e){
+	if(e.target.nodeName!="TD"){
+		return;
+	}
+	$("#leftTable tr").removeClass("selectedbg");
+	$(this).addClass("selectedbg");
+	//$(this).find("td:eq(0) input:checkbox").get(0).checked=true;
+	//显示详细信息
+	var currentRowId = $(this).attr("id");
+	$.ajax({
+        type: "POST", 
+       	url: "${ctx}/spe/purchaseOrderDataLoad.action",
+       	data:{id:currentRowId},
+        success: function(result) {
+        	if(result!=null&&result!=""){
+        		setValue(result);     		
+        	}
+        }
+    });
+	//$("#infoPageDiv").load("${ctx}/spe/purchaseOrderInfo.action", {'id':currentRowId});
+}
+
+//选中系列数据行
+function seriesRowSelected(e,tableId){
+
+	$("#"+tableId+" tr").removeClass("selectedbg");
+	$(e).addClass("selectedbg");
+
+	currentSeriesRowId = $(this).attr("id");
+}
+function setValue(result) {
+	var info = eval("(" + result + ")");
+	var dto = info.dto;
+	var details = info.detailsJson;
+	orderDetails = details;
+	if (orderDetails == null || orderDetails == 'null') {
+		orderDetails = [];
+	}
+	count = orderDetails.length;
+	$("#purchaseOrder_upt_name").val(dto.purchaseOrderName);
+	var time = dto.estimateArrivalTime;
+	if (time != null && time.indexOf(" ") >= 0) {
+		time = time.substring(0, time.indexOf(" "));
+	}
+	$("#estimateArrivalTimeUpt").val(time);
+	$("#purchaseOrder_id").val(dto.id);
+	$("#remarksUpt").val(dto.remarks);
+
+	setTimeout(function(){
+		applicantForUptCombo.setValue(dto.applicant);
+		warehouseForUptCombo.setValue(dto.warehouse);
+		if (dto.orderState == 400) { //如果还可以编辑，则重新加载库存信息
+			onWarehouseChange();
+		}
+	},500);
+	
+	showAllSeriesData(details);
+	if (dto.orderState == 400) {
+		enableInput();
+	} else {
+		disableInput();
+	}
+}
+function showAllSeriesData(details){
+	var html = "";
+	for (var i in details){
+		var jsonData = details[i];
+		var id = jsonData.id;
+	
+//		var salesOrderName = jsonData.salesOrderName;
+//		var orderNum = jsonData.orderNum;
+		var seriesName = jsonData.seriesName;
+		var procurementNum = jsonData.procurementNum;
+		var warehousingNum = jsonData.warehousingNum;
+		var needPurchaseNum = jsonData.needPurchaseNum;
+		var completePurchaseNum = jsonData.completePurchaseNum;
+		
+		if (count % 2 == 0) { //当前含有偶数行，添加的是奇数行
+			html += "<tr id='"+id+"' class=\"oddbg\">";
+		} else {
+			html += "<tr id='"+id+"' class=\"evenbg\">";
+		}
+	
+		html += "	<td width='110px' title=\""+seriesName+"\">"+seriesName+"</td>";
+//		html += "	<td title=\""+orderNum+"\">"+orderNum+"</td>";
+		html += "	<td width='110px' title=\""+warehousingNum+"\" id='warehousingNum_"+id+"' >"+warehousingNum+"</td>";
+		html += "	<td width='110px' title=\""+needPurchaseNum+"\" >"+
+					"<input type='text' style='width:90%' id='input_needPurchaseNum_"+id+"' value='"+needPurchaseNum+"' onblur=\"blurEditTd('"+id+"','needPurchaseNum','edit')\" /></td>";
+//		html += "	<td title=\""+needPurchaseNum+"\" ondblclick=\"dblclickEditTd('"+id+"','needPurchaseNum')\" ><span id='span_needPurchaseNum_"+id+"'>"+needPurchaseNum+"</span>"+
+//		"<input type='text' style='display:none;width:90%' id='input_needPurchaseNum_"+id+"' value='"+needPurchaseNum+"' onblur=\"blurEditTd('"+id+"','needPurchaseNum')\" /></td>";
+		html += "	<td width='110px' title=\""+procurementNum+"\">"+procurementNum+"</td>";
+		html += "	<td width='110px' title=\""+completePurchaseNum+"\">"+completePurchaseNum+"</td>";
+//		html += "	<td title=\""+salesOrderName+"\">"+salesOrderName+"</td>";
+//		html += "	<td align='center'><img src=\""+ ctx +"/images/del.gif\" border=\"0\" onclick=\"delSeries('"+id+"')\" title=\"删除\"></td>";
+		
+		html += "</tr>";
+	}
+
+	var dataTable = $("#dataTable");
+	$("#dataTable tr:not(:first)").remove();
+	dataTable.append(html);
+	$("#dataTable tr[class!='trTitle']").click(function(){seriesRowSelected(this,"dataTable");});
+	return;
+}
+//分页查询(此方法名不可更改,在page.jsp中有调用)
+function pageQuery(id){
+	//判断日期是否都选择了
+	if(trim($("#applyTime_start").val()) == "" || trim($("#applyTime_end").val()) == ""){
+		showMsg('请输入完整的时间段!');
+		return ;
+	}
+	var otherHeight = $(".group_left_one").outerHeight(true)+pageHeigh+buttonHeight+queryTitle+5;
+	var row = getRow(otherHeight+tableTitle);
+	var formParam = $("#pageForm").serializeArray();
+	$("#tableList").load("${ctx}/spe/purchaseOrderList.action?row="+row, formParam, function(){
+		$('.scrollDiv').height($(window).height()-otherHeight-15);
+		clearInfo();
+		//选中第一行，如果有数据的话
+		if (id != null && id != '' && typeof(id) == 'string') { //选中指定行
+			$("#leftTable tr[id='"+id+"'] td:eq(1)").click();
+		} else { //选中第一行
+			$("#leftTable tr:eq(1) td:eq(1)").click();
+		}
+	});
+}
+function clearInfo(){
+	//复原全局变量
+//	canSaveApply = true;
+	orderDetails = [];
+	warehouseNumJson = {};
+	count = 0;
+	applicantForUptCombo.clear();
+	seriesForUptCombo.clear();
+	warehouseForUptCombo.clear();
+	
+	$("#purchaseOrder_id").val("");
+	$("#purchaseOrder_upt_name").val("");
+	$("#estimateArrivalTimeUpt").val("");
+	$("#remarksUpt").val("");
+	$("#dataTable tr:not(:first)").remove();
+}
+function clearApplyInfo(){
+	
+	//复原全局变量
+	canSaveApply = true;
+	orderDetailsApply = [];
+	warehouseNumForAppJson = {};
+	countForApp = 0;
+	applicantForAppCombo.clear();
+	seriesForAppCombo.clear();
+//	saleOrdersForAppCombo.clear();
+	warehouseForAppCombo.clear();
+	
+	$("#purchaseOrder_app_name").val("");
+	$("#estimateArrivalTimeApp").val("");
+	$("#remarksApp").val("");
+	$("#dataAppTable tr:not(:first)").remove();
+}
+//验证保存
+function validateAndSave(){
+	var purchaseOrderId = $("#purchaseOrder_id").val();
+
+	if(trim($("#purchaseOrder_name").val()) == ""){
+		showMsg("采购订单名称不能为空","提示信息",function(){
+			$("#purchaseOrder_name").focus();
+		});
+		return false;
+	}	
+	//保存
+	blockUI();
+	var formParam = $("#infoForm").serialize();
+	
+	$.post("${ctx}/spe/purchaseOrderStore.action",formParam,function(result,status){
+		unblockUI();
+		if (result != null) {
+			if (result == "existsPurchaseOrderName") {
+				showMsg("采购订单名称已经存在","提示信息");
+			} else if (result == "success") {
+				//新增保存
+				if (purchaseOrderId=="") {
+					//清空表单内容
+					clearInfo();
+					//刷新左边列表
+					$("#pageNo").val(1);
+					pageQuery(purchaseOrderId);
+					//选中新增的记录
+				} else {
+					var selectedRow = $("#leftTable .selectedbg");
+					if (selectedRow.size() > 0) {
+						$($(selectedRow[0]).children("td")[1]).text($("#purchaseOrder_name").val());
+					}
+				}
+				jAlert("操作成功","提示信息");
+			} else if (result != "") {
+				showMsg(result,"提示信息");
+			}
+		}
+	});
+}
+
+/**
+ * 采购单确认
+ */
+function surePurchaseOrders(){
+	var array = new Array();
+	var checkFlag = false;
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	if (!checkFlag) {
+		showMsg("请先勾选要确认的采购单","提示信息");
+		return;
+	}
+	jConfirm('确定要确认这些采购单吗？', '提示信息', function(choice){
+		if(choice){
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/spe/purchaseOrdersSure.action?time=" + new Date().getTime(),
+				data:{arrayIds : arrayIds},
+				success : function(result) {
+					if("error" == result){
+						showMsg("操作失败","提示信息");
+						
+					} else if ("blank" == result) {
+						
+						showMsg("没有要操作的数据","提示信息");
+					} else if (result != null && result != '') {
+						showMsg(result,"提示信息");
+						pageQuery(array[0]);
+					}
+				}
+			});
+		}
+	});
+}
+
+/**
+ * 取消确认
+ */
+function cancelSureOrders(){
+	var array = new Array();
+	var checkFlag = false;
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	if (!checkFlag) {
+		showMsg("请先勾选要取消确认的采购单","提示信息");
+		return;
+	}
+	jConfirm('确定要取消确认这些采购单吗？', '提示信息', function(choice){
+		if(choice){
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/spe/purchaseOrdersCancelSure.action?time=" + new Date().getTime(),
+				data:{arrayIds : arrayIds},
+				success : function(result) {
+					if("error" == result){
+						
+						showMsg("操作失败","提示信息");
+					} else if ("blank" == result) {
+						
+						showMsg("没有要操作的数据","提示信息");
+					} else if (result != null && result != '') {
+						
+						showMsg(result,"提示信息");
+						pageQuery(array[0]);
+					}
+				}
+			});
+		}
+	});
+}
+
+/**
+ * 采购完成
+ */
+function completePurchaseOrders(){
+	var array = new Array();
+	var checkFlag = false;
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	if (!checkFlag) {
+		showMsg("请先勾选要采购完成的采购单","提示信息");
+		return;
+	}
+	jConfirm('确定要完成这些采购单吗？', '提示信息', function(choice){
+		if(choice){
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/spe/purchaseOrdersComplete.action?time=" + new Date().getTime(),
+				data:{arrayIds : arrayIds},
+				success : function(result) {
+					if("error" == result){
+						
+						showMsg("操作失败","提示信息");
+					} else if ("blank" == result) {
+						
+						showMsg("没有要操作的数据","提示信息");
+					} else if (result != null && result != '') {
+						
+						showMsg(result,"提示信息");
+						pageQuery(array[0]);
+					}
+				}
+			});
+		}
+	});
+}
+
+/**
+ * 取消采购完成
+ */
+function cancelCompleteOrders(){
+	var array = new Array();
+	var checkFlag = false;
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	if (!checkFlag) {
+		showMsg("请先勾选要取消采购完成的采购单","提示信息");
+		return;
+	}
+	jConfirm('确定要取消完成这些采购单吗？', '提示信息', function(choice){
+		if(choice){
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/spe/purchaseOrdersCancelComplete.action?time=" + new Date().getTime(),
+				data:{arrayIds : arrayIds},
+				success : function(result) {
+					if("error" == result){
+						
+						showMsg("操作失败","提示信息");
+					} else if ("blank" == result) {
+						
+						showMsg("没有要操作的数据","提示信息");
+					} else if (result != null && result != '') {
+						
+						showMsg(result,"提示信息");
+						pageQuery(array[0]);
+					}
+				}
+			});
+		}
+	});
+}
+
+function exportExcel(){
+	var array = new Array();
+	var checkFlag = false;
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	$("#ids").val(arrayIds);
+	$("#starttime").val($("#applyTime_start").val());
+	$("#endtime").val($("#applyTime_end").val());
+	$("#applyperson").val(applyerCombo.getText());
+	$("#ordername").val($("#search_purchaseOrderName").val());
+//	$("#saleordername").val(saleOrdersForSchCombo.getText());
+	$("#orderstatus").val($("#status").find("option:selected").text());
+	$("#seriesname").val(seriesForSchCombo.getText());
+	if(!checkFlag){
+		showMsg("请先勾选要导出的采购订单");
+		return;
+	}
+	$("#excelForm").submit();
+}
+
+//初始化时间区间
+function initdate(){
+	var myDate = new Date();
+	var year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+	var month = myDate.getMonth() + 1; //获取月份
+	var day = myDate.getDate();
+	
+	//获取当前日(1-31)
+	if (month < 10) { //月份小于10，前面加上0
+		month = "0" + month;
+	}
+
+	if (day < 10) { //日小于10，前面加上0
+		day = "0" + day;
+	}
+
+	var dateInit = year + "-" + month + "-" + day;
+
+	$("#applyTime_start").val(dateInit + " 00:00:00");
+	$("#applyTime_end").val(dateInit + " 23:59:59");
+}
+
+//js日期比较(yyyy/mm/dd)
+function duibi(a, b) {
+    var arr = a.split("-");
+    var starttime = new Date(arr[0], arr[1], arr[2]);
+    var starttimes = starttime.getTime();
+
+    var arrs = b.split("-");
+    var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+    var lktimes = lktime.getTime();
+    if (starttimes > lktimes) {
+        return false;
+    }else{
+    	return true;
+    }
+}
+
+function notBeforeCurDate(date){
+	date = date.replace(/ /g,'-').replace(/:/g,'-');
+	var dateStr = date.split("-");
+	var dateTime = new Date(dateStr[0], dateStr[1], dateStr[2]);
+	var curTime = new Date();
+	if (dateTime > curTime) {
+		return true;
+	}
+	return false;
+}
+
+function disableInput(){
+	applicantForUptCombo.disable();
+	seriesForUptCombo.disable();
+	warehouseForUptCombo.disable();
+	
+	$("#purchaseOrder_upt_name").attr("disabled", true);
+	$("#estimateArrivalTimeUpt").attr("disabled", true);
+	$("#remarksUpt").attr("disabled", true);
+	$("#btnSaveOrder").attr("disabled", true);
+	$("#btnDelSeries").attr("disabled", true);
+
+	$(".btnComment[disabled=disabled]").addClass("disabledBtn grey");
+	$(".btnComment[disabled=disabled]").removeClass("btnComment blue round");
+	//列表中的还需采购数量不可用
+	if ($("input[id^=input_needPurchaseNum_]")) {
+		$("input[id^=input_needPurchaseNum_]").attr("disabled", true);
+	}
+}
+
+function enableInput(){
+	applicantForUptCombo.enable();
+	seriesForUptCombo.enable();
+	warehouseForUptCombo.enable();
+	
+	$("#purchaseOrder_upt_name").attr("disabled", false);
+	$("#estimateArrivalTimeUpt").attr("disabled", false);
+	$("#remarksUpt").attr("disabled", false);
+	$("#btnSaveOrder").attr("disabled", false);
+	$("#btnDelSeries").attr("disabled", false);
+	
+	$(".disabledBtn").addClass("btnComment blue round");
+	$(".disabledBtn").removeClass("disabledBtn grey");
+}
+function addPurchaseOrder(){
+	clearInfo();
+	enableInput();
+	//初始化申请人
+	setTimeout(function(){
+		applicantForUptCombo.setValue(curApplicantForUpt);
+	},300);
+}
+/**
+ * 申请采购单（弹出申请页面）
+ */
+function applyOrder(){
+	canSaveApply = true;
+	//$("#loadPageDiv").load('${ctx}/spe/purchaseOrderEdit.action', {}, function(){
+		$("#loadPageDiv").show();
+		//初始化申请人
+		setTimeout(function(){
+			applicantForAppCombo.setValue(curApplicantForUpt);
+		},500);
+		$('#loadPageDiv').dialog({
+		    title: '申请采购',
+		    left:230,
+		    top:10,
+		    width: 890,
+		    height: 505,
+		    closed: false,
+		    cache: false,
+		    modal: true,
+		    onClose:function(){
+		    	clearApplyInfo();
+		    },
+		    buttons:[{
+				text:'确定',
+				id:'saveApply',
+				handler:function(){
+					saveApplyOrder();
+				}
+			},{
+				text:'删除系列',
+				handler:function(){
+					delAppSeries();
+				}
+			},{
+				text:'取消',
+				handler:function(){
+					closePage();
+				}
+			}]
+		});
+	//});
+}
+
+function closePage(){
+	clearApplyInfo();
+	$('#loadPageDiv').dialog( "close" );
+}
+function saveOrder(){
+	
+	$.post("${ctx}/spe/purchaseOrderStateCheck.action?id="+$("#purchaseOrder_id").val(), null, function(result) {
+		if (result != null && result != '') {
+			var data = eval('('+result+')');
+			if (data["error"] != undefined && data["error"] != 'undefined' && data["error"] != '') {
+				jAlert(data["error"],"提示信息");
+				return;
+			}
+		} else {
+			lastSave();
+		}
+    });
+}
+function lastSave(){
+	//先验证是否可以修改
+	if (trim(warehouseForUptCombo.getValue()) == "") {
+		showMsg("仓库不能为空","提示信息");
+		return;
+	}
+	if(trim($("#purchaseOrder_upt_name").val()) == ""){
+		showMsg("采购单名称不能为空","提示信息",function(){
+			$("#purchaseOrder_upt_name").focus();
+		});
+		return;
+	}
+	if (($("#purchaseOrder_upt_name").val()).length > 50) {
+		showMsg("采购单名称不能超过50个字","提示信息",function(){
+			$("#purchaseOrder_upt_name").focus();
+		});
+		return;
+	}
+	if (trim(applicantForUptCombo.getValue()) == "") {
+		showMsg("申请人不能为空","提示信息");
+		return;
+	}
+	//备注
+	if (($("#remarksUpt").val()).length > 500) {
+		showMsg("备注不能超过500个字","提示信息",function(){
+			$("#remarksUpt").focus();
+		});
+		canSaveApply = true;
+		return;
+	}
+	if (count <= 0) {
+		jAlert("没有系列数据","提示信息");
+		return;
+	}
+	for (var i in orderDetails) {
+		var data = orderDetails[i];
+		var value = data["needPurchaseNum"];
+		value = trim(value);
+		if (value == null || value == '' || value == '0') {
+			jAlert("需采购数量不能有空数据或为0的数据","提示信息");
+			return;
+		}
+		if (value != null && value != '') {
+			if (!checkPositiveInteger(value)) {
+				jAlert("需采购数量只能输入正整数！","提示信息");
+				return;
+			}
+			if (data["needPurchaseNum"].length > 10) {
+				jAlert("需采购数量不能超过10位数！","提示信息");
+				return;
+			}
+		}
+	}
+	//预计到货时间不能小于当前日期
+	var estimateArrivalTime = $("#estimateArrivalTimeUpt").val();
+	if (estimateArrivalTime != '' && !notBeforeCurDate(estimateArrivalTime)) {
+		jAlert("预计到货时间不能小于当前日期","提示信息");
+		return;
+	}
+
+	if (hasTheSameSeries(orderDetails)) {
+		jAlert("列表中存在重复数据","提示信息");
+		return;
+	}
+
+	$("#warehouseNameUpt").val(warehouseForUptCombo.getText());
+	$("#applicantForUpt").val(applicantForUptCombo.getText());
+	$("#orderDetailsUptJson").val(JSON.stringify(orderDetails));
+	var formParam = $("#infoForm").serializeArray();
+
+	//保存数据
+	blockUI();
+	$.post("${ctx}/spe/purchaseOrderApplyStore.action",formParam,function(result) {
+		unblockUI();
+    	if (result == 'existsOrderName') {
+    		jAlert("该采购单名称已存在，请重新输入。","提示信息", function(){
+    			$("#purchaseOrder_upt_name").focus();
+    		});
+    		return;
+    	} else {
+    	
+    		jAlert("保存成功！","提示信息");
+        	//orderDetails = eval(result);
+    		//count = orderDetails.length;
+    		
+        	//刷新列表
+        	pageQuery($("#purchaseOrder_id").val());
+    	} 	
+    });
+}
+
+function delSeries(){
+
+	var id = $("#dataTable .selectedbg").attr("id");
+	if (id == null || id == undefined || id == '') {
+		jAlert("请选择一条系列数据","提示信息");
+		return;
+	}
+	jConfirm("您是否确定要删除该记录吗?","提示信息",function(choice){
+		if(choice){
+
+			$("#"+id).remove();
+
+			var temp = [];
+			var j = 0;
+	
+			for (var i in orderDetails) {
+				if (orderDetails[i]["id"] == id) {
+					continue;
+				} else {
+					temp.push(orderDetails[i]);
+					j++;
+				}
+			}
+			orderDetails = temp;
+			count = j;
+		}
+	});
+}
+
+function delAppSeries(){
+
+	var id = $("#dataAppTable .selectedbg").attr("id");
+	if (id == null || id == undefined || id == '') {
+		jAlert("请选择一条系列数据","提示信息");
+		return;
+	}
+	jConfirm("您是否确定要删除该记录吗?","提示信息",function(choice){
+		if(choice){
+
+			$("#"+id).remove();
+
+			var temp = [];
+			var j = 0;
+	
+			for (var i in orderDetailsApply) {
+				if (orderDetailsApply[i]["id"] == id) {
+					continue;
+				} else {
+					temp.push(orderDetailsApply[i]);
+					j++;
+				}
+			}
+			orderDetailsApply = temp;
+			countForApp = j;
+		}
+	});
+}
+
+/**
+ * 保存采购订单（弹出页面点确定）
+ * @returns 
+ */
+function saveApplyOrder(){
+	if (canSaveApply) {
+		canSaveApply = false;
+		if (trim(warehouseForAppCombo.getValue()) == "") {
+			showMsg("仓库不能为空","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		if(trim($("#purchaseOrder_app_name").val()) == ""){
+			showMsg("采购单名称不能为空","提示信息",function(){
+				$("#purchaseOrder_app_name").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if (($("#purchaseOrder_app_name").val()).length > 50) {
+			showMsg("采购单名称不能超过50个字","提示信息",function(){
+				$("#purchaseOrder_app_name").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if (trim(applicantForAppCombo.getValue()) == "") {
+			showMsg("申请人不能为空","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		//预计到货时间不能小于当前日期
+		var estimateArrivalTime = $("#estimateArrivalTimeApp").val();
+		if (estimateArrivalTime != '' && !notBeforeCurDate(estimateArrivalTime)) {
+			jAlert("预计到货时间不能小于当前日期","提示信息");
+			canSaveApply = true;
+			return;
+		}
+
+		//备注
+		if (($("#remarksApp").val()).length > 500) {
+			showMsg("备注不能超过500个字","提示信息",function(){
+				$("#remarksApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		
+		if (countForApp <= 0) {
+			jAlert("没有系列数据","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		for (var i in orderDetailsApply) {
+			var data = orderDetailsApply[i];
+			var value = data["needPurchaseNum"];
+			if (value == null || value == '' || value == '0') {
+				jAlert("需采购数量不能有空数据或为0的数据","提示信息");
+				canSaveApply = true;
+				return;
+			}
+			if (value != null && value != '') {
+				if (!checkPositiveInteger(value)) {
+					jAlert("需采购数量只能输入正整数！","提示信息");
+					canSaveApply = true;
+					return;
+				}
+				if (value.length > 10) {
+					jAlert("需采购数量不能超过10位数！","提示信息");
+					canSaveApply = true;
+					return;
+				}
+			}
+		}
+
+		if (hasTheSameSeries(orderDetailsApply)) {
+			jAlert("列表中存在重复数据","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		
+		$("#warehouseNameApp").val(warehouseForAppCombo.getText());
+		$("#applicantForApp").val(applicantForAppCombo.getText());
+		$("#orderDetailsAppJson").val(JSON.stringify(orderDetailsApply));
+		var formParam = $("#infoFormApply").serializeArray();
+
+		//保存数据
+		blockUI();
+		$.post("${ctx}/spe/purchaseOrderApplyStore.action",formParam,function(result) {
+	    	unblockUI();
+	    	canSaveApply = true;
+	    	jAlert("保存成功！","提示信息");
+	    	closePage();
+	    	//刷新列表
+	    	pageQuery();
+	    });
+	} else {
+		
+	}
+}
+
+function addNewRow(jsonData, tableId, type){
+	var id = jsonData.id;
+
+//	var salesOrderName = jsonData.salesOrderName;
+//	var orderNum = jsonData.orderNum;
+	var seriesName = jsonData.seriesName;
+	var procurementNum = jsonData.procurementNum;
+	var warehousingNum = jsonData.warehousingNum;
+	var needPurchaseNum = jsonData.needPurchaseNum;
+	var completePurchaseNum = jsonData.completePurchaseNum;
+	
+	var html = "";
+	var size = count;
+	if (type == 'apply') {
+		size = countForApp;
+	}
+	if (size % 2 == 0) { //当前含有偶数行，添加的是奇数行
+		html += "<tr id='"+id+"' class=\"oddbg\" onclick=\"seriesRowSelected(this,'"+tableId+"')\">";
+	} else {
+		html += "<tr id='"+id+"' class=\"evenbg\" onclick=\"seriesRowSelected(this,'"+tableId+"')\">";
+	}
+
+	html += "	<td width='110px' title=\""+seriesName+"\">"+seriesName+"</td>";
+//	html += "	<td title=\""+orderNum+"\">"+orderNum+"</td>";
+	html += "	<td width='110px' title=\""+warehousingNum+"\" id='warehousingNum_"+id+"' >"+warehousingNum+"</td>";
+	html += "	<td width='110px' title=\""+needPurchaseNum+"\" >"+
+				"<input type='text' style='width:90%' id='input_needPurchaseNum_"+id+"' value='"+needPurchaseNum+"' onblur=\"blurEditTd('"+id+"','needPurchaseNum','"+type+"')\" /></td>";
+//	html += "	<td title=\""+needPurchaseNum+"\" ondblclick=\"dblclickEditTd('"+id+"','needPurchaseNum')\" ><span id='span_needPurchaseNum_"+id+"'>"+needPurchaseNum+"</span>"+
+//	"<input type='text' style='display:none;width:90%' id='input_needPurchaseNum_"+id+"' value='"+needPurchaseNum+"' onblur=\"blurEditTd('"+id+"','needPurchaseNum')\" /></td>";
+	html += "	<td width='110px' title=\""+procurementNum+"\">"+procurementNum+"</td>";
+	html += "	<td width='110px' title=\""+completePurchaseNum+"\">"+completePurchaseNum+"</td>";
+//	html += "	<td title=\""+salesOrderName+"\">"+salesOrderName+"</td>";
+	//html += "	<td align='center'><img src=\""+ ctx +"/images/del.gif\" border=\"0\" onclick=\"delSeries('"+id+"')\" title=\"\"></td>";
+	
+	html += "</tr>";
+
+	var dataTable = $("#" + tableId);
+	dataTable.append(html);
+	
+	return;
+}
+
+function dblclickEditTd(id,type){
+	$("#span_"+type+"_"+id).css("display","none");
+	$("#input_"+type+"_"+id).css("display","inline");
+	$("#input_"+type+"_"+id).focus();
+}
+
+function blurEditTd(id, type, optType){
+
+	var value = $("#input_"+type+"_"+id).val();
+//	if (type == 'needPurchaseNum') {
+//		if (value != '' && !checkPositiveInteger(value)) {
+//			jAlert("还需采购数量只能输入正整数！","提示信息",function(){
+//				$("#input_"+type+"_"+id).focus();
+//			});
+//		}
+//	}
+//	var text = value;
+	if ($("#input_"+type+"_"+id).attr('type') == 'checkbox') {
+
+		if ($("#input_"+type+"_"+id).attr('checked') == undefined || $("#input_"+type+"_"+id).attr('checked') == 'false'){
+			value = 0;
+//			text = "否";
+		} else if ($("#input_"+type+"_"+id).attr('checked') == 'checked' || $("#input_"+type+"_"+id).attr('checked') == 'true'){
+			value = 1;
+//			text = "是";
+		};
+	}
+//	$("#span_"+type+"_"+id).text(text);
+//	$("#span_"+type+"_"+id).css("display","inline");
+//	$("#input_"+type+"_"+id).css("display","none");
+	//更新jsonData
+	if (optType == 'apply') {
+		for (var i in orderDetailsApply) {
+			if (orderDetailsApply[i]["id"] == id) {
+				var item = orderDetailsApply[i];
+				item[type] = value;
+				
+				orderDetailsApply[i] = item;
+				break;
+			}
+		}
+	} else {
+		for (var i in orderDetails) {
+			if (orderDetails[i]["id"] == id) {
+				var item = orderDetails[i];
+				item[type] = value;
+				
+				orderDetails[i] = item;
+				break;
+			}
+		}
+	}
+}
+
+function hasTheSameSeries(jsonData){
+	var map = new Map();
+	for (var i in jsonData) {
+		var item = jsonData[i];
+//		var saleOrderId = jsonData["saleOrderId"];
+//		if (saleOrderId != "") {
+//			continue;
+//		}
+		var seriesId = item["seriesId"];
+		if (map.get(seriesId) != null && map.get(seriesId) != '') {
+			return true;
+		} else {
+			map.put(seriesId, item);
+		}
+	}
+	
+	return false;
+}
+
+var onWarehouseChange = function(tr){ //更新所有库存数量
+	var warehouse = warehouseForUptCombo.getValue();
+	if (warehouse == "") {
+		return;
+	}
+	$.ajax({
+		type: "POST",
+		url: "${ctx}/spe/purchaseOrderWarehouseComJson.action",
+		data: {warehouseId: warehouse, time: new Date().getTime()},
+		success: function(result) {
+			if (result == null || result == '') {
+				warehouseNumJson = {};
+				setWarehouseNum();
+				return;
+			} else {
+				var jsonData = eval('('+result+')');
+				warehouseNumJson = jsonData;
+				
+				//设置每一行的库存数量
+				setWarehouseNum();
+			}
+		}
+	});
+};
+function setWarehouseNum(){
+	//table中显示的数据要设置，json对象的值也要设置
+	for (var i in orderDetails){
+		var jsonData = orderDetails[i];
+		var id = jsonData.id;
+		var seriesId = jsonData.seriesId;
+		var warehouseNum = warehouseNumJson[seriesId];
+		if (warehouseNum == undefined || warehouseNum == '') {
+			warehouseNum = 0;
+		}
+		//更新json数据
+		jsonData.warehousingNum = warehouseNum;
+		orderDetails[i] = jsonData;
+		
+		//更新页面table库存数据
+		$("#warehousingNum_"+id).attr('title',warehouseNum);
+		$("#warehousingNum_"+id).html(warehouseNum);
+	}
+}
+
+function setWarehouseNumForApp(){
+	//table中显示的数据要设置，json对象的值也要设置
+	for (var i in orderDetailsApply){
+		var jsonData = orderDetailsApply[i];
+		var id = jsonData.id;
+		var seriesId = jsonData.seriesId;
+		var warehouseNum = warehouseNumForAppJson[seriesId];
+		if (warehouseNum == undefined || warehouseNum == '') {
+			warehouseNum = 0;
+		}
+		//更新json数据
+		jsonData.warehousingNum = warehouseNum;
+		orderDetailsApply[i] = jsonData;
+		
+		//更新页面table库存数据
+		$("#warehousingNum_"+id).attr('title',warehouseNum);
+		$("#warehousingNum_"+id).html(warehouseNum);
+	}
+}
+
+function existsThisSeries(data, details){
+
+	var salesOrderId = data.salesOrderId;
+	var series = data.seriesId;
+	for (i in details){
+		var jsonData = details[i];
+		if (salesOrderId == jsonData.salesOrderId && series == jsonData.seriesId)  {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+function validateSeriesNew(data, details){
+	var series = data.seriesId;
+	for (i in details){
+		var jsonData = details[i];
+//		if (jsonData.salesOrderId != "") {
+//			continue;
+//		}
+		if (series == jsonData.seriesId)  {
+			return true;
+		}
+	}
+	
+	return false;
+}
+var onSeriesForAppChange = function(tr){
+	var series = seriesForAppCombo.getValue();
+	if (series == "") {
+		return;
+	}
+	$.ajax({
+		type: "POST",
+		url: "${ctx}/spe/purchaseOrderSeriesComJson.action",
+		data: {seriesId: series, time: new Date().getTime()},
+		success: function(result) {
+			if (result == null || result == '') {
+				return;
+			}
+			var jsonData = eval('('+result+')');
+			if (validateSeriesNew(jsonData, orderDetailsApply)) {
+				showMsg("该系列已存在","提示信息");
+				return;
+			}
+			
+			var id = jsonData.seriesId;
+			var warehouseNum = warehouseNumForAppJson[id];
+			if (warehouseNum == undefined || warehouseNum == '') {
+				warehouseNum = 0;
+			}
+			jsonData.warehousingNum = warehouseNum;
+			//添加新行
+			addNewRow(jsonData, 'dataAppTable', 'apply');
+			//更新json的值
+			orderDetailsApply.push(jsonData);
+			countForApp++;
+			seriesForAppCombo.clear();
+			//选中新加的行
+		}
+	});
+};
+
+var onSaleOrdersForAppChange = function(tr){
+	var saleOrder = saleOrdersForAppCombo.getValue();
+	if (saleOrder == "") {
+		return;
+	}
+	$.ajax({
+		type: "POST",
+		url: "${ctx}/spe/purchaseOrderSaleComJson.action",
+		data: {saleOrderId: saleOrder, time: new Date().getTime()},
+		success: function(result) {
+			if (result == null || result == '') {
+				return;
+			}
+
+			var jsonData = eval('('+result+')');
+			//jsonData.unshift(1, 0);
+			//Array.prototype.splice.apply(orderDetailsApply, jsonData);
+			
+			//选择销售订单，可能有多条系列数据
+			for (var i in jsonData) {
+				data = jsonData[i];
+				if (existsThisSeries(data, orderDetailsApply)) {
+					continue;
+				}
+				//设置库存的值
+				var id = data.seriesId;
+				var warehouseNum = warehouseNumForAppJson[id];
+				if (warehouseNum == undefined || warehouseNum == '') {
+					warehouseNum = 0;
+				}
+				data.warehousingNum = warehouseNum;
+
+				//添加新行
+				addNewRow(data, 'dataAppTable', 'apply');
+				//更新json的值
+				orderDetailsApply.push(data);
+				countForApp++;
+			}
+			
+			saleOrdersForAppCombo.clear();
+			//选中新加的行
+		}
+	});
+};
+var onWarehouseForAppChange = function(tr){ //更新所有库存数量
+	var warehouse = warehouseForAppCombo.getValue();
+	if (warehouse == "") {
+		return;
+	}
+	$.ajax({
+		type: "POST",
+		url: "${ctx}/spe/purchaseOrderWarehouseComJson.action",
+		data: {warehouseId: warehouse, time: new Date().getTime()},
+		success: function(result) {
+			if (result == null || result == '') {
+				warehouseNumForAppJson = {};
+				setWarehouseNumForApp();
+				return;
+			} else {
+				var jsonData = eval('('+result+')');
+				warehouseNumForAppJson = jsonData;
+				
+				//设置每一行的库存数量
+				setWarehouseNumForApp();
+			}
+		}
+	});
+};

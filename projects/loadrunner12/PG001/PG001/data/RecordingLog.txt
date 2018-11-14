@@ -1,0 +1,1689 @@
+[API Trapper      (4998:3b6c)] Recording in 64-bit mode: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+[API Trapper      ( 250:4774)] Recording in 64-bit mode: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+[API Trapper      (48e8:48f8)] Recording in 64-bit mode: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+[Network Analyzer (4998:4838)] ------------------------------------------------------------------------------------------
+[Network Analyzer (4998:4838)] Load Network Traffic Analyzers:
+[Network Analyzer (4998:4838)]     Analyzer Module: WPLUS (value=)
+[Network Analyzer (4998:4838)]     Analyzer Module: WebBase (value=GetHttpProtocolAnalyzer:api_http_filter_x64.dll)
+[Network Analyzer (4998:4838)]     + Network Analyzer: api_http_filter_x64.dll @ GetHttpProtocolAnalyzer Loaded!
+[Network Analyzer (4998:4838)]     + Interception Auditors: WinInetWplusInterceptionAudit:api_http_filter_x64.dll
+[Network Analyzer (4998:4838)]     Analyzer Module: QTWeb (value=GetWebSocketProtocolAnalyzer:WebSocketAnalyzer_x64.dll)
+[Network Analyzer (4998:4838)]     + Network Analyzer: WebSocketAnalyzer_x64.dll @ GetWebSocketProtocolAnalyzer Loaded!
+[Network Analyzer (4998:4838)] ------------------------------------------------------------------------------------------
+[Network Analyzer (4998:4acc)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  1)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clientservices.googleapis.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:  1) Client -> Server @ : 254 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  2)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT www.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:  2) Client -> Server @ : 224 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  3)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT accounts.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:  3) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  4)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT www.googleapis.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:  4) Client -> Server @ : 232 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid:  1) Server -> Client : 107 bytes 
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  5)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/home.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 422 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 339 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 67 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/login.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 530 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 305 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 4929 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  6)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  7)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  8)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/css/master.css"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 436 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jquery-1.11.0.min.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 435 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 13484 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/common.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  7) Client -> Server @ : 424 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/validateCode.img"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 459 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 6622 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 1331 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 14796 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_login_01.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  7) Client -> Server @ : 468 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_login_pad_bg.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 472 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/btn_login_go_over.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 473 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 3459 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/btn_login_go.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 468 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 5310 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 4942 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 8881 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=  9)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/favicon.ico"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 390 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:  9) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 1223 bytes  (Service=HTTP)
+[Net An. Error    (4998:3df4)] SSL_connect(ssl_id = 1958967296 = 0000014174C37800) Failed, ctx = 0000014174B069F0, err = "SSLv2/v3 read server hello A", err code = 5
+[Network Analyzer (4998:3df4)]   (Sid:  1) Negotiate Proxy -> Server SSL Handshake (ssl:TLSv1.2, ciphers:(NONE))
+[Network Analyzer (4998:3df4)]   (Sid:  1) Negotiate Client -> Proxy SSL Handshake (ssl:TLSv1.2, ciphers:AES128-GCM-SHA256)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 10)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://clientservices.googleapis.com/chrome-variations/seed?osname=win&channel=stable&milestone=68"   
+[Network Analyzer (4998:4acc)]   (Sid: 10) Client -> Server @ : 529 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 10) Server -> Client : 161 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  1) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 11)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 12)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 13)  PROXIED!
+[Web Request      (4998:4acc)] "HEAD http://hffiumcrxfyib/"   
+[Network Analyzer (4998:4acc)]   (Sid: 11) Client -> Server @ : 251 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "HEAD http://elgakwxboy/"   
+[Network Analyzer (4998:4acc)]   (Sid: 12) Client -> Server @ : 245 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "HEAD http://yglualex/"   
+[Network Analyzer (4998:4acc)]   (Sid: 13) Client -> Server @ : 241 bytes (Service=HTTP)
+[User action                 ] StartTransactionEvent 登录 [API Trapper      (47e0:4b90)] Recording in 64-bit mode: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+[Network Analyzer (4998:4acc)]   (Sid: 11) Server -> Client : 737 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 11) Connection Terminated (by Server)
+[Network Analyzer (4998:4acc)]   (Sid: 13) Server -> Client : 737 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 13) Connection Terminated (by Server)
+[Network Analyzer (4998:4acc)]   (Sid: 12) Server -> Client : 737 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 12) Connection Terminated (by Server)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/btn_login_go1.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 469 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 324 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 5121 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/login.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 773 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 256 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/home.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 556 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 6151 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 13628 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jquery-migrate-1.2.1.min.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 441 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 333 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 7219 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 14)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 15)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/qcm_common.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 427 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/css/easyUI.css"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 435 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jquery.easyui.min.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  7) Client -> Server @ : 434 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 6421 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/css/topmenu.css"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 436 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jalert/jquery.alerts.css"   
+[Network Analyzer (4998:4acc)]   (Sid: 15) Client -> Server @ : 453 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 5139 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 15) Server -> Client : 1558 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 6481 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/topmenu/superfish.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 434 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 4170 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/topmenu/custom.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 431 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 3361 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jquery.blockUI.js"   
+[Network Analyzer (4998:4acc)]   (Sid: 15) Client -> Server @ : 431 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jalert/jquery.alerts.js"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 437 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 15) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 8247 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 15) Server -> Client : 4517 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 5122 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_cent_02.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid:  7) Client -> Server @ : 467 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_top_bg.gif"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 466 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_top_menu_bg.png"   
+[Network Analyzer (4998:4acc)]   (Sid: 15) Client -> Server @ : 472 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_top_meue_right.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 474 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_top_meue_left.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 473 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 899 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_login.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 465 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 2110 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 15) Server -> Client : 1444 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 1543 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 1378 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_top_bg1.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 467 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/pic_logo1.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 465 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/css/images/tabs_icons.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 470 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 468 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16242 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 5446 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 8639 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  2) Server -> Client : 789 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  2) Connection Terminated (by Server)
+[Network Analyzer (4998:4acc)]   (Sid:  3) Server -> Client : 789 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  3) Connection Terminated (by Server)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 16)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT accounts.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 16) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/top_menu_over.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  7) Client -> Server @ : 470 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 318 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 653 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/submenu_shadow.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 471 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 320 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 4292 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid:  4) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:  9) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 17)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 17) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] EndTransactionEvent 登录 [Network Analyzer (4998:4acc)]   (Sid: 16) Server -> Client : 789 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 16) Connection Terminated (by Server)
+[API Trapper      ( 7fc:4b68)] Recording in 64-bit mode: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 18)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT accounts.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 18) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 17) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 19)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 19) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 18) Server -> Client : 789 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 18) Connection Terminated (by Server)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 20)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT accounts.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 20) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 19) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 21)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 21) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 20) Server -> Client : 789 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 20) Connection Terminated (by Server)
+[User action                 ] StartTransactionEvent 打开领料申请页面 [Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/salesorder.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 539 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 312 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 14392 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/input_common.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 439 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/datepicker/WdatePicker.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  7) Client -> Server @ : 449 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/aa.js"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 429 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jquery-easyui-1.3.6/jquery.easyui.min.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 464 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 10571 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 15233 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/css/style.css"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 455 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 12711 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/css/text_style.css"   
+[Network Analyzer (4998:4acc)]   (Sid: 15) Client -> Server @ : 460 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 10054 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 15) Server -> Client : 1564 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/css/text_grid.css"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 459 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/css/newStyle.css"   
+[Network Analyzer (4998:4acc)]   (Sid:  7) Client -> Server @ : 458 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 2648 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jquery-easyui-1.3.6/themes/default/easyui.css"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 484 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Server -> Client : 1706 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/jquery-easyui-1.3.6/themes/icon.css"   
+[Network Analyzer (4998:4acc)]   (Sid: 15) Client -> Server @ : 474 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/css/tree/zTreeStyle.css"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 454 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 6635 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 15) Server -> Client : 2521 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 177 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 5122 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/datepicker/skin/WdatePicker.css"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 470 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 317 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 155 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/div_bg.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 462 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 318 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 166 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/salesorderList.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 494 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/salesorderInfo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 494 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/outBoundDetail.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 494 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/busy.gif"   
+[Network Analyzer (4998:4acc)]   (Sid:  5) Client -> Server @ : 467 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Server -> Client : 1929 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 4139 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 311 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 13867 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/group_2.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 463 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/group_1.png"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 463 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 320 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 3340 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 3801 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 311 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 13378 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/images/loading.gif"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 488 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/images/clear-basic.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 492 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 2738 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/images/select-basic.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 493 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1171 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 1135 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 22)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/group_5.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 463 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 22) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/datepicker/skin/datePicker.gif"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 508 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/group_3.png"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 463 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 3651 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 3793 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1371 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/spe/salesorder/scripts/plansEdit.js?_=1542010310039"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 606 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 2078 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/images/ico_01.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 483 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 897 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/findSalesOrderByConditions.action?applyTime_start=2018-11-12+00%3A00%3A00&applyTime_end=2018-11-12+23%3A59%3A59&searchdto.applyUserid=&searchdto.areaid=&detaildto.productId=&page.pageNo=1&searchdto.name=&searchdto.state=&row=13"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 700 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 23)  PROXIED!
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 305 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 6399 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 23) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] EndTransactionEvent 打开领料申请页面 [User action                 ] StartTransactionEvent 新增 [Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/getApplyNumber.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 525 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 251 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 24)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT accounts.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 24) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 25)  PROXIED!
+[Network Analyzer (4998:4acc)]   (Sid: 21) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 25) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/images/select-hover.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 493 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1167 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/images/select-click.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 493 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1162 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 26)  PROXIED!
+[Network Analyzer (4998:4acc)]   (Sid: 22) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 26) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 27)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 27) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 23) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 28)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 28) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/test/images/clear-hover.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 492 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1209 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 24) Server -> Client : 789 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 24) Connection Terminated (by Server)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/PlansComJson.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 648 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 417 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/images/dd.jpg"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 465 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 323 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 10895 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 29)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 29) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/saveSalesOrder.action?dto.id=&plansInfo=ff8080815d7e6a77015da74e239e0059:2&time=1542010356325"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 1069 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 239 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/findSalesOrderByConditions.action?applyTime_start=2018-11-12+00%3A00%3A00&applyTime_end=2018-11-12+23%3A59%3A59&searchdto.applyUserid=&searchdto.areaid=&detaildto.productId=&status=310&status=310&status=320&page.pageNo=1&searchdto.name=&searchdto.state=&row=13"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 733 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 7199 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 新增 [Network Analyzer (4998:4acc)]   (Sid: 25) Connection Terminated (by Client)
+[User action                 ] StartTransactionEvent 财务审核 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 26) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 27) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 30)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 30) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 28) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 31)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 31) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 32)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 32) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 29) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/findOrderStatusByIds.action?flag=audit&time=1542010385583"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 666 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 234 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/FinancialAudit.action?time=1542010387157"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 649 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 239 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/findSalesOrderByConditions.action?applyTime_start=2018-11-12+00%3A00%3A00&applyTime_end=2018-11-12+23%3A59%3A59&searchdto.applyUserid=&searchdto.areaid=&detaildto.productId=&checkbutton=on&status=300&status=310&status=310&status=320&page.pageNo=1&searchdto.name=&searchdto.state=&row=13"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 759 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 6145 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1057 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 33)  PROXIED!
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/findSetmealDetailbyId.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 655 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 33) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/findOutBoundDetail.action?page.pageNo=1&orderId=ff80808166ce6340016706fd050d0354&row=20"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 560 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/loadSalesOrderMessage.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 631 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 2966 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 3903 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 831 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 财务审核 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 34)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 34) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 30) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 31) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 35)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 35) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 36)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients4.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 36) Client -> Server @ : 232 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 32) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 37)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 37) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 38)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 38) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 33) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 34) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 39)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT accounts.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 39) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] StartTransactionEvent 打开产品出库页面 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 40)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 40) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 41)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 41) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 42)  PROXIED!
+[Network Analyzer (4998:4acc)]   (Sid: 35) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 42) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/productsOutbound.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 545 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 7612 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 1470 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/spe/productsOutbound/scripts/productsOutbound.js?version=1.1.2"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 490 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 335 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 12924 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/productsOutboundInfo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 506 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/productsOutboundLeft.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 506 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 311 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 7612 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 1443 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 36) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 270 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 43)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 43) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 37) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 44)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 44) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 38) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 654 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 3149 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 8805 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 打开产品出库页面 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 45)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 45) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 39) Server -> Client : 207 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 39) Server -> Client : 582 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 39) Connection Terminated (by Server)
+[User action                 ] StartTransactionEvent 出库申请 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 46)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 527 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "CONNECT clients4.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 46) Client -> Server @ : 232 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 229 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 11725 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 40) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 41) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 42) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 47)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 47) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 48)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 48) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundSalesOrderChange.action?time=1542010466941"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 692 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 437 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 686 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 221 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 400 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 49)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 49) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 43) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 50)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 50) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 44) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 51)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 51) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 45) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 52)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 52) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 46) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 53)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 53) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 47) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 48) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 54)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 54) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 49) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 55)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 55) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansComJson.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 735 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 405 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 50) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 51) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 56)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 56) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundStateCheck.action?id="   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 562 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 206 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundApplyStore.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 1696 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 242 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 57)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 57) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] EndTransactionEvent 出库申请 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 52) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 58)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 58) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 53) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 54) Connection Terminated (by Client)
+[User action                 ] StartTransactionEvent 查询条码 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 59)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients4.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 59) Client -> Server @ : 232 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 55) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 60)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 60) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 61)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 61) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 62)  PROXIED!
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundList.action?row=12"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 946 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 62) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 306 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 4098 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 527 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundDataLoad.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 655 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 228 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 11725 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 1267 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 527 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 228 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 11725 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansComJson.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 735 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 228 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 176 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundSalesOrderChange.action?time=1542010536442"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 692 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 436 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 686 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 621 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 56) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 63)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 63) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] EndTransactionEvent 查询条码 [Network Analyzer (4998:4acc)]   (Sid: 57) Connection Terminated (by Client)
+[User action                 ] StartTransactionEvent 确认出库 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 58) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 64)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 64) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 65)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 65) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundSure.action?OutboundType=1&time=1542010556277"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 691 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 261 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundList.action?row=12"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 961 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 1765 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 2658 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 527 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundDataLoad.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 655 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 228 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 11725 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 1284 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 527 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 228 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 11725 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansComJson.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 735 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 404 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundSalesOrderChange.action?time=1542010557536"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 660 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 233 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 654 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 7528 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 4425 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 确认出库 [Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 66)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT update.googleapis.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 66) Client -> Server @ : 238 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 10) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 59) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 66) Server -> Client : 107 bytes 
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 60) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 67)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 67) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 62) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 61) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 68)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 68) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 69)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 69) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 63) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 70)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 70) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 64) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 71)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 71) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 65) Connection Terminated (by Client)
+[User action                 ] StartTransactionEvent 打开易感基因录入页面 [Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/speInputMain.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 541 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 8843 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/spe/specimenInput/scripts/specimenInput.js?version=2.6.9"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 480 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 335 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 6859 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speInputList.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 509 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speInputInfo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 509 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 311 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 9203 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 312 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 8262 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 72)  PROXIED!
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/tree/jquery.ztree.core-3.5.js?_=1542010590915"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 604 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 72) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 335 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 7914 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/tree/jquery.ztree.excheck-3.5.js?_=1542010590916"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 607 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 335 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 5521 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[User action                 ] EndTransactionEvent 打开易感基因录入页面 [User action                 ] StartTransactionEvent 新增易感基因 [Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 73)  PROXIED!
+[Network Analyzer (4998:4acc)]   (Sid: 69) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 70) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 71) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 67) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 68) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 72) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 73) Client -> Server @ : 926 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 73) Client -> Server @ : 2920 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  7) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "POST http://update.googleapis.com/service/update2?cup2key=8:3023100404&cup2hreq=5c1b182689fd948da09483c08fa45017bf2a165a6457e9317f4f3aa5ddfb1d05"   
+[Network Analyzer (4998:4acc)]   (Sid: 73) Client -> Server @ : 977 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 15) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:  5) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 74)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 74) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 75)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 75) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 76)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 76) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 77)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 77) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 78)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 78) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 79)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 79) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speSendoutCustomersCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 650 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 312 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 73) Server -> Client : 1417 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 3800 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 80)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients4.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 80) Client -> Server @ : 232 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 81)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT accounts.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 81) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speInputLoadSpecimenInfo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 636 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 1263 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getPlansInfo.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 644 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 758 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getCityByProvince.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 636 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getRegionByCity.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 641 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getTestItem.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 662 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 441 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/plansdeatil.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  6) Client -> Server @ : 643 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1173 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 82)  PROXIED!
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getRegionByCity.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 641 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  6) Server -> Client : 3628 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getCityByProvince.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 636 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 83)  PROXIED!
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 442 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getTestItem.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 83) Client -> Server @ : 662 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/getBarCodeState.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 633 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 83) Server -> Client : 1173 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 229 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 242 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 10566 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 10794 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/speInputSexLinkagePlans.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 637 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1088 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/getTestItem.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 647 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/plansdeatil.action"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 628 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 1468 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 4990 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/datepicker/lang/zh-cn.js"   
+[Network Analyzer (4998:4acc)]   (Sid:  8) Client -> Server @ : 450 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/datepicker/skin/default/datepicker.css"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 479 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:  8) Server -> Client : 1422 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 4045 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/datepicker/calendar.js"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 448 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 335 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 6160 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/scripts/datepicker/skin/default/img.gif"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 516 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 320 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 1578 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 74) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 84)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 84) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 76) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 77) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 75) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 78) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 79) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 85)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 85) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 86)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 86) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 87)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 87) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 88)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 88) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 89)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 89) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 81) Server -> Client : 789 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 81) Connection Terminated (by Server)
+[Network Analyzer (4998:4acc)]   (Sid: 80) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/getCityByProvince.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 658 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 2183 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/getRegionByCity.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 698 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 2716 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 84) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 90)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 90) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 91)  PROXIED!
+[Network Analyzer (4998:4acc)]   (Sid: 85) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 86) Connection Terminated (by Client)
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 91) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 92)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 92) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 88) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 89) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 87) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 93)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 93) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 94)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 94) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 95)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 95) Client -> Server @ : 234 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/checkTestItemSex.action?ids=ff8080815d7e6a77015da76d0f690094,ff8080815d7e6a77015dac601524016e,ff8080815f48dc1e015f4c20dd73003d,ff8080815f48dc1e015f4c2df394005d,ff8080815f48dc1e015f4c319c640067,ff8080815f48dc1e015f4c38983c0079,ff8080815f4c6938015f4d2ead85027c&planId=ff8080815f4c6938015f4d417db402ca&patientSex=male"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 835 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 234 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 983 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/saveSpeInputSpecimen.action?ids=ff8080815d7e6a77015da76d0f690094,ff8080815d7e6a77015dac601524016e,ff8080815f48dc1e015f4c20dd73003d,ff8080815f48dc1e015f4c2df394005d,ff8080815f48dc1e015f4c319c640067,ff8080815f48dc1e015f4c38983c0079,ff8080815f4c6938015f4d2ead85027c&isDefault=y&customerName=%E6%9D%AD%E5%B7%9E%E8%93%9D%E8%83%9C%E5%81%A5%E5%BA%B7%E5%92%A8%E8%AF%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 1273 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 1526 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speSendoutCustomersCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 650 bytes (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speInputPlansCombo.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 14) Client -> Server @ : 515 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 312 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 14) Server -> Client : 11016 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 311 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 3800 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 新增易感基因 [User action                 ] StartTransactionEvent 内勤接收 [Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speInputAuditSpecimen.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 655 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 276 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[User action                 ] EndTransactionEvent 内勤接收 [Network Analyzer (4998:4acc)]   (Sid: 90) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 96)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 96) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 92) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 93) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 91) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 94) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 95) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 97)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 97) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 98)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 98) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid= 99)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid: 99) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=100)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:100) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=101)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:101) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] StartTransactionEvent 打开实验室接收页面 [Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/spe/speReceiveMain.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 543 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 312 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 10222 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "GET http://192.168.14.35/PG/pages/spe/specimenReceive/scripts/specimenReceive.js?version=2.5.6"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 486 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 335 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 13706 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 96) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=102)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:102) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid: 97) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=103)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:103) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 99) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:100) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid: 98) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:101) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=104)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:104) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=105)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:105) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=106)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:106) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=107)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:107) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] EndTransactionEvent 打开实验室接收页面 [User action                 ] StartTransactionEvent 扫描条码 [Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/scanCheckSpecimen.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 628 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 438 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/speReceiveScan.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 613 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 603 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/speReceiveList.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 701 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 6393 bytes  (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=108)  PROXIED!
+[User action                 ] EndTransactionEvent 扫描条码 [Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:108) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid:102) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:103) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=109)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:109) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid:104) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=110)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:110) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:106) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:107) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:105) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=111)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:111) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=112)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:112) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=113)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:113) Client -> Server @ : 234 bytes (Service=HTTP)
+[User action                 ] StartTransactionEvent 接收 [Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/speReceiveAcceptSpecimen.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 696 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 311 bytes  (Service=HTTP)
+[Web Request      (4998:4acc)] "POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speReceiveArea.action"   
+[Network Analyzer (4998:4acc)]   (Sid: 82) Client -> Server @ : 666 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid: 82) Server -> Client : 3413 bytes  (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:108) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=114)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:114) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:109) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=115)  PROXIED!
+[User action                 ] EndTransactionEvent 接收 [Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:115) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:110) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=116)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:116) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=117)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:117) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4acc)]   (Sid:113) Connection Terminated (by Client)
+[Network Analyzer (4998:4acc)]   (Sid:111) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (4998:4acc)]   (Sid:112) Connection Terminated (by Client)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=118)  PROXIED!
+[Network Analyzer (4998:4838)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:118) Client -> Server @ : 234 bytes (Service=HTTP)
+[Network Analyzer (4998:4838)] Request Connection: Remote Server @ 127.0.0.1:8888   (Service=)  (Sid=119)  PROXIED!
+[Web Request      (4998:4acc)] "CONNECT clients1.google.com:443"   
+[Network Analyzer (4998:4acc)]   (Sid:119) Client -> Server @ : 234 bytes (Service=HTTP)

@@ -1,0 +1,1220 @@
+/**
+ * 条码打印
+ */
+var printName="\\\\172.16.10.213\\DaanBarcode1.0";
+	function thisMovie(movieName) {  
+    if (navigator.appName.indexOf("Microsoft") != -1) {  
+        return document.getElementById(movieName);
+    } else {  
+        return document.embeds[movieName];
+    }  
+}
+function isinstallAIR(){
+	//thisMovie("MyFlexApp").init();
+	var val = thisMovie("MyFlexApp").isinstallAIR();
+	if(!val){
+		fadeInMessage("没有安装或启动Daan条码打印服务。");
+		return ;
+	}
+}
+/**临检打印*/
+function printTestEnName(str){
+	if(printType=="1"){
+		isinstallAIR();
+		//alert("1临检打印barCode="+barCode);
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		thisMovie("MyFlexApp").setup("50", "20", "5", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+	    var len = str.length;
+	    var rows = Math.ceil(len/18);
+	    for(var i=0;i<rows;i++){
+	    	var printStr = "";
+	    	if(i+1==rows){
+	    		printStr = str.substring(i*18,len);
+	    	}else{
+	    		printStr = str.substring(i*18,(i+1)*18);
+	    	}
+	    	thisMovie("MyFlexApp").windowsfont(10, 10+35*i, 35, 0, 0, 0, "Arial", printStr);
+	    }
+	    
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{ //新版打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var setup={'setup':'"50", "20", "5", "10", "5", "2", "0"'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};
+	    var len = str.length;
+	    var rows = Math.ceil(len/18);
+	    var textArray = new Array();
+	    for(var i=0;i<rows;i++){
+	    	var printStr = "";
+	    	if(i+1==rows){
+	    		printStr = str.substring(i*18,len);
+	    	}else{
+	    		printStr = str.substring(i*18,(i+1)*18);
+	    	}
+	    	var obj={};
+	    	obj[i] = '10, '+ (10+35*i) +', 35, 0, 2, 0, "Arial", '+ printStr;
+	    	textArray.push(obj);
+	    }
+	   	console.log(textArray);
+		var head ={'text':textArray};
+		console.log(head);
+		var label={'label':'1'};
+	  
+		var pr = $.extend({}, printName,size,refe,cls,setup,head,label);
+		console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+function barcode_printtext(str,str1){//目前没有用到，修改前最好search下
+	if(printType=="1"){
+		isinstallAIR();
+		//alert("1临检打印barCode="+barCode);
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+	    thisMovie("MyFlexApp").windowsfont(10, 30, 35, 0, 0, 0, "Arial", str);
+	    if(str1!=null){
+	    	thisMovie("MyFlexApp").windowsfont(10, 110, 35, 0, 0, 0, "Arial", str1);
+	    }
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{ //新打印方法
+		//alert("1临检打印barCode="+barCode);
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var setup={'setup':'"50", "20", "5", "10", "5", "2", "0"'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};//清楚打印机内部记忆体
+	    var textArray = [{ '0':'10, 30, 35, 0, 0, 0, "Arial",' + str }];
+	    if (strlen(str1) > 13) {
+	 	   var line1 = str.substring(0, 13);
+	 	   var line2 = str1.substring(13);
+	 	   textArray.push({'1':'10, 110, 35, 0, 0, 0, "Arial",' + line1});
+	 	   textArray.push({'2':'10, 150, 35, 0, 0, 0, "Arial",' + line2});
+	 	} else {
+	 	   textArray.push({'1':'10, 110, 35, 0, 0, 0, "Arial",' + str1});
+	 	}
+	    console.log(textArray);
+	    var head ={'text':textArray};
+		console.log(head);
+	    var label={'label':'1'};
+	    var pr = $.extend({}, printName,size,refe,cls,setup,head,label);
+	    console.log(pr);
+	    evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+/**打印病理条码，[核收生成病理号-未核收-回车打印、补打病理标签，核收生成病理号-已核收-打印病理号]*/
+function printBarCode(seqCode,barCode,copy){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "3", "6", "0", "2", "0");
+		thisMovie("MyFlexApp").windowsfont(40, 20, 38, 0, 2, 0, "Arial", "病理号：" + seqCode);
+		thisMovie("MyFlexApp").barcode("105", "60", "128", "55", "0", "0", "2", "4", barCode);
+	    thisMovie("MyFlexApp").windowsfont(45, 115, 32, 0, 2, 0, "Arial", "条码号：" + barCode);
+	    
+	    thisMovie("MyFlexApp").printlabel("1",""+copy);
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var speed ={'speed':'SPEED 3'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "6", "0", "2", "0"'};
+		var barcode ={'barcode':[{ '0':'105,50,128,55,0,0,2,4,' + barCode}]};
+		var head ={'text':[{ '0':'40, 5, 38, 0, 2, 0, "Arial", 病理号：' + seqCode +'' },
+			{ '1':'45, 110, 32, 0, 2, 0, "Arial", 条码号：' + barCode +'' }]};
+		var label={'label':copy};  
+		var pr = $.extend({}, printName,size,refe,cls,speed,setup,head,barcode,label);
+		console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+/**打印病理条码,[标本预处理-批量打印-批量打印-标签]*/
+function printBarCode1(seqCode,barCode,copy){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "3", "6", "0", "2", "0");
+		thisMovie("MyFlexApp").windowsfont(65, 20, 38, 0, 2, 0, "Arial", "病理号：" + seqCode);
+		thisMovie("MyFlexApp").barcode("105", "60", "128", "55", "0", "0", "2", "4", barCode);
+	    thisMovie("MyFlexApp").windowsfont(65, 115, 32, 0, 2, 0, "Arial", "条码号：" + barCode);
+	    
+	    thisMovie("MyFlexApp").printlabel("1",""+copy);
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var speed ={'speed':'SPEED 3'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "6", "0", "2", "0"'};
+		//var seqcode ={'seqcode':'40, 20, 38, 0, 2, 0, "Arial", 病理号：' + seqCode +''};
+		var seqcode ={'text':[{ '0':'40, 20, 38, 0, 2, 0, "Arial", 病理号：' + seqCode +'' },
+		       			{ '1':'65, 115, 32, 0, 2, 0, "Arial", 条码号：' + barCode +'' }]};
+		var barcode ={'barcode':[{ '0':'105,60,128,55,0,0,2,4,' + barCode}]};
+		var label={'label':copy};  
+		var pr = $.extend({}, printName,size,refe,cls,speed,setup,seqcode,barcode,label);
+		console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+
+/**打印二维码*/
+function printTwoDimensionCodeAndHead(seqCode, barcode, head) {
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		thisMovie("MyFlexApp").setup("25", "25", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").sendcommand("SIZE 25 mm, 25 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");
+		thisMovie("MyFlexApp").sendcommand("REM ***** This is a test by JAVA. *****");
+		if (head != null && head != "") {
+			thisMovie("MyFlexApp").windowsfont(20, 20, 30, 0, 0, 0, "Arial", head);
+		}
+		thisMovie("MyFlexApp").sendcommand("QRCODE 60, 60,L,4,A,0,M2,S3,\"" + (barcode) + "\"");
+		thisMovie("MyFlexApp").windowsfont(20, 160, 30, 0, 0, 0, "Arial", seqCode);
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 25 mm, 25 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"25", "25", "3", "10", "5", "2", "0"'};
+		var rem ={'rem':'REM ***** This is a test by JAVA. *****'};
+		var head1; 
+		if (head != null && head != "") {
+			head1 ={'text':[{'0':'20, 20, 30, 0, 0, 0, "Arial", ' + head}]};
+		}
+		//var qrcode ={'qrcode':'QRCODE 60, 60,L,4,A,0,M2,S3,"(' + seqCode + '-' + barcode +')"'};
+		var qrcode = {'qrcode':[
+		                         { '0':'QRCODE 60, 60,L,4,A,0,M2,S3,"(' + seqCode + '-' + barcode +')"'}
+		]};
+		var seqcode ={'seqcode':'20, 160, 30, 0, 0, 0, "Arial", ' + seqCode};
+		var label={'label':"1"};
+		var pr = $.extend({}, printName,setup,size,refe,cls,rem,head1,qrcode,seqcode,label);
+		console.log(pr);   
+		 
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+
+/**打印二维码，[标本预处理-批量打印-批量打印-玻片标识码、蜡块标识码]*/
+function printTwoDimensionCodeAndHead1(seqCode, barcode, head) {
+	if(printType=="1"){
+		//alert(seqCode + "-" + barcode);
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		thisMovie("MyFlexApp").setup("25", "25", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").sendcommand("SIZE 25 mm, 25 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");
+		thisMovie("MyFlexApp").sendcommand("REM ***** This is a test by JAVA. *****");
+		if (head != null && head != "") {
+			thisMovie("MyFlexApp").windowsfont(180, 190, 30, 180, 0, 0, "Arial", head);
+		}
+		thisMovie("MyFlexApp").sendcommand("QRCODE 60, 60,L,4,A,0,M2,S3,\"" + (seqCode + "-" + barcode) + "\"");
+
+		
+		thisMovie("MyFlexApp").windowsfont(182, 50, 30, 180, 0, 0, "Arial", seqCode);
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{//新打印
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 25 mm, 25 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var speed ={'speed':'SPEED 3'};	//清楚打印机内部记忆体
+		var setup={'setup':'"25", "25", "3", "10", "5", "2", "0"'};
+		var rem ={'rem':'REM ***** This is a test by JAVA. *****'};
+		var head1; 
+		if (head != null && head != "") {
+			head1 ={'text':[{'0':'180, 190, 30, 180, 0, 0, "Arial", ' + head}]};
+		}
+		//var qrcode ={'qrcode':'QRCODE 60, 60,L,4,A,0,M2,S3,"(' + seqCode + '-' + barcode +')"'};
+		var qrcode = {'qrcode':[
+		                         { '0':'QRCODE 60, 60,L,4,A,0,M2,S3,"(' + seqCode + '-' + barcode +')"'}
+		]};
+		var seqcode ={'seqcode':'182, 50, 30, 180, 0, 0, "Arial", ' + seqCode};
+		var label={'label':"1"};
+		var pr = $.extend({}, printName,setup,size,refe,cls,speed,rem,head1,qrcode,seqcode,label);
+		console.log(pr);   
+		 
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+
+/**打印分瓶条码 显示科室、年龄、性别、检测项目（英文），条码补打*/
+function printSpeSplitBarCode1(data,count){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 55 mm, 30 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+	    thisMovie("MyFlexApp").setup("55", "30", "3", "10", "5", "2", "0");
+		
+		thisMovie("MyFlexApp").barcode("10", "25", "128", "90", "0", "0", "2", "4", data.code);
+	   	thisMovie("MyFlexApp").windowsfont(215, 25, 32, 0, 2, 0, "Arial", data.code);
+
+		thisMovie("MyFlexApp").windowsfont(215, 55, 32, 0, 2, 0, "Arial", data.laboratory);//"广州");
+		thisMovie("MyFlexApp").windowsfont(280, 55, 32, 0, 2, 0, "Arial", data.deptName);//"分子病理");
+	   	var age = data.age;
+	   	var ageLen = strlen(age);
+	   	if (ageLen > 8 ){ //超过8个字符，需要截取
+	   		
+		   	if(age.indexOf('岁') >= 0 && age.indexOf('月') >= 0 && age.indexOf('日') >= 0) {
+		   		//如果是有n岁n月n日的，取n岁n月
+		   		age = age.substr(0, age.indexOf('月')+1);
+		   	} else if(age.indexOf('岁') < 0 && age.indexOf('月') >= 0 && age.indexOf('日') >= 0 && age.indexOf('时') >= 0){
+		   		//如果没有n岁，有n月n日n时，取n月n日
+		   		age = age.substr(0, age.indexOf('日')+1);
+		   	}
+	   	}
+		thisMovie("MyFlexApp").windowsfont(215, 85, 32, 0, 2, 0, "Arial", age);
+	   	thisMovie("MyFlexApp").windowsfont(360, 85, 32, 0, 2, 0, "Arial", "("+data.sex+")");
+	   	//thisMovie("MyFlexApp").windowsfont(20, 120, 27, 0, 2, 0, "Arial", data.testItem);
+	   	var testItem = data.testItem;
+	   	testItem = subStringByLen(testItem, 28, ",", "**");
+	   	var printStr = testItem.split("**");
+	   	
+	   	var len = printStr.length;
+	    for(var i = 0; i < len && i < 4; i++){
+	    	var str = printStr[i];
+	    	if (str.length > 0) {
+	    		if (str.lastIndexOf(",") == (str.length - 1)) {
+	    			str = str.substr(0, str.length - 1);
+	    		}
+	    		if (len > 4 && i == 3) { //最后一行
+	        		thisMovie("MyFlexApp").windowsfont(15, 120+28*i, 28, 0, 0, 0, "Arial", str + "★");
+	        	} else {
+	            	thisMovie("MyFlexApp").windowsfont(15, 120+28*i, 28, 0, 0, 0, "Arial", str);
+	        	}
+	    	}
+	    }
+
+	    thisMovie("MyFlexApp").printlabel("1",""+count);
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 55 mm, 30 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"55", "30", "3", "12", "5", "2", "0"'};
+		var barcode ={'barcode':[{'0':'10,25,128,90,0,0,2,4,'+data.code}]};
+	   	var age = data.age;
+	   	var ageLen = strlen(age);
+	    var textArray = new Array();
+	   	if (ageLen > 8 ){ //超过8个字符，需要截取
+	   		
+		   	if(age.indexOf('岁') >= 0 && age.indexOf('月') >= 0 && age.indexOf('日') >= 0) {
+		   		//如果是有n岁n月n日的，取n岁n月
+		   		age = age.substr(0, age.indexOf('月')+1);
+		   	} else if(age.indexOf('岁') < 0 && age.indexOf('月') >= 0 && age.indexOf('日') >= 0 && age.indexOf('时') >= 0){
+		   		//如果没有n岁，有n月n日n时，取n月n日
+		   		age = age.substr(0, age.indexOf('日')+1);
+		   	}
+	   	}
+	   	var code = data.code;
+	   	var lab = data.laboratory;
+	   	var dept = data.deptName;
+	   	var sex = data.sex;
+		textArray.push({ '0':'215, 25, 32, 0, 2, 0, "Arial", '+ (code==null?"":code) +''});
+	   	textArray.push({ '1':'215, 55, 32, 0, 2, 0, "Arial", '+ (lab==null?"":lab) +''});
+	   	textArray.push({ '2':'280, 55, 32, 0, 2, 0, "Arial", '+ (dept==null?"":dept)});
+	   	textArray.push({ '3':'215, 85, 32, 0, 2, 0, "Arial", '+ (age==null?"":age)});
+	   	textArray.push({ '4':'360, 85, 32, 0, 2, 0, "Arial", '+ (sex==null?"":sex)+''});
+	   	var testItem = data.testItem;
+	   	testItem = testItem.replace(/,/g,"，");
+	   	testItem = subStringByLen(testItem, 28, "，", "**");
+	   	var printStr = testItem.split("**");
+	   	
+	   	var len = printStr.length;
+	    for(var i = 0; i < len && i < 4; i++){
+	    	var str = printStr[i];
+	    	if (str.length > 0) {
+	    		if (str.lastIndexOf("，") == (str.length - 1)) {
+	    			str = str.substr(0, str.length - 1);
+	    		}
+	    		if (len > 4 && i == 3) { //最后一行
+	        		var obj={};
+	            	obj[i+5] = '15, '+ (120+28*i) +', 28, 0, 0, 0, "Arial", '+ str+"★";
+	            	textArray.push(obj);
+	        	} else {
+	            	var obj={};
+	            	obj[i+5] = '15, '+ (120+28*i) +', 28, 0, 0, 0, "Arial", '+ str;
+	            	textArray.push(obj);
+	        	}
+	    	}
+	    }
+		//console.log(textArray);
+		var head ={'text':textArray};
+		//console.log(head);
+		var label={'label':count};
+	  
+		var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+		console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+
+/**打印分瓶条码,目前只有[自定义打印条码]使用*/
+function printSpeSplitBarCodeOld(barCode){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").barcode("105", "45", "128", "60", "0", "0", "2", "4", barCode);
+	    thisMovie("MyFlexApp").windowsfont(105, 105, 32, 0, 2, 0, "Arial", barCode);
+	    
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var speed ={'speed':'SPEED 3'};	//打印速度
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		
+		var barcode ={'barcode':[{'0':'105,45,128,60,0,0,2,4,'+barCode}]};
+		var label={'label':'1'};
+		var head = {'text':[{'0':'105, 105, 32, 0, 0, 0, "Arial", ' + barCode}]};
+		var pr = $.extend({}, printName,size,refe,cls,speed,setup,barcode,head,label);
+		console.log(pr);   
+	 	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	 	// fire the event
+	 	document.dispatchEvent(evt);
+	}
+}
+/**打印分瓶条码(新：增加科室和实验室（如广州、济南等）)，条码补打-直接打印(样本分瓶、样本分发、样本准备、实验室接收)*/
+function printSpeSplitBarCode(data,count){
+	/*if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("30", "20", "3", "10", "5", "2", "0");
+		var barCode = data.code;
+		
+		thisMovie("MyFlexApp").barcode("70", "20", "128", "60", "0", "0", "2", "4", barCode);
+		thisMovie("MyFlexApp").windowsfont(70, 80, 32, 0, 2, 0, "Arial", barCode);
+		
+		thisMovie("MyFlexApp").windowsfont(70, 110, 30, 0, 2, 0, "Arial", data.laboratory);
+		thisMovie("MyFlexApp").windowsfont(140, 110, 30, 0, 2, 0, "Arial", data.deptName);
+		
+		thisMovie("MyFlexApp").printlabel("1",""+count);
+		thisMovie("MyFlexApp").closeport(); 
+		
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{*///新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"30", "20", "3", "10", "5", "2", "0"'};
+		var barCode = data.code;
+		var barcode ={'barcode':[{'0':'70,20,128,60,1,0,2,4,'+barCode}]};
+		var head = {'text':[{ '0':'70, 110, 30, 0, 2, 0, "Arial", '+ data.laboratory +''},
+		                 	{'1':'140, 110, 30, 0, 2, 0, "Arial", '+ data.deptName}]};
+
+		var label={'label':count};
+	    
+	    var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+	    //console.log(pr);   
+	  
+	 	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	 	// fire the event
+	 	document.dispatchEvent(evt);
+//	}
+}
+
+/**打印分子病理分瓶条码，条码补打-直接打印(样本分瓶、样本分发、样本准备、实验室接收)*/
+function fzblPrintSpeSplitBarCode(data,count){
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 25 mm, 25 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'25, 25, 5, 20, 1, 2, 0'};
+	var barCode = data.code;
+	var barcode ={'barcode':[{'0':'150, 103, 128, 55, 0, 180, 1, 1,' + barCode}]};
+	var head = {'text':[{ '0':'4, 169, 29, 0, 2, 0, "Arial", '+ data.laboratory +''},
+	                 	{'1':'59, 169, 29, 0, 2, 0, "Arial", '+ data.deptName},
+	                 	{'2':'15, 106, 30, 0, 2, 0, "Arial", '+ barCode},
+	                 	{'3':'40, 136, 30, 0, 2, 0, "Arial", '+ data.sex},
+	                 	{'4':'100, 136, 30, 0, 2, 0, "Arial", '+ data.age},
+	                 	{'5':'15, 10, 30, 0, 2, 0, "Arial", '+ data.pathologycodeheader}
+	            ]};
+	var label={'label':count};
+    var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+    //console.log(pr);
+ 	evt.initCustomEvent('myCustomEvent', true, false, pr);
+ 	// fire the event
+ 	document.dispatchEvent(evt);
+}
+
+/**实验室批号*/
+//打印科室批号方法  labName:实验室名称  deptCode:批号    deptName:科室名称
+//上面是实验室名称，中间是批号，下面是科室名称
+function printLocalBarCodeAndDeptNameOld(labName,deptCode,deptName){
+	if(printType=="1"){
+		//alert(labName+","+deptCode+","+deptName);
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "8", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").windowsfont(105, 10, 30, 0, 2, 0, "宋体", labName);
+		thisMovie("MyFlexApp").barcode("105", "45", "128", "50", "1", "0", "2", "4",deptCode );
+	    thisMovie("MyFlexApp").windowsfont(105, 125, 30, 0, 2, 0, "宋体", deptName);
+	    
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		//alert(labName+","+deptCode+","+deptName);
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "8", "10", "5", "2", "0"'};
+		var barcode ={'barcode':[{'0':'105, 45, 128, 50, 1, 0, 2, 4,'+deptCode}]};
+		var head = {'text':[
+		                    { '0':'105,  10, 30, 0, 2, 0, "宋体", '+ labName +''},
+		                    { '1':'105, 125, 30, 0, 2, 0, "宋体", '+ deptName +''}
+		                    ]};
+		var label={'label':'1'};
+		console.log(head);
+		var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+function printLocalBarCodeAndDeptName(labName,deptCode,deptName){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		var barCode = deptCode;
+		thisMovie("MyFlexApp").barcode("30", "20", "128", "60", "0", "0", "3", "4", barCode);
+		thisMovie("MyFlexApp").windowsfont(30, 80, 32, 0, 2, 0, "Arial", barCode);
+		
+		thisMovie("MyFlexApp").windowsfont(30, 115, 32, 0, 2, 0, "Arial", labName);
+		thisMovie("MyFlexApp").windowsfont(120, 115, 32, 0, 2, 0, "Arial", deptName);
+		
+		thisMovie("MyFlexApp").printlabel("1","1");
+		thisMovie("MyFlexApp").closeport(); 
+		
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var barCode = deptCode;
+		var barcode ={'barcode':[{'0':'30,20,128,60,1,0,3,4,'+barCode}]};
+		var head = {'text':[
+		                    { '0':'30, 115, 32, 0, 2, 0, "Arial", '+ labName +''},
+		                    { '1':'120, 115, 32, 0, 2, 0, "Arial", '+ deptName +''}
+		                    ]};
+		var label={'label':'1'};
+		console.log(head);
+		var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+//打印实验室批号方法 labCode是批号，labName是实验室名称 
+//上面是批号，下面是实验室名称
+function printLocalBarCodeNoDeptName(labCode,labName){
+	if(printType=="1"){
+		//alert(labCode+","+labName);
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").barcode("25", "45", "128", "60", "0", "0", "3", "4", labCode);
+	    thisMovie("MyFlexApp").windowsfont(55, 110, 32, 0, 2, 0, "Arial", labName);
+	    
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		//alert(labCode+","+labName);
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var barCode = labCode;
+		var barcode ={'barcode':[{'0':'25,45,128,60,0,0,3,4,'+barCode}]};
+		var head = {'text':[
+		                    { '0':'55, 110, 32, 0, 2, 0, "Arial", '+ labName +''}
+		                    ]};
+		var label={'label':'1'};
+		console.log(head);
+		var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+//验单入库--批号
+function printBatchBarCode(barCode1,barCode2) {
+	if(printType=="1"){
+		//alert(labCode+","+labName);
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").windowsfont(10, 45, 38, 0, 2, 0, "宋体", barCode1);
+		if(barCode2!=null&&barCode2!=""){
+			var count = barCode2.length;
+			thisMovie("MyFlexApp").windowsfont(200-11*count, 75, 38, 0, 2, 0, "宋体", barCode2);
+		}
+
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		//alert(labCode+","+labName);
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var textArray =  new Array(); 
+		textArray.push({ '0':'10, 45, 38, 0, 2, 0, "宋体",'+ barCode1 +''});
+		if(barCode2!=null&&barCode2!=""){
+			var count = barCode2.length;
+			textArray.push({'1':''+(200-11*count)+', 75, 38, 0, 2, 0,"宋体",'+barCode2+''});
+		}
+		console.log(textArray);
+		var head ={'text':textArray};
+		console.log(head);
+		var label={'label':'1'};
+		var pr = $.extend({}, printName,size,refe,cls,setup,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+//验单入库CAP--批号
+function printBatchCAPBarCode(barCode1) {
+	if(printType=="1"){
+		//alert(labCode+","+labName);
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").windowsfont(250, 100, 45, 180, 2, 0, "Times new Roman", barCode1);//旋转180度
+
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		//alert(labCode+","+labName);
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'50, 20, 3, 10, 1, 2, 0'};
+		var head = {'text':[
+		                    { '0':'250, 100, 45, 180, 2, 0, "Times new Roman", '+ barCode1 +''}
+		                    ]}; //旋转180度
+
+		var label={'label':'1'};
+		console.log(head);
+		var pr = $.extend({}, printName,size,refe,cls,setup,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+//样本分发
+function printInputRackBarCodeDis(barCode,labName) {
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").barcode("35", "20", "128", "60", "1", "0", "2", "4", barCode);
+		thisMovie("MyFlexApp").windowsfont(40, 115, 35, 0, 2, 0, "Arial", labName);
+
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var barcode ={'barcode':[{'0':'35,20,128,60,1,0,2,4,'+barCode}]};
+		var head = {'text':[
+		                    { '0':'40, 115, 35, 0, 2, 0, "Arial", '+ labName +''}
+		                    ]};
+		
+		var label={'label':'1'};
+		console.log(head);
+		var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+
+}
+//标本入库--架条码 
+function printInputRackBarCode(barCode,labName) {
+	if(printType=="1"){
+		//alert(labCode+","+labName);
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").barcode("10", "30", "128", "40", "1", "0", "2", "4", barCode);
+		thisMovie("MyFlexApp").windowsfont(20, 115, 25, 0, 2, 0, "Arial", labName);
+
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var barcode ={'barcode':[{'0':'10,30,128,40,1,0,2,4,'+barCode}]};
+		var head = {'text':[
+		                    { '0':'20, 115, 25, 0, 2, 0, "Arial", '+ labName +''}
+		                    ]};
+		
+		var label={'label':'1'};
+		console.log(head);
+		var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+//标本入库--条码号
+function printInputBarCode(barCode) {
+	if(printType=="1"){
+		//alert(labCode+","+labName);
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").barcode("105", "30", "128", "100", "1", "0", "2", "4", barCode);
+
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var speed ={'speed':'SPEED 3'};	//打印速度
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var barcode ={'barcode':[{'0':'105,30,128,100,1,0,2,4,'+barCode}]};
+		var head = {'text':[
+		                    { '0':'20, 115, 0, 0, 2, 0, "Arial", '+ barCode +''}
+		                    ]};
+		var label={'label':'1'};
+		var pr = $.extend({}, printName,size,refe,cls,speed,setup,barcode,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+function subStringByLen(str , len , identifier,putInIdentifier){
+	var returnStr = "";
+	var strLen = str.length;
+	if(len>strLen){
+		returnStr = str.substring(0,strLen);
+	}else{
+		var newStr = str.substring(0,len);
+		var newLen = newStr.lastIndexOf(identifier)+1;
+		returnStr = str.substring(0,newLen);
+		str = str.substring(newLen,strLen);//新的str
+		returnStr = returnStr +putInIdentifier+subStringByLen(str, len, identifier,putInIdentifier);
+	}
+	return returnStr;
+}
+//外包清单打印code,name,sex,age,testName
+function printBarCodeInfo(data){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "3", "6", "0", "2", "0");
+		thisMovie("MyFlexApp").barcode("10", "5", "128", "35", "0", "0", "2", "4", data.code);
+		var userName = data.name;
+		var len = strlen(userName);
+		if(len<=13){
+			thisMovie("MyFlexApp").windowsfont(220, 5, 27, 0, 2, 0, "Arial", userName);
+		}else{
+			var str1 = "";
+			var str2 = "";
+			var l = "";
+			if(userName.length!=len){
+				l = Math.floor(userName.length/2);
+				str1 = userName.substring(0,l);
+				str2 = userName.substring(l,userName.length);
+			}else{
+				l = Math.floor(len/2);
+				str1 = userName.substring(0,l);
+				str2 = userName.substring(l,len);
+			}
+			thisMovie("MyFlexApp").windowsfont(220, 5, 27, 0, 2, 0, "Arial",str1);
+			thisMovie("MyFlexApp").windowsfont(220, 60, 27, 0, 2, 0, "Arial",str2);
+		}
+		var testName = data.testName;
+		var t1="";
+		var t2 = "";
+		var t3 = "";
+		if(testName.length<17){ 
+			t1 = testName.replace(/,/g,"，");
+		}else if(testName.length>=17 && testName.length<34){
+			testName = testName.replace(/,/g,"，");
+			 t1=testName.substring(0,17);
+			 t2=testName.substring(17,testName.length);
+		}else{
+			testName = testName.replace(/,/g,"，");
+			 t1=testName.substring(0,17);
+			 t2=testName.substring(17,34);
+			 t3=testName.substring(34,testName.length);
+		}
+	   	thisMovie("MyFlexApp").windowsfont(10, 40, 32, 0, 2, 0, "Arial", data.code);
+	   	thisMovie("MyFlexApp").windowsfont(200, 40, 27, 0, 2, 0, "Arial", data.sex);
+	   	thisMovie("MyFlexApp").windowsfont(230, 40, 27, 0, 2, 0, "Arial", data.age);
+	   	thisMovie("MyFlexApp").windowsfont(10, 73, 24, 0, 2, 0, "Arial", t1);
+	   	thisMovie("MyFlexApp").windowsfont(10, 95, 24, 0, 2, 0, "Arial", t2);
+	   	thisMovie("MyFlexApp").windowsfont(10, 117, 24, 0, 2, 0, "Arial", t3);
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var speed ={'speed':'SPEED 3'};	//打印速度
+		var setup={'setup':'"50", "20", "3", "6", "0", "2", "0"'};
+		var barcode ={'barcode':[{'0':'20, 5, 128, 35, 0, 0, 2, 4,'+data.code}]};
+		var userName = data.name;
+		var len = strlen(userName);
+		var textArray =  new Array(); 
+		if(len<=13){
+			textArray.push({ '0':'230, 5, 27, 0, 2, 0, "Arial",'+ userName +''});
+			textArray.push({ '1':'230, 40, 27, 0, 2, 0, "Arial",'+ ''});
+		}else{
+			var str1 = "";
+			var str2 = "";
+			var l = "";
+			if(userName.length!=len){
+				l = Math.floor(userName.length/2);
+				str1 = userName.substring(0,l);
+				str2 = userName.substring(l,userName.length);
+			}else{
+				l = Math.floor(len/2);
+				str1 = userName.substring(0,l);
+				str2 = userName.substring(l,len);
+			}
+			textArray.push({ '0':'230, 5, 27, 0, 2, 0, "Arial",'+ str1 +''});
+			textArray.push({ '1':'230, 40, 27, 0, 2, 0, "Arial",'+ str2 +''});
+		}
+		var code = data.code;
+		var sex  = data.sex;
+		var age  = data.age;
+		var testName = data.testName;
+		var t1="";
+		var t2 = "";
+		var t3 = "";
+		if(testName.length<17){ 
+			t1 = testName.replace(/,/g,"，");
+		}else if(testName.length>=17 && testName.length<34){
+			testName = testName.replace(/,/g,"，");
+			 t1=testName.substring(0,17);
+			 t2=testName.substring(17,testName.length);
+		}else{
+			testName = testName.replace(/,/g,"，");
+			 t1=testName.substring(0,17);
+			 t2=testName.substring(17,34);
+			 t3=testName.substring(34,testName.length);
+		}
+		textArray.push({ '2':'20, 40, 32, 0, 2, 0, "Arial",'+ (code==null?"":code) +''});
+	   	textArray.push({ '3':'210, 40, 27, 0, 2, 0, "Arial",'+ (sex==null?"":sex) +''});
+	   	textArray.push({ '4':'265, 40, 27, 0, 2, 0, "Arial",'+ (age==null?"":age) +''});
+	   	textArray.push({ '5':'20, 73, 24, 0, 2, 0, "Arial",'+ (t1==null?"":t1) +''});
+	  	textArray.push({ '6':'20, 95, 24, 0, 2, 0, "Arial",'+ (t2==null?"":t2) +''});
+	  	textArray.push({ '7':'20, 117, 24, 0, 2, 0, "Arial",'+ (t3==null?"":t3) +''});
+
+	  	console.log(textArray);
+		var head ={'text':textArray};
+		console.log(head);
+		var label={'label':'1'};
+		var pr = $.extend({}, printName,size,refe,cls,speed,setup,barcode,head,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+//外包清单打印仪器和项目数量
+function printWaiBaoQingDanArray(dataArray){
+
+	var timeArray = new Array();
+	var instrumentArray1 = new Array();
+	var instrumentArray2 = new Array();
+	var numArray = new Array();
+	for (i in dataArray) {
+		timeArray.push(dataArray[i].time);
+		if(dataArray[i].instrument.length<13){
+			instrumentArray1.push(dataArray[i].instrument);
+			}else{
+				instrumentArray1.push(dataArray[i].instrument.substring(0,13));
+				instrumentArray2.push(dataArray[i].instrument.substring(13,23));
+			}
+		numArray.push(dataArray[i].num);
+	}
+
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 50 mm, 20 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var speed ={'speed':'SPEED 3'};	//清楚打印机内部记忆体
+	var setup={'setup':'50, 20, 3, 6, 1, 2, 0'};
+	var seqcode ={'text':[{ '0':'10, 5, 38, 0, 2, 0, "Arial", ' + timeArray +'' },
+			       		  { '1':'10, 45, 32, 0, 2, 0, "Arial",' + instrumentArray1+'' },
+			       		  { '2':'10, 85, 32, 0, 2, 0, "Arial",' + instrumentArray2 +'' },
+			       		  { '3':'320, 85, 35, 0, 2, 0, "Arial",' + numArray +'' }]};
+	var label={'label':'1'};
+	var pr = $.extend({}, printName,size,refe,cls,speed,setup,seqcode,label);
+	//console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+	
+}
+function strlen(str) {
+	var len = 0;
+	for ( var i = 0; i < str.length; i++) {
+		var c = str.charCodeAt(i);
+		//单字节加1 
+		if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+			len++;
+		} else {
+			len += 2;
+		}
+	}
+	return len;
+}
+
+//测试 自定义打条码-二维码
+function twoDimensionalCode(value){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		thisMovie("MyFlexApp").setup("35", "40", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").sendcommand("SIZE 35 mm, 40 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0,0");
+		thisMovie("MyFlexApp").sendcommand("CLS");
+		thisMovie("MyFlexApp").sendcommand("REM ***** This is a test by JAVA. *****");
+		
+		thisMovie("MyFlexApp").sendcommand("QRCODE 45, 72,L,8,A,0,M2,S3,\"" + (value) + "\"");
+		
+		thisMovie("MyFlexApp").printlabel("1", "1");
+		thisMovie("MyFlexApp").closeport();
+		thisMovie("MyFlexApp").mustFinishMethod();
+		thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 35 mm, 40 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"35", "40", "3", "10", "5", "2", "0"'};
+		var rem ={'rem':'REM ***** This is a test by JAVA. *****'};
+		//var qrcode ={'qrcode':'QRCODE 45, 72,L,8,A,0,M2,S3,"' + (value) +'"'};
+		var qrcode = {'qrcode':[
+		                         { '0':'QRCODE 45,72,L,8,A,0,M2,S3,"' + (value) +'"' }
+		]};
+		var label={'label':"1"};
+		var pr = $.extend({}, printName,setup,size,refe,cls,rem,qrcode,label);
+		//console.log(pr);   
+		 
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+//样本综合查询-打码
+function printBarCodeAndSeq(barCode,seq){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		//thisMovie("MyFlexApp").setup("50", "20", "3", "6", "0", "2", "0");
+		/* thisMovie("MyFlexApp").barcode("30", "40", "128", "50", "1", "0", "1", "1", barcode);
+	   	thisMovie("MyFlexApp").windowsfont(30, 120, 32, 0, 2, 0, "Arial", seq);
+	   	
+	    thisMovie("MyFlexApp").barcode("250", "40", "128", "50", "0", "0", "1", "1", barcode);
+	    thisMovie("MyFlexApp").windowsfont(250, 100, 32, 0, 2, 0, "Arial", seq); */
+	    
+	  	//左条码
+        thisMovie("MyFlexApp").barcode("50", "20", "128", "50", "1", "0", "1", "1", barCode);
+	    thisMovie("MyFlexApp").windowsfont(50, 90, 25, 0, 0, 0, "Arial", seq);
+
+        //右条码
+        thisMovie("MyFlexApp").barcode("150", "20", "128", "50", "1", "0", "1", "1", barCode);
+        thisMovie("MyFlexApp").windowsfont(150, 90, 25, 0, 0, 0, "Arial", seq);
+
+	    
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{//新打印方法
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var speed ={'speed':'SPEED 3'};	//
+	    var barcode ={'barcode':[
+	                             { '0':'20, 20, 128, 50, 1, 0, 1, 1,' + barCode},
+	                             { '1':'240, 20, 128, 50, 1, 0, 1, 1,' + barCode}
+	    						]};
+	    var seqcode ={'text':[
+	                             { '0':'20,  90, 25, 0, 0, 0, "Arial",' +(seq)+''},
+								 { '1':'240, 90, 25, 0, 0, 0, "Arial",' + seq +''}	                             
+	                             ]};
+	    var label={'label':'1'};  
+		var pr = $.extend({}, printName,size,refe,cls,speed,setup,seqcode,barcode,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}
+
+//样本准备
+function printSpeSplitBarCode0(barCode,seq){
+	if(printType=="1"){
+		isinstallAIR();
+		thisMovie("MyFlexApp").openport(printName);
+		thisMovie("MyFlexApp").clearbuffer();
+		
+		thisMovie("MyFlexApp").sendcommand("SIZE 50 mm, 20 mm");
+		thisMovie("MyFlexApp").sendcommand("REFERENCE 0 ,0");
+	    thisMovie("MyFlexApp").sendcommand("CLS");//清楚打印机内部记忆体
+		
+		thisMovie("MyFlexApp").setup("50", "20", "3", "10", "5", "2", "0");
+		thisMovie("MyFlexApp").windowsfont(10, 25, 32, 0, 2, 0, "Arial", seq);
+		thisMovie("MyFlexApp").barcode("10", "55", "128", "60", "0", "0", "2", "4", barCode);
+	    thisMovie("MyFlexApp").windowsfont(10, 120, 32, 0, 2, 0, "Arial", barCode);
+	    
+	    thisMovie("MyFlexApp").printlabel("1","1");
+	    thisMovie("MyFlexApp").closeport(); 
+	  
+	    thisMovie("MyFlexApp").mustFinishMethod();
+	    thisMovie("MyFlexApp").init();
+	}else{
+		var evt = document.createEvent("CustomEvent");
+		var printName ={'printName':'TSC TTP-244 Plus'};
+		var size ={'size':'SIZE 50 mm, 20 mm'};
+		var refe ={'refe':'REFERENCE 0 ,0'};
+		var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+		var speed ={'speed':'SPEED 3'};	//清楚打印机内部记忆体
+		var setup={'setup':'"50", "20", "3", "10", "5", "2", "0"'};
+		var barcode ={'barcode':[{ '0':'10,55,128,60,1,0,2,4,' + barCode}]};
+		var head ={'text':[{ '0':'10, 25, 32, 0, 2, 0, "Arial",' + seq +'' },
+							]};
+		var label={'label':'1'};  
+		var pr = $.extend({}, printName,size,refe,cls,speed,setup,head,barcode,label);
+		//console.log(pr);   
+		evt.initCustomEvent('myCustomEvent', true, false, pr);
+		// fire the event
+		document.dispatchEvent(evt);
+	}
+}

@@ -1,0 +1,339 @@
+var templateCache = new Map();//模板录入cache
+var templateGrid;
+//模板录入
+function templateInputBtnClick() {
+	var temp = getSubarCode();
+	if (temp == "") {
+		return;
+	}
+	//取得勾选测试项目的集合
+	var array = new Array();
+	var ya = new Array();//查找已经存在
+	//alert($("#gridTestItem tr").length);
+	//alert($("#gridTestItem tbody tr").length);
+	$("#gridTestItem tr").each(function() {
+		array.push($(this).children("td:last").children("p:first").html());
+	});
+	//取得已经存在的
+	$("#loadTbody input[type=hidden]").each(function() {
+		ya.push($.trim($(this).val()));
+	});
+	//求两个数组的差集
+	var a = $.grep(array, function(n, i) {
+		return jQuery.inArray($.trim(n), ya) == -1;
+	});
+	var param = {
+		checkedIds : $.unique(a).join()
+	};
+	$
+			.ajax( {
+				type : "POST",
+				url : "${ctx}/lab/specimenResultTemplateList.action",
+				data : param,
+				success : function(result) {
+					$("#mblrTbody").empty();
+					if (result != null && result != "null") {
+						var jsonArray = eval("(" + result + ")");
+						//templateCache.loadByJsonArray(jsonArray);
+						for ( var i = 0; i < jsonArray.length; i++) {
+							var json = jsonArray[i];
+							var temp = "";
+							temp = "<tr><td style='width: 15px;'>&nbsp;</td><td style='width: 28px;text-align:center;'><input type='checkbox' name='items' value='"
+									+ json.testItemId
+									+ "' style='margin-top: 4px;'/></td>";
+							temp += "<td style='width: 200px;'>"
+									+ json.testItemName + "</td>";
+							temp += "<td style='auto;'>" + json.templateName
+									+ "</td></tr>";
+							$("#mblrTbody").append(temp);
+						}
+					}
+					//给输入checkbox增加事件
+					qx();
+					//页面按钮绑定事件等
+					//$("#templateInputWin").show();
+
+					//$("#txtFinaRemark1").text("");
+					//确定
+					$("#templateChoiceBtn").unbind('click');//先解除单击绑定事件
+					$("#templateChoiceBtn").bind('click', initTempalteGrid);
+					//取消
+					$("#templateInputWin #templateCancelBtn").click(function() {
+						$("#templateInputWin").hide();
+					});
+					//显示
+					$("#templateInputWin").show();
+					//tabMblrItemClick();
+					//确定
+					//$("#templateInputWin #templateChoiceBtn[type='button']").bind('click',initTempalteGrid);
+				}
+			});
+}
+
+function initTempalteGrid(json) {
+	//初始化模板录入中的项目datagrid
+	var uId = "";
+	var selectId = "";
+	$("#templateDiv").empty();
+	var json = allCheckVal();
+	//alert(json.toString());
+	var ua = new Array();
+	$
+			.each(
+					json,
+					function(i, n) {
+						ua.push(n.testItemId);
+						//将选中的记录插入到页签中
+						$("#loadTbody")
+								.append(
+										"<tr  onclick='rTemplateInputDetail(\""
+												+ n.testItemId
+												+ "\",$(this))'><td><input type='hidden' name='items' value='"
+												+ n.testItemId + "'/>"
+												+ n.testItemName + "</td></tr>");
+					});
+	//预先初始化检测项目与模板关联的中间表
+	$("#templateInputWin").hide();
+	if (ua.length > 0) {
+		initTemplateDatas($.unique(ua).join(), selectId);
+	} else {
+		//增加样式和选中第一行数据
+		mblrSxxz();
+	}
+	$("#templateInputWin #templateChoiceBtn").unbind("click");
+
+	if ($("#gridList .tablelist_now").size() <= 0)
+		return;
+	$("#tabMblrItem").show();
+	$("#tabMblrItem").trigger("click");
+
+}
+
+//模板录入列表中项目行单击事件
+//function rTemplateInputDetail(rowId, cellIndex){
+function rTemplateInputDetail(rowId, obj) {
+	var subBarCode = getSubarCode();
+	var param = {
+		uniqueid : rowId,
+		subBarCode : subBarCode
+	};
+	$('#loadTbody tr').removeClass("tablelist_now");
+	obj.addClass("tablelist_now");
+	$("#templateDiv").empty();
+	//$("#templateDiv").attr("src","${ctx}/lab/specimenResultTemplateDetail.action?uniqueid="+rowId+"&subBarCode="+subBarCode);
+	$("#templateDiv").load("${ctx}/lab/specimenResultTemplateDetail.action",
+			param, function() {
+				$("#templateDiv #subBarCodeId").val(subBarCode);
+			});
+}
+
+//预先初始化检测项目与模板关联的中间表
+function initTemplateDatas(ids, selectId) {
+	var subBarCode = getSubarCode();
+	$.post("${ctx}/lab/specimenResultTemplateInit.action", {
+		checkedIds : ids,
+		subBarCode : subBarCode
+	}, function(result) {
+		//var index = rTemplateInputGrid.getRowIndex(selectId);
+			//rTemplateInputGrid.selectRow(index, true, true, true);//(加此行模板内容会重复，反复调用初始化的方法)
+			//增加样式和选中第一行数据
+			mblrSxxz();
+		}, "text");
+	/*
+	$.ajax({
+	 type: "POST",
+	 url:"${ctx}/lab/specimenResultTemplateInit.action",
+	 data:{checkedIds:ids, subBarCode:subBarCode},
+	 success: function(result) {
+	     if(result == "success"){
+	     	rTemplateInputGrid.selectRow(0, true, true, true);
+	     }
+	 }
+	});
+	 */
+}
+
+//保存模板
+function savaTemplateBtnClick() {
+	var tp = $("#loadTbody .tablelist_now ").find("input[name=items]").val();
+	if (tp == 'undefined' || tp == "" || tp == null) {
+		jAlert("请选中模板!",'提示信息');
+		return;
+	}
+	// 结果内容
+	var param = $("#templateDiv #resultForm").serialize();
+	var itemName=$("#loadTbody .tablelist_now ").children("td:nth-child(1)").text();
+	$.ajax( {
+		type : "POST",
+		url : encodeURI(encodeURI("${ctx}/lab/specimenResultTemplateSave.action?testItem="+itemName)),
+		data : param,
+		success : function(result) {
+			jAlert("模板保存成功",'提示信息');
+		}
+	});
+}
+
+//删除模板
+function delTemplateBtnDelete() {
+	var tp = $("#loadTbody .tablelist_now ").find("input[name=items]").val();
+	if (tp == 'undefined' || tp == "" || tp == null) {
+		jAlert("请选中模板!",'提示信息');
+		return;
+	}
+	jConfirm('确定要删除选中的模板？','提示信息', function(choice) {
+		if (choice) {
+			//找到选中的UNICODE
+			var uniqueid = tp;
+			var itemName=$("#loadTbody .tablelist_now ").children("td:nth-child(1)").text();
+			//alert(uniqueid);
+			$.ajax( {
+				type : "POST",
+				url : encodeURI(encodeURI("${ctx}/lab/specimenResultTemplateDel.action?testItem="+itemName)),
+				data : {
+					uniqueid : uniqueid,
+					subBarCode : getSubarCode()
+				},
+				success : function(result) {
+					//删除选中的行
+				$("#loadTbody .tablelist_now").remove();
+				//删除加载的文本
+				$("#templateDiv").empty();
+				jAlert("模板删除成功",'提示信息');
+				//重新选中第一行
+				$("#loadTBody").children(":first").addClass("tablelist_now");
+				mblrSxxz();
+				var temp=$('#loadTbody tr').hasClass("tablelist_now");
+				if(!temp){
+					$("#tabMblrItem").hide();
+					if (currentIsMic == "true") {
+						tabMicTestItemClick();
+						$("#tabMicTestItem").addClass("now");
+					} else {
+						tabTestItemClick();
+						$("#tabTestItem").addClass("now");
+					}
+				}
+				
+			}
+			});
+		}
+	});
+}
+	//当前子条码有模板资料时加载模板录入中左侧列表资料
+function loadTestItemGridData() {
+	//alert("开始加载模板信息");
+	var subBarCode = getSubarCode();
+	$
+			.ajax( {
+				type : "POST",
+				url : "${ctx}/lab/specimenResultItemsLoad.action",
+				data : {
+					subBarCode : subBarCode
+				},
+				success : function(result) {
+					//rTemplateInputGrid.clearAll();
+					$("#templateDiv").empty();
+					$("#loadTbody").empty();
+					if (result != null && result != "null") {
+						var jsonArray = eval("(" + result + ")");
+						var temp = "";
+						for ( var i = 0; i < jsonArray.length; i++) {
+							var json = jsonArray[i];
+							temp = "<tr   onclick='rTemplateInputDetail(\""
+									+ json.testItemId
+									+ "\",$(this))'><td  align='left'><input type='hidden' name='items' value='"
+									+ json.testItemId
+									+ "'/>"
+									+ json.testItemName + "</td></tr>";
+							//rTemplateInputGrid.addRow(json.testItemId, [json.testItemName]);
+						}
+						$("#loadTbody").prepend(temp);
+						//$("#loadTbody>tr:first").addClass("selected");
+						//给表格增加样式
+						//模板录入首行选中
+						mblrSxxz();
+						//rTemplateInputGrid.selectRow(0, true, true, true);
+					}
+
+				}
+			});
+}
+
+function mbInit(mb){
+	//alert(JSON.stringify(mb));
+	var temp="";
+	$("#templateDiv").empty();
+	$("#loadTbody").empty();
+	$.each(mb,function(i,n){
+		//alert(n.testItemId);
+		temp += "<tr   onclick='rTemplateInputDetail(\""
+									+ n.testItemId
+									+ "\",$(this))'><td  align='left'><input type='hidden' name='items' value='"
+									+ n.testItemId
+									+ "'/>"
+									+ n.testItemName + "</td></tr>";
+	});
+	//alert(temp);
+	$("#loadTbody").prepend(temp);
+	mblrSxxz();
+}
+
+
+//得到所有的选中的值,如果存在多个值，以逗号隔开
+function allCheckVal() {
+	var str = "";
+	var name = "";
+	var json = new Array();
+	$('input[type=checkbox][name=items]:checked').each(
+			function() {
+				name = $(this).parent().next().text();
+				str = $(this).val();
+				json.push("{\"testItemId\":\"" + str + "\",\"testItemName\":\""
+						+ name + "\"}");
+				//json.push("{\"testItemId\":\""+str+"\",\"testItemName\":\""+name+"\"}");
+			})
+	//alert(json.join());
+	var obj = jQuery.parseJSON("[" + json.join() + "]");
+	return obj;
+}
+function allCheckHtml() {
+	$('input[type=checkbox][name=items]:checked').each(function() {
+		str += $(this).val() + ",";
+	})
+}
+//模板录入首行选中
+function mblrSxxz() {
+	var flag = $('#loadTbody tr').hasClass("tablelist_now");
+	if (!flag) {
+		$('#loadTbody tr:first').addClass("tablelist_now");
+	}
+	//alert($('#loadTbody tr').hasClass("tablelist_now"));
+	$("#loadTbody .tablelist_now").triggerHandler("click");
+}
+
+function qx(){
+	$("#CheckedAll").prop("checked",false);
+	 $('[name=items]:checkbox').prop("checked",false);
+	//全选
+     $("#CheckedAll").click(function(){
+			//所有checkbox跟着全选的checkbox走。
+			$('[name=items]:checkbox').prop("checked", this.checked );
+	 });
+	 $('[name=items]:checkbox').click(function(){
+				//定义一个临时变量，避免重复使用同一个选择器选择页面中的元素，提升程序效率。
+				var $tmp=$('[name=items]:checkbox');
+				//用filter方法筛选出选中的复选框。并直接给CheckedAll赋值。
+				$('#CheckedAll').prop('checked',$tmp.length==$tmp.filter(':checked').length);
+
+			/*
+				//一行做过多的事情需要写更多注释。复杂选择器还可能影响效率。因此不推荐如下写法。
+				$('#CheckedAll').attr('checked',!$('[name=items]:checkbox').filter(':not(:checked)').length);
+			*/
+	 });
+}
+  
+$(document).ready(function() {
+	$("#templateInputBtn").click(templateInputBtnClick); //模板录入
+		$("#savaTemplateBtn").click(savaTemplateBtnClick); //保存模板
+		$("#delTemplateBtn").click(delTemplateBtnDelete); //删除模板
+	});

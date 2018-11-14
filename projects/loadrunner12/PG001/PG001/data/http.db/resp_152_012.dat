@@ -1,0 +1,123 @@
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title></title>
+</head>
+<body>
+		<div id="listDiv_1">
+		     <div class="tab_bg_2" style="width:auto">
+		    	<span id="pendingCountLabel">查询列表(共0条)</span>
+		     </div>
+		     <div class="area_comm">
+		    	<!--div滚动区域开始-->
+			    <div style="width:339px;height:310px; overflow-x:auto;" class="scrollDiv"><!--需要根据内容合理控制DIV滚动宽度和高度，手动输入-->
+					<table id="pendingTable" class="dataTable" style="width:338px;"><!--需要根据内容合理控制表格宽度，手动输入-->
+					  <tr class="trTitle">
+						<td width="40"><input id="checkAllPending" type="checkbox" /></td>
+						<td width="100">条码号</td>
+						<td width="60">姓名</td>
+<!-- 						<td width="60">批号</td> -->
+						<td width="100">快递单号</td>
+						<td width="100">所属机构</td> 
+						<!-- <td style="display:none;">所属机构ID</td> -->
+					  </tr>
+					  
+					</table>
+				</div>
+				<!--div滚动区域结束-->
+		     </div>
+	     </div>
+	     <div id="listDiv_2" style="display:none;">
+		     <div class="tab_bg_2" style="width:auto">
+		    	<span id="checkedCountLabel">查询列表(共3条)</span>
+		     </div>
+		     <div class="area_comm">
+		    	<!--div滚动区域开始-->
+			    <div style="width:339px; height:326px; overflow-x:auto;" class="scrollDiv"><!--需要根据内容合理控制DIV滚动宽度和高度，手动输入-->
+					<table id="checkedTable" class="dataTable" style="width:338px;"><!--需要根据内容合理控制表格宽度，手动输入-->
+					  <tr class="trTitle">
+						<td width="40"><input id="checkAllChecked" type="checkbox" /></td>
+						<td width="100">条码号</td>
+						<td width="60">姓名</td>
+<!-- 						<td width="60">批号</td> -->
+						<td width="100">快递单号</td>
+						<td width="100">所属机构</td> 
+						<td style="display:none;">所属机构ID</td>
+					  </tr>
+					  
+					  
+					  		<tr id="ff80808166ce62fd016706dfbf66039f" class="oddbg">
+					  	
+					  	
+				           <td class="itemCheck"><input name="checkbutton" type="checkbox"/></td>
+							<td title="201811125900">201811125900</td>
+							<td title="www">www</td>
+
+							<td title="22233444">22233444</td>
+			        		<td title="广州达安">广州达安</td> 
+			        		<td style="display:none;" title="fux9381293012jjd2ijcijisd45g23x1">fux9381293012jjd2ijcijisd45g23x1</td>
+			        	</tr>
+			        
+					  
+					  	
+					  		<tr id="ff80808166ce62fd016706ed1bf003ac" class="evenbg">
+					  	
+				           <td class="itemCheck"><input name="checkbutton" type="checkbox"/></td>
+							<td title="201811125400">201811125400</td>
+							<td title="0511">0511</td>
+
+							<td title="222334441">222334441</td>
+			        		<td title="广州达安">广州达安</td> 
+			        		<td style="display:none;" title="fux9381293012jjd2ijcijisd45g23x1">fux9381293012jjd2ijcijisd45g23x1</td>
+			        	</tr>
+			        
+					  
+					  		<tr id="ff80808166ce6340016706ff58900359" class="oddbg">
+					  	
+					  	
+				           <td class="itemCheck"><input name="checkbutton" type="checkbox"/></td>
+							<td title="201811125200">201811125200</td>
+							<td title="0511">0511</td>
+
+							<td title="22233444">22233444</td>
+			        		<td title="广州达安">广州达安</td> 
+			        		<td style="display:none;" title="fux9381293012jjd2ijcijisd45g23x1">fux9381293012jjd2ijcijisd45g23x1</td>
+			        	</tr>
+			        
+					</table>
+				</div>
+				<!--div滚动区域结束-->
+		     </div>
+	     </div>
+</body>
+</html>

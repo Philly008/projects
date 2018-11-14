@@ -1,0 +1,1 @@
+sample_save.c(5): Error -27725: Step download timeout (120 seconds) has expired when downloading resource(s). Set the "Step Timeout caused by resources is a warning" Run-Time Setting to Yes/No to have this message as a warning/error, respectively  	[MsgId: MERR-27725]

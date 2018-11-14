@@ -1,0 +1,3724 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<link href="/NIP/pages/test/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/style2.css?v=1.0.1" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/text_style.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/input_style.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/text_grid.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/newStyle.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/style_openwin01.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script src="/NIP/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/NIP/scripts/common.js" type="text/javascript"></script>
+<script src="/NIP/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<script src="/NIP/pages/test/scripts/input_common_forSpeResult.js" type="text/javascript"></script>
+<script src="/NIP/scripts/resizable-tables.js" type="text/javascript"></script>
+<script src="/NIP/scripts/resizable-tables-height.js" type="text/javascript"></script>
+<script src="/NIP/pages/test/scripts/specimenAuditListAndBtn.js?version=1214" type="text/javascript"></script>
+<script src="/NIP/pages/test/scripts/specimenAudit.js?version=1004" type="text/javascript"></script>
+<script src="/NIP/scripts/jquery.blockUI.js" type="text/javascript"></script>
+
+<!-- 快速录入模板需要 -->
+<link rel="stylesheet" type="text/css" href="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" />
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" type="text/javascript"></script>
+<!-- 历史标本 -->
+<script src="/NIP/pages/test/scripts/lsbb.js" type="text/javascript"></script>
+<title>新签字审核</title>
+<style type="text/css">
+	* {
+		margin: 0px;
+		padding: 0px;
+	}
+		
+	.title_for_alert {
+		background-repeat: repeat-x;
+		background-position: bottom;
+		height: 24px;
+		width: auto;
+		clear: both;
+		padding-left: 2px;
+	}
+	
+	.li_for_alert {
+		float: left;
+		list-style-type: none;
+		height: 20px;
+		width: 82px;
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-left-width: 1px;
+		border-top-style: solid;
+		border-right-style: solid;
+		border-left-style: solid;
+		border-top-color: #9194a3;
+		border-right-color: #9194a3;
+		border-left-color: #9194a3;
+		text-align: center;
+		margin-top: 3px;
+		line-height: 20px;
+	}
+	
+	.now_for_alert {
+		line-height: 23px;
+		background-color: #FFFFFF;
+		height: 23px;
+		margin-top: 0px;
+	}
+	
+	.boxstyle_for_alert {
+		background-color: #FFFFFF;
+		padding: 3px;
+		border-right-width: 1px;
+		border-left-width: 1px;
+		border-right-style: solid;
+		border-left-style: solid;
+		border-right-color: #9194a3;
+		border-left-color: #9194a3;
+		height: 445px;
+	}
+	.resizable tr td {
+　　   font-weight:bold;
+       white-space:nowrap;
+       overflow:hidden;
+	 }
+</style>
+<script type="text/javascript">
+	var currentId = null; //当前选中条码Id
+	var currentInstrument = null; //当前被选中设备Id
+	var currentIsMic = null; //当前仪器是否微生物
+	var communicateMode = null; //当前仪器通信模式
+	var instrumentCombo = null;
+	var customerCombo = null;
+	var specimenTypeCombo = null;
+	var financialRemarkAll = "";
+	var currentSpecimenStatus = null;
+	$(document).ready(function(){
+		ResizableColumns();
+		heightDrag();
+	});
+</script>
+</head>
+<body>
+	<div id="wrap">
+		<!--wrap start-->
+		<div id="mainbox_01">
+			<!--mainbox_01 start-->
+			<div id="main_left_2">
+				<!--main_left_2 st art-->
+				<div id="box_01">
+					<!--main_left box_01 start-->
+					<div class="clear">
+						<!--第一行 start-->
+						<div class="text_01">选择设备</div>
+						<div id="comboInstrument" style="width: 115px;"></div>
+						<div class="text_02">&nbsp;</div>
+						
+							<div class="buttonstyle_05">
+								<a id="btnQueryFun" href="###">Q</a>
+							</div>
+						
+					</div>
+					<!--第一行 end-->
+					<div class="clear">
+						<!--第二行 start-->
+						<div class="text_01">选择客户</div>
+						<div id="comboCustomer" style="width: 161px;"></div>
+					</div>
+					<!--第二行 end-->
+					<div class="clear">
+						<!--第三行 start-->
+						<div class="text_01">查找条码</div>
+						<div>
+							<input id="txtSearchSubBarCode" name="" type="text" style="width: 157px; height: 18px; font-size: 14px; font-weight: bold;" />
+						</div>
+					</div>
+					<!--第三行 end-->
+					<div class="clear">
+						<!--第四行 start-->
+						<div class="text_6">
+							<input id="chkNumbered" name="" type="checkbox" value="" />
+						</div>
+						<div class="text_6">已编号</div>
+						<div style="width: 24px; height: 12px;"></div>
+						<div class="text_6">
+							<input id="chkException" name="" type="checkbox" value="" />
+						</div>
+						<div class="text_6">异常</div>
+						<div style="width: 25px; height: 12px;"></div>
+						<div class="text_6">
+							<input id="chkCancleAudit" name="" type="checkbox" value="" />
+						</div>
+						<div class="text_6">取消审核</div>
+					</div>
+					<!--第四行 end-->
+				</div>
+				<!--main_left_2 box_01 end-->
+				<div id="box_02">
+					<!--main_left box_02 start-->
+					<div class="boxstyle" style="height: 414px;">
+						<!--box_02 boxstyle start-->
+						<div class="tablebox_02" style="width: 410px;">
+							<!--box_04 tablebox_02 start-->
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" style="width: 410px;">
+								<tr class="tablehead">
+									<td style="width: 15px;">&nbsp;<input type="text" style="width:0px;height:0px;border:0px;" id="focusInput"></input></td>
+									<td style="width: 28px;">
+										<input id="chkList" name="" type="checkbox" value="" style="margin-top: 4px;" />
+									</td>
+									<td style="width: 80px;">条码号</td>
+									<td style="width: 40px;">流水号</td>
+									<td style="width: 40px;">异常</td>
+									<td style="width: 50px;">取消审核</td>
+									<td style="width: auto;">开单时间</td>
+								</tr>
+							</table>
+							<div id="divList" class="tablelist" style="height: 373px;">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridList" width="100%" border="0" cellspacing="0" cellpadding="0">
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--box_02 boxstyle end-->
+					<div class="tag_01">
+						<span id="spanTag01">&#8250;共有0条记&#8249;</span> <span style="padding-left: 20px"><a href="###" id="hrefOptionLab" style="color: #099">特殊颜色符号说明</a></span>
+					</div>
+				</div>
+				<!--main_left_2 box_02 end-->
+			</div>
+			<!--main_left_2 end-->
+			<!--左中的分割---左中的分割----左中的分割----左中的分割----左中的分割----左中的分割----左中的分割----左中的分割-->
+			<div id="main_mid">
+				<!--main_mid start-->
+				<div class="clear">
+					<!--第一行 start-->
+					<div class="text_7">条码号:</div>
+					<div>
+						<input id="txtSubBarCode" name="" type="text" style="width: 152px; height: 18px; font-size: 14px; font-weight: bold;" />
+					</div>
+				</div>
+				<!--第一行 end-->
+				<div class="clear">
+					<!--第二行 start-->
+					<div class="text_7" id="labStatus">状态:</div>
+					<div>
+						<input type="hidden" id="specimenStatusId" value=""></input>
+						<input id="specimenStatusName" value="" style="width: 152px; height: 18px; font-size: 14px; font-weight: bold;" ></input>
+					</div>
+				</div>
+				<!--第二行 end-->
+				<div class="clear">
+					<!--第三行 start-->
+					<div class="text_7">姓名:</div>
+					<div>
+						<input id="txtPatientName" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第三行 end-->
+				<div class="clear">
+					<!--第四行 start-->
+					<div class="text_7">性别:</div>
+					<div>
+						<input id="txtSexView" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第四行 end-->
+				<div class="clear">
+					<!--第五行 start-->
+					<div class="text_7">年龄:</div>
+					<div>
+						<input id="txtAge" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第五行 end-->
+				<div class="clear">
+					<!--第六行 start-->
+					<div class="text_7">生日:</div>
+					<div>
+						<input id="txtBirthdayView" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第六行 end-->
+				<div class="clear">
+					<!--第七行 start-->
+					<div class="text_7">客户:</div>
+					<div>
+						<textarea spellcheck="false" id="txtCustomerName" name="" rows="" style="width: 152px; height: 35px;"></textarea>
+						<!-- <input id="txtCustomerName" name="" type="text" style="width: 152px;" /> -->
+					</div>
+				</div>
+				<!--第七行 end-->
+				<div class="clear">
+					<!--第八行 start-->
+					<div class="text_7">采集时间:</div>
+					<div>
+						<input id="txtCollectDateView" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第八行 end-->
+				<div class="clear">
+					<!--第九行 start-->
+					<div class="text_7">接收时间:</div>
+					<div>
+						<input id="txtTakeDateView" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第九行 end-->
+				<div class="clear">
+					<!--第十行 start-->
+					<div class="text_7">临床诊断:</div>
+					<div>
+						<input id="txtClinicalRemark" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第十行 end-->
+				<div class="clear">
+					<!--第十一行 start-->
+					<div class="text_7">体重:</div>
+					<div>
+						<input id="txtPatientWeight" name="" type="text" style="width: 48px;" />
+					</div>
+					<div class="text_8">身高:</div>
+					<div>
+						<input id="txtPatientHeight" name="" type="text" style="width: 50px;" />
+					</div>
+				</div>
+				<!--第十一行 end-->
+				<div class="clear">
+					<!--第十二行 start-->
+					<div class="text_7">体位:</div>
+					<div>
+						<input id="txtBodyStyleView" name="" type="text" style="width: 48px;" />
+					</div>
+					<div class="text_8">24H尿量:</div>
+					<div>
+						<input id="txtUrineVolume" name="" type="text" style="width: 50px;" />
+					</div>
+				</div>
+				<!--第十二行 end-->
+				<div class="clear">
+					<!--第十三行 start-->
+					<div class="text_7">B超孕周:</div>
+					<div>
+						<input id="txtBultrasonic" name="" type="text" style="width: 48px;" />
+					</div>
+					<div class="text_8">B超孕日:</div>
+					<div>
+						<input id="txtPregnant" name="" type="text" style="width: 50px;" />
+					</div>
+				</div>
+				<!--第十三行 end-->
+				<div class="clear">
+					<!--第十四行 start-->
+					<div class="text_7">LMP孕周:</div>
+					<div>
+						<input id="txtLmp" name="" type="text" style="width: 48px;" />
+					</div>
+					<div class="text_8">LMP孕日:</div>
+					<div>
+						<input id="txtLmpDate" name="" type="text" style="width: 50px;" />
+					</div>
+				</div>
+				<!--第十四行 end-->
+				<div class="clear">
+					<!--第十五行 start-->
+					<div class="text_7">怀孕胎数:</div>
+					<div>
+						<input id="txtBabyCountView" name="" type="text" style="width: 48px;" />
+					</div>
+					<div class="text_8">精浆量:</div>
+					<div>
+						<input id="txtSeminalVolume" name="" type="text" style="width: 50px;" />
+					</div>
+				</div>
+				<!--第十五行 end-->
+				<div class="clear">
+					<!--第十六行 start-->
+					<div class="text_7">送检医生:</div>
+					<div>
+						<input id="txtDoctorName" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第十六行 end-->
+				<div class="clear">
+					<!--第十七行 start-->
+					<div class="text_7">送检科室:</div>
+					<div>
+						<input id="txtLocationName" name="" type="text" style="width: 152px;" />
+					</div>
+				</div>
+				<!--第十七行 end-->
+				<div class="clear">
+					<!--第十八行 start-->
+					<div class="text_7">其它说明:</div>
+					<div>
+						<textarea spellcheck="false" id="txtRemark" name="" rows="" style="width: 152px; height: 46px;"></textarea>
+					</div>
+				</div>
+				<!--第十八行 end-->
+				<div class="clear">
+					<!--第十九行 start-->
+					<div class="text_7">检查项目:</div>
+					<div>
+						<textarea spellcheck="false" id="txtTestItemStr" name="" rows="" style="width: 152px; height: 46px"></textarea>
+					</div>
+				</div>
+				<!--第十九行 end-->
+			</div>
+			<!--main_mid end-->
+			<!--中右的分割---中右的分割----中右的分割----中右的分割----中右的分割----中右的分割----中右的分割----中右的分割-->
+			<div id="main_right_2">
+				<!--main_right_2 start-->
+				<div class="box_06">
+					<!--main_right_2 box_06 start-->
+					<div class="clear" style="padding-bottom: 8px;" id="msid">
+						<!--第一行 start-->
+						<div style="line-height: 34px;"><a href="#" id="reportRemark" style="cursor:pointer;">建议解释:</a></div>
+						<div style="float: none;" class="box_100e">
+							<textarea spellcheck="false" id="txtReportRemark" name="" rows="" style="width: 100%; height: 34px;"></textarea>
+						</div>
+					</div>
+					<!--第一行 end-->
+					<div class="clear" id="msid">
+						<!--第二行 start-->
+						<div style="line-height: 34px;"><a href="#" id="reportBrief" style="cursor:pointer;">自动小结:</a></div>
+						<div style="float: none;" class="box_100e">
+							<textarea spellcheck="false" id="txtReportBrief" name="" rows="" style="width: 100%; height: 34px;"></textarea>
+						</div>
+					</div>
+					<!--第二行 end-->
+				</div>
+				<div id="line" style="top:50%;height:4px;overflow:hidden;margin-top:-2px;background:#d0dded;cursor:n-resize;"><hr></hr></div>  
+				<!--main_right_2 box_06 end-->
+				<div class="title_03">
+					<!--main_right——2 title_03 start-->
+					<ul id="tabForItem">
+						<li class="now" id="tabTestItem">测试项</li>
+						<li id="tabMicTestItem" style="display: none;">测试项</li>
+						<li id="tabOtherItem" style="display: none;">其它常规项</li>
+						<li id="tabOtherMicItem" style="display: none;">其它微生物项</li>
+						<li id="tabTxlrItem" style="display: none;">图像录入</li>
+						<li id="tabMblrItem" style="display: none;">模板录入</li>
+						<li id="tabRemark" style="display: none;">备注</li>
+						<!--  <li id="tabResultWidthSelect" style="width:200px;border:0px;">结果宽度								
+							<select id="resultTDWidthSelect" style="width:50px;">
+								<option value="100">小</option>
+								<option value="160">中</option>
+								<option value="220">大</option>
+							</select></li>-->
+					</ul>
+				</div>
+				<!--main_right_2 title_03 end-->
+				<div id="qiehuan_01">
+					<!--切换项 start-->
+					<div class="box_07">
+						<!--main_right_2 box_07 start-->
+						<div id="itemOuterDiv" class="tablebox_02" style="width: 1116px;">
+							<!--box_04 tablebox_02 start-->
+							<table id="gridTestItemHead" width="1115px" border="0" cellspacing="0" cellpadding="0" class='resizable' style="table-layout:fixed;">
+								<tr class="tablehead">
+									<td style="width: 15px;">&nbsp;</td>
+									<!-- <td style="width: 20px;">&nbsp;</td> -->
+									<td style="width: 20px;">
+										<input id="chkTestItemList" name="" type="checkbox" value="" style="margin-top: 4px;" onclick="testItemCheckClick();"/>
+									</td>
+									<td style="width: 50px;">英文名</td>
+									<td style="width: 40px;">流水号</td>
+									<td style="width: 70px;">名称</td>
+									<td style="width: 100px;">结果</td>
+									<td style="width: 40px;">提示</td>
+									<td style="width: 100px;">参考范围</td>
+									<td style="width: 60px;">单位</td>
+									<td style="width: 75px;">标本类型</td>
+									<td style="width: 100px;">结果备注</td>
+									<td style="width: 60px;">项目状态</td>
+									<td style="width: 60px;">打印报告</td>
+									<td style="width: 0px;"></td>
+									<td style="width: 60px;">原测结果</td>
+									<td style="width: 60px;">历史结果1</td>
+									<td style="width: 60px;">历史结果2</td>
+									<td style="width: 60px;">历史结果3</td>
+								</tr>
+							</table>
+							<div class="tablelist" style="height: 365px;" id="itemlistdiv">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridTestItem" width="100%" border="0" cellspacing="0" cellpadding="0">
+
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--main_right_2 box_07 end-->
+					<div class="box_08">
+						<!--box_08 start-->
+						<div class="text_6">
+							<input id="chkSeqView" type="checkbox" value="true" checked="checked" />
+						</div>
+						<div class="text_6">是否显示流水号</div>
+						<div style="width: 34px; height: 12px;"></div>
+						<div class="text_6">
+							<input id="chkNameView" type="checkbox" value="true" checked="checked" />
+						</div>
+						<div class="text_6">是否显示中文名</div>
+						<div style="margin-left:30px;"><div name="labColdStore" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">冰冻</div><div name="labRerun" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">复查</div><div name="labEnReport" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">英文报告</div><div name="labCEnReport" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">中英文报告</div></div>
+						<div style="width: 34px; height: 12px;"></div>
+						<div class="text_6">孕周计算基于</div>
+						<div class="text_6">
+							<input id="gestationalWeeksCalculation" type="text" readonly="true" maxlength="10" style="width: 124px; height: 12px;" />
+						</div>
+						<div name="highRisk" class="text_6" style="margin-left:15px;width:50px;text-align:center; height:20px;background-color: yellow;font-weight: bold;display:none">
+							<font color="red">高危</font>
+						</div>
+					</div>
+					<!--box_08 end-->
+				</div>
+				<!--切换项 end-->
+				<!--===========选项卡切换内容的分割线===============================================================-->
+				<div id="qiehuan_02" class="box_09">
+					<!--main_right_2 box_09 start-->
+					<div class="liandongbox_01">
+						<!--box_09 liandongbox_01 start-->
+						<div id="micItemOuterDiv" class="tablebox_02" style="width: 861px;">
+							<!--box_04 tablebox_02 start-->
+							<table id="gridMicTestItemHead" width="861px" border="0" cellspacing="0" cellpadding="0" class='resizable' style="table-layout:fixed;">
+								<tr class="tablehead">
+									<td id="tdClick1" style="width: 15px;" class="ico_arrow5">&nbsp;</td>
+									<!-- <td id="tdClickInit" style="width: 28px;">&nbsp;</td> -->
+									<td id="tdClickInit" style="width: 28px;">
+										<input id="chkMicTestItemList" name="" type="checkbox" value="" style="margin-top: 4px;" onclick="micTestitemCheckClick();"/>
+									</td>
+									<td style="width: 70px;">英文名称</td>
+									<td style="width: 40px;">流水号</td>
+									<td style="width: 125px;">项目名称</td>
+									<td style="width: 70px;">结果类型</td>
+									<td style="width: 100px;">结果</td>
+									<td style="width: 70px;">项目编号</td>
+									<td style="width: 100px;">标本类型</td>
+									<td style="width: 70px;">项目状态</td>
+									<td style="width: auto;">打印报告</td>
+								</tr>
+							</table>
+							<div id="item_div" class="tablelist" style="height: 66px;">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridMicTestItem" width="100%" border="0" cellspacing="0" cellpadding="0">
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--box_09 liandongbox_01 end-->
+					<div class="box_08">
+						<!--box_08 start-->
+						<div class="text_6">
+							<input id="chkMicSeqView" type="checkbox" value="true" checked="checked" />
+						</div>
+						<div class="text_6">是否显示流水号</div>
+						<div style="width: 34px; height: 12px;"></div>
+						<div class="text_6">
+							<input id="chkMicNameView" type="checkbox" value="true" checked="checked" />
+						</div>
+						<div class="text_6">是否显示中文名</div>
+						<div style="margin-left:30px;"><div name="labColdStore" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">冰冻</div><div name="labRerun" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">复查</div><div name="labEnReport" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">英文报告</div><div name="labCEnReport" style="display:none;margin-right:20px;background-color:red;font-weight:bold;" class="specialTips">中英文报告</div></div>
+					</div>
+					<!--box_08 end-->
+					<div class="liandongbox_02">
+						<!--box_09 liandongbox_02 start-->
+						<div class="tablebox_02" id="xijunid">
+							<!--box_04 tablebox_02 start-->
+							<table style="width:100%;min-width: 500px;" border="0" cellspacing="0" cellpadding="0" class='resizable' id="gridMicBacterialHead">
+								<tr class="tablehead">
+									<td id="tdClick2" class="ico_arrow5" style="width: 15px;">&nbsp;</td>
+									<td style="width: 230px;">细菌中文名</td>
+									<td style="width: 50px;">菌落计数</td>
+									<td style="width: auto;">提示</td>
+								</tr>
+							</table>
+							<div id="bacterial_div" class="tablelist" style="height: 66px;">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridMicBacterial" width="100%" border="0" cellspacing="0" cellpadding="0">
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--box_09 liandongbox_02 end-->
+					<div class="box_08">
+						<!--box08 单选按钮组和复选按钮一个 start-->
+						<div class="bgstyle_01">
+							<p>
+								<label style="float: left; padding-right: 10px;"> <input type="radio" name="RadioGroup1" value="KB" id="KB" />KB
+								</label> <label style="float: left"> <input type="radio" name="RadioGroup1" value="MIC" id="MIC" checked="checked" />MIC
+								</label> <br />
+							</p>
+						</div>
+						<div style="width: 28px; height: 12px;"></div>
+						<div class="text_6">
+							<input id="chkReportOption" type="checkbox" value="true" />
+						</div>
+						<div id="labReportOption" class="text_6">以MIC值为报告结果</div>
+					</div>
+					<!--box08 单选按钮组和复选按钮一个 end-->
+					<div class="liandongbox_03">
+						<!--box_09 liandongbox_03 start-->
+						<div class="tablebox_02" style="width: 99.8%;min-width: 680px;" >
+							<!--box_04 tablebox_02 start-->
+							<table id="gridMicAntibioticHead" width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr class="tablehead">
+									<td id="tdClick3" class="ico_arrow5" style="width: 15px;">&nbsp;</td>
+									<td style="width: 140px;">抗生素英文名</td>
+									<td style="width: 120px;">抗生素中文名</td>
+									<td style="width: 55px;" id="MicResultMICTD" unselectable="none" onselectstart="return false;">MIC</td>
+									<td style="width: 55px; display: none;" id="MicResultKBTD" unselectable="none" onselectstart="return false;">K-B</td>
+									<td style="width: 70px;" id="MicResultTD" unselectable="none" onselectstart="return false;">结果</td>
+									<td style="width: 70px;">敏感</td>
+									<td style="width: 70px; display: none;">耐药</td>
+									<td style="width: 70px;">中介</td>
+									<td style="width: 70px; display: none;">中介</td>
+									<td style="width: auto;">耐药</td>
+									<td style="width: auto; display: none;">敏感</td>
+								</tr>
+							</table>
+							<div id="anti_div" class="tablelist" style="height: 150px;">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridMicAntibiotic" width="height:150px;" border="0" cellspacing="0" cellpadding="0">
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--box_09 liandongbox_03 end-->
+				</div>
+				<!--main_right_2 box_09 end-->
+				<!--===========选项卡切换内容的分割线===================================================================-->
+				<div id="qiehuan_03">
+					<!--切换项 start-->
+					<div class="box_07">
+						<!--main_right_2 box_07 start-->
+						<div class="tablebox_02" style="width: 861px;">
+							<!--box_04 tablebox_02 start-->
+							<table width="861px" border="0" cellspacing="0" cellpadding="0" style="table-layout:auto;word-wrap:normal;">
+								<tr class="tablehead">
+									<td style="width: 15px;">&nbsp;</td>
+									<td style="width: 10px; border-right-width: 0px;">&nbsp;</td>
+									<td style="width: 100px;">子条码</td>
+									<td style="width: 50px;">英文名</td>
+									<td style="width: 80px;">名称</td>
+									<td style="width: 40px;">流水号</td>
+									<td style="width: 50px;">结果</td>
+									<td style="width: 30px;">提示</td>
+									<td style="width: 100px;">参考范围</td>
+									<td style="width: 40px;">单位</td>
+									<td style="width: 90px;">标本类型</td>
+									<td style="width: 110px">结果备注</td>
+									<td style="width: auto;">项目状态</td>
+								</tr>
+							</table>
+							<div class="tablelist" style="height: 365px;width:860">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridOtherItem" width="860px" border="0" cellspacing="0" cellpadding="0" style="table-layout:auto;word-wrap:normal;">
+
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--main_right_2 box_07 end-->
+				</div>
+				<!--切换项 end-->
+				<!--===========选项卡切换内容的分割线===============================================================-->
+				<div id="qiehuan_04" class="box_09">
+					<!--main_right_2 box_09 start-->
+					<div class="liandongbox_01">
+						<!--box_09 liandongbox_01 start-->
+						<div class="tablebox_02" style="width: 861px;">
+							<!--box_04 tablebox_02 start-->
+							<table width="861px" border="0" cellspacing="0" cellpadding="0" style="table-layout:auto;word-wrap:normal;">
+								<tr class="tablehead">
+									<td style="width: 15px;">&nbsp;</td>
+									<td style="width: 10px; border-right-width: 0px;">&nbsp;</td>
+									<td style="width: 99px;">子条码</td>
+									<td style="width: 70px;">英文名</td>
+									<td style="width: 40px;">流水号</td>
+									<td style="width: 70px;">项目名称</td>
+									<td style="width: 60px;">结果类型</td>
+									<td style="width: 50px;">结果</td>
+									<td style="width: 60px;">项目编号</td>
+									<td style="width: 60px;">标本类型</td>
+									<td style="width: auto;">项目状态</td>
+								</tr>
+							</table>
+							<div class="tablelist" style="height: 132px;">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridOtherMicItem" width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout:auto;word-wrap:normal;">
+
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--box_09 liandongbox_01 end-->
+					<div class="liandongbox_02">
+						<!--box_09 liandongbox_02 start-->
+						<div class="tablebox_02">
+							<!--box_04 tablebox_02 start-->
+							<table style="width:100%;min-width: 500px;" border="0" cellspacing="0" cellpadding="0">
+								<tr class="tablehead">
+									<td style="width: 15px;">&nbsp;</td>
+									<td style="width: 180px;">细菌中文名</td>
+									<td style="width: 120px;">菌落计数</td>
+									<td style="width: auto;">提示</td>
+								</tr>
+							</table>
+							<div class="tablelist" style="height: 65px;">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridOtherMicBacterial" width="100%" border="0" cellspacing="0" cellpadding="0">
+
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--box_09 liandongbox_02 end-->
+					<div class="liandongbox_03">
+						<!--box_09 liandongbox_03 start-->
+						<div class="tablebox_02" style="width: 99.8%;min-width: 680px;">
+							<!--box_04 tablebox_02 start-->
+							<table id="gridOtherMicAntibioticHead" width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr class="tablehead">
+									<td style="width: 15px;">&nbsp;</td>
+									<td style="width: 140px;">抗生素英文名</td>
+									<td style="width: 120px;">抗生素中文名</td>
+									<td style="width: 55px;">MIC</td>
+									<td style="width: 55px; display: none;">K-B</td>
+									<td style="width: 70px;">结果</td>
+									<td style="width: 70px;">敏感</td>
+									<td style="width: 70px; display: none;">耐药</td>
+									<td style="width: 70px;">中介</td>
+									<td style="width: 70px; display: none;">中介</td>
+									<td style="width: auto;">耐药</td>
+									<td style="width: auto; display: none;">敏感</td>
+								</tr>
+							</table>
+							<div class="tablelist" style="height: 134px;">
+								<!--tablebox_02 tablelist start-->
+								<table id="gridOtherMicAntibiotic" width="height:134px;" border="0" cellspacing="0" cellpadding="0">
+								</table>
+							</div>
+							<!--tablebox_02 tablelist end-->
+						</div>
+						<!--tablebox_02 end-->
+					</div>
+					<!--box_09 liandongbox_03 end-->
+				</div>
+				<!--main_right_2 box_09 end-->
+				<div id="qiehuan_05" class="box_09">
+					
+<script type="text/javascript">
+<!--
+$.getScript("/NIP/pages/test/scripts/txlr.js");
+$.getScript("/NIP/scripts/json2.js");
+//-->
+</script>
+<!-- 图片上传开始  -->
+<div class="box_06" id="txlr"
+	style="width: 510px; height: 370px; border: solid 1px #d0dded;">
+	<div id="resultImgDiv"
+		style="width: %; height: 90%; background: white; overflow: auto;"
+		class="alertWindowNew">
+		<style type="text/css">
+		.imgBg1 {
+			border: 1px black dotted;
+			background-color: #E8F1FA;
+		}
+		
+		.imgBg2 {
+			border: 1px #A4BED4 solid;
+			background-color: #A4BED4;
+		}
+		
+		.imgBg2 textarea {
+			border: 1px #A4BED4 solid;
+			background-color: #A4BED4;
+		}
+		
+		.imgClick {
+			border: 1px #A4BED4 solid;
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+			/*IE8*/
+			filter: alpha(opacity =   80); /*IE5、IE5.5、IE6、IE7*/
+			opacity: .3; /*Opera9.0+、Firefox1.5+、Safari、Chrome*/
+			z-index: -1; /*让其位于in的下面*/
+		}
+		</style>
+		<input id="imgId" type="hidden" />
+		<input type="hidden" id="imgsCount" value="" />
+		<div
+			style="width: 100%; height: 100%; overflow-x:auto; overflow-y:hidden; <!--[if IE]>display:inline;<![endif]-->">
+			<table>
+				<tr>
+
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="tpcz">
+		<input type="button" value="上传图片" id="uploadImgBtn"
+			class="buttonstyle_01" style="width: 64px" />
+		<input type="button" value="删除图片" id="delImgBtn"
+			class="buttonstyle_01" style="width: 64px" />
+	</div>
+	<div id="tpmb" style="display: none;">
+		<table>
+			<tr>
+				<td>
+					<div id=""
+						style="width: 180px; height: 99%; margin-left: 1px; float: left;"
+						class="imgBg1">
+						<div style="width: 99%; float: left;" class="imgBg2">
+						</div>
+						<div style="width: 99%; float: left;" class="imgBg2">
+							打印：
+							<input type="checkbox" disabled="disabled"/>
+						</div>
+						<div
+							style="width: 99%; height: 235px; float: left; line-height: 235px; vertical-align: middle; text-align: center;"
+							class="imgBg2">
+							<img style="width: 180px; height: 100%;"
+								src=""
+								ondblclick="" />
+						</div>
+						<div
+							style="width: 99%; height: 50px; float: left; word-break: break-all; overflow-y: auto; overflow-x: hidden;"
+							class="imgBg2">
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<!-- 图片上传结束  -->
+
+				</div>
+				<div id="qiehuan_06" class="box_09">
+					
+<script type="text/javascript">
+<!--
+$.getScript("/NIP/pages/test/scripts/mblr.js");
+//-->
+</script>
+<!-- 保存模板  -->
+<div style="width: 510px; height: 380px;">
+	<div class="tablebox_02"
+		style="height: 98%; float: left; width: 200px;" id="rTemplateInputGrid">
+		<table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
+			<tr class="tablehead">
+				<td style="width: auto;">
+					项目名
+				</td>
+			</tr>
+		</table>
+		<div class="tablelist" style="height: 330px;">
+			<table id="loadTbody" border="0" cellspacing="0" cellpadding="0"
+				style="width: 100%;">
+			</table>
+		</div>
+		<div>
+			<table>
+				<tr>
+					<td>
+						<div class="buttonbox_01">
+							<div class="buttonstyle_01">
+								<a id="savaTemplateBtn">保存模板</a>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="buttonbox_01">
+							<div class="buttonstyle_01">
+								<a id="delTemplateBtn">删除模板</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div id="templateDiv"
+		style="height: 98%; float: left; margin: 2px; background: white; overflow: auto; border: solid 1px #d0dded; width: 300px"
+		width="620px">
+
+	</div>
+</div>
+<!-- 模板上传结束  -->
+
+				</div>
+				<div id="qiehuan_07">
+					<!--切换项 start-->
+					<div class="box_10">
+						<!--main_right_2 box_10 start-->
+						<div class="beizhu_01">
+							<!--box_10beizhu_01 start-->
+							<div class="tablebox_02" style="width: auto;">
+								<!--box_04 tablebox_02 start-->
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr class="tablehead">
+										<td colspan="4" style="padding-left: 10px; text-align: left; font-weight: bold;">标本备注</td>
+									</tr>
+									<tr class="tablehead">
+										<td style="width: 15px;">&nbsp;</td>
+										<td style="width: 120px;">操作时间</td>
+										<td style="width: 80px;">操作员</td>
+										<td style="width: auto;">备注</td>
+									</tr>
+								</table>
+								<div class="tablelist" style="height: 158px;">
+									<!--tablebox_02 tablelist start-->
+									<table id="gridSpecimenRemark" width="100%" border="0" cellspacing="0" cellpadding="0">
+									</table>
+								</div>
+								<!--tablebox_02 tablelist end-->
+							</div>
+							<!--tablebox_02 end-->
+						</div>
+						<!--box_10beizhu_01 end-->
+						<div class="beizhu_01">
+							<!--box_10beizhu_01 start-->
+							<div class="tablebox_02" style="width: auto;">
+								<!--box_04 tablebox_02 start-->
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr class="tablehead">
+										<td colspan="5" style="padding-left: 10px; text-align: left; font-weight: bold;">项目备注</td>
+									</tr>
+									<tr class="tablehead">
+										<td style="width: 15px;">&nbsp;</td>
+										<td style="width: 120px;">项目</td>
+										<td style="width: 120px;">操作时间</td>
+										<td style="width: 80px;">操作员</td>
+										<td style="width: auto;">备注</td>
+									</tr>
+								</table>
+								<div class="tablelist" style="height: 184px;">
+									<!--tablebox_02 tablelist start-->
+									<table id="gridTestItemRemark" width="100%" border="0" cellspacing="0" cellpadding="0">
+									</table>
+								</div>
+								<!--tablebox_02 tablelist end-->
+							</div>
+							<!--tablebox_02 end-->
+						</div>
+						<!--box_10beizhu_01 end-->
+					</div>
+					<!--main_right_2 box_10 end-->					
+				</div>
+				<!--切换项 end-->
+			</div>
+			<!--main_right_2 end-->
+			<div class="cleardiv"></div>
+		</div>
+		<!--mainbox_01 end-->
+		<div id="divBtn" class="buttonbox_bottom" style="position:absolute;z-index:49">
+			<!--buttonbox_bottom start-->
+			
+				<div class="buttonstyle_07">
+					<a id="btnRefresh" href="###">刷新(R)</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="btnAuditSpecimen" href="###">审核标本</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="btnReDo" href="###">重做</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="btnDelItem" href="###">删除项目</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="btnInstrumentResult" href="###">仪器结果</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="btnOperationLog" href="###">操作日志</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="historySampleBtn" href="###" onclick="historySampleBtnClick()">历史标本</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="specialistAuditBtn" href="###">专家审核</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="btnLoadPDF" href="###">预览报告</a>
+				</div>
+			
+			
+				<div class="buttonstyle_01">
+					<a id="btnChangeSco" href="###">S/CO</a>
+				</div>
+			
+		</div>
+	</div>
+	<!--wrap end-->
+
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------选择仪器下拉Grid数据源------------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="aaaa" style="width: 100px; height: 1000px;"></div>
+	<div id="gridInstrument" class="tablebox_02" style="width: 300px; height: 200px;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr class="tablehead">
+				<td style="width: 15px;">&nbsp;</td>
+				<td style="width: 75px;">设备代码</td>
+				<td style="width: 120px;">设备名称</td>
+				<td style="width: auto;">助记符</td>
+				<td style="display: none;">是否微生物</td>
+				<td style="display: none;">通信模式</td>
+			</tr>
+		</table>
+		<div class="tablelist" style="width: 100%; height: 176px;">
+			<!--tablebox_02 tablelist start-->
+			<table cellspacing="0" cellpadding="0">
+				
+					<tr id="20100">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103002</td>
+						<td style="width: 120px;">F分泌物检验仪器</td>
+						<td style="width: auto;">fmwdl</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20101">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104010</td>
+						<td style="width: 120px;">3130-AVANT</td>
+						<td style="width: auto;">3130</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20102">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109005</td>
+						<td style="width: 120px;">寄生虫教研室</td>
+						<td style="width: auto;">寄生虫教研室</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20106">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103003</td>
+						<td style="width: 120px;">其它项目检验仪器</td>
+						<td style="width: auto;">qtdl</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20107">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109006</td>
+						<td style="width: 120px;">南方医院生殖医学实验室</td>
+						<td style="width: auto;">南方医院生殖医学实验室</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20109">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109007</td>
+						<td style="width: 120px;">市妇婴医院</td>
+						<td style="width: auto;">市妇婴医院</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20111">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101001</td>
+						<td style="width: 120px;">日立7600</td>
+						<td style="width: auto;">RL</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20115">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104001</td>
+						<td style="width: 120px;">地贫基因检验仪器</td>
+						<td style="width: auto;">dp</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20117">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000107002</td>
+						<td style="width: 120px;">Leica DM2500荧光显微镜</td>
+						<td style="width: auto;">fish</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20118">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101004</td>
+						<td style="width: 120px;">德普发光仪1</td>
+						<td style="width: auto;">dpfgy1</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20119">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104006</td>
+						<td style="width: 120px;">ABI -9700 PCR仪(组配)</td>
+						<td style="width: auto;">abi</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20121">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104007</td>
+						<td style="width: 120px;">ELx800 酶标仪(组配)</td>
+						<td style="width: auto;">mby</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20122">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104008</td>
+						<td style="width: 120px;">血型检验仪器</td>
+						<td style="width: auto;">xxjy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20123">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000108001</td>
+						<td style="width: 120px;">骨髓细胞形态学</td>
+						<td style="width: auto;">gsxb</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20125">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000107001</td>
+						<td style="width: 120px;">二氧化碳培养箱</td>
+						<td style="width: auto;">CO2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20126">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000106001</td>
+						<td style="width: 120px;">微生物手工(VITEK2)</td>
+						<td style="width: auto;">wsw</td>
+						<td style="display: none;">true</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20127">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101024</td>
+						<td style="width: 120px;">时间分辨免疫荧光分析仪</td>
+						<td style="width: auto;">sjfby</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20128">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102001</td>
+						<td style="width: 120px;">精子图谱分析仪</td>
+						<td style="width: auto;">jzfxy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20129">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102002</td>
+						<td style="width: 120px;">手工免疫一</td>
+						<td style="width: auto;">sgmy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20130">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109014</td>
+						<td style="width: 120px;">中大附一免疫室</td>
+						<td style="width: auto;">中大附一免疫室</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20135">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101018</td>
+						<td style="width: 120px;">全自动化学发光仪（1）</td>
+						<td style="width: auto;">gqyq</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20139">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109010</td>
+						<td style="width: 120px;">中山大学附属肿瘤医院</td>
+						<td style="width: auto;">zsdxzlyy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20143">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109031</td>
+						<td style="width: 120px;">广东药学院附属第一医院-检验科</td>
+						<td style="width: auto;">广东药学院附属第一医院-检验科</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20144">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109009</td>
+						<td style="width: 120px;">儿童医院</td>
+						<td style="width: auto;">etyy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20145">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109011</td>
+						<td style="width: 120px;">中山大学附属第二医院-体检中心</td>
+						<td style="width: auto;">zs2yfk</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20146">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109012</td>
+						<td style="width: 120px;">中大附一生化室</td>
+						<td style="width: auto;">zdfyshs</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20148">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109013</td>
+						<td style="width: 120px;">广东省妇幼保健院</td>
+						<td style="width: auto;">广东省妇幼保健院</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20150">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105001</td>
+						<td style="width: 120px;">日立Z-2000原子吸收分光光度计</td>
+						<td style="width: auto;">yzxsfggdj</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20152">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105002</td>
+						<td style="width: 120px;">分析化学室手工</td>
+						<td style="width: auto;">fxhxsg</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20153">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">600004</td>
+						<td style="width: 120px;">（停用）高效液相色谱仪</td>
+						<td style="width: auto;">gxyxspy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20155">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">600002</td>
+						<td style="width: 120px;">（停用）过敏原筛查仪</td>
+						<td style="width: auto;">gmyscy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20156">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102004</td>
+						<td style="width: 120px;">血型血清学用离心机</td>
+						<td style="width: auto;">XXXQXLXJ</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20162">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000108002</td>
+						<td style="width: 120px;">流式细胞仪</td>
+						<td style="width: auto;">lsxby</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20164">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000106003</td>
+						<td style="width: 120px;">血清学虚拟</td>
+						<td style="width: auto;">test</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20165">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105003</td>
+						<td style="width: 120px;">全血微量元素分析仪</td>
+						<td style="width: auto;">BH-5300</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20168">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103004</td>
+						<td style="width: 120px;">DA7600(A-YC045)-质控</td>
+						<td style="width: auto;">gyxljyyqzk</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20169">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103005</td>
+						<td style="width: 120px;">DA7600(A-YC046)-质控</td>
+						<td style="width: auto;">gyxljyyqzk</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20170">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">JN1001</td>
+						<td style="width: 120px;">济南外包室</td>
+						<td style="width: auto;">JNWBS</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20172">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">YN1001</td>
+						<td style="width: 120px;">云南实验室</td>
+						<td style="width: auto;">YN</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20173">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103006</td>
+						<td style="width: 120px;">HPV高危体检专用仪器</td>
+						<td style="width: auto;">gwtj</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20177">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">700001</td>
+						<td style="width: 120px;">病理标本上传</td>
+						<td style="width: auto;">blsc</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20178">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109015</td>
+						<td style="width: 120px;">湖州数康生物科技有限公司</td>
+						<td style="width: auto;">湖州数康生物科技有限公司</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20179">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">YN1002</td>
+						<td style="width: 120px;">云南生化仪（BS420）</td>
+						<td style="width: auto;">YNSH</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20180">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">YN1003</td>
+						<td style="width: 120px;">云南血球仪（BC-1800）</td>
+						<td style="width: auto;">BC1800</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20181">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">YN1004</td>
+						<td style="width: 120px;">尿液分析仪（U-300）</td>
+						<td style="width: auto;">U-300</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20182">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109016</td>
+						<td style="width: 120px;">达安基因（风湿免疫类项目）</td>
+						<td style="width: auto;">达安基因（风湿免疫类项目）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20184">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109017</td>
+						<td style="width: 120px;">广东省人民医院</td>
+						<td style="width: auto;">srmyy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20185">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109018</td>
+						<td style="width: 120px;">中大附一病理室</td>
+						<td style="width: auto;">zdfyb</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20186">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101006</td>
+						<td style="width: 120px;">迈瑞BC-5800—1</td>
+						<td style="width: auto;">迈瑞BC-5800—1</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20187">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102005</td>
+						<td style="width: 120px;">手工免疫二</td>
+						<td style="width: auto;">sgmy2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20188">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109008</td>
+						<td style="width: 120px;">南方医院传染科</td>
+						<td style="width: auto;">南方医院传染科</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20189">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109019</td>
+						<td style="width: 120px;">（停用）康圣达（代谢病）</td>
+						<td style="width: auto;">康圣达（代谢病）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20190">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101007</td>
+						<td style="width: 120px;">迈瑞BS-800M</td>
+						<td style="width: auto;">BS800</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20191">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102006</td>
+						<td style="width: 120px;">免疫科研</td>
+						<td style="width: auto;">myky</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20192">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101015</td>
+						<td style="width: 120px;">西门子2</td>
+						<td style="width: auto;">西门子2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20193">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101010</td>
+						<td style="width: 120px;">西门子1</td>
+						<td style="width: auto;">55</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20194">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101026</td>
+						<td style="width: 120px;">体检中心</td>
+						<td style="width: auto;">tm15</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20197">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102007</td>
+						<td style="width: 120px;">产前筛查风险评估系统</td>
+						<td style="width: auto;">cqscfxpgxt</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20199">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101008</td>
+						<td style="width: 120px;">国产化学发光仪</td>
+						<td style="width: auto;">gchxfgy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20200">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105004</td>
+						<td style="width: 120px;">过敏原检测（sIgE半定量）</td>
+						<td style="width: auto;">gmysg</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20201">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101009</td>
+						<td style="width: 120px;">日立7600(电泳图)</td>
+						<td style="width: auto;">tu</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20202">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105005</td>
+						<td style="width: 120px;">微量元素（末梢血）</td>
+						<td style="width: auto;">wlysmsx</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20205">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101017</td>
+						<td style="width: 120px;">百特五分类血球仪</td>
+						<td style="width: auto;">btxqy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20207">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102008</td>
+						<td style="width: 120px;">骨代谢分析仪</td>
+						<td style="width: auto;">gdxfxy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20208">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102016</td>
+						<td style="width: 120px;">科研检测</td>
+						<td style="width: auto;">kyjc</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20210">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102015</td>
+						<td style="width: 120px;">UNION</td>
+						<td style="width: auto;">UNION</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20212">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101011</td>
+						<td style="width: 120px;">赛科希德血液流变仪</td>
+						<td style="width: auto;">skxd</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20214">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105007</td>
+						<td style="width: 120px;">铅数据2(日立)</td>
+						<td style="width: auto;">wlysmsx</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">others</td>
+					</tr>
+				
+					<tr id="20217">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000199001</td>
+						<td style="width: 120px;">无创产前基因检测</td>
+						<td style="width: auto;">wcjy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20218">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">200015</td>
+						<td style="width: 120px;">（停用）时间分辨免疫荧光分析仪（TM15）(虚拟)</td>
+						<td style="width: auto;">无</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20220">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101025</td>
+						<td style="width: 120px;">华科泰-化学发光免疫分析仪</td>
+						<td style="width: auto;">xn800</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20221">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109021</td>
+						<td style="width: 120px;">广州金域检验</td>
+						<td style="width: auto;">广州金域检验</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20228">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102009</td>
+						<td style="width: 120px;">自身免疫抗体系列</td>
+						<td style="width: auto;">zsmy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20229">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102010</td>
+						<td style="width: 120px;">肝炎病毒检测系列</td>
+						<td style="width: auto;">gybd</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20230">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102011</td>
+						<td style="width: 120px;">不孕不育检测系列</td>
+						<td style="width: auto;">byby</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20231">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102012</td>
+						<td style="width: 120px;">优生优育检测系列</td>
+						<td style="width: auto;">ysys</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20233">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101012</td>
+						<td style="width: 120px;">性激素检测仪器（旧单位）</td>
+						<td style="width: auto;">xjsjdw</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20234">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109022</td>
+						<td style="width: 120px;">（停用）爱健生物技术有限公司</td>
+						<td style="width: auto;">aj</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20235">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109023</td>
+						<td style="width: 120px;">中大附一泌尿外科</td>
+						<td style="width: auto;">mnk</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20236">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101013</td>
+						<td style="width: 120px;">博奥赛斯高血压仪器</td>
+						<td style="width: auto;">bass</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20237">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105008</td>
+						<td style="width: 120px;">HP测试仪</td>
+						<td style="width: auto;">HP测试仪</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">others</td>
+					</tr>
+				
+					<tr id="20238">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109024</td>
+						<td style="width: 120px;">广东省职业病防治院</td>
+						<td style="width: auto;">广东省职业病防治院</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20239">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104005</td>
+						<td style="width: 120px;">无创产筛</td>
+						<td style="width: auto;">wccs</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20240">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101014</td>
+						<td style="width: 120px;">东曹G8</td>
+						<td style="width: auto;">DCG8</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20241">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109025</td>
+						<td style="width: 120px;">康圣达（融合基因）</td>
+						<td style="width: auto;">康圣达（融合基因）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20242">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102013</td>
+						<td style="width: 120px;">孕前优生检测仪</td>
+						<td style="width: auto;">YQYS</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20243">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101016</td>
+						<td style="width: 120px;">全自动化学发光仪（2）</td>
+						<td style="width: auto;">QZDFGY2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20244">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101019</td>
+						<td style="width: 120px;">全自动化学发光仪（3）</td>
+						<td style="width: auto;">QZDFGY3</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20245">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104003</td>
+						<td style="width: 120px;">Y缺检验仪器</td>
+						<td style="width: auto;">YQ</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20246">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105009</td>
+						<td style="width: 120px;">食物不良反应检测（sIgG4）</td>
+						<td style="width: auto;">sigg4</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20248">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109026</td>
+						<td style="width: 120px;">广州血液中心</td>
+						<td style="width: auto;">广州血液中心</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20249">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000199002</td>
+						<td style="width: 120px;">CDC糖化血红蛋白（质控）</td>
+						<td style="width: auto;">CDC糖化血红蛋白（质控）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20250">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109027</td>
+						<td style="width: 120px;">电泳外包</td>
+						<td style="width: auto;">电泳外包</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20252">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103007</td>
+						<td style="width: 120px;">易感基因检测</td>
+						<td style="width: auto;">YGJY</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20253">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101020</td>
+						<td style="width: 120px;">东曹G8(慈铭)</td>
+						<td style="width: auto;">东曹G8(慈铭)</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20254">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105010</td>
+						<td style="width: 120px;">微量元素（末梢血锰铅）</td>
+						<td style="width: auto;">微量元素（末梢血锰铅）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20255">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105011</td>
+						<td style="width: 120px;">博晖2200多元素分析仪</td>
+						<td style="width: auto;">博晖2200多元素分析仪</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20256">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101021</td>
+						<td style="width: 120px;">迈瑞BC-5800—2</td>
+						<td style="width: auto;">迈瑞BC-5800—2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20257">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109028</td>
+						<td style="width: 120px;">广东省微生物研究所</td>
+						<td style="width: auto;">广东省微生物研究所</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20258">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104004</td>
+						<td style="width: 120px;">遗传代谢病（丰华）</td>
+						<td style="width: auto;">遗传代谢病（丰华）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20259">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102003</td>
+						<td style="width: 120px;">华科泰-化学发光免疫分析仪2</td>
+						<td style="width: auto;">xn802</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="20262">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101027</td>
+						<td style="width: 120px;">安图化学发光仪-1</td>
+						<td style="width: auto;">安图化学发光仪-1</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20265">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109029</td>
+						<td style="width: 120px;">康圣达（常规项目）</td>
+						<td style="width: auto;">康圣达（常规项目）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20266">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105012</td>
+						<td style="width: 120px;">phadia250</td>
+						<td style="width: auto;">phadia250</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20267">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105013</td>
+						<td style="width: 120px;">食物不耐受sIgG检测</td>
+						<td style="width: auto;">食物不耐受sIgG检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="20270">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101023</td>
+						<td style="width: 120px;">日立7600(基线)</td>
+						<td style="width: auto;">日立7600(基线)</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="20272">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105017</td>
+						<td style="width: 120px;">phadia250_O</td>
+						<td style="width: auto;">phadia250_O</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="2080">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000106002</td>
+						<td style="width: 120px;">微生物血清学</td>
+						<td style="width: auto;">xwj</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="2081">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109001</td>
+						<td style="width: 120px;">中大附一常规室</td>
+						<td style="width: auto;">中大附一常规室</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="2091">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109002</td>
+						<td style="width: 120px;">广医附二</td>
+						<td style="width: auto;">广医附二</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="2093">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103001</td>
+						<td style="width: 120px;">肝炎系列检验仪器</td>
+						<td style="width: auto;">gyxljyyq</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="2094">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109003</td>
+						<td style="width: 120px;">中大附三</td>
+						<td style="width: auto;">中大附三</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="2096">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109004</td>
+						<td style="width: 120px;">广东省中医院</td>
+						<td style="width: auto;">广东省中医院</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="2097">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104002</td>
+						<td style="width: 120px;">分子遗传其他项目检验仪器</td>
+						<td style="width: auto;">fzqtyc</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="2098">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101002</td>
+						<td style="width: 120px;">电泳仪(正在使用)</td>
+						<td style="width: auto;">dyy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="40288ea65e79b26f015e7f5590fe019d">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">914153700</td>
+						<td style="width: 120px;">检测设备</td>
+						<td style="width: auto;">IT</td>
+						<td style="display: none;">true</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a5125f98e01516075e5203dd5">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102023</td>
+						<td style="width: 120px;">激素检测</td>
+						<td style="width: auto;">激素检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a53d6db3c0153eedd43ad3033">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000199005</td>
+						<td style="width: 120px;">叶酸代谢能力基因检测</td>
+						<td style="width: auto;">叶酸代谢能力基因检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a551580a8015525f63e5f4360">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101046</td>
+						<td style="width: 120px;">耳聋基因NEW</td>
+						<td style="width: auto;">耳聋基因NEW</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="4028908a551580a80155260feb3f4e9f">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101047</td>
+						<td style="width: 120px;">SR-1-100尿碘检测仪</td>
+						<td style="width: auto;">ND</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="4028908a5558b165015572d22259142c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101048</td>
+						<td style="width: 120px;">自动光激化学发光检测仪(LiCA500)2</td>
+						<td style="width: auto;">1000101048</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a5558b165015572d22fd6142e">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101049</td>
+						<td style="width: 120px;">自动光激化学发光检测仪(LiCA500)3</td>
+						<td style="width: auto;">1000101049</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a5558b165015572d238331430">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101050</td>
+						<td style="width: 120px;">自动光激化学发光检测仪(LiCA500)4</td>
+						<td style="width: auto;">1000101050</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a559687ea0155a0401e15210b">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101051</td>
+						<td style="width: 120px;">华曦司法鉴定所</td>
+						<td style="width: auto;">华曦司法鉴定所</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a559687ea0155a06261042d56">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101052</td>
+						<td style="width: 120px;">科斯迈全自动化学发光测定仪2</td>
+						<td style="width: auto;">科斯迈全自动化学发光测定仪2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a55de9e42015601e59e1f00ef">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101054</td>
+						<td style="width: 120px;">总IGE检测</td>
+						<td style="width: auto;">总IGE检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a55de9e6b0155e8951d3c29f8">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101053</td>
+						<td style="width: 120px;">酒精耐受力基因检测</td>
+						<td style="width: auto;">酒精耐受力基因检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4028908a56a0d5a80156b16540ab7d71">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101055</td>
+						<td style="width: 120px;">解放军总医院聋病分子诊断中心</td>
+						<td style="width: auto;">解放军总医院聋病分子诊断中心</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88949a734350149a7cfedc7507c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104011</td>
+						<td style="width: 120px;">遗传代谢病（达瑞）</td>
+						<td style="width: auto;">ycdxbdr</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8894b0138dd014b016f714c1096">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105025</td>
+						<td style="width: 120px;">Phadia-250（盒子）</td>
+						<td style="width: auto;">1000105025</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8894b0138dd014b0172646c10e3">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102022</td>
+						<td style="width: 120px;">酶标仪-宝特2（盒子）</td>
+						<td style="width: auto;">1000102022</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b14af97ce3d02">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104012</td>
+						<td style="width: 120px;">无创产筛（金域标本）</td>
+						<td style="width: auto;">1000104012</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8894d00596b014d0326df6d0505">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109035</td>
+						<td style="width: 120px;">广州军区机关门诊部</td>
+						<td style="width: auto;">1000109035</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8894e099ab8014e2ede0f567472">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101037</td>
+						<td style="width: 120px;">科美全自动化学发光仪-1500</td>
+						<td style="width: auto;">1000101037</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8894fbbe8a8014fd4f78f6e4320">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000107004</td>
+						<td style="width: 120px;">二代测序仪</td>
+						<td style="width: auto;">1000107004</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e889503aa1a801505b0a270c2892">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101041</td>
+						<td style="width: 120px;">自动光激化学发光检测仪(LiCA500)</td>
+						<td style="width: auto;">1000101041</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e889503aa1a801505b0b8bec28d9">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101042</td>
+						<td style="width: 120px;">AE-180全自动化学发光测定仪</td>
+						<td style="width: auto;">1000101042</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88950ae26f70150b2376f894992">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103009</td>
+						<td style="width: 120px;">QF-PCR快速诊断报告</td>
+						<td style="width: auto;">QF-PCR</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8895125f80601513792931a1c59">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109037</td>
+						<td style="width: 120px;">珠江医院</td>
+						<td style="width: auto;">珠江医院</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88951f5c4240151f6d95e0109db">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109040</td>
+						<td style="width: 120px;">睿玻生物科技有限公司</td>
+						<td style="width: auto;">睿玻生物科技有限公司</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8895229e6ce01522fc8fb004a03">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109041</td>
+						<td style="width: 120px;">中山大学附属第一医院黄埔院区</td>
+						<td style="width: auto;">中山大学附属第一医院黄埔院区</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8895276f4c201527c67cc4f6e2a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109042</td>
+						<td style="width: 120px;">中大附三神经内科</td>
+						<td style="width: auto;">中大附三神经内科</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e8895398edeb01539d51f5aa3d0a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109044</td>
+						<td style="width: 120px;">睿玻生物有限公司（SCA1）</td>
+						<td style="width: auto;">睿玻生物有限公司（SCA1）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a46001a190146045aad6014c1">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105015</td>
+						<td style="width: 120px;">phadia250（ECP）</td>
+						<td style="width: auto;">phadia250（ECP）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="4af4e88a4665c719014667956d4d7521">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105016</td>
+						<td style="width: 120px;">phadia250（ECP）_O</td>
+						<td style="width: auto;">phadia250（ECP）_O</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a466817d901466a0f691b276e">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109030</td>
+						<td style="width: 120px;">广州市胸科医院</td>
+						<td style="width: auto;">gzxkyy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a470f2094014715762d7d3bde">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109032</td>
+						<td style="width: 120px;">广州医学院附属第二医院-血液科</td>
+						<td style="width: auto;">gyeyxy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4723b58a01472480102a45b8">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101029</td>
+						<td style="width: 120px;">迈瑞BC-5800—3</td>
+						<td style="width: auto;">迈瑞BC-5800—3</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="4af4e88a4757222f0147623a03f23b7b">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102017</td>
+						<td style="width: 120px;">呼吸道病毒检测</td>
+						<td style="width: auto;">hxdbd</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a47857cb7014785cdb4ed0d29">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105018</td>
+						<td style="width: 120px;">博晖2101S钨舟元素分析仪</td>
+						<td style="width: auto;">博晖2101S钨舟元素分析仪</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a483a9c3e014845020a2f418c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109033</td>
+						<td style="width: 120px;">广州市妇女儿童医疗中心</td>
+						<td style="width: auto;">fnetylzx</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a495621ea01495abbef096e60">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101030</td>
+						<td style="width: 120px;">泰格科信GH体检</td>
+						<td style="width: auto;">ghtj(tg)</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a498362e601499860b1592ac2">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101032</td>
+						<td style="width: 120px;">康金发光仪</td>
+						<td style="width: auto;">dp12</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a498362e601499861bc8f2ba4">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101033</td>
+						<td style="width: 120px;">科美发光仪</td>
+						<td style="width: auto;">dp13</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a498362e6014998d0f75a71ce">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101035</td>
+						<td style="width: 120px;">科美发光仪2</td>
+						<td style="width: auto;">km2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a49e654b50149eb645c2a178c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109034</td>
+						<td style="width: 120px;">康圣达电泳外包</td>
+						<td style="width: auto;">ksddy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a49faa68b014a0488b3443ecd">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000103008</td>
+						<td style="width: 120px;">HPV（HC2）检测</td>
+						<td style="width: auto;">hc2</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4a7bb69b014a809341571184">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102018</td>
+						<td style="width: 120px;">酶标仪（宝特）（盒子）</td>
+						<td style="width: auto;">酶标仪（宝特）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4a7bb69b014a8093d21d11f1">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102019</td>
+						<td style="width: 120px;">酶标仪（MK3）（盒子）</td>
+						<td style="width: auto;">酶标仪（MK3）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4a7bb69b014a80945e311221">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102020</td>
+						<td style="width: 120px;">酶标仪（DNM-9602）</td>
+						<td style="width: auto;">酶标仪（DNM-9602）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4a7bb69b014a8094e43912ad">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102021</td>
+						<td style="width: 120px;">时间分辨免疫荧光分析仪（DR6608)</td>
+						<td style="width: auto;">时间分辨免疫荧光分析仪（DR6608)</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4abf7c7c014ace3f7dfd1554">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105019</td>
+						<td style="width: 120px;">酶标仪（DNM-9602）-食物不耐受sIgG检测1（盒子）</td>
+						<td style="width: auto;">1000105019</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4abf7c7c014ace401039155a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105020</td>
+						<td style="width: 120px;">酶标仪（DNM-9602）-食物不耐受sIgG检测2（盒子）</td>
+						<td style="width: auto;">1000105020</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4abf7c7c014ace40a7191560">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105021</td>
+						<td style="width: 120px;">酶标仪（DNM-9602）-过敏原检测（sIgE半定量）（盒子）</td>
+						<td style="width: auto;">1000105021</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4abf7c7c014ace411a061566">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105022</td>
+						<td style="width: 120px;">酶标仪（DNM-9602）-食物不良反应检测（sIgG4）（盒子）</td>
+						<td style="width: auto;">1000105022</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4abf7c7c014ace419167156c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105023</td>
+						<td style="width: 120px;">酶标仪Tecan（盒子）</td>
+						<td style="width: auto;">1000105023</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4abf7c7c014ace4202701572">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000105024</td>
+						<td style="width: 120px;">时间分辨免疫荧光分析仪（DR6601)</td>
+						<td style="width: auto;">1000105024</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4e570dd6014e62978031620c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101038</td>
+						<td style="width: 120px;">罗氏E602</td>
+						<td style="width: auto;">1000101038</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4e570dd6014e6298886a63b5">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101039</td>
+						<td style="width: 120px;">西门子2000Xpi(1)</td>
+						<td style="width: auto;">1000101039</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4e570dd6014e62994f1564f2">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101040</td>
+						<td style="width: 120px;">西门子2000Xpi(2)</td>
+						<td style="width: auto;">1000101040</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4f10b211014f159d06e12bd6">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000107003</td>
+						<td style="width: 120px;">染色体微阵列扫描仪</td>
+						<td style="width: auto;">1000107003</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4f58dd4d014f5de49efc102a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109036</td>
+						<td style="width: 120px;">广州蓝吉生物科技有限公司</td>
+						<td style="width: auto;">广州蓝吉生物科技有限公司</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a4fbbe2ce014fc9917b695ba2">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104013</td>
+						<td style="width: 120px;">地贫基因DP17</td>
+						<td style="width: auto;">dpdb17</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a51bdaac30151ce1e535c369a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109038</td>
+						<td style="width: 120px;">腾飞基因</td>
+						<td style="width: auto;">腾飞基因</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a5229df970152535e3e2d4166">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104014</td>
+						<td style="width: 120px;">地贫MagPix</td>
+						<td style="width: auto;">magpix</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a5392600e015397fc3f654129">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109043</td>
+						<td style="width: 120px;">睿玻生物有限公司（全外显子及部分内含子检测报告）</td>
+						<td style="width: auto;">1000109043</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a5398e7d20153c13ed2606a2c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109045</td>
+						<td style="width: 120px;">佛山市妇幼保健院</td>
+						<td style="width: auto;">佛山市妇幼保健院</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a5398e7d20153cbd5aed807d3">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000199004</td>
+						<td style="width: 120px;">易感基因系统</td>
+						<td style="width: auto;">易感基因系统</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a53c8174f0153ea9ca10b497a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101043</td>
+						<td style="width: 120px;">科斯迈全自动化学发光测定仪</td>
+						<td style="width: auto;">SMART 3000</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153f45098981ce7">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101044</td>
+						<td style="width: 120px;">西门子1800</td>
+						<td style="width: auto;">西门子1800</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="4af4e88a548d66d501549dd76fb6480d">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101045</td>
+						<td style="width: 120px;">常规趋势图专用虚拟仪器</td>
+						<td style="width: auto;">常规趋势图专用虚拟仪器</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">bidirectional_no</td>
+					</tr>
+				
+					<tr id="4af4e8bd45b1d2d30145b71974f90110">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000199003</td>
+						<td style="width: 120px;">耳聋基因</td>
+						<td style="width: auto;">耳聋基因</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="5b0cfd2bb4907e42709d8f09">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">CS0529</td>
+						<td style="width: 120px;">日光仪</td>
+						<td style="width: auto;">529</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">others</td>
+					</tr>
+				
+					<tr id="5b0f7111b4907e4a5068c786">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">531</td>
+						<td style="width: 120px;">商业线专用</td>
+						<td style="width: auto;">531</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="5b31a137b4907e20a198e09a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">wuchuanplus</td>
+						<td style="width: 120px;">无创PLUS</td>
+						<td style="width: auto;">wuchuanplus</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">others</td>
+					</tr>
+				
+					<tr id="5b31a79bb4907e20a198e199">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">erlongjiyinhebing</td>
+						<td style="width: 120px;">耳聋基因报告模板(合并)</td>
+						<td style="width: auto;">erlongjiyinhebing</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">unidirectional</td>
+					</tr>
+				
+					<tr id="5b5824d1b4907e61182ac901">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">888888888</td>
+						<td style="width: 120px;">云康测试设备A</td>
+						<td style="width: auto;">YKtest</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="5b72489fb4907e7ec3ab5f56">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">nythmu</td>
+						<td style="width: 120px;">尿液有机酸模板</td>
+						<td style="width: auto;">nythmu</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f8556ff267a015709043aa71242">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101056</td>
+						<td style="width: 120px;">痛风用药安全个性化基因检测</td>
+						<td style="width: auto;">1000101056</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f8557b85c100157c253ea961487">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101058</td>
+						<td style="width: 120px;">上海分子病理实验室</td>
+						<td style="width: auto;">1000101058</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f855b2951ae015b4150f0611c61">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000104015</td>
+						<td style="width: 120px;">Y缺检验仪器（8个位点）</td>
+						<td style="width: auto;">Y缺检验仪器（8个位点）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f855b42bfa1015b56abd6fd57be">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000112003</td>
+						<td style="width: 120px;">儿童癫痫个体化用药基因检测</td>
+						<td style="width: auto;">儿童癫痫个体化用药基因检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f855b42bfa1015b56ad67ee57ce">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">TYZH00664</td>
+						<td style="width: 120px;">氨基糖苷类抗生素个体化用药基因检测</td>
+						<td style="width: auto;">氨基糖苷类抗生素个体化用药基因检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f855b9f6f14015ba38541f20e94">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109048</td>
+						<td style="width: 120px;">中大附三-风湿科</td>
+						<td style="width: auto;">中大附三-风湿科</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f855c291f3a015c3475214e49a9">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109049</td>
+						<td style="width: 120px;">广州市胸科医院（结核杆菌）</td>
+						<td style="width: auto;">gzsxkyy</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f855cf34c84015d11ad483c660e">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101064</td>
+						<td style="width: 120px;">西门子 Centaur XPT（1）</td>
+						<td style="width: auto;">西门子 Centaur XPT（1）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b79f855cf34c84015d122cf6061361">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101065</td>
+						<td style="width: 120px;">西门子 Centaur XPT（2）</td>
+						<td style="width: auto;">西门子 Centaur XPT（2）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75730bc2601573cb8cded7844">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101057</td>
+						<td style="width: 120px;">睿玻生物科技有限公司（常规报告）</td>
+						<td style="width: auto;">1000101057</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b757cf87860157e5d7cffb1f33">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000107005</td>
+						<td style="width: 120px;">细胞遗传室仪器</td>
+						<td style="width: auto;">1000107005</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b7589649e70158995d32ed0e82">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101059</td>
+						<td style="width: 120px;">中山三院（痛风）</td>
+						<td style="width: auto;">痛风</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b758a640fa0158aa46a3e60bb2">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101060</td>
+						<td style="width: 120px;">肯帝SUNRISE酶标仪</td>
+						<td style="width: auto;">1000101057</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b758a640fa0158aa4a34630cbe">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101061</td>
+						<td style="width: 120px;">东曹G8（2）</td>
+						<td style="width: auto;">1000101061</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b758bdf4dd0158cd0a68c770e3">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102030</td>
+						<td style="width: 120px;">德夏全自动酶免仪（AE1100）</td>
+						<td style="width: auto;">1000102030</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b758f7a55c0159017752430018">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000102024</td>
+						<td style="width: 120px;">化学发光免疫分析仪（iFlash3000）</td>
+						<td style="width: auto;">iFlash3000</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75907310801592057818d0428">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109046</td>
+						<td style="width: 120px;">广州嘉检医学检测有限公司</td>
+						<td style="width: auto;">jjyx</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b759abe94e0159c4c5f8540f15">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109047</td>
+						<td style="width: 120px;">广州医科大学附属肿瘤医院</td>
+						<td style="width: auto;">1000109047</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b759abe95b0159b5c24ff32006">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000109117</td>
+						<td style="width: 120px;">南方医院（NIPT）</td>
+						<td style="width: auto;">nfyynipt</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75a89542b015ad0d8d8d77792">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000112001</td>
+						<td style="width: 120px;">雌激素治疗个体化基因检测</td>
+						<td style="width: auto;">1000112001</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75a89542b015ad0da09b677a6">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000112002</td>
+						<td style="width: 120px;">女性个性化补铁基因检测</td>
+						<td style="width: auto;">1000112002</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75b42bdc3015b467158ac7b95">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000113001</td>
+						<td style="width: 120px;">ABI3730xl</td>
+						<td style="width: auto;">ABI3730xl</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75b42bdc3015b4671e6367b98">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000113002</td>
+						<td style="width: 120px;">分子病理免疫组化</td>
+						<td style="width: auto;">分子病理免疫组化</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75b42bdc3015b4672ac167b9a">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000113003</td>
+						<td style="width: 120px;">LeicaDM2500荧光显微镜</td>
+						<td style="width: auto;">LeicaDM2500荧光显微镜</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75bec2e2f015bf0e66d142965">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000112005</td>
+						<td style="width: 120px;">个体化用药基因检测</td>
+						<td style="width: auto;">个体化用药基因检测</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75c2919ce015c62bd8c1a48f9">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101062</td>
+						<td style="width: 120px;">SEBIA全自动毛细管电泳仪（1）</td>
+						<td style="width: auto;">SEBIA（1）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75c2919ce015c62c1285c4904">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000101063</td>
+						<td style="width: 120px;">SEBIA全自动毛细管电泳仪（2）</td>
+						<td style="width: auto;">SEBIA（2）</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+					<tr id="f2b7c0b75d311c7b015d34a390544e7c">
+						<td style="width: 15px;"></td>
+						<td style="width: 75px;">1000113004</td>
+						<td style="width: 120px;">ABI 7500</td>
+						<td style="width: auto;">ABI 7500</td>
+						<td style="display: none;">false</td>
+						<td style="display: none;">none</td>
+					</tr>
+				
+			</table>
+		</div>
+	</div>
+
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------选择客户下拉Grid数据源------------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="gridCustomer" class="tablebox_02" style="width: 300px; height: 200px;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr class="tablehead">
+				<td style="width: 15px;">&nbsp;</td>
+				<td style="width: 120px;">渠道名称</td>
+				<td style="width: 75px;">客户代码</td>
+				<td style="width: auto;">助记符</td>
+			</tr>
+		</table>
+		<div class="tablelist" style="width: 100%; height: 176px;">
+			<!--tablebox_02 tablelist start-->
+			<table cellspacing="0" cellpadding="0">
+				
+					<tr id="f2b7c0b759c5a0d6015a6a1782e2768c">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">惠州市惠阳区新圩镇中心卫生院（体检）</td>
+						<td style="width: 75px;">44110771</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f8558bdfb4a0158d6e32c4c681e">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广东省中医院珠海医院病理</td>
+						<td style="width: 75px;">44030011</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f8559c5a2d7015a7e56fa78108e">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">揭阳市揭东区曲溪社区卫生服务中心</td>
+						<td style="width: 75px;">44200610</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="2014100500001629">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州达安临床检验中心</td>
+						<td style="width: 75px;">44010010</td>
+						<td style="width: auto;">gzda</td>
+					</tr>
+				
+					<tr id="f2b7c0b75cf34df0015d0b78928c6d76">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州丹溪医疗门诊部责任有限公司</td>
+						<td style="width: 75px;">44017980</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="5ba09169308f2e3a71b9dd6f">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">陈江社区卫生服务中心（全民体检）</td>
+						<td style="width: 75px;">44110361</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="20608">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">佛山市顺德区勒流医院</td>
+						<td style="width: 75px;">44220010</td>
+						<td style="width: auto;">gd</td>
+					</tr>
+				
+					<tr id="2014100500001636">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">北京金雨千红</td>
+						<td style="width: 75px;">11010010</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f855a895437015a8dc5433366f7">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州市好大夫口腔门诊部有限公司</td>
+						<td style="width: 75px;">44017790</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f855d3b2ec1015d54f64dd454af">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州爱贝儿科专科门诊部有限公司</td>
+						<td style="width: 75px;">44018010</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="201598">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">东莞市清溪镇柏丽（清厦）综合门诊部</td>
+						<td style="width: 75px;">44170910</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f855d5525a0015d58dc0f9c2995">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">茂名市电白区妇幼保健院</td>
+						<td style="width: 75px;">44100410</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b7c0b75ad17a1e015aeefafc8b0d6f">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州青苗口腔门诊部有限公司</td>
+						<td style="width: 75px;">44017850</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="201496">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">佛山市禅城区澜石医院</td>
+						<td style="width: 75px;">44050370</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="20700">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">东莞长安港湾医院</td>
+						<td style="width: 75px;">44170770</td>
+						<td style="width: auto;">gw</td>
+					</tr>
+				
+					<tr id="f2b79f855cbf5f48015cceaeb683336e">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">李昊西医内科诊所</td>
+						<td style="width: 75px;">44052750</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f85594a11d80159730ff81f7181">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">佛山市南海区第四人民医院（临检及无创）</td>
+						<td style="width: 75px;">44050643</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e8895267d3270152689966471ab5">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">中山大学眼科中心</td>
+						<td style="width: 75px;">44106100</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="5ba091a2308f2e3a71b9dd71">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">惠州仲恺高新技术产业开发区惠环街道办事处社区卫生服务中心（全民体检）</td>
+						<td style="width: 75px;">44112991</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b7c0b75d5526aa015d5da979192e9b">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">郑州大学附属郑州中心医院</td>
+						<td style="width: 75px;">41010130</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="20470">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">佛山市南海区桂城医院</td>
+						<td style="width: 75px;">44230020</td>
+						<td style="width: auto;">gc</td>
+					</tr>
+				
+					<tr id="4af4e889505f5ac401506acbae7c131a">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广东省计划生育科学技术研究所</td>
+						<td style="width: 75px;">44015950</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b7c0b75b42bda8015b805aa8f20d2b">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">安陆市妇幼保健院</td>
+						<td style="width: 75px;">42100010</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="201461">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州达安临床检验中心（临时）</td>
+						<td style="width: 75px;">44010017</td>
+						<td style="width: auto;">gzdals</td>
+					</tr>
+				
+					<tr id="f2b79f855c291f3a015c5dca52b77210">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广东省汕尾市海丰县海城镇卫生院</td>
+						<td style="width: 75px;">44040870</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e88a462832530146287c0d203869">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">江门市江海区人民医院</td>
+						<td style="width: 75px;">44090660</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e8895233e26501523f7a81925f44">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">D海丰县彭湃纪念医院</td>
+						<td style="width: 75px;">44040550</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b7c0b75ca0ea09015cd34f17da59c1">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州花都区广北医疗门诊部</td>
+						<td style="width: 75px;">44017960</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e88a55edb50a0155fcbe10bf5ea4">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">九江市庐山区人民医院（无创）</td>
+						<td style="width: 75px;">36075680</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="20369">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州市白云区第三人民医院良田分院</td>
+						<td style="width: 75px;">44010631</td>
+						<td style="width: auto;">byhh</td>
+					</tr>
+				
+					<tr id="202300">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广东省公安消防总队门诊部</td>
+						<td style="width: 75px;">44014340</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="20367">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州市白云区江高镇卫生院</td>
+						<td style="width: 75px;">44012510</td>
+						<td style="width: auto;">ssyy</td>
+					</tr>
+				
+					<tr id="202707">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">D东莞市凤岗医院</td>
+						<td style="width: 75px;">44170145</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="20265">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">中山医科大学</td>
+						<td style="width: 75px;">44010300</td>
+						<td style="width: auto;">jtys</td>
+					</tr>
+				
+					<tr id="20368">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州市白云区第三人民医院</td>
+						<td style="width: 75px;">44010630</td>
+						<td style="width: auto;">byhh</td>
+					</tr>
+				
+					<tr id="f2b79f855d15cb34015d1b09980557f5">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">汕尾市亮睛工程眼科医院</td>
+						<td style="width: 75px;">44040910</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b7c0b757cf87860157fec061a8683e">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州市白云区第三人民医院良田分院（职工体检）</td>
+						<td style="width: 75px;">44010633</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e88a50226b8c015065894ff05ee9">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">海南美年大健康医院有限公司</td>
+						<td style="width: 75px;">46010140</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f855d5525a0015d58dea47029cc">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">阳山县妇幼保健计划生育服务中心</td>
+						<td style="width: 75px;">44163090</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="201324">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">中山大学附属第三医院（物流对接）</td>
+						<td style="width: 75px;">90000060</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e8895205d7af01520fda87b32837">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州爱博恩妇产医院有限公司</td>
+						<td style="width: 75px;">44016040</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e88a51d632a00151f6053e386546">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">清远市妇幼保健院</td>
+						<td style="width: 75px;">44160260</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="4af4e88a5193d59b0151aa19ddfb4142">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">连山壮族瑶族自治县人民医院</td>
+						<td style="width: 75px;">44164750</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b7c0b75d311c7b015d3b0fd0fa1d84">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">贵州医科大学附属医院</td>
+						<td style="width: 75px;">52010070</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f855cbf5f48015cd303aae81f22">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">佛山市南海区第八人民医院（金沙院区）</td>
+						<td style="width: 75px;">44050770</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b79f855d3b2ec1015d542d655621f0">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">汕头大学医学院第一附属医院龙湖医院（病理项目）</td>
+						<td style="width: 75px;">44040920</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="f2b7c0b757cf87860157e038cf096232">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">肇庆市高要区中医院</td>
+						<td style="width: 75px;">44080440</td>
+						<td style="width: auto;"></td>
+					</tr>
+				
+					<tr id="20158">
+						<td style="width: 15px;"></td>
+						<td style="width: 120px;">广州市第十二人民医院</td>
+						<td style="width: 75px;">44010070</td>
+						<td style="width: auto;">gd</td>
+					</tr>
+				
+			</table>
+		</div>
+	</div>
+
+	
+	
+<!-- ----------------------------------上传弹出弹出窗口------------------------------------------ -->
+<div id="imgInputWin"
+	style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;"
+	class="alertWindowNew">
+	<h1 align="center">
+		正在加载...
+	</h1>
+</div>
+<div id="imgEditWin" style="display:none;position: absolute;z-index:999; top: 0px;left: 0px;width: 100%;height:100%;border:1px #A4BED4 solid;">
+		<h1 align="center">正在加载...</h1>
+</div>
+
+	
+<!-- ----------------------------------模板录入弹出窗口------------------------------------------ -->
+<div id="templateInputWin"
+	style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+	<div class="alertWindowNew"></div>
+	<div id="templateGrid1"
+		style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 550px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;">
+		<div class="tablebox_02" style="width: 100%;">
+			<table border="0" cellspacing="0" cellpadding="0"
+				style="width: 100%;">
+				<tr class="tablehead">
+					<td style="width: 15px;">
+						&nbsp;
+					</td>
+					<td style="width: 28px;">
+						<input id="CheckedAll" name="CheckedAll" type="checkbox" value=""
+							style="margin-top: 4px;" />
+					</td>
+					<td style="width: 200px;">
+						项目名称
+					</td>
+					<td style="width: auto;">
+						项目模板
+					</td>
+				</tr>
+			</table>
+			<div class="tablelist" style="height: 303px;">
+				<table id="mblrTbody" border="0" cellspacing="0" cellpadding="0"
+					style="width: 100%;">
+					<tr>
+						<td style="width: 15px;">
+							&nbsp;
+						</td>
+						<td style="width: 28px;">
+							<input name="" type="checkbox" value=""
+								style="margin-top: 4px; margin-left: 7px;" />
+						</td>
+						<td style="width: 65px;"></td>
+						<td style="width: 65px;"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div>
+			<table>
+				<tr>
+					<td style="padding-left: 410px;">
+						<div class="buttonbox_01">
+							<div class="buttonstyle_01">
+								<a id="templateChoiceBtn">确定</a>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="buttonbox_01">
+							<div class="buttonstyle_01">
+								<a id="templateCancelBtn">取消</a> 
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------Q键弹出框----------------------------------------
+	--------------------------------------------------------------------------------->
+	<div id=divForQWin style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div id="divForQ" style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 550px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;"></div>
+	</div>
+	
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------建议解释弹出框----------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="divForReportRemarkAlertWin" style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div id="divForReportRemarkAlert" style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 550px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;">
+			<table style="width: 100%; height: 93%">
+				<tr>
+					<td width="100%" height="6%">请确认下面的建议解释内容,确认后会覆盖此标本上的建议解释,需要手工建议解释在此输入框中加上然后就点击确认</td>
+				</tr>
+				<tr>
+					<td width="100%" height="94%">
+						<textarea spellcheck="false" id="txtReportRemarkAlert" cols="40" rows="12" style="width: 100%; height: 100%"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div>
+				<table>
+					<tr>
+						<td style="padding-left: 410px;">
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnReportRemarkAlertSumit">确定</a>
+									</div>
+								</div>
+							
+						</td>
+						<td>
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnReportRemarkAlertQuit">取消</a>
+									</div>
+								</div>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------自动小结弹出框----------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="divForReportBriefAlertfWin" style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div id="divForReportBriefAlert" style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 550px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;">
+			<table style="width: 100%; height: 93%">
+				<tr>
+					<td width="100%" height="6%" >请确认下面的自动小结内容,以下内容由规则公式自动生成,确认后会会覆盖此标本上的自动小结,需要手工自动小结在此输入框中加上然后点击确定</td>
+				</tr>
+				<tr>
+					<td width="100%" height="94%">
+						<textarea spellcheck="false" id="txtReportBriefAlert" cols="40" rows="12" style="width: 100%; height: 100%"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div>
+				<table>
+					<tr>
+						<td style="padding-left: 410px;">
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnReportBriefAlertSumit">确定</a>
+									</div>
+								</div>
+							
+						</td>
+						<td>
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnReportBriefAlertQuit">取消</a>
+									</div>
+								</div>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------仪器结果弹出框----------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="divForInsResultWin" style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div id="divForInsResult" style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 620px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;"></div>
+	</div>
+
+	<form id="insResultExportForm" action="/NIP/lab/specimenAuditExportInstrumentResult.action">
+		<input id="ins_name" name="itemName" type="hidden"/>
+		<input id="sub_code" name="subBarCode" type="hidden"/>
+		<input id="insResultCurrentID" type="hidden" name="currentSpeId">
+		<input id="insResultInsID" type="hidden" name="instrumentId">
+	</form>
+	
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------重做弹出框-------------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="divForReDoWin" style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div id="divForReDo" style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 550px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;">
+			<table style="width: 100%; height: 93%">
+				<tr>
+					<td width="100%" height="6%" id="txtReDoTips"></td>
+				</tr>
+				<tr>
+					<td width="100%" height="94%">
+						<textarea spellcheck="false" id="txtReDo" cols="40" rows="12" style="width: 100%; height: 100%"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div>
+				<table>
+					<tr>
+						<td style="padding-left: 410px;">
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnReDoSumit">确定</a>
+									</div>
+								</div>
+							
+						</td>
+						<td>
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnReDoQuit">取消</a>
+									</div>
+								</div>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------删除项目弹出框-------------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="divForDelItemWin" style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div id="divForDelItem" style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 550px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;">
+			<table style="width: 100%; height: 93%">
+				<tr>
+					<td width="100%" height="6%" id="txtDelItemTips"></td>
+				</tr>
+				<tr>
+					<td width="100%" height="94%">
+						<textarea spellcheck="false" id="txtDelItem" cols="40" rows="12" style="width: 100%; height: 100%"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div>
+				<table>
+					<tr>
+						<td style="padding-left: 410px;">
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnDelItemSumit">确定</a>
+									</div>
+								</div>
+							
+						</td>
+						<td>
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnDelItemQuit">取消</a>
+									</div>
+								</div>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!---------------------------------------------------------------------- 
+	-----------------------------操作日志弹出框--------------------------------
+	------------------------------------------------------------------------>
+	<div id="divForOperationLog" style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div style="background-color: #d0dded; position: absolute; top: 4%; left: 19%; width: 800px; height: 500px; border: 1px #A4BED4 solid; overflow: hidden;">
+			<div class="title_for_alert">
+				<ul>
+					<li id="tabForOLNote" class="li_for_alert now_for_alert" >节点信息</li>
+					<li id="tabForOLLog" class="li_for_alert">修改日志</li>
+					<li id="tabForOLRemark" class="li_for_alert">操作备注</li>
+				</ul>
+			</div>
+			<div id="tableForOperationLog" class="boxstyle_for_alert">
+			</div>
+			<div style="padding-left: 350px;">
+				<div class="buttonstyle_01" >
+					<a id="btnOperationLogQuit" href="#" >退出</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------专家审核弹出框-------------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="divForSpecialistAuditWin" style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div id="divForSpecialistAudit" style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 550px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;">
+			<table style="width: 100%; height: 93%">
+				<tr>
+					<td width="100%" height="6%" id="txtSpecialistAuditTips"></td>
+				</tr>
+				<tr>
+					<td width="100%" height="94%">
+						<textarea spellcheck="false" id="txtSpecialistAuditDo" cols="40" rows="12" style="width: 100%; height: 100%"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div>
+				<table>
+					<tr>
+						<td style="padding-left: 410px;">
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnSpecialistAuditSumit">确定</a>
+									</div>
+								</div>
+							
+						</td>
+						<td>
+							
+								<div class="buttonbox_01">
+									<div class="buttonstyle_01">
+										<a id="btnSpecialistAuditQuit">取消</a>
+									</div>
+								</div>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<!---------------------------------------------------------------------- 
+	-----------------------------预览报告弹出出框--------------------------------
+	------------------------------------------------------------------------>
+	<div id="divForPreImg"
+		style="display: none; position: absolute; z-index: 999; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div
+			style="background-color: #d0dded; position: absolute; top: 1%; left: 19%; width: 800px; height: 92%; border: 1px #A4BED4 solid; overflow: hidden;">
+			<div id="preImg" style="width: 800px; height: 94%;"></div>
+			<div style="padding-left: 350px;">
+				<div class="buttonstyle_01">
+					<a id="btnDivForPreImgQuit" href="#">退出</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-------------------------------------------------------------------------------- 
+	-----------------------------------S/CO参考区间 弹出框----------------------------------
+	--------------------------------------------------------------------------------->
+	<div id="divForLoadScoWin" style="display: none; position: absolute; z-index: 888; top: 0px; left: 0px; width: 100%; height: 100%; border: 1px #A4BED4 solid;">
+		<div class="alertWindowNew"></div>
+		<div style="background-color: #d0dded; position: absolute; top: 15%; left: 28%; width: 650px; height: 350px; border: 1px #A4BED4 solid; overflow: hidden;">
+			<div>
+				<table>
+					<tr>
+						<td>项目Sco参考区间：</td>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="divForLoadSco">
+			
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,1410 @@
+/**
+ * 产品出库
+ */
+var canSaveApply = true;
+var isNull = true;
+//分页查询(此方法名不可更改,在page.jsp中有调用)
+function pageQuery(id){
+	//判断日期是否都选择了
+	if(trim($("#applyTimeStart").val()) == "" || trim($("#applyTimeEnd").val()) == ""){
+		showMsg('请输入完整的时间段!');
+		return ;
+	}
+	//判断领料单是否为空
+//	var salesOrder = saleOrderForSchCombo.getValue();
+//	if(trim(salesOrder) == "" || trim(salesOrder) == null){
+//		showMsg('领料申请单不能为空!',"提示信息",function(){
+//			//光标转到输入框
+//			saleOrderForSchCombo.focus();
+//		});
+//		return ;
+//	}
+	var otherHeight = $(".group_left_one").outerHeight(true)+pageHeigh+queryTitle+buttonHeight+10;
+	var row = getRow(otherHeight+tableTitle);
+	var formParam = $("#pageForm").serializeArray();
+	$("#tableList").load("${ctx}/spe/productsOutboundList.action?row="+row, formParam, function(){
+		$('.scrollDiv').height($(window).height()-otherHeight-10);
+		clearInfo();
+		//选中第一行，如果有数据的话
+		if (id != null && id != '' && typeof(id) == 'string') { //选中指定行
+			$("#leftTable tr[id='"+id+"'] td:eq(1)").click();
+		} else { //选中第一行
+			$("#leftTable tr:eq(1) td:eq(1)").click();
+		}
+	});
+}
+
+function initPlansUpt(){
+	var salesOrderId = saleOrderForUptCombo.getValue();
+	plansForUptCombo.loadingStart(function(){
+		$("#gridPlansForUpt .tablelist").load("${ctx}/spe/productsOutboundPlansCombo.action", {"salesOrderId" : salesOrderId}, function(){
+			plansForUptCombo.loadingOver();
+		});
+	});
+}
+function initPlansApp(){
+	var salesOrderId = saleOrderForAppCombo.getValue();
+	plansForAppCombo.loadingStart(function(){
+		$("#gridPlansForApp .tablelist").load("${ctx}/spe/productsOutboundPlansCombo.action", {"salesOrderId" : salesOrderId}, function(){
+			plansForAppCombo.loadingOver();
+		});
+	});
+}
+function clearInfo(){
+	$("#productsoutbound_id").val("");
+	$("#barcodeUpt").val("");
+
+	$("#barcodeUpt").attr('readonly',false);
+	$("#barcodeUpt").removeClass('input_readOnly');
+	
+	$("#barcodeViewUpt").val("");
+	applicantForUptCombo.clear();
+	saleOrderForUptCombo.clear();
+	saleOrderForViewCombo.clear();
+	warehouseForUptCombo.clear();
+	plansForUptCombo.clear();
+	customerForUptCombo.clear();
+	areaForUptCombo.clear();
+	jdOrderForUptCombo.clear();
+	clearSalesOrder();
+	jdOrderForUptCombo.clear();
+	
+	$("#expressNumUpt").val("");
+	$("#sendExpressCompany").val("");
+	$("#sendBackExpressNum").val("");
+	$("#returnExpressCompany").val("");
+	$("#signUserNameUpt").val("");
+	$("#signUserPhoneUpt").val("");
+	$("#receiveAddress").val("");
+	$("#agency").val("");
+	$("#businessArea").val("");
+	$("#materielCode").val("");
+	
+	$("#dataTable tr:not(:first)").remove();
+	isNull = true;
+}
+function clearApplyInfo(){
+	$("#barcodeApp").val("");
+	applicantForAppCombo.clear();
+	saleOrderForAppCombo.clear();
+	warehouseForAppCombo.clear();
+	plansForAppCombo.clear();
+	customerForAppCombo.clear();
+	areaForAppCombo.clear();
+	jdOrderForAppCombo.clear();
+	
+	$("#expressNumApp").val("");
+	$("#sendExpressCompanyApp").val("");
+	$("#sendBackExpressNumApp").val("");
+	$("#returnExpressCompanyApp").val("");
+	$("#signUserNameApp").val("");
+	$("#signUserPhoneApp").val("");
+	$("#receiveAddress").val("");
+	$("#agency").val("");
+	$("#businessArea").val("");
+	$("#materielCode").val("");
+	
+	$("#dataAppTable tr:not(:first)").remove();
+}
+//列表行选中
+function rowSelected(e){
+	if(e.target.nodeName!="TD"){
+		return;
+	}
+	
+	$("#leftTable tr").removeClass("selectedbg");
+	$(this).addClass("selectedbg");
+	//$(this).find("td:eq(0) input:checkbox").get(0).checked=true;
+	//显示详细信息
+	var currentRowId = $(this).attr("id");
+	
+	$.ajax({
+        type: "POST", 
+       	url: "${ctx}/spe/productsOutboundDataLoad.action",
+       	data:{id:currentRowId},
+        success: function(result) {
+        	if(result!=null&&result!=""){
+        		setValue(result);     		
+        	}
+        }
+    });
+}
+function plansForUptChange(type, plans, callback){
+	//var plans = plansForUptCombo.getValue();
+	var order = saleOrderForUptCombo.getValue();
+	
+	if (plans == '' || plans == null) {
+		clearPlans();
+		if (callback) {
+			callback();
+		}
+		return;
+	}
+	
+	$.ajax({
+		type: "POST",
+		url: "${ctx}/spe/productsOutboundPlansComJson.action",
+		data: {plansId : plans, orderId : order, type: type, time : new Date().getTime()},
+		success: function(result) {
+			if (result == null || result == '') {
+				return;
+			} else {
+				if (type !='load' && result == 'outAll') {
+			
+					jAlert("该产品已【完全出库】，请重新选择。","提示信息");
+					return;
+				}
+				var jsonData = eval('('+result+')');
+				//var plansId = jsonData.plansId;
+				
+				var plansName = jsonData.plansName;
+				var seriesId = jsonData.seriesId;
+				var seriesName = jsonData.seriesName;
+				var materielCode = jsonData.materielCode;
+				$("#plansNameUpt").val(plansName);
+				$("#seriesIdUpt").val(seriesId);
+				$("#seriesNameUpt").val(seriesName);
+				$("#materielCodeUpt").val(materielCode);
+				$("#materielCode").val(materielCode);
+	
+				//添加新行
+				addNewRow(jsonData,'dataTable');
+				//选中新加的行
+				if (callback) {
+					callback();
+				}
+			}
+		}
+	});
+}
+function clearPlans(){
+	$("#plansNameUpt").val("");
+	$("#seriesIdUpt").val("");
+	$("#seriesNameUpt").val("");
+	$("#materielCodeUpt").val("");
+	$("#materielCode").val("");
+	
+	$("#dataTable tr:not(:first)").empty();
+}
+function clearSalesOrder() {
+	//清除耗材申请单下拉数据时，重新加载产品数据
+	var plansId = plansForUptCombo.getValue();
+	plansForUptCombo.loadingStart(function(){
+		$("#gridPlansForUpt .tablelist").load("${ctx}/spe/productsOutboundPlansCombo.action", null, function(){
+			plansForUptCombo.loadingOver();
+			plansForUptCombo.setValue(plansId);
+			if (plansForUptCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+				plansForUptCombo.clear();
+				clearPlans();
+			}
+		});
+	});
+}
+function clearSalesOrderForApp() {
+	//清除耗材申请单下拉数据时，重新加载产品数据
+	var plansId = plansForAppCombo.getValue();
+	plansForUptCombo.loadingStart(function(){
+		$("#gridPlansForApp .tablelist").load("${ctx}/spe/productsOutboundPlansCombo.action", null, function(){
+			plansForAppCombo.loadingOver();
+			plansForAppCombo.setValue(plansId);
+			if (plansForAppCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+				plansForAppCombo.clear();
+				clearPlans();
+			}
+		});
+	});
+}
+function setValue(result) {
+	//记录前一个条码状态
+	$("#preState").val($("#curState").val());
+	//先调用一次clear
+	clearInfo();
+	var info = eval("(" + result + ")");
+	var dto = info.dto;
+	var barCode = dto.barCode;
+	$("#productsoutbound_id").val(dto.id); //id
+	$("#barcodeUpt").val(barCode); //条码号
+	if (barCode != '' && barCode.length > 0) {
+		$("#barcodeUpt").attr('readonly',true);
+		$("#barcodeUpt").addClass('input_readOnly');
+	} else {
+		$("#barcodeUpt").attr('readonly',false);
+		$("#barcodeUpt").removeClass('input_readOnly');
+	}
+	$("#barcodeViewUpt").val(dto.barCode); //条码号
+	$("#expressNumUpt").val(dto.expressNum); //寄送快递单号
+	$("#sendExpressCompany").val(dto.sendExpressCompany); //寄送快递公司
+	$("#sendBackExpressNum").val(dto.sendBackExpressNum); //回寄快递单号
+	$("#returnExpressCompany").val(dto.returnExpressCompany); //回寄快递公司
+	$("#signUserNameUpt").val(dto.signUserName); //接收人
+	$("#signUserPhoneUpt").val(dto.signUserPhone); //接收人电话
+	$("#receiveAddress").val(dto.receiveAddress); //接收人电话
+	$("#agency").val(dto.agency); //机构/部门
+	$("#businessArea").val(dto.businessArea); //营业区
+	$("#materielCode").val(dto.materielCode); //物料编码
+	
+	$("#curState").val(dto.status); //状态
+	setTimeout(function(){
+		applicantForUptCombo.setValue(dto.applicant);
+		customerForUptCombo.setValue(dto.customerId);
+		areaForUptCombo.setValue(dto.whereaboutsAreaId);
+		warehouseForUptCombo.setValue(dto.warehouse);
+
+//		jdOrderForUptCombo.loadingOver();
+		jdOrderForUptCombo.setValue(dto.systemOrder);
+		if (jdOrderForUptCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+			jdOrderForUptCombo.clear();
+		}
+//		var status = $("#curState").val();
+//		if (status != $("#preState").val()){
+//			saleOrderForUptCombo.loadingStart(function(){
+//				$("#gridSaleOrdersForUpt .tablelist").load("${ctx}/spe/productsOutboundSalesOrderCombo.action", {"status" : status}, function(){
+//					saleOrderForUptCombo.loadingOver();
+//					saleOrderForUptCombo.setValue(dto.salesOrderId);
+//					plansForUptCombo.setValue(dto.plans);
+//					plansForUptChange('load', function(){
+//						if (dto.status == 90) {
+//							//调用耗材申请单下拉框change事件
+//							changeSalesOrder('load', 'edit');
+//							enableInput();
+//						} else {
+//							//调用耗材申请单下拉框change事件
+//							changeSalesOrder('load', 'view');
+//							disableInput();
+//						}
+//					});
+//				});
+//			});
+//			jdOrderForUptCombo.loadingStart(function(){
+//				$("#gridJdOrderForUpt .tablelist").load("${ctx}/spe/productsOutboundJdOrderCombo.action", {"status" : status}, function(){
+//					jdOrderForUptCombo.loadingOver();
+//					jdOrderForUptCombo.setValue(dto.systemOrder);
+//					if (jdOrderForUptCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+//						jdOrderForUptCombo.clear();
+//					}
+//				});
+//			});
+//			
+//		} else {
+//			saleOrderForUptCombo.setValue(dto.salesOrderId);
+//			plansForUptCombo.setValue(dto.plans);
+//			plansForUptChange('load', function(){
+//				if (dto.status == 90) {
+//					//调用耗材申请单下拉框change事件
+//					changeSalesOrder('load', 'edit');
+//					enableInput();
+//				} else {
+//					//调用耗材申请单下拉框change事件
+//					changeSalesOrder('load', 'view');
+//					disableInput();
+//				}
+//			});
+//			
+//			jdOrderForUptCombo.setValue(dto.systemOrder);
+//			if (jdOrderForUptCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+//				jdOrderForUptCombo.clear();
+//			}
+//		}
+		
+		saleOrderForUptCombo.setValue(dto.salesOrderId,dto.salesOrderName);
+		//saleOrderForViewCombo.setValue(dto.salesOrderId);
+		plansForUptCombo.setValue(dto.productId);
+		
+		plansForUptChange('load', dto.productId, function(){
+			if (dto.status == 90) {
+				//调用耗材申请单下拉框change事件F
+				changeSalesOrder('load', 'edit');
+				$("#comboSaleOrderForUpt").show();
+				$("#comboSaleOrderForView").hide();
+				
+				enableInput();
+			} else {
+
+				//调用耗材申请单下拉框change事件
+				changeSalesOrder('load', 'view');
+				//$("#comboSaleOrderForUpt").hide();
+				//$("#comboSaleOrderForView").show();
+				
+				disableInput();
+			}
+		});
+	}, 500);
+
+}
+
+function changeSalesOrder(type, isView){
+	var salesOrderId = saleOrderForUptCombo.getValue();
+	if (isView == 'view') {
+		salesOrderId = saleOrderForViewCombo.getValue();
+	}
+	
+	$.ajax({
+		type : "POST",
+		url : "${ctx}/spe/productsOutboundSalesOrderChange.action?time=" + new Date().getTime(),
+		data:{"salesOrderId" : salesOrderId},
+		success : function(result) {
+			if (result != null && result != '') {
+				
+				if (type != 'load') {
+					//验证状态
+					if (result == 'isOut') {
+						jAlert("该耗材申请单已【完全出库】，请重新选择。","提示信息");
+						return;
+					}
+					var data = eval('('+result+')');
+					var customer = data['customer'];
+					var area = data['area'];
+					var signUserName = data['signUserName'];
+					var signUserPhone = data['signUserPhone'];
+					var receiveAddress = data['receiveAddress'];
+					var agency = data['agency'];
+					var businessArea = data['businessArea'];
+					if (customer != null && customer != null) {
+						customerForUptCombo.setValue(customer);
+						if (customerForUptCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+							customerForUptCombo.clear();
+						}
+					}
+					if (agency != null && agency != null) {
+						$("#agency").val(agency); //机构/部门
+					}
+					if (businessArea != null && businessArea != null) {
+						$("#businessArea").val(businessArea); //营业区
+					}
+					if (area != null && area != null) {
+						areaForUptCombo.setValue(area);
+						if (areaForUptCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+							areaForUptCombo.clear();
+						}
+					}
+					if (signUserName != null && area != signUserName) {
+						$("#signUserNameUpt").val(signUserName); //接收人
+					}
+					if (signUserPhone != null && signUserPhone != null) {
+						$("#signUserPhoneUpt").val(signUserPhone); //接收人电话
+					}
+					if (signUserPhone != null && signUserPhone != null) {
+						$("#signUserPhoneUpt").val(signUserPhone); //接收人电话
+					}
+					if (receiveAddress != null && receiveAddress != null) {
+						$("#receiveAddress").val(receiveAddress); //收件地址
+					}
+				}
+				isNull = false;
+			}
+			var plansId = plansForUptCombo.getValue();
+			plansForUptCombo.loadingStart(function(){
+				$("#gridPlansForUpt .tablelist").load("${ctx}/spe/productsOutboundPlansCombo.action", {"salesOrderId" : salesOrderId}, function(){
+					plansForUptCombo.loadingOver();
+					plansForUptCombo.setValue(plansId);
+					if (plansForUptCombo.getText().indexOf(']未找到,请刷新重试') >= 0) { //如果Id未找到，将下拉框清空
+						plansForUptCombo.clear();
+						clearPlans();
+					}
+				});
+			});
+		}
+	});
+}
+/**
+ * 出库确认
+ */
+function sureOutbound(flag){
+	var array = new Array();
+	var checkFlag = false;
+	var codeFlag = false;
+	var wareFlag = false;
+	var numFlag = false;
+	var companyFlag = false;
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			var barCode = $(this).parent().parent().children('td').eq(1).html();
+			if (barCode == '') {
+				codeFlag = true;
+				return;
+			}
+			var warehouse = $(this).parent().parent().children('td').eq(2).html();
+			if (warehouse == '') {
+				wareFlag = true;
+				return;
+			}
+			if ($(this).parent().parent().children('td').eq(5).html() == '') {
+				numFlag = true;
+				return;
+			}
+			if ($(this).parent().parent().children('td').eq(6).html() == '') {
+				companyFlag = true;
+				return;
+			}
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	if(flag == 1){
+		if(!checkFlag){
+			showMsg("请先勾选要确认的出库单");
+			return;
+		}
+	}else if(flag == 2){
+		if(checkFlag){
+			showMsg("全部出库时请不要勾选出库单");
+			return;
+		}
+	}
+	if (codeFlag) {
+		showMsg("存在未填写“条码号”的出库申请单，不能确认出库，请重新选择","提示信息");
+		return;
+	}
+	if (wareFlag) {
+		showMsg("存在未选择“仓库”的出库申请单，不能确认出库，请重新选择","提示信息");
+		return;
+	}
+	if (numFlag) {
+		showMsg("存在未填写“寄送快递单号”的出库申请单，不能确认出库，请重新选择","提示信息");
+		return;
+	}
+	if (companyFlag) {
+		showMsg("存在未填写“寄送快递公司”的出库申请单，不能确认出库，请重新选择","提示信息");
+		return;
+	}
+	//判断领料单是否为空
+	var salesOrder = saleOrderForUptCombo.getValue();
+	if(trim(salesOrder) == "" || trim(salesOrder) == null){
+		showMsg('领料申请单不能为空!',"提示信息",function(){
+			//光标转到输入框
+			saleOrderForSchCombo.focus();
+		});
+		return ;
+	}
+	if (flag == 1) {
+		jConfirm('确定要确认这些出库单吗？', '提示信息', function(choice){
+			if(choice){
+				$.ajax({
+					type : "POST",
+					url : "${ctx}/spe/productsOutboundSure.action?OutboundType=1&time=" + new Date().getTime(),
+					data:{arrayIds : arrayIds},
+					success : function(result) {
+						if("error" == result){
+							showMsg("操作失败","提示信息");
+						} else if ("blank" == result) {
+							showMsg("没有要操作的数据","提示信息");
+						} else if (result != null && result != '') {
+							showMsg(result,"提示信息");
+							pageQuery(array[0]);
+						}
+					}
+				});
+			}
+		});
+	} else if (flag == 2) {
+		var formParam = $("#pageForm").serializeArray();
+		$.post("${ctx}/spe/productsOutboundSure.action?OutboundType=2&time=" + new Date().getTime(),formParam,function(result) {
+			if("error" == result){
+				showMsg("操作失败","提示信息");
+			} else if (result.indexOf("err|") != -1) {
+				showMsg(result.substr(4,result.length-4),"提示信息");
+			}else if ("blank" == result) {
+				showMsg("没有要操作的数据","提示信息");
+			} else if (result != null && result != '') {
+				showMsg(result,"提示信息");
+				pageQuery();
+			}
+		/*$.ajax({
+			type : "POST",
+			url : "${ctx}/spe/productsOutboundSure.action?OutboundType=2&time=" + new Date().getTime(),
+			data:{},
+			success : function(result) {
+				if("error" == result){
+					showMsg("操作失败","提示信息");
+				} else if (result.indexOf("err|") != -1) {
+					showMsg(result.substr(4,result.length-4),"提示信息");
+				}else if ("blank" == result) {
+					showMsg("没有要操作的数据","提示信息");
+				} else if (result != null && result != '') {
+					showMsg(result,"提示信息");
+					pageQuery();
+				}
+			}*/
+		});
+	}
+}
+
+/**
+ * 取消确认
+ */
+function cancelSureOutbound(){
+	var array = new Array();
+	var checkFlag = false;
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	if (!checkFlag) {
+		showMsg("请先勾选要取消确认的出库单","提示信息");
+		return;
+	}
+	jConfirm('确定要取消确认这些出库单吗？', '提示信息', function(choice){
+		if(choice){
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/spe/productsOutboundCancelSure.action?time=" + new Date().getTime(),
+				data:{arrayIds : arrayIds},
+				success : function(result) {
+					if("error" == result){
+						
+						showMsg("操作失败","提示信息");
+					} else if ("blank" == result) {
+						
+						showMsg("没有要操作的数据","提示信息");
+					} else if (result != null && result != '') {
+						
+						showMsg(result,"提示信息");
+						pageQuery(array[0]);
+					}
+				}
+			});
+		}
+	});
+}
+
+
+function exportExcel(flag){
+	var array = new Array();
+	var checkFlag = false;
+	var resultSize = $("#resultSize").val();
+		//'${page.totalCount}';
+	$("input[name='checkbutton']").each(function(){
+		if ($(this).attr("checked") == "checked") {
+			checkFlag = true;
+			array.push($(this).parent().parent().attr("id"));
+		}
+	});
+	var arrayIds = array.sort().join(",");
+	$("#ids").val(arrayIds);
+	if(flag == 1){
+		if(!checkFlag){
+			showMsg("请先勾选要导出的出库单");
+			return;
+		}
+	}else if(flag == 2){
+		if(checkFlag){
+			showMsg("导出全部时请不要勾选出库单");
+			return;
+		}
+	}
+	/*if(resultSize > 1000){
+		showMsg("导出数据不能超过1000条");
+		return;
+	}*/
+	if(flag == 1){
+		$("#exportType").val("1");
+		$("#excelForm").submit();
+	}else if(flag == 2){
+		$("#pageForm").attr("action","${ctx}/spe/productsOutboundExportExcel.action?exportType=2");
+		/*$.ajax({
+	        type: "POST", 
+	       	url: "${ctx}/spe/productsOutboundExportExcel.action?exportType=2",
+	       	data:formParam,
+	        success: function(result) {
+	        	
+	        }
+	    });*/
+		$("#pageForm").submit();
+		$("#pageForm").attr("action","");
+	}
+	
+}
+
+//初始化时间区间
+function initdate(){
+	var myDate = new Date();
+	var year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+	var month = myDate.getMonth() + 1; //获取月份
+	var day = myDate.getDate();
+	
+	//获取当前日(1-31)
+	if (month < 10) { //月份小于10，前面加上0
+		month = "0" + month;
+	}
+
+	if (day < 10) { //日小于10，前面加上0
+		day = "0" + day;
+	}
+
+	var dateInit = year + "-" + month + "-" + day;
+
+	$("#applyTimeStart").val(dateInit + " 00:00:00");
+	$("#applyTimeEnd").val(dateInit + " 23:59:59");
+}
+
+//js日期比较(yyyy/mm/dd)
+function duibi(a, b) {
+    var arr = a.split("-");
+    var starttime = new Date(arr[0], arr[1], arr[2]);
+    var starttimes = starttime.getTime();
+
+    var arrs = b.split("-");
+    var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+    var lktimes = lktime.getTime();
+    if (starttimes > lktimes) {
+        return false;
+    }else{
+    	return true;
+    }
+}
+
+function disableInput(){
+
+	applicantForUptCombo.disable();
+	saleOrderForUptCombo.disable();
+	saleOrderForViewCombo.disable();
+	warehouseForUptCombo.disable();
+	customerForUptCombo.disable();
+	areaForUptCombo.disable();
+	plansForUptCombo.disable();
+	jdOrderForUptCombo.disable();
+	
+	$("#barcodeUpt").attr("disabled", true); //条码号
+	$("#expressNumUpt").attr("disabled", true); //寄送快递单号
+	$("#sendExpressCompany").attr("disabled", true); //寄送快递公司
+	$("#sendBackExpressNum").attr("disabled", true); //回寄快递单号
+	$("#returnExpressCompany").attr("disabled", true); //回寄快递公司
+	$("#signUserNameUpt").attr("disabled", true); //接收人
+	$("#signUserPhoneUpt").attr("disabled", true); //接收人电话
+	$("#receiveAddress").attr("disabled", true); //收件地址
+	$("#agency").attr("disabled", true); //机构/部门
+	$("#businessArea").attr("disabled", true); //营业区
+
+
+	$("#btnSaveOutbound").attr("disabled", true);
+	
+	$(".btnComment[disabled=disabled]").addClass("disabledBtn grey");
+	$(".btnComment[disabled=disabled]").removeClass("btnComment blue round");
+}
+
+function enableInput(){
+
+	applicantForUptCombo.enable();
+	saleOrderForUptCombo.enable();
+	saleOrderForViewCombo.enable();
+	warehouseForUptCombo.enable();
+	customerForUptCombo.enable();
+	areaForUptCombo.enable();
+	plansForUptCombo.enable();
+	jdOrderForUptCombo.enable();
+	
+	$("#barcodeUpt").attr("disabled", false); //条码号
+	$("#expressNumUpt").attr("disabled", false); //寄送快递单号
+	$("#expressNumUpt").attr("disabled", false); //寄送快递单号
+	$("#sendExpressCompany").attr("disabled", false); //寄送快递公司
+	$("#sendBackExpressNum").attr("disabled", false); //回寄快递单号
+	$("#returnExpressCompany").attr("disabled", false); //回寄快递公司
+	$("#signUserNameUpt").attr("disabled", false); //接收人
+	$("#signUserPhoneUpt").attr("disabled", false); //接收人电话
+	$("#receiveAddress").attr("disabled", false); //收件地址
+	$("#agency").attr("disabled", false); //机构/部门
+	$("#businessArea").attr("disabled", false); //营业区
+
+	$("#btnSaveOutbound").attr("disabled", false);
+	$(".disabledBtn").addClass("btnComment blue round");
+	$(".disabledBtn").removeClass("disabledBtn grey");
+	
+	$("#comboSaleOrderForUpt").show();
+	$("#comboSaleOrderForView").hide();
+}
+
+/**
+ * 新增出库记录
+ */
+function addProductsOutbound(){
+	clearInfo();
+	enableInput();
+	//初始化申请人
+	setTimeout(function(){
+		applicantForUptCombo.setValue(curApplicantForUpt);
+	},300);
+}
+
+/**
+ * 申请采购单（弹出申请页面）
+ */
+function applyOutbound(){
+	canSaveApply = true;
+	//initSalesOrderCombo();
+	initJdOrderCombo();
+//	$("#loadPageDiv").load('${ctx}/spe/productsOutboundApp.action', {}, function(result){
+		$("#loadPageDiv").show();
+		//初始化申请人
+		setTimeout(function(){
+			applicantForAppCombo.setValue(curApplicantForUpt);
+		},500);
+		$('#loadPageDiv').dialog({
+		    title: '产品出库',
+		    left:230,
+		    top:10,
+		    width: 890,
+		    height: 505,
+		    closed: false,
+		    cache: false,
+		    modal: true,
+		    onClose: function(){clearApplyInfo();},
+		    buttons:[{
+				text:'确定',
+				handler:function(){
+					saveApplyOutbound();
+				}
+			},{
+				text:'取消',
+				handler:function(){
+					clearApplyInfo();
+					$('#loadPageDiv').dialog( "close" );
+				}
+			}]
+		});
+//	});
+}
+
+/**
+ * 产品出库信息保存
+ */
+function saveOutbound(){
+	//先验证是否可以修改
+	var barCode = trim($("#barcodeUpt").val());
+	if(barCode == ""){
+		showMsg("条码号不能为空","提示信息",function(){
+			$("#barcodeUpt").focus();
+		});
+		return;
+	}
+	var flag = checkBarCodeNew("barcodeUpt","条码");
+	if (!flag) {
+		return;
+	}
+	if (trim(saleOrderForUptCombo.getValue()) == "") {
+		showMsg("请选择领料申请单下拉框上的数据","提示信息");
+		return;
+	}
+	if (trim(applicantForUptCombo.getValue()) == "") {
+		showMsg("请选择申请人下拉框上的数据","提示信息");
+		return;
+	}
+	if(trim($("#expressNumUpt").val()) == ""){
+		showMsg("寄送快递单号不能为空","提示信息",function(){
+			$("#expressNumUpt").focus();
+		});
+		return;
+	}
+	
+	if(trim($("#sendExpressCompany").val()) == ""){
+		showMsg("寄送快递公司不能为空","提示信息",function(){
+			$("#sendExpressCompany").focus();
+		});
+		return;
+	}
+	if($("#expressNumUpt").val() != "" && checkInput2($("#expressNumUpt").val())){
+		showMsg("寄送快递单号只能输入数字或字母", "提示信息",function(){
+			$("#expressNumUpt").focus();
+		});
+		return false;
+	}
+	if ($("#expressNumUpt").val() != undefined && $("#expressNumUpt").val() != "" && $("#expressNumUpt").val().length > 20) {
+		showMsg("寄送快递单号不能超过20个字","提示信息",function(){
+			$("#expressNumUpt").focus();
+		});
+		return;
+	}
+	if ($("#sendExpressCompany").val().length > 50) {
+		showMsg("寄送快递公司不能超过50个字","提示信息",function(){
+			$("#sendExpressCompany").focus();
+		});
+		return;
+	}
+	if($("#sendBackExpressNum").val() != "" && checkInput2($("#sendBackExpressNum").val())){
+		showMsg("回寄快递单号只能输入数字或字母", "提示信息",function(){
+			$("#sendBackExpressNum").focus();
+		});
+		return false;
+	}
+	if ($("#sendBackExpressNum").val() != undefined && $("#sendBackExpressNum").val() != "" && $("#sendBackExpressNum").val().length > 20) {
+		showMsg("回寄快递单号不能超过20个字","提示信息",function(){
+			$("#sendBackExpressNum").focus();
+		});
+		return;
+	}
+	if ($("#returnExpressCompany").val().length > 50) {
+		showMsg("回寄快递公司不能超过50个字","提示信息",function(){
+			$("#sendbackExpressCompany").focus();
+		});
+		return;
+	}
+	if (trim(customerForUptCombo.getValue()) == "") {
+		showMsg("请选择下单客户下拉框上的数据","提示信息");
+		return;
+	}
+	/*if(trim($("#agency").val()) == ""){
+		showMsg("机构/部门不能为空","提示信息",function(){
+			$("#agency").focus();
+		});
+		return;
+	}
+	if(trim($("#businessArea").val()) == ""){
+		showMsg("营业区不能为空","提示信息",function(){
+			$("#businessArea").focus();
+		});
+		return;
+	}*/
+	if (trim(areaForUptCombo.getValue()) == "") {
+		showMsg("请选择去向区域下拉框上的数据","提示信息");
+		return;
+	}
+	if (trim(warehouseForUptCombo.getValue()) == "") {
+		showMsg("请选择仓库下拉框上的数据","提示信息");
+		return;
+	}
+	if(trim($("#signUserNameUpt").val()) == ""){
+		showMsg("签收人不能为空","提示信息",function(){
+			$("#signUserNameUpt").focus();
+		});
+		return;
+	}
+	if ($("#signUserNameUpt").val().length > 10) {
+		showMsg("签收人不能超过10个字","提示信息",function(){
+			$("#signUserNameUpt").focus();
+		});
+		canSaveApply = true;
+		return;
+	}
+	if(trim($("#signUserPhoneUpt").val()) == ""){
+		showMsg("签收电话不能为空","提示信息",function(){
+			$("#barcodeUpt").focus();
+		});
+		return;
+	}
+	if($("#signUserPhoneUpt").val().length > 50){
+		showMsg("签收电话不能超过50个字","提示信息",function(){
+			$("#signUserPhoneApp").focus();
+		});
+		canSaveApply = true;
+		return;
+	}
+	if(trim($("#receiveAddress").val()) == ""){
+		showMsg("收件地址不能为空","提示信息",function(){
+			$("#receiveAddress").focus();
+		});
+		return;
+	}
+	if (trim(plansForUptCombo.getValue()) == "") {
+		showMsg("请选择产品下拉框上的数据","提示信息");
+		return;
+	}
+	$.post("${ctx}/spe/productsOutboundStateCheck.action?id="+$("#productsoutbound_id").val(), null, function(result) {
+		if (result != null && result != '') {
+			var data = eval('('+result+')');
+			if (data["error"] != undefined && data["error"] != 'undefined' && data["error"] != '') {
+				jAlert(data["error"],"提示信息");
+				return;
+			}
+		} else {
+			lastSave();
+		}
+    });
+}
+function lastSave(){
+//	先验证是否可以修改
+	var barCode = trim($("#barcodeUpt").val());
+//	if(barCode == ""){
+//		showMsg("条码号不能为空","提示信息",function(){
+//			$("#barcodeUpt").focus();
+//		});
+//		return;
+//	}
+//	var flag = checkBarCodeNew("barcodeUpt","条码");
+//	if (!flag) {
+//		return;
+//	}
+//	if (trim(saleOrderForUptCombo.getValue()) == "") {
+//		showMsg("请选择领料申请单下拉框上的数据","提示信息");
+//		return;
+//	}
+//	if (trim(applicantForUptCombo.getValue()) == "") {
+//		showMsg("请选择申请人下拉框上的数据","提示信息");
+//		return;
+//	}
+//	if(trim($("#expressNumUpt").val()) == ""){
+//		showMsg("寄送快递单号不能为空","提示信息",function(){
+//			$("#expressNumUpt").focus();
+//		});
+//		return;
+//	}
+//	
+//	if(trim($("#sendExpressCompany").val()) == ""){
+//		showMsg("寄送快递公司不能为空","提示信息",function(){
+//			$("#sendExpressCompany").focus();
+//		});
+//		return;
+//	}
+//	if($("#expressNumUpt").val() != "" && checkInput2($("#expressNumUpt").val())){
+//		showMsg("寄送快递单号只能输入数字或字母", "提示信息",function(){
+//			$("#expressNumUpt").focus();
+//		});
+//		return false;
+//	}
+//	if ($("#expressNumUpt").val() != undefined && $("#expressNumUpt").val() != "" && $("#expressNumUpt").val().length > 20) {
+//		showMsg("寄送快递单号不能超过20个字","提示信息",function(){
+//			$("#expressNumUpt").focus();
+//		});
+//		return;
+//	}
+////	if(trim($("#sendExpressCompany").val()) == ""){
+////		showMsg("寄送快递公司不能为空","提示信息",function(){
+////			$("#sendExpressCompany").focus();
+////		});
+////		return;
+////	}
+//	if ($("#sendExpressCompany").val().length > 50) {
+//		showMsg("寄送快递公司不能超过50个字","提示信息",function(){
+//			$("#sendExpressCompany").focus();
+//		});
+//		return;
+//	}
+////	if(trim($("#sendBackExpressNum").val()) == ""){
+////		showMsg("回寄快递单号不能为空","提示信息",function(){
+////			$("#sendBackExpressNum").focus();
+////		});
+////		return;
+////	}
+//	if($("#sendBackExpressNum").val() != "" && checkInput2($("#sendBackExpressNum").val())){
+//		showMsg("回寄快递单号只能输入数字或字母", "提示信息",function(){
+//			$("#sendBackExpressNum").focus();
+//		});
+//		return false;
+//	}
+//	if ($("#sendBackExpressNum").val() != undefined && $("#sendBackExpressNum").val() != "" && $("#sendBackExpressNum").val().length > 20) {
+//		showMsg("回寄快递单号不能超过20个字","提示信息",function(){
+//			$("#sendBackExpressNum").focus();
+//		});
+//		return;
+//	}
+//	if ($("#returnExpressCompany").val().length > 50) {
+//		showMsg("回寄快递公司不能超过50个字","提示信息",function(){
+//			$("#sendbackExpressCompany").focus();
+//		});
+//		return;
+//	}
+//	if (trim(customerForUptCombo.getValue()) == "") {
+//		showMsg("请选择下单客户下拉框上的数据","提示信息");
+//		return;
+//	}
+//	if (trim(areaForUptCombo.getValue()) == "") {
+//		showMsg("请选择去向区域下拉框上的数据","提示信息");
+//		return;
+//	}
+//	if (trim(warehouseForUptCombo.getValue()) == "") {
+//		showMsg("请选择仓库下拉框上的数据","提示信息");
+//		return;
+//	}
+//	if(trim($("#signUserNameUpt").val()) == ""){
+//		showMsg("签收人不能为空","提示信息",function(){
+//			$("#signUserNameUpt").focus();
+//		});
+//		return;
+//	}
+//	if ($("#signUserNameUpt").val().length > 10) {
+//		showMsg("签收人不能超过10个字","提示信息",function(){
+//			$("#signUserNameUpt").focus();
+//		});
+//		canSaveApply = true;
+//		return;
+//	}
+//	if(trim($("#signUserPhoneUpt").val()) == ""){
+//		showMsg("签收电话不能为空","提示信息",function(){
+//			$("#barcodeUpt").focus();
+//		});
+//		return;
+//	}
+//	if($("#signUserPhoneUpt").val().length > 50){
+//		showMsg("签收电话不能超过50个字","提示信息",function(){
+//			$("#signUserPhoneApp").focus();
+//		});
+//		canSaveApply = true;
+//		return;
+//	}
+//	if(trim($("#receiveAddress").val()) == ""){
+//		showMsg("收件地址不能为空","提示信息",function(){
+//			$("#receiveAddress").focus();
+//		});
+//		return;
+//	}
+////	if (!checkTelOrMobile(trim($("#signUserPhoneUpt").val())) || $("#signUserPhoneUpt").val().length > 20) {
+////		showMsg("签收电话格式不正确","提示信息",function(){
+////			$("#signUserPhoneUpt").focus();
+////		});
+////		return;
+////	}
+//	if (trim(plansForUptCombo.getValue()) == "") {
+//		showMsg("请选择产品下拉框上的数据","提示信息");
+//		return;
+//	}
+////	if (trim(warehouseForUptCombo.getValue()) == "") {
+////		showMsg("仓库不能为空","提示信息");
+////		return;
+////	}
+	$("#applicantNameUpt").val(applicantForUptCombo.getText()); //保存申请人的姓名
+	$("#saleOrderNameUpt").val(saleOrderForUptCombo.getText());
+	$("#warehouseNameUpt").val(warehouseForUptCombo.getText());
+	$("#plansNameUpt").val(plansForUptCombo.getText());
+	$("#customerNameUpt").val(customerForUptCombo.getText());
+	$("#areaNameUpt").val(areaForUptCombo.getText());
+	var formParam = $("#infoForm").serializeArray();
+
+	//保存数据
+	blockUI();
+	$.post("${ctx}/spe/productsOutboundApplyStore.action",formParam,function(result) {
+    	unblockUI();
+
+    	if (result == 'noProduct') {
+    		jAlert("请选择产品。","提示信息");
+			return;
+    	} else if (result == 'noPlans') {
+    		jAlert("该产品下没有绑定套餐！","提示信息");
+    		return;
+    	} else if (result == 'existsBarCode') {
+    		jAlert("该条码已存在！","提示信息");
+    		$("#barcodeApp").focus();
+    		return;
+    	} else if (result == 'outAll') {
+    		jAlert("该产品已【完全出库】，请重新选择。","提示信息");
+			return;
+    	} else if (result == 'notExistsJdOrder') {
+    		jAlert("该京东订单号不存在，请重新选择。","提示信息");
+			return;
+    	} else if (result == 'notTheSamePlans') {
+    		jAlert("所选套餐跟京东订单的套餐不一致，请重新选择。","提示信息");
+			return;
+    	} else if (result == 'hasBarcode') {
+    		jAlert("所选京东订单已关联出库记录，请重新选择。","提示信息");
+    		return;
+    	} else if (result == 'statusError') {
+    		jAlert("所选京东订单的状态不是【已确认】，请重新选择。","提示信息");
+    		return;
+    	} else {
+    		
+        	jAlert("保存成功！","提示信息");
+        	//刷新列表
+        	//pageQuery($("#productsoutbound_id").val());
+    	}
+    });
+}
+
+/**
+ * 保存采购订单（弹出页面点确定）
+ * @returns 
+ */
+function saveApplyOutbound(){
+	if (canSaveApply) {
+		canSaveApply = false;
+		if(trim($("#barcodeApp").val()) == ""){
+			showMsg("条码号不能为空","提示信息",function(){
+				$("#barcodeApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		var flag = checkBarCodeNew("barcodeApp","条码");
+		if (!flag) {
+			canSaveApply = true;
+			return;
+		}
+		if (trim(applicantForAppCombo.getValue()) == "") {
+			showMsg("申请人不能为空","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		if(trim($("#expressNumApp").val()) == ""){
+			showMsg("寄送快递单号不能为空","提示信息",function(){
+				$("#expressNumApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if(checkInput2($("#expressNumApp").val())){
+			showMsg("寄送快递单号只能输入数字或字母", "提示信息",function(){
+				$("#expressNumApp").focus();
+			});
+			canSaveApply = true;
+			return false;
+		}
+		if ($("#expressNumApp").val().length > 20) {
+			showMsg("寄送快递单号不能超过20个字","提示信息",function(){
+				$("#expressNumApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if(trim($("#sendExpressCompanyApp").val()) == ""){
+			showMsg("寄送快递公司不能为空","提示信息",function(){
+				$("#sendExpressCompanyApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if ($("#sendExpressCompanyApp").val().length > 50) {
+			showMsg("寄送快递公司不能超过50个字","提示信息",function(){
+				$("#sendExpressCompanyApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if(trim($("#sendBackExpressNumApp").val()) != "" && checkInput2($("#sendBackExpressNumApp").val())){
+			showMsg("回寄快递单号只能输入数字或字母", "提示信息",function(){
+				$("#sendBackExpressNumApp").focus();
+			});
+			canSaveApply = true;
+			return false;
+		}
+		if ($("#sendBackExpressNumApp").val().length > 20) {
+			showMsg("回寄快递单号不能超过20个字","提示信息",function(){
+				$("#sendBackExpressNumApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if ($("#returnExpressCompanyApp").val().length > 20) {
+			showMsg("回寄快递公司不能超过50个字","提示信息",function(){
+				$("#returnExpressCompanyApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if (trim(customerForAppCombo.getValue()) == "") {
+			showMsg("下单客户不能为空","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		if (trim(areaForAppCombo.getValue()) == "") {
+			showMsg("去向区域不能为空","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		if(trim($("#signUserNameApp").val()) == ""){
+			showMsg("签收人不能为空","提示信息",function(){
+				$("#signUserNameApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if ($("#signUserNameApp").val().length > 10) {
+			showMsg("签收人不能超过10个字","提示信息",function(){
+				$("#signUserNameApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if(trim($("#signUserPhoneApp").val()) == ""){
+			showMsg("签收电话不能为空","提示信息",function(){
+				$("#signUserPhoneApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+		if($("#signUserPhoneApp").val().length > 50){
+			showMsg("签收电话不能超过50个字","提示信息",function(){
+				$("#signUserPhoneApp").focus();
+			});
+			canSaveApply = true;
+			return;
+		}
+//		if (!checkTelOrMobile(trim($("#signUserPhoneApp").val())) || $("#signUserPhoneApp").val().length > 20) {
+//			showMsg("签收电话格式不正确","提示信息",function(){
+//				$("#signUserPhoneApp").focus();
+//			});
+//			canSaveApply = true;
+//			return;
+//		}
+		if (trim(plansForAppCombo.getValue()) == "") {
+			showMsg("产品不能为空","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		if (trim(warehouseForAppCombo.getValue()) == "") {
+			showMsg("仓库不能为空","提示信息");
+			canSaveApply = true;
+			return;
+		}
+		$("#applicantNameApp").val(applicantForAppCombo.getText()); //保存申请人的姓名
+		$("#saleOrderNameApp").val(saleOrderForAppCombo.getText());
+		$("#warehouseNameApp").val(warehouseForAppCombo.getText());
+	//	$("#palnsNameNameApp").val(plansForAppCombo.getText());
+		$("#customerNameApp").val(customerForAppCombo.getText());
+		$("#areaNameApp").val(areaForAppCombo.getText());
+		var formParam = $("#infoFormApp").serializeArray();
+	
+		//保存数据
+		blockUI();
+		$.post("${ctx}/spe/productsOutboundApplyStore.action",formParam,function(result) {
+	    	unblockUI();
+	    	if (result == 'noPlans') {
+	    		canSaveApply = true;
+	    		jAlert("请选择产品。","提示信息");
+				return;
+	    	} else if (result == 'existsBarCode') {
+	    		jAlert("该条码已存在！","提示信息");
+	    		$("#barcodeApp").focus();
+				canSaveApply = true;
+	    		return;
+	    	} else if (result == 'outAll') {
+	    		canSaveApply = true;
+	    		jAlert("该产品已【完全出库】，请重新选择。","提示信息");
+				return;
+	    	} else if (result == 'notExistsJdOrder') {
+	    		canSaveApply = true;
+	    		jAlert("该京东订单号不存在，请重新选择。","提示信息");
+				return;
+	    	} else if (result == 'notTheSamePlans') {
+	    		canSaveApply = true;
+	    		jAlert("所选套餐跟订单套餐不一致，请重新选择。","提示信息");
+				return;
+	    	} else if (result == 'hasBarcode') {
+	    		canSaveApply = true;
+	    		jAlert("所选京东订单已关联条码，请重新选择。","提示信息");
+	    		return;
+	    	} else if (result == 'statusError') {
+	    		canSaveApply = true;
+	    		jAlert("所选京东订单的状态不是【已确认】，请重新选择。","提示信息");
+	    		return;
+	    	} else {
+				canSaveApply = true;
+	        	jAlert("保存成功！","提示信息");
+	        	clearApplyInfo();
+	        	$('#loadPageDiv').dialog( "close" );
+	        	//刷新列表
+	        	pageQuery();
+	    	}
+	    });
+	}
+}
+
+function addNewRow(jsonData, tableId){
+	var id = jsonData.id;
+	var materielCode = jsonData.materielCode;
+	var plansName = jsonData.plansName;
+	var seriesName = jsonData.seriesName;
+	
+	var html = "";
+
+	html += "<tr id='"+id+"' class=\"evenbg\">";
+	html += "	<td title=\""+materielCode+"\">"+materielCode+"</td>";
+	html += "	<td title=\""+plansName+"\">"+plansName+"</td>";
+	html += "	<td title=\""+seriesName+"\">"+seriesName+"</td>";
+	html += "</tr>";
+
+	var dataTable = $("#" + tableId);
+	$("#" + tableId + " tr:not(:first)").empty();
+	dataTable.append(html);
+	
+	return;
+}
+function setPlans(){
+	
+}
+//批量入库
+function mutilOutbound(){
+
+	$("#importPageDiv").show();
+	$.fn.window.defaults.zIndex=500;
+	$('#importPageDiv').dialog({
+	    title: '批量出库',
+	    href:ctx + '/spe/productsOutboundImport.action',
+	    left:230,
+	    top:10,
+	    width: 897,
+	    height: 495,
+	    closed: false,
+	    cache: false,
+	    modal: true,
+	    buttons:[{
+			text:'关闭',
+			handler:function(){
+				$('#importPageDiv').dialog( "close" );
+			}
+		}]
+	});
+}
+
+/**
+ * 获取文件名
+ */
+function submitFile() {
+	var fileName = $("#excelFile").val();
+	var fileNameLength = fileName.length;
+	if (fileName == "") {
+		showMsg("请选择文件","提示信息");
+		return;
+	}
+	if (fileName.indexOf(".xls") != fileNameLength - 4
+			&& fileName.indexOf(".xlsx") != fileNameLength - 5) {
+		showMsg("只支持excel文件","提示信息");
+		return;
+	}
+	var fileSize = getFileSize("excelFile");
+	if (fileSize > 2*1024*1024) {
+		showMsg("导入文件大小不能超过2M，请重新选择。<br>注：如果您上传的文件是Excel 2003的版本，建议另存为Excel 2007（或以上）版本；如果已是Excel 2007（或以上）版本，或者转换之后文件仍过大，请拆分Excel文件后再进行导入。","提示信息");
+		return;
+	}
+	$("#excelFilePath").val(fileName);
+
+	$("#btnImport").unbind("click");
+//	$("#btnImport").attr("disabled", true);
+//	$(".btnComment[disabled=disabled]").addClass("disabledBtn grey");
+//	$(".btnComment[disabled=disabled]").removeClass("btnComment blue round");
+	blockUI();
+	$("#batchImport").submit();
+	//执行时间太短，这个样式的改变看不出效果
+//	$("#btnImport").attr("disabled", false);
+//	$(".disabledBtn").addClass("btnComment blue round");
+//	$(".disabledBtn").removeClass("disabledBtn grey");
+	$("#btnImport").bind("click",submitFile);
+}
+
+function initSalesOrderCombo(){
+	saleOrderForAppCombo.loadingStart(function(){
+		$("#gridSaleOrdersForApp .tablelist").load("${ctx}/spe/productsOutboundSalesOrderCombo.action", {"status" : ""}, function(){
+			saleOrderForAppCombo.loadingOver();
+		});
+	});
+}
+function initJdOrderCombo(){
+	jdOrderForAppCombo.loadingStart(function(){
+		$("#gridJdOrderForApp .tablelist").load("${ctx}/spe/productsOutboundJdOrderCombo.action", {"status" : "", type : "apply"}, function(){
+			jdOrderForAppCombo.loadingOver();
+		});
+	});
+}
+
+
+function outboundOperation(){
+	var barCode = $("#barcodeUpt").val();
+	if (barCode != undefined && barCode != '') {
+		operationNote('leftTable', '1' ,'1','');
+	} else {
+		operationNote('leftTable', 'id' ,'1','');
+	}
+}
+
+function changeJdOrder(){
+	var jdOrderId = jdOrderForUptCombo.getValue();
+	$.ajax({
+		type : "POST",
+		url : "${ctx}/spe/productsOutboundJdOrderChange.action?time=" + new Date().getTime(),
+		data:{"jdOrderId" : jdOrderId},
+		success : function(result) {
+			if (result != null && result != '') {
+				showMsg(result, "提示信息");
+			}
+		}
+	});
+}

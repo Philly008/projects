@@ -1,0 +1,9 @@
+-+
+-DCCI
+-D_IDA_XL
+-DWINNT
+-ID:\HP\exercises\sample4_50save
+-ID:\HP\LR12\include
+-ed:\hp\exercises\sample4_50save\\logfile.log
+d:\hp\exercises\sample4_50save\\combined_sample4_50save.c
+d:\hp\exercises\sample4_50save\\pre_cci.c

@@ -1,0 +1,11 @@
+[t58]
+FileName1=t58.html
+URL1=http://192.168.14.35/PG/spe/plansdeatil.action
+Total=1
+RequestHeaderFile=t58_RequestHeader.txt
+RequestBodyFile=t58_RequestBody.txt
+ResponseHeaderFile=t58_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_58.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

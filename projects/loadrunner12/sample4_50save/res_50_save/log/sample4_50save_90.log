@@ -1,0 +1,1 @@
+sample_save.c(76): Error -27780: Timeout (120 seconds) exceeded while waiting to receive data for URL "http://202.116.104.161/NIP/ref/rateMatured.action"  	[MsgId: MERR-27780]

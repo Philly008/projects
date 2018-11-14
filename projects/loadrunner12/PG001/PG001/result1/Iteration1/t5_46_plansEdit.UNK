@@ -1,0 +1,57 @@
+//选中系列数据行
+function plansRowSelected(e,tableId){
+
+	$("#"+tableId+" tr").removeClass("selectedbg");
+	$(e).addClass("selectedbg");
+
+	currentPlansRowId = $(this).attr("id");
+}
+
+
+//订单新增 ---套餐列表新增
+function addNewRow(jsonData, tableId){
+	var id = jsonData.id;
+
+	var plansid=jsonData.plansid;
+	var materielCode=jsonData.materielCode;
+	var plansname = jsonData.plansname;
+	var series = jsonData.series;
+	var plansnumber = jsonData.plansnumber;
+	
+	var tab = document.getElementById(tableId);
+	var rows = tab.rows.length;
+	
+	var html = "";
+	html += "<tr id='"+id+"' class=\"evenbg\" onclick=\"plansRowSelected(this,'"+tableId+"')\">";
+	html += "	<td title=\""+plansid+"\">"+"<input type='hidden' style='width:90px;height:10px' value='"+plansid+"'>"+"<div align='center'>"+"<img src='../images/dd.jpg' width='10' height='10' />"+"</div>"+"</td>";
+	html += "	<td title=\""+materielCode+"\">"+materielCode+"</td>";
+	html += "	<td title=\""+plansname+"\">"+plansname+"</td>";
+	html += "	<td title=\""+series+"\">"+series+"</td>";
+	html += "	<td title=\""+plansnumber+"\">"+"<input type='text' style='width:90px;' value='' />"+"</td>";
+	
+	html += "</tr>";
+
+	var dataTable = $("#" + tableId);
+	dataTable.append(html);
+	
+	return;
+}
+
+function refreshProductNum(){
+	var table = document.getElementById("ptoductsTable");
+	$("#productsNum").html("领料产品(总数 " + ( table.rows.length - 1) + ")" );
+}
+
+function existsThisProduct(data, details){
+	var purchaseOrder = data.plansid;
+	if(details != null || trim(details) != ''){
+		for (i in details){
+			var jsonData = details[i];
+			if (purchaseOrder == jsonData.plansid)  {
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}

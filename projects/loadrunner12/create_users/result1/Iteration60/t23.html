@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<!-- Common -->
+
+
+<script src="/NIP/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/NIP/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<script src="/NIP/scripts/jquery.blockUI.js" type="text/javascript"></script>
+
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nip_common.js?V=2.9.5.1" type="text/javascript"></script>
+<script src="/NIP/scripts/common.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nipDhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/pdfobject.js?v=2014103114211" type="text/javascript"></script>
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlxGrid/ext/dhtmlxgrid_srnd.js" type="text/javascript"></script>
+<script src="/NIP/scripts/input_common.js" type="text/javascript"></script>
+<!-- NIP css -->
+<link href="/NIP/pages/test/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/text_style.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/input_style.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/text_grid.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/pages/test/css/newStyle.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/css/style_notContainCombo.css" rel="stylesheet" type="text/css" />
+<link href="/NIP/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+<script type="text/javascript">
+var IMG_BASEPATH_GRID = "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/";
+var IMG_BASEPATH_TABBAR = "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/";
+var isIE=false; 
+function openDhtmlWin(id,title,url, width, height){
+	var dhxWins = parent.nipDhxWins;
+	dhxWins.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+	dhxWins.enableAutoViewport(true);
+	if(dhxWins.window(id)==null){
+		var printWin = dhxWins.createWindow(id, 0, 0, width, height);// 自定义位置和宽度、高度
+		printWin.setText(title);
+		printWin.center();
+		//printWin.hideHeader();
+		//printWin.denyResize();
+		//printWin.denyPark();
+		printWin.button("minmax1").hide();
+		printWin.button("park").hide();
+		//printWin.button("close").hide();
+		printWin.denyResize();
+		printWin.denyPark();
+		printWin.attachURL(url);
+		printWin.setModal(true);
+	}else{
+		dhxWins.window(id).show();
+	}
+	return dhxWins;
+	/* var s = 'dialogWidth:' + width + 'px; dialogHeight:' + height + 'px; dialogTop=' + y + 'px; dialogLeft=' + x + 'px; scroll:no;';
+	return window.showModalDialog(url,window,s); */
+}
+function openModalDialog(url, width, height){
+	var x = ($(parent.document.body).width() - width) / 2;
+	var y = ($(parent.document.body).height() - height) / 2;
+	var s = 'dialogWidth:' + width + 'px; dialogHeight:' + height + 'px; dialogTop=' + y + 'px; dialogLeft=' + x + 'px; scroll:no;';
+	return window.showModalDialog(url,window,s);
+}
+
+function getScreenCenterCss(w, h){
+	var l = (screen.width - w) / 2;
+	var t = (screen.height - h) / 2;
+	var s = 'dialogWidth:' + w + 'px; dialogHeight:' + h + 'px; dialogTop=' + t + 'px; dialogLeft=' + l + 'px; scroll:no;';
+	
+	return s;
+}
+
+function errorHandle(XMLHttpRequest){
+	//unblockUI();
+	var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
+	if(sessionstatus == "timeout"){
+	   	   parent.location.href = ctx+"/login.action";
+	    }
+	var errirstatus = XMLHttpRequest.getResponseHeader("error");
+	if(errirstatus == "true"){
+		//alert("系统错误,请联系管理员");
+	}
+}
+
+$.ajaxSetup({     
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",     
+    beforeSend: function(XMLHttpRequest){
+    	//blockUI();
+	},
+	error: function(xhr,status,error){
+		//alert("系统错误,请联系管理员");
+	},
+    complete:function(XMLHttpRequest,textStatus){
+		errorHandle(XMLHttpRequest);
+    }
+});
+
+
+dhtmlxError.catchError("ALL",function(a,b,data){
+    var str = data[0].responseText;
+    if(typeof(str) == "undefined")
+        return false;
+    if(str.indexOf("parent.location.href")>-1){
+   	  parent.location.href = ctx+"/login.action";
+    }
+    //alert("系统错误,请联系管理员");
+});
+</script> 
+<!-- isIE? -->
+<!--[if IE]> 
+<script type="text/javascript"> 
+	var isIE=true; 
+</script> 
+<![endif]-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>用户角色</title>
+<script>
+	var selectGrid, unselectGrid;
+	$(document).ready(function() {
+		var id ='5be539dd308f2e3661de10d1';// window.dialogArguments;
+		//create DataGrid
+		unselectGrid = new dhtmlXGridObject("datagrid1");
+		unselectGrid.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/icons_greenfolders/");
+		unselectGrid.setHeader("角色名,实验室");
+		unselectGrid.setInitWidthsP("99,0");
+		unselectGrid.setColAlign("left,left");
+		unselectGrid.setColTypes("ro,ro");
+		unselectGrid.setColSorting("str,str");
+		unselectGrid.init();
+		unselectGrid.setSkin("dhx_skyblue");
+		unselectGrid.setMultiselect(!unselectGrid.selMultiRows);
+		unselectGrid.loadXML(ctx+"/ref/userRoleList.action?status=unselect&id="+id);
+
+		selectGrid = new dhtmlXGridObject("datagrid2");
+		selectGrid.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/icons_greenfolders/");
+		selectGrid.setHeader("角色名,实验室");
+		selectGrid.setInitWidths("200,4000");
+		selectGrid.setColAlign("left,left");
+		selectGrid.setColTypes("ro,ro");
+		selectGrid.setColSorting("str,str");
+		selectGrid.init();
+		selectGrid.setSkin("dhx_skyblue");
+		selectGrid.setMultiselect(!selectGrid.selMultiRows);
+		selectGrid.loadXML(ctx + "/ref/userRoleList.action?status=select&id="+id);
+
+	});
+	
+	function removeToRight() {
+		if (unselectGrid.getSelectedRowId() == null) {
+			fadeInMessage("请选择角色");
+			return;
+		}
+		var rowIDs = unselectGrid.getSelectedRowId().split(",");
+		var rowIndex="";
+		for(var i=0;i<rowIDs.length;i++){
+			var rowID=rowIDs[i];
+			var val = unselectGrid.cells(rowID,0).getValue();
+			var lab = unselectGrid.cells(rowID,1).getValue();
+			selectGrid.addRow(rowID, [val,"&nbsp;&nbsp;"+lab]);
+			if(i==rowIDs.length-1){
+				rowIndex=unselectGrid.getRowIndex(rowID);
+			}
+			unselectGrid.deleteRow(rowID);
+			if(i==rowIDs.length-1){
+				var rowNubs=unselectGrid.getRowsNum();
+				if(rowNubs==0){
+					rowIndex="";
+				}else{
+					if(rowNubs<=rowIndex){
+						rowIndex=rowNubs-1;
+					}	
+				}
+			}
+		}
+		unselectGrid.selectRow(rowIndex,true,true,true);
+	}
+	
+	function removeToLeft() {
+		if (selectGrid.getSelectedRowId() == null) {
+			fadeInMessage("请选择角色");
+			return;
+		}
+		var rowIDs = selectGrid.getSelectedRowId().split(",");
+		for(var i=0;i<rowIDs.length;i++){
+			rowID=rowIDs[i];
+			var val = selectGrid.cells(rowID,0).getValue();
+			var lab = selectGrid.cells(rowID,1).getValue();
+			unselectGrid.addRow(rowID, [val,lab]);
+			selectGrid.deleteRow(rowID);
+		}
+	}
+	
+	function save(){
+		var saveArr=[];
+		var userName = $("#userName").val();
+		if(selectGrid.getRowsNum()>0) {
+			var laboratotyIds=$("#laboratotyIds").val();
+			var labidArr=laboratotyIds.split(",");
+			
+			var flag=false;
+			selectGrid.forEachRow(function(id){
+				var checkCount=0;
+				var obj = {"roleId":"","laboratoryList": []} ;
+				for(var i=0;i<labidArr.length;i++) {
+					var labid=labidArr[i];
+					if(document.getElementById(id+labid).checked){
+						checkCount++;
+						obj.laboratoryList.push(labid);
+					}
+				}
+				if(checkCount==0){
+					flag=true;
+				} else {
+					obj.roleId = id;
+					saveArr.push(obj);
+				}
+			});
+			if(flag){
+				fadeInMessage("每个角色都分配实验室，请先选择实验室！");
+				return;
+			}
+		}
+		var objJson = JSON.stringify(saveArr); 
+		var id = '5be539dd308f2e3661de10d1';
+		//var allRows = selectGrid.getAllRowIds(",");
+		$.ajax({
+			type: "POST",
+			url: ctx+"/ref/updateUserRole.action",
+			data:{saveids:objJson,id:id,userName:userName},
+			success: function(result) {
+				parent.parent.nipDhxWins.window("userRolePage").close();
+			}
+			});  
+	}
+	function closeWin(){
+		parent.parent.nipDhxWins.window("userRolePage").close();
+	}
+</script>
+
+
+</head>
+<body>
+    <input type="hidden" id="userName" name="userName" value="liu070b"/>
+    <input id="itemId" name="itemId" type="hidden"/>
+    <input id="laboratotyIds" value="40281281401ec28f01401ec53f690003,4af4e88a46e6dfcb0146f5143eb55885,4028908a47e7f33d0147f7c72ed82dbe,4af4e8894937272601493fffbd72094a,4af4e889494653120149502ecab87add,4028908a49f57826014a052214c057df,4028908a4a76d205014a7afacac11068,4028908a4ab43ea8014ab8e9a3a42df1,f2b7c0b758113784015822d388e23851,40288ea65e7006aa015e73d26100006d,5b0cb0bfb4907e3a77ee60c7,5b57f587b4907e5c939a4bcf" type="hidden"/>
+	<div style="width: 100%; height: 90%; margin: 5px;">
+		<div style="width: 250px; height: 100%; float: left;">
+			<fieldset style="width: 92%; height: 95%;">
+				<legend>可选角色</legend>
+				<div id="datagrid1" style="width: 240px; height: 96.5%;"></div>
+			</fieldset>
+		</div>
+
+		<div style="width: 100px; height: 100%; float: left;">
+			<div style="height: 100px;"></div>
+			<div style="text-align: center;">
+				<div>
+					<input type="button" value=">>" onclick="removeToRight()" />
+				</div>
+				<div>
+					<input type="button" value="<<" onclick="removeToLeft()">
+				</div>
+			</div>
+		</div>
+
+		<div style="width: 450px; height: 100%; float: left;">
+			<fieldset style="width: 99%; height: 95%;"> 
+				<legend>已选角色</legend> 
+				<div id="datagrid2" style="width:500px; height: 96.5%;"></div> 
+			</fieldset> 
+		</div>
+	</div>
+
+	<div style=" text-align: center; width: 98%;height: 10%;">
+		
+		<input type="button" value="保存" onclick="save()"/> 
+		
+		<input type="button" value="取消" onclick="closeWin();" />
+	</div>
+
+</body>
+</html>

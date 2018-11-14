@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+ <script type="text/javascript"> 
+	$(function(){
+		$("#outBoundDetail").height($(window).height()-pageHeigh-queryTitle-40);
+		
+	});
+
+</script>
+ <div class="tab_bg_2" style="width:auto">
+    	<span>出库数量：0</span>
+     </div>
+     <div class="area_comm">
+    	<!--div滚动区域开始-->
+	    <div style="width:750px; overflow-x:auto;" id="outBoundDetail"><!--需要根据内容合理控制DIV滚动宽度和高度，手动输入-->
+			<table id="leftTable" class="dataTable" style="width:750px;"><!--需要根据内容合理控制表格宽度，手动输入-->
+			  <tr class="trTitle">
+				<!-- <td width="40px"><input id="checkAll" type="checkbox" /></td> -->
+				<td width="100px">出库条码号</td>
+				<td width="100px">物料编码</td>
+				<td width="130px">产品</td>
+				<td width="100px">系列</td>
+				<td width="100px">出库时间</td>
+			  </tr>
+			  
+			</table>
+		</div>
+		<!--div滚动区域结束-->
+		
+		<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<script type="text/javascript">
+	function nextPageNew(){
+		
+		var lastPage = parseInt($("#lastPageNoNew").val());
+		var currentPage = parseInt($("#pageNoNew").val());
+		if(currentPage<lastPage){
+			$("#pageNoNew").val(currentPage+1);
+			pageQueryNew();
+		}
+	}
+
+	function previousPageNew(){
+		var currentPage = parseInt($("#pageNoNew").val());
+		if(currentPage>1){
+			$("#pageNoNew").val(currentPage-1);
+			pageQueryNew();
+		}
+	}
+
+	function firstPageNew(){
+		var currentPage = parseInt($("#pageNoNew").val());
+		if(currentPage!=1){
+			$("#pageNoNew").val(1);
+			pageQueryNew();	
+		}
+	}
+
+	function lastPageNew(){
+		var currentPage = parseInt($("#pageNoNew").val());
+		var lastPage=parseInt($("#lastPageNoNew").val());
+		if(currentPage!=lastPage){
+			$("#pageNoNew").val(lastPage);
+			pageQueryNew();	
+		}
+	}
+
+	function selectPageNew(){
+		var currentPage = parseInt($("#pageNoNew").val());
+		var selectPageNo = $("#pageSelectNew").val();
+		if(currentPage!=selectPageNo){
+			$("#pageNoNew").val(selectPageNo);
+			pageQueryNew();	
+		}		
+	}
+	
+</script>
+<input type="hidden" id="pageNoNew" name="page.pageNo" value="1">
+<input type="hidden" id="lastPageNoNew" value="0">
+<input type="hidden" id="totalPageNoNew" value="0">
+
+<ul class="page">
+  <li><input type="button" value="首页" class="btnPage" onclick="firstPageNew();" /></li>
+  <li><input type="button" value="上一页" class="btnPageLong" onclick="previousPageNew();" /></li>
+  <li>
+  	<select id="pageSelectNew" class="selectPage" onchange="selectPageNew();">
+  		 
+	</select>
+  </li>
+  <li><input type="button" value="下一页" class="btnPageLong" onclick="nextPageNew();"/></li>
+  <li id="lastpageNew"><input value="尾页" type="button" class="btnPage"   onclick="lastPageNew();" /></li>
+</ul>
+
+     </div> 	
+<!--组结束-->

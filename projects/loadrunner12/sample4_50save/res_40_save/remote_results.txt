@@ -1,0 +1,2 @@
+[Hosts]
+localhost=d:\hp\exercises\sample4_50save\res_40_save\localhost_1.eve

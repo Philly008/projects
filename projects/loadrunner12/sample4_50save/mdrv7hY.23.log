@@ -1,0 +1,10 @@
+Start auto log messages stack - Iteration 1.	[MsgId: MMSG-10545]
+sample_save.c(5): Downloading resource "http://202.116.104.161/NIP/images/new/bgd_login3_0.jpg" (specified by argument number 11)  	[MsgId: MMSG-26577]
+sample_save.c(5): Downloading resource "http://202.116.104.161/NIP/images/new/input.gif" (specified by argument number 13)  	[MsgId: MMSG-26577]
+sample_save.c(5): Downloading resource "http://202.116.104.161/NIP/images/new/btn_login.png" (specified by argument number 15)  	[MsgId: MMSG-26577]
+sample_save.c(5): web_url("login.action") was successful, 80579 body bytes, 1411 header bytes  	[MsgId: MMSG-26386]
+sample_save.c(19): web_submit_form("login.action_2") started  	[MsgId: MMSG-26355]
+sample_save.c(19): Error -27979: Requested form not found  	[MsgId: MERR-27979]
+End auto log messages stack.	[MsgId: MMSG-10544]
+
+

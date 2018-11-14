@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Mon, 01 Jan 1990 00:00:00 GMT
+Date: Mon, 12 Nov 2018 07:57:42 GMT
+X-Cup-Server-Proof: 3045022021891fa5500976abc62bcf6a77bdac5633862f078f0d510b37972e23e60288870221009bf3d294ed330c52be901b11eca35c8f73418cb8c2fc935aa36964a771fd0ff0:f595c845dd9cbabda8e1745ee0bdfa93a52214542c926e40b1249be35ab45fb5
+ETag: W/"3045022021891fa5500976abc62bcf6a77bdac5633862f078f0d510b37972e23e60288870221009bf3d294ed330c52be901b11eca35c8f73418cb8c2fc935aa36964a771fd0ff0:f595c845dd9cbabda8e1745ee0bdfa93a52214542c926e40b1249be35ab45fb5"
+Content-Type: text/xml; charset=UTF-8
+X-Daynum: 4332
+X-Daystart: 86262
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Content-Length: 568
+Server: GSE
+

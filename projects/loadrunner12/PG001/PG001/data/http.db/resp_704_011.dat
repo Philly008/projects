@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		//如果没有财务审核权限，则申请人不可编辑，只能为当前登陆用户。
+		/* if($("#financialaudit").val()==undefined){
+			ApplyNameSearchCombo.disable();
+		}else{
+			ApplyNameSearchCombo.enable();
+		} */
+	});
+
+</script>
+<!--组开始-->
+ <div class="tab_bg_2" style="width:auto">
+    	<span>查询列表(共1条)</span>
+     </div>
+     <div class="scrollDiv" style="margin-bottom: -10px;">
+    	<!--div滚动区域开始-->
+	    <div style="width:339px;overflow-x:auto;" class="area_comm"><!--需要根据内容合理控制DIV滚动宽度和高度，手动输入-->
+			<table id="leftTable" class="dataTable" style="width:315px;"><!--需要根据内容合理控制表格宽度，手动输入-->
+			  <tr class="trTitle">
+				<td width="40px"><input id="checkAll" type="checkbox" /></td>
+				<td width="70px">领料单</td>
+				<td width="60px">状态</td>
+				<td width="70px">申请时间</td>
+				<td width="60px">来源</td>
+			  </tr>
+			  
+			  
+			  		<tr id="ff80808166ce634001670746f9000369" class="oddbg">
+			  	
+			  	
+		           <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td>
+					<td title="201811124900">201811124900</td>
+					<td class="zhuangtai">
+						<span>
+					已申请
+					
+					
+					
+					<input type="hidden" name='status' value="300">
+						</span>
+					</td>
+					<td title="2018-11-12">2018-11-12</td>
+					<td title="系统">系统</td>
+	        	</tr>
+	        
+			</table>
+		</div>
+		<!--div滚动区域结束-->
+		
+     </div>
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<script type="text/javascript">
+	function nextPage(){
+		var lastPage = parseInt($("#lastPageNo").val());
+		var currentPage = parseInt($("#pageNo").val());
+		if(currentPage<lastPage){
+			$("#pageNo").val(currentPage+1);
+			pageQuery();
+		}
+	}
+
+	function previousPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		if(currentPage>1){
+			$("#pageNo").val(currentPage-1);
+			pageQuery();
+		}
+	}
+
+	function firstPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		if(currentPage!=1){
+			$("#pageNo").val(1);
+			pageQuery();	
+		}
+	}
+
+	function lastPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		var lastPage=parseInt($("#lastPageNo").val());
+		if(currentPage!=lastPage){
+			$("#pageNo").val(lastPage);
+			pageQuery();	
+		}
+	}
+
+	function selectPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		var selectPageNo = $("#pageSelect").val();
+		if(currentPage!=selectPageNo){
+			$("#pageNo").val(selectPageNo);
+			pageQuery();	
+		}		
+	}
+	
+</script>
+<input type="hidden" id="pageNo" name="page.pageNo" value="1">
+<input type="hidden" id="lastPageNo" value="1">
+<input type="hidden" id="totalPageNo" value="1">
+
+<ul class="page">
+  <li><input type="button" value="首页" class="btnPage" onclick="firstPage();" /></li>
+  <li><input type="button" value="上一页" class="btnPageLong" onclick="previousPage();" /></li>
+  <li>
+  	<select id="pageSelect" class="selectPage" onchange="selectPage();">
+  		 
+  		 	<option value="1"  selected >1</option>
+  		 
+	</select>
+  </li>
+  <li><input type="button" value="下一页" class="btnPageLong" onclick="nextPage();"/></li>
+  <li id="lastpage"><input value="尾页" type="button" class="btnPage"   onclick="lastPage();" /></li>
+</ul>
+
+		 <div class="btns"	align="left">
+     <div style=" ">
+     	<table>
+     	<tr >
+		 <!-- 11030206 -->
+		 	<td style="padding-left: 20px;">
+			<input id="financialaudit" type="button" class="btnComment blue round" value="财务审核" onclick="FinancialAudit();"  style="width: 100px;"/>
+		 	</td>
+		 
+		 <!-- 11030208 -->
+		 	<td>
+			<input type="button" class="btnComment blue round" value="取消审核" onclick="CancelAudit();"  style="width: 100px;"/>
+			</td>
+		 
+		 
+		 	<td>
+			<input type="button" class="btnComment blue round" value="导出Excel" onclick="exportExcel('1');" style="width: 100px;"/>
+			</td>
+		 
+		 <!-- 按钮换成双行 -->
+		 </tr>
+		 <tr>
+		 
+			 <td style="padding-left: 20px;">
+			 	<input type="button" class="btnComment blue round" value="导出全部" onclick="exportExcel('2');" style="width: 100px;"/>
+			 </td>
+		 
+		 
+		 <td>
+			<input type="button" class="btnComment blue round" value="批量导入" onclick="batchImport();" style="width: 100px;"/>
+		 </td>
+		 
+		  
+		 <td><input type="button" class="btnComment blue round" value="删除领料单" onclick="deleteSales();" style="width: 100px;"/>
+		 </td>
+		 
+		 </tr>
+		 </table>
+		</div>
+	</div>
+    
+	

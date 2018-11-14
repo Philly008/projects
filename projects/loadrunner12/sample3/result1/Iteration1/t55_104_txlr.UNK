@@ -1,0 +1,280 @@
+//控制图像录入页签的显示和隐藏，
+//if(json.pictures!=null){
+//存在  则加载并显示
+//mainBar.showTab("a3");
+//加载
+//$("#resultImgDiv").load("${ctx}/lab/specimenResultImgLoad.action?subBarCode="+getSubarCode());
+
+//}else{
+//	mainBar.hideTab("a3");
+//}
+
+//图片初始化
+function tpInit(pics,flag) {
+	//alert(JSON.stringify(pics));
+	$("#resultImgDiv table:first").find("tr:first").empty();
+	//图片数量
+	var imgNum = pics.length;
+	//alert(JSON.stringify(pics));
+	$
+			.each(
+					pics,
+					function(i, n) {
+						var $tpmb = $("#tpmb table tr td:first").clone();
+						$tpmb.find("div:first").attr("id", "div_" + i);
+						$tpmb.find("div:first").children("div:first").text(
+								"当前" + (i + 1) + "共" + imgNum);
+						//alert(n.printFlag == '1');
+						if (n.printFlag == '1') {
+							$tpmb
+									.find("div:first>div")
+									.eq(1)
+									.html(
+											"<input type='checkbox' disabled='disabled' checked />");
+						} else {
+							$tpmb
+									.find("div:first>div")
+									.eq(1)
+									.html(
+											"<input type='checkbox' disabled='disabled'/>");
+						}
+						//alert($tpmb.find("div:first>div").eq(2).html());
+						if(flag==undefined){
+							$tpmb.find("div:first>div").eq(2).find("img").attr(
+								"src",
+								"${ctx}/lab/showImage.action?filepath="
+										+ n.fileName).attr(
+								"ondblclick",
+								"imgdbClick('" + n.id + "', this.src, '"
+										+ n.printFlag + "');");
+						}else{
+							$("#tpcz").empty();
+							$tpmb.find("div:first>div").eq(2).find("img").attr(
+								"src",
+								"${ctx}/lab/showImage.action?filepath="
+										+ n.fileName);
+						}
+						
+						
+						$tpmb.find("div:first>div").eq(3)
+								.html("备注：" + n.remark);
+						//alert($tpmb.html());
+						$("#resultImgDiv table:first").find("tr:first").append("<td>"+
+								$tpmb.html()+"</td>");
+						//添加完成后修改样式
+						tpInitCss(i, n.id);
+					});
+}
+//初始化图片样式
+function tpInitCss(index, id) {
+	//每个div都需修改样式
+	$("#div_" + index + " div").each(function() {
+		$(this).mouseover(function() {
+			$("#div_" + index + " div").removeClass("imgBg1");
+			$("#div_" + index + " div").addClass("imgBg2");
+			$(this).removeClass("imgBg2");
+			$(this).addClass("imgBg1");
+		});
+	});
+	$("#div_" + index).click(function() {
+		$("#imgId").val(id);
+		$("#div_" + index).addClass('imgClick');
+		$("div:not(#div_" + index + ")").removeClass('imgClick');
+	});
+}
+
+//图像录入
+function imgInputBtnClick() {
+	if (getSubarCode() != "") {
+		//mainBar.showTab("a3");
+		//mainBar.setTabActive("a3");
+		$("#resultImgDiv").empty();
+		$("#resultImgDiv").load(
+				"${ctx}/lab/specimenResultImgLoad.action?subBarCode="
+						+ getSubarCode());
+	}
+}
+//上传图片
+function uploadImgBtnClick() {
+	if (getSubarCode() == "") {
+		return;
+	}
+	$("#imgInputWin").load("${ctx}/lab/specimenResultImgInputWin.action",
+			function() {
+				//上传图片弹窗
+			$("#imgInputWin").show();
+			$("#imgInputWin #subBarCodeId").val(getSubarCode());
+			$("#imgInputWin #cancle").click(function() {
+				$("#imgInputWin").hide();
+			});
+
+			$("#imgInputWin #save").click(function() {
+				if($("#imgFileId").val()==""){$("#imgInputWin").hide();return false;}else{
+					$("#imgInputWin").hide();
+					//保存图片之后并加载
+					imgInputSave();
+				}
+				
+				});
+		});
+}
+//取得当前左侧列表中选择的子条码
+function getSubarCode() {
+	if (currentSubBarCode == null || currentSubBarCode == "") {
+		jAlert("请选择测试项！",'提示信息');
+		return "";
+	}
+	return currentSubBarCode;
+	var subarcode = "";
+	if (listGrid.getSelectedRowId() == null) {
+		return "";
+	} else {
+		var listGridId = listGrid.getSelectedRowId();
+		subarcode = listGrid.cells(listGridId, 1).getValue();
+	}
+
+	return subarcode;
+}
+//删除图片
+function delImgBtnClick() {
+	var imgId = $("#resultImgDiv #imgId").val();
+	if (imgId == "") {
+		jAlert("请选择要删除的图片",'提示信息');
+		return;
+	}
+	jConfirm('你确定要删除选中图片吗？','提示信息',function(choice) {
+		if (choice) {
+			$.ajax( {
+				type : "POST",
+				url : "${ctx}/lab/specimenResultDelImg.action",
+				data : {
+					uniqueid : imgId,
+					subBarCode : getSubarCode()
+				},
+				success : function(result) {
+					//删除页面上对应的图片资料
+					jAlert("删除成功",'提示信息');
+					$("#resultImgDiv").load(
+							"${ctx}/lab/specimenResultImgLoad.action?subBarCode="
+									+ getSubarCode(), function() {
+								var l=$("#resultImgDiv img").length;
+								if (l==0) {
+									//清空可能存在的图片
+									$("#resultImgDiv table:first").find("tr:first").empty();
+									$("#tabTxlrItem").hide();
+									//mainBar.hideTab("a3");
+									if (currentIsMic == "true") {
+										tabMicTestItemClick();
+										$("#tabMicTestItem").addClass("now");
+										//	mainBar.setTabActive("a0");
+									} else {
+										tabTestItemClick();
+										$("#tabTestItem").addClass("now");
+										//	mainBar.setTabActive("a1");
+									}
+								}
+					});
+				}
+			});
+		}
+	});
+}
+//保存上传的图片后加载
+function imgInputSave() {
+	$("#imgInputWin #imgForm").ajaxForm(
+			{
+				type : 'post',
+				url : "${ctx}/lab/specimenResultUploadImg.action",
+				success : function(data) {
+					if (data == "success") {
+						$("#imgInputWin").hide();
+						//加载该子条码的图片资料
+				$("#resultImgDiv").load(
+						"${ctx}/lab/specimenResultImgLoad.action?subBarCode="
+								+ getSubarCode());
+			}
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			jAlert("error",'提示信息');
+		}
+			});
+}
+
+//图片双击事件
+function imgdbClick(id, src, printFlag) {
+	$("#imgEditWin").load("${ctx}/lab/specimenResultImgEditWin.action",
+			function() {
+				$.ajax( {
+					type : "POST",
+					url : "${ctx}/lab/specimenResultImgShow.action",
+					data : {
+						uniqueid : id
+					},
+					success : function(result) {
+						//上传图片弹窗
+					$("#imgEditWin").show();
+					$("#imgEditWin #subBarCodeId").val(getSubarCode());
+					$("#imgEditWin #showImgId").attr("src", src);
+					$("#imgEditWin #remarkLabelId").text(result);
+					$("#imgEditWin #imgId").val(id);
+					if (printFlag == "1") {
+						$("#imgEditWin #printFlag").prop("checked", true);
+					} else if (printFlag == "0") {
+						$("#imgEditWin #printFlag").prop("checked", false);
+					}
+
+					$("#imgEditWin #cancle").click(function() {
+						$("#imgEditWin").hide();
+					});
+
+					$("#imgEditWin #save").click(function() {
+						$("#imgEditWin").hide();
+						//修改图片资料
+							imgEdit();
+						});
+				},
+				error : function(XmlHttpRequest, textStatus, errorThrown) {
+					jAlert("error",'提示信息');
+				}
+				});
+
+			});
+
+}
+
+//图片资料修改
+function imgEdit() {
+	var id = $("#imgEditWin #imgId").val();
+	var subBarCode = getSubarCode();
+	var remark = $("#imgEditWin #remarkLabelId").val();
+	var printFlag = $("#imgEditWin #printFlag:checked").size();
+	//alert(remark);
+	//jAlert("id:"+id+"\r\n"+"subBarCode:"+subBarCode+"\r\n"+"remark:"+remark+"\r\n"+"printFlag:"+printFlag);
+	$.ajax( {
+		type : "POST",
+		url : "${ctx}/lab/specimenResultImgEdit.action",
+		data : {
+			uniqueid : id,
+			imgRemark : remark,
+			printFlag : printFlag,
+			subBarCode : subBarCode
+		},
+		success : function(result) {
+			$("#imgInputWin").hide();
+			//加载该子条码的图片资料
+			$("#resultImgDiv").load(
+					"${ctx}/lab/specimenResultImgLoad.action?subBarCode="
+							+ subBarCode);
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			jAlert("error",'提示信息');
+		}
+	});
+
+}
+
+$(document).ready(function() {
+	$("#imgInputBtn").click(imgInputBtnClick); //图像录入
+		$("#uploadImgBtn").click(uploadImgBtnClick); //上传图片
+		$("#delImgBtn").click(delImgBtnClick); //删除图片
+	});

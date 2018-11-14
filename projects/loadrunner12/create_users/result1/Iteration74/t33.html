@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<!-- 清除缓存 -->
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="0">
+<!-- Common -->
+
+
+<script src="/NIP/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/NIP/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<link href="/NIP/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+<script src="/NIP/scripts/jquery.blockUI.js" type="text/javascript"></script>
+
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nip_common.js?V=2.9.5.1" type="text/javascript"></script>
+<script src="/NIP/scripts/common.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nipDhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/pdfobject.js?v=2014103114211" type="text/javascript"></script>
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlxGrid/ext/dhtmlxgrid_srnd.js" type="text/javascript"></script>
+<!-- NIP css -->
+<link rel="stylesheet" href="/NIP/css/style.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" />
+<script type="text/javascript">
+var IMG_BASEPATH_GRID = "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/";
+var IMG_BASEPATH_TABBAR = "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/";
+var isIE=false; 
+function openDhtmlWin(id,title,url, width, height){
+	var dhxWins = parent.nipDhxWins;
+	dhxWins.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+	dhxWins.enableAutoViewport(true);
+	if(dhxWins.window(id)==null){
+		var printWin = dhxWins.createWindow(id, 0, 0, width, height);// 自定义位置和宽度、高度
+		printWin.setText(title);
+		printWin.center();
+		//printWin.hideHeader();
+		//printWin.denyResize();
+		//printWin.denyPark();
+		printWin.button("minmax1").hide();
+		printWin.button("park").hide();
+		//printWin.button("close").hide();
+		printWin.denyResize();
+		printWin.denyPark();
+		printWin.attachURL(url);
+		printWin.setModal(true);
+	}else{
+		dhxWins.window(id).show();
+	}
+	return dhxWins;
+	/* var s = 'dialogWidth:' + width + 'px; dialogHeight:' + height + 'px; dialogTop=' + y + 'px; dialogLeft=' + x + 'px; scroll:no;';
+	return window.showModalDialog(url,window,s); */
+}
+function openModalDialog(url, width, height){
+	var x = ($(parent.document.body).width() - width) / 2;
+	var y = ($(parent.document.body).height() - height) / 2;
+	var s = 'dialogWidth:' + width + 'px; dialogHeight:' + height + 'px; dialogTop=' + y + 'px; dialogLeft=' + x + 'px; scroll:no;';
+	return window.showModalDialog(url,window,s);
+}
+
+function getScreenCenterCss(w, h){
+	var l = (screen.width - w) / 2;
+	var t = (screen.height - h) / 2;
+	var s = 'dialogWidth:' + w + 'px; dialogHeight:' + h + 'px; dialogTop=' + t + 'px; dialogLeft=' + l + 'px; scroll:no;';
+	
+	return s;
+}
+
+function errorHandle(XMLHttpRequest){
+	//unblockUI();
+	var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
+	if(sessionstatus == "timeout"){
+	   	   parent.location.href = ctx+"/login.action";
+	    }
+	var errirstatus = XMLHttpRequest.getResponseHeader("error");
+	if(errirstatus == "true"){
+		//alert("系统错误,请联系管理员");
+	}
+}
+
+$.ajaxSetup({     
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",     
+    beforeSend: function(XMLHttpRequest){
+    	//blockUI();
+	},
+	error: function(xhr,status,error){
+		//alert("系统错误,请联系管理员");
+	},
+    complete:function(XMLHttpRequest,textStatus){
+		errorHandle(XMLHttpRequest);
+    }
+});
+
+
+dhtmlxError.catchError("ALL",function(a,b,data){
+    var str = data[0].responseText;
+    if(typeof(str) == "undefined")
+        return false;
+    if(str.indexOf("parent.location.href")>-1){
+   	  parent.location.href = ctx+"/login.action";
+    }
+    //alert("系统错误,请联系管理员");
+});
+</script> 
+<!-- isIE? -->
+<!--[if IE]> 
+<script type="text/javascript"> 
+	var isIE=true; 
+</script> 
+<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>操作病理类型</title>
+<script>
+	var selectGrid, unselectGrid,id;
+	$(document).ready(function(){ 
+		id ='5be53a67b4907e1ab2b6c327'; //window.dialogArguments;
+		unselectGrid = new dhtmlXGridObject('datagrid3');
+		unselectGrid.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+		unselectGrid.setHeader("病理类型");
+		unselectGrid.attachHeader("#text_filter");//filter
+		unselectGrid.setInitWidths("230");
+		unselectGrid.setColAlign("left");
+		unselectGrid.setColTypes("ro");
+		unselectGrid.setColSorting("str");
+		unselectGrid.init();
+		unselectGrid.setSkin("dhx_skyblue");
+		unselectGrid.loadXML(ctx + "/ref/userPathologyTypeList.action?status=unselect&id="+id+"&laboratotyId="+$("#laboratorys").val());
+		unselectGrid.setMultiselect(!unselectGrid.selMultiRows);
+		
+		selectGrid = new dhtmlXGridObject('datagrid4');
+		selectGrid.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+		selectGrid.setHeader("病理类型, 所属实验室");
+		selectGrid.attachHeader("#text_filter,#text_filter");//filter
+		selectGrid.setInitWidths("200,100");
+		selectGrid.setColAlign("left,left");
+		selectGrid.setColTypes("ro,ro");
+		selectGrid.setColSorting("str,str");
+		selectGrid.init();
+		selectGrid.setSkin("dhx_skyblue");
+		selectGrid.loadXML(ctx+"/ref/userPathologyTypeList.action?status=select&id="+id);
+		
+		$("#laboratorys").change(laboratoryChange);
+	});
+
+	function removeToRight() {
+		if (unselectGrid.getSelectedRowId() == null) {
+			fadeInMessage("请选择病理类型");
+			return;
+		}
+		var rowIDs = unselectGrid.getSelectedRowId().split(",");
+		var rowIndex="";
+		
+		for ( var i = 0; i < rowIDs.length; i++) {
+			rowID = rowIDs[i];
+			var val = unselectGrid.cells(rowID, 0).getValue();
+			selectGrid.addRow(rowID, [ val, $("#laboratorys option:selected").text() ]);
+			if (i == rowIDs.length - 1) {
+				rowIndex = unselectGrid.getRowIndex(rowID);
+			}
+			unselectGrid.deleteRow(rowID);
+			if (i == rowIDs.length - 1) {
+				var rowNubs = unselectGrid.getRowsNum();
+				if (rowNubs == 0) {
+					rowIndex = "";
+				} else {
+					if (rowNubs <= rowIndex) {
+						rowIndex = rowNubs - 1;
+					}
+				}
+			}
+		}
+		unselectGrid.selectRow(rowIndex, true, true, true);
+	}
+
+	//全部右移
+	function removeAllToRight() {
+		//遮罩
+		blockUI();
+		var rowIDs = unselectGrid.getAllRowIds(",").split(",");
+		if (rowIDs != null && rowIDs != "" && rowIDs.length > 0) {
+			for ( var i = 0; i < rowIDs.length; i++) {
+				rowID = rowIDs[i];
+				var val = unselectGrid.cells(rowID, 0).getValue();
+				selectGrid.addRow(rowID, [ val, $("#laboratorys option:selected").text() ]);
+				unselectGrid.deleteRow(rowID);
+			}
+		}
+		unblockUI();
+	}
+
+	function removeToLeft() {
+		if (selectGrid.getSelectedRowId() == null) {
+			fadeInMessage("请选择病理类型");
+			return;
+		}
+		var rowIDs = selectGrid.getSelectedRowId().split(",");
+		for ( var i = 0; i < rowIDs.length; i++) {
+			rowID = rowIDs[i];
+			var val = selectGrid.cells(rowID, 0).getValue();
+			unselectGrid.addRow(rowID, [ val ]);
+			selectGrid.deleteRow(rowID);
+		}
+	}
+
+	//全部左移
+	function removeAllToLeft() {
+		//遮罩
+		blockUI();
+		var rowIDs = selectGrid.getAllRowIds(",").split(",");
+		if (rowIDs != null && rowIDs != "" && rowIDs.length > 0) {
+			for ( var i = 0; i < rowIDs.length; i++) {
+				rowID = rowIDs[i];
+				var val = selectGrid.cells(rowID, 0).getValue();
+				unselectGrid.addRow(rowID, [ val ]);
+				selectGrid.deleteRow(rowID);
+			}
+		}
+		unblockUI();
+	}
+
+	function save() {
+		var id = '5be53a67b4907e1ab2b6c327';
+		var ids = [];
+		selectGrid.forEachRow(function(id){
+			ids.push(id);
+		});
+		$.ajax({
+			type: "POST",
+			url: ctx+"/ref/updateUserPathologyType.action",
+			data:{pathologyTypeIdList: ids, userId:id},
+			dataType: "json",
+            traditional: true,  
+			success: function(result) {
+				if (result == "1") {
+					parent.parent.nipDhxWins.window("userPathologyType").close();
+				} else {
+					fadeInMessage("保存操作病理类型失败！");
+				}
+			}
+		});
+	}
+
+	function closeWin(){
+		parent.parent.nipDhxWins.window("userPathologyType").close();
+	}
+	
+	function laboratoryChange(){
+		unselectGrid.clearAll();
+		unselectGrid.loadXML(ctx + "/ref/userPathologyTypeList.action?status=unselect&id="+id+"&laboratotyId="+$("#laboratorys").val());
+	}
+
+</script>
+</head>
+<body>
+<div style="width:100%; height:90%; padding:5px; float:left;">
+	<fieldset style="width:250px; height:95%; float:left;">
+	<legend>可选病理类型</legend> 
+	<div>
+		<table>
+			<tr>
+				<td>实验室</td>
+				<td>
+					<select style="width:200px" id="laboratorys" >
+						
+							<option value="40281281401ec28f01401ec53f690003">广州达安临床检验中心</option>
+						
+							<option value="4af4e889494653120149502ecab87add">上海达安医学检验所</option>
+						
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="datagrid3" style="width:250px; height:89.5%;"></div>
+	</fieldset>
+	
+	<fieldset style="width:90px; height:95%; float:left;">
+	<legend>操作</legend>
+		<div style="margin:0 auto; height:110px;"></div>
+		<div style="margin:0 auto; vertical-align:middle; text-align:center;">
+			<div><input type="button" value="&gt;&gt;" onclick="removeAllToRight()"/></div>
+			<div><input type="button" value="&gt;" onclick="removeToRight()"/></div>
+			<br/><br/><br/><br/>
+			<div><input type="button" value="&lt;" onclick="removeToLeft()" /></div>
+			<div><input type="button" value="&lt;&lt;" onclick="removeAllToLeft() "/></div>
+		</div>
+	</fieldset>
+	
+	<fieldset style="width:300px; height:95%; float:left;">
+	<legend>已选病理类型</legend>
+	<div id="datagrid4" style="width:300px; height:96.5%;"></div>
+	</fieldset>
+</div>
+
+<div style=" text-align: center; width: 98%;height:10%;">
+	
+	<input type="button" value="保存" onclick="save()"/>
+	
+	<input type="button" value="取消" onclick="closeWin();"/>
+</div>
+</body>
+</html>

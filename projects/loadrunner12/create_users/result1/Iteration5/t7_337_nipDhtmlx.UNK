@@ -1,0 +1,87 @@
+dhtmlXCalendarObject.prototype.langData["cn"] = {
+				dateformat: '%Y-%m-%d',
+				monthesFNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+				monthesSNames: ["一","二","三","四","五","六","七","八","九","十","十一","十二"],
+				daysFNames: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+				daysSNames: ["日","一","二","三","四","五","六"],
+				weekstart: 0
+		};
+
+/**
+ * 日历控件
+ * @param inps
+ */
+function nipDhtmlXCalendarObject(inps,formt) {
+	//将日期空间加载到text表单上
+	var calendar = new dhtmlXCalendarObject(inps);
+	//设置语言
+	calendar.loadUserLanguage("cn");
+	//设置日期格式
+	if(formt!=null){
+		calendar.setDateFormat(formt);
+	}
+	else{
+		calendar.setDateFormat("%Y-%m-%d %H:%i");
+	}
+	
+	return calendar;
+}
+
+/**
+ * 页签控件
+ * @param barName 页签放置于此DIV中
+ * @param tabNames 各页签名称，数组类型,格式["tabName1","tabName2","tabName3","tabName4"]
+ * @param isIframe 是否为iframe模式
+ * @returns
+ */
+function nipDhtmlXTabBar(cctx,barName,tabNames,isIframe){
+	tabbar = new dhtmlXTabBar(barName, "top");
+	tabbar.setSkin('dhx_skyblue');
+	if(isIframe){
+		tabbar.setHrefMode("iframes-on-demand");
+	}
+	tabbar.setImagePath(cctx + "/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+	for(var i=0;i<tabNames.length;i++){
+		tabbar.addTab("tab" + i, tabNames[i], "100px");
+	}
+	return tabbar;
+}
+
+
+/**
+ * 数据list控件
+ * @param cctx
+ * @param gridbox div id名
+ * @param array 数组，相关参数
+ * @returns {grid}
+ */
+function nipDhtmlXGridObject(cctx,gridbox,array){
+	var grid = new dhtmlXGridObject(gridbox);
+	grid.selMultiRows = true;
+	//grid.imgURL = "${ctx}/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/icons_greenfolders/";
+	grid.setImagePath(cctx + "/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+	grid.setHeader(array[0]);
+	grid.setInitWidthsP(array[1]);
+	//grid.enableAutoHeight(true);
+	grid.setColAlign(array[2]);
+	grid.setColTypes(array[3]);
+	grid.setColSorting(array[4]);
+	grid.init();
+	grid.setSkin("dhx_skyblue");
+	grid.enableMultiselect(false);
+	//grid.enableTooltips("false");	
+	return grid;
+}
+
+/**
+ * 下拉菜单
+ * @param comboBox div id名
+ * @param name combo名称
+ * @param width 宽度
+ * @returns {dhtmlXCombo}
+ */
+function nipDhtmlXCombo(comboBox, name, width){
+	var combo = new dhtmlXCombo(comboBox, name, width);
+	combo.enableFilteringMode(true, "",true,true);
+	return combo;
+}

@@ -1,0 +1,11 @@
+[t64]
+FileName1=t64.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speSendoutCustomersCombo.action
+Total=1
+RequestHeaderFile=t64_RequestHeader.txt
+RequestBodyFile=t64_RequestBody.txt
+ResponseHeaderFile=t64_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_64.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

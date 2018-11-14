@@ -1,0 +1,2 @@
+sample_save.c(133): 201400741200	[MsgId: MMSG-17999]
+sample_save.c(174): Error -27726: Step download timeout (120 seconds) has expired  	[MsgId: MERR-27726]

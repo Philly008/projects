@@ -1,0 +1,11 @@
+[t132]
+FileName1=t132.xml
+URL1=http://update.googleapis.com/service/update2?cup2key=8:3023100404&cup2hreq=5c1b182689fd948da09483c08fa45017bf2a165a6457e9317f4f3aa5ddfb1d05
+Total=1
+RequestHeaderFile=t132_RequestHeader.txt
+RequestBodyFile=t132_RequestBody.txt
+ResponseHeaderFile=t132_ResponseHeader.txt
+ContentType=text/xml
+SnapshotXmlFile=snapshot_132.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

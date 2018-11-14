@@ -1,0 +1,2207 @@
+	var btnControl = false;
+	var btnControl02 = false;
+	var btnControl03 = false;
+	var btnControl04 = false;
+	var btnControl05 = false;
+
+	/*-------------------------------------------------------------------------------- 
+	----------------------选择设备下拉Grid参数设置---------------------------------- 
+	--------------------------------开始---------------------------------------------*/
+	
+	var instrument_param = {
+		/*必填内容*/
+		div_id : "comboInstrument", 	//对应DIV的id
+		grid_id : "gridInstrument", 	//对应Grid的Id	
+		name:"",
+		columnShow:2,					//将要在文本框中显示的列序号
+		clearOff:false,					//是否禁用clear按钮
+		grid_onChange:onInstrumentChange,
+		searchColumn:[2,3,1],
+		onEnter:function(){
+		}
+	};
+	var isDrag=false;	//是否重置表头(每次选择设备重置)
+	function onInstrumentChange(tr){
+		var id = tr.attr("id");
+		currentId = "";
+		currentInstrument = id;
+		isDrag=true;
+		currentIsMic = tr.find("td:eq(4)").html();
+		communicateMode = tr.find("td:eq(5)").html();
+		$("#txtSearchSubBarCode").val("");
+		cleanInfo();
+		var param = {"instrumentId":id,"customerId":customerCombo.getValue()};
+		$("#box_02 div.boxstyle").load("${ctx}/lab/specimenAuditLeft.action",param,function(){
+			var count=0;
+			$("#gridList tr").each(function(){
+				var ishiden=false;
+				if($("#chkNumbered").is(":checked")){
+					if($(this).find("td:eq(3)").html() == ""){
+						$(this).hide();
+						ishiden=true;
+					}
+				}
+				if($("#chkException").is(":checked") && $(this).is(":visible")){
+					if($(this).find("td:eq(4)").html() == ""){
+						$(this).hide();
+						ishiden=true;
+					}
+				}
+				if($("#chkUncomplete").is(":checked") && $(this).is(":visible")){
+					if($(this).find("td:eq(5)").html() == ""){
+						$(this).hide();
+						ishiden=true;
+					}
+				}
+				if(!ishiden){
+					count++;
+				}
+			});
+			$("#spanTag01").html("&#8250;共有"+count+"条记&#8249;");
+			$("#chkList").click(listCheckAll);
+			$("#gridList tr").click(listRowSelected);
+			bindSelectRow("gridList");
+			//切换页签显示
+			initTabViewForItemGrid(currentIsMic);
+			//自动选中第一条并加载数据
+			$("#gridList tr:first").trigger("click");
+		});
+	}
+	/*----------------------------结束------------------------------------------------ 
+	----------------------选择设备下拉Grid参数设置---------------------------------- 
+	---------------------------------------------------------------------------------*/
+	
+	/*-------------------------------------------------------------------------------- 
+	----------------------选择客户下拉Grid参数设置---------------------------------- 
+	--------------------------------开始---------------------------------------------*/
+	var customer_param = {
+		/*必填内容*/
+		div_id : "comboCustomer", 	//对应DIV的id
+		grid_id : "gridCustomer", 	//对应Grid的Id	
+		name:"",
+		columnShow:1,				//将要在文本框中显示的列序号
+		clearOff:false,				//是否禁用clear按钮
+		grid_onChange:onCustomerChange,
+		searchColumn:[1,3,2],
+		onEnter:function(){
+		}
+	};
+	
+	function onCustomerChange(tr){
+		instrumentCombo.checkValue();
+		if(instrumentCombo.getValue() == null || instrumentCombo.getValue() == ""){
+			customerCombo.clear();
+			instrumentCombo.setText("");
+			jAlert("请选择仪器", '提示信息');
+			return;
+		}
+		var id = tr.attr("id");
+		currentId = "";
+		var param = {"instrumentId":instrumentCombo.getValue(),"customerId":id};
+		$("#box_02 div.boxstyle").load("${ctx}/lab/specimenAuditLeft.action",param,function(){
+			$("#gridList tr").each(function(){
+				if($("#chkNumbered").is(":checked")){
+					if($(this).find("td:eq(3)").html() == ""){
+						$(this).hide();
+					}
+				}
+				if($("#chkException").is(":checked") && $(this).is(":visible")){
+					if($(this).find("td:eq(4)").html() == ""){
+						$(this).hide();
+					}
+				}
+				if($("#chkUncomplete").is(":checked") && $(this).is(":visible")){
+					if($(this).find("td:eq(5)").html() == ""){
+						$(this).hide();
+					}
+				}
+			});
+			$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+			$("#chkList").click(listCheckAll);
+			$("#gridList tr").click(listRowSelected);
+			bindSelectRow("gridList");
+			//自动选中第一条并加载数据
+			$("#gridList tr:first").trigger("click");
+		});
+	}
+	/*----------------------------结束------------------------------------------------ 
+	----------------------选择客户下拉Grid参数设置---------------------------------- 
+	---------------------------------------------------------------------------------*/
+	
+	
+	$(function() {
+		instrumentCombo = new TextCombo(instrument_param);
+		customerCombo = new TextCombo(customer_param);
+		//左侧全选checkBox的Click事件
+		$("#chkList").click(listCheckAll);
+		//左侧的3个过滤用的checkBox的Click事件
+		$("#chkNumbered").click(numberedClick);
+		$("#chkException").click(exceptionClick);
+		$("#chkCancleAudit").click(cancleAuditClick);
+		//查找条码
+		$("#txtSearchSubBarCode").keyup(searchSubBarCode);
+		//建议解释和自动小结的保存
+		$("#txtReportRemark").blur(reportRemarkSave);
+		$("#txtReportBrief").blur(reportBriefSave);
+		//建议解释、自动小结弹出框
+		$("#reportRemark").click(reportRemarkAlertWin);
+		$("#reportBrief").click(reportBriefAlertWin);
+		//建议解释、自动小结快速录入模板
+		$("#txtReportRemark").dblclick(txtReportRemarkDbClick);
+		$("#txtReportBrief").dblclick(txtReportBriefDbClick);
+		//按钮的Click事件
+		$("#btnQueryFun").click(btnQueryFunClick);
+		$("#btnRefresh").click(btnRefresh);
+		$("#btnAuditSpecimen").click(btnAuditSpecimenClick);
+		$("#btnReDo").click(btnReDoClick);
+		$("#btnReDoSumit").click(btnReDoSumitClick);
+		$("#btnReDoQuit").click(btnReDoQuitClick);
+		$("#btnDelItem").click(btnDelItemClick);
+		$("#btnDelItemSumit").click(btnDelItemSumitClick);
+		$("#btnDelItemQuit").click(btnDelItemQuitClick);
+		$("#btnOperationLog").click(btnOperationLogClick);
+		$("#btnInstrumentResult").click(btnInsResultClick);
+		//专家审核
+		$("#specialistAuditBtn").click(specialistAuditBtnClick);
+		$("#btnSpecialistAuditSumit").click(btnSpecialistAuditSumitClick);
+		$("#btnSpecialistAuditQuit").click(btnSpecialistAuditQuitClick);
+		$("#btnLoadPDF").click(loadPDFBtnClick);
+		//加载S/CO
+		$("#btnChangeSco").click(LoadScoBtnClick);
+	});
+	
+	//左侧全选checkBox的Click事件
+	function listCheckAll(){
+		if($("#chkList").is(":checked")){
+			$("#gridList tr:visible input[type='checkbox']").prop("checked",true);
+		}else{
+			$("#gridList tr:visible input[type='checkbox']").prop("checked",false);
+		}
+	}
+	//右边常规测试项全选反选的事件
+	function testItemCheckClick(){
+		if($("#chkTestItemList").is(":checked")){
+			$("#gridTestItem tr").each(function(){
+				$(this).parent().find("input[type='checkbox']").prop("checked",true);
+			});
+		}else{
+			$("#gridTestItem input[type='checkbox']").prop("checked",false);
+		}
+	}
+	//右边微生物测试项全选反选的事件
+	function micTestitemCheckClick(){
+		if($("#chkMicTestItemList").is(":checked")){
+			$("#gridMicTestItem tr").each(function(){
+				$(this).parent().find("input[type='checkbox']").prop("checked",true);
+			});
+		}else{
+			$("#gridMicTestItem input[type='checkbox']").prop("checked",false);
+		}
+	}
+	//编号checkBox的Click事件
+	function numberedClick(){
+		if($("#chkList").is(":checked")){
+			$("#gridList input[type='checkbox']").prop("checked",false);
+		}
+		if($("#chkNumbered").is(":checked")){
+			$("#gridList tr").each(function(){
+				if($(this).is(":visible") && $(this).find("td:eq(3)").html() == ""){
+					$(this).hide();
+				}
+				if($(this).is(":hidden") && $(this).find("td:eq(3)").html() != ""){
+					$(this).show();
+				}
+			});
+			var count = $("#gridList tr:visible").size();
+			$("#spanTag01").html("&#8250;共有"+count+"条记&#8249;");
+			//选中第一条子条码
+			if(count > 0){
+				$("#gridList tr:visible:first").removeClass("tablelist_now");
+				$("#gridList tr:visible:first").removeClass("ico_now");
+				$("#gridList tr:visible:first").trigger("click");
+			}else if(count == 0){
+				cleanInfo();
+			}
+		}else{
+			$("#gridList tr").each(function(){
+				if($(this).is(":hidden") && $(this).find("td:eq(3)").html() == ""){
+					$(this).show();
+				}
+			});
+			var count = $("#gridList tr:visible").size();
+			$("#spanTag01").html("&#8250;共有"+count+"条记&#8249;");
+			//选中第一条子条码
+			if(count > 0){
+				$("#gridList tr:visible:first").removeClass("tablelist_now");
+				$("#gridList tr:visible:first").removeClass("ico_now");
+				$("#gridList tr:visible:first").trigger("click");
+			}else if(count == 0){
+				cleanInfo();
+			}
+		}
+		if($("#chkList").is(":checked")){
+			$("#gridList tr:visible input[type='checkbox']").prop("checked",true);
+		}
+	}
+	
+	//异常checkBox的Click事件
+	function exceptionClick(){
+		if($("#chkList").is(":checked")){
+			$("#gridList input[type='checkbox']").prop("checked",false);
+		}
+		if($("#chkException").is(":checked")){
+			$("#gridList tr").each(function(){
+				if($(this).is(":visible") && $(this).find("td:eq(4)").html() == ""){
+					$(this).hide();
+				}
+				if($(this).is(":hidden") && $(this).find("td:eq(4)").html() != ""){
+					$(this).show();
+				}
+			});
+			var count = $("#gridList tr:visible").size();
+			$("#spanTag01").html("&#8250;共有"+count+"条记&#8249;");
+			//选中第一条子条码
+			if(count > 0){
+				$("#gridList tr:visible:first").removeClass("tablelist_now");
+				$("#gridList tr:visible:first").removeClass("ico_now");
+				$("#gridList tr:visible:first").trigger("click");
+			}else if(count == 0){
+				cleanInfo();
+			}
+		}else{
+			$("#gridList tr").each(function(){
+				if($(this).is(":hidden") && $(this).find("td:eq(4)").html() == ""){
+					$(this).show();
+				}
+			});
+			var count = $("#gridList tr:visible").size();
+			$("#spanTag01").html("&#8250;共有"+count+"条记&#8249;");
+			//选中第一条子条码
+			if(count > 0){
+				$("#gridList tr:visible:first").removeClass("tablelist_now");
+				$("#gridList tr:visible:first").removeClass("ico_now");
+				$("#gridList tr:visible:first").trigger("click");
+			}else if(count == 0){
+				cleanInfo();
+			}
+		}
+		if($("#chkList").is(":checked")){
+			$("#gridList input[type='checkbox']").prop("checked",true);
+		}
+	}
+	
+	//取消审核checkBox的Click事件
+	function cancleAuditClick(){
+		if($("#chkList").is(":checked")){
+			$("#gridList input[type='checkbox']").prop("checked",false);
+		}
+		if($("#chkCancleAudit").is(":checked")){
+			$("#gridList tr").each(function(){
+				if($(this).is(":visible") && $(this).find("td:eq(5)").html() == ""){
+					$(this).hide();
+				}
+				if($(this).is(":hidden") && $(this).find("td:eq(5)").html() != ""){
+					$(this).show();
+				}
+			});
+			var count = $("#gridList tr:visible").size();
+			$("#spanTag01").html("&#8250;共有"+count+"条记&#8249;");
+			//选中第一条子条码
+			if(count > 0){
+				$("#gridList tr:visible:first").removeClass("tablelist_now");
+				$("#gridList tr:visible:first").removeClass("ico_now");
+				$("#gridList tr:visible:first").trigger("click");
+			}else if(count == 0){
+				cleanInfo();
+			}
+		}else{
+			$("#gridList tr").each(function(){
+				if($(this).is(":hidden") && $(this).find("td:eq(5)").html() == ""){
+					$(this).show();
+				}
+			});
+			var count = $("#gridList tr:visible").size();
+			$("#spanTag01").html("&#8250;共有"+count+"条记&#8249;");
+			//选中第一条子条码
+			if(count > 0){
+				$("#gridList tr:visible:first").removeClass("tablelist_now");
+				$("#gridList tr:visible:first").removeClass("ico_now");
+				$("#gridList tr:visible:first").trigger("click");
+			}else if(count == 0){
+				cleanInfo();
+			}
+		}
+		if($("#chkList").is(":checked")){
+			$("#gridList input[type='checkbox']").prop("checked",true);
+		}
+	}
+
+	//查找条码
+	function searchSubBarCode(e) {
+		if(e.keyCode == 13) {
+			var subBarCode=$("#txtSearchSubBarCode").val();
+			var trObj = $("#gridList tr:visible");
+			if(trObj.size() > 0){
+				var flag = false;
+				trObj.each(function(){
+					if($(this).find("td:eq(2)").html() == subBarCode){
+						//移动滚动条 
+						var hp=$(this).position().top;
+						var hs=$("#divList").scrollTop();
+						$("#divList").scrollTop(hs+hp-146);
+						currentId = $(this).attr("id");
+						currentSubBarCode = subBarCode;
+						$("#gridList tr").removeClass("tablelist_now");
+						$("#gridList tr td:first-child").removeClass("ico_now");
+						$(this).addClass("tablelist_now");
+						$(this).find("td:first").addClass("ico_now");
+						$(this).children("td:nth-child(2)").children("input[type='checkbox']").prop("checked",true);
+						$("#txtSearchSubBarCode").val("");
+						loadSpecimenData(this,false);
+						flag = true;
+						return false;
+					}
+				});
+				if(!flag){
+					fadeInMessageDiv("没有找到条码为:"+subBarCode+"的标本", '提示信息');
+					$("#txtSearchSubBarCode").select();
+				}
+			}
+		}
+	}
+	
+	
+	//保存建议解释
+	function reportRemarkSave(){
+		if (currentId != null && currentId != "") {
+			var param = {"currentSpeId" : currentId,"reportRemark" : $("#txtReportRemark").val(),"subBarCode":currentSubBarCode,"actionURL":"SPE_AUDIT"};
+			$.post("${ctx}/lab/speResultSaveReportRemark.action", param);
+		}
+	}
+	
+	//建议解释弹出框
+	function reportRemarkAlertWin(){
+		if(currentId != null && currentId != ""){
+			var reportRemark=$("#txtReportRemark").val();
+			$("#txtReportRemarkAlert").val(reportRemark);
+			$("#btnReportRemarkAlertSumit").click(function(){
+				var remark=$("#txtReportRemarkAlert").val();
+				var param = {"currentSpeId" : currentId, "reportRemark" : remark,"subBarCode":currentSubBarCode,"actionURL":"SPE_AUDIT"};
+				if(remark!=null&&remark!=""){
+					$.post("${ctx}/lab/speResultSaveReportRemark.action", param,function(){
+						$("#txtReportRemark").val(remark);
+						$("#divForReportRemarkAlertWin").hide();
+						jAlert("保存成功", '提示信息');
+					});
+				}else{
+					jConfirm('确认要保存空的内容吗?','提示信息',function(choice){
+						if(choice){
+							$.post("${ctx}/lab/speResultSaveReportRemark.action", param,function(){
+								$("#txtReportRemark").val(remark);
+								$("#divForReportRemarkAlertWin").hide();
+								jAlert("保存成功", '提示信息');
+							});
+						}
+					});
+				}
+			});
+			$("#btnReportRemarkAlertQuit").click(function(){
+				$("#divForReportRemarkAlertWin").hide();
+			});
+			$("#divForReportRemarkAlertWin").show();
+		}
+	}
+	
+	//建议解释快速录入模版 
+	function txtReportRemarkDbClick(){
+		if(currentId!=null&&currentId!=""){
+			openFastComment('建议解释', 'txtReportRemark','reportRemarkSave',true);
+		}
+	}
+	
+	
+	//保存自动小结
+	function reportBriefSave(){
+		if (currentId != null && currentId != "") {
+			var param = {"currentSpeId" : currentId,"reportBrief" : $("#txtReportBrief").val(),"subBarCode":currentSubBarCode,"actionURL":"SPE_AUDIT"};
+			$.post("${ctx}/lab/speResultSaveReportBrief.action", param);
+		}
+	}
+	
+	//自动小结弹出框
+	function reportBriefAlertWin(){
+		if(currentId != null && currentId != ""){
+			var reportBrief=$("#txtReportBrief").val();
+			$("#txtReportBriefAlert").val(reportBrief);
+			$("#btnReportBriefAlertSumit").click(function(){
+				var remark=$("#txtReportBriefAlert").val();
+				var param = {"currentSpeId" : currentId, "reportBrief" : remark,"subBarCode":currentSubBarCode,"actionURL":"SPE_AUDIT"};
+				if(remark!=null&&remark!=""){
+					$.post("${ctx}/lab/speResultSaveReportBrief.action", param,function(){
+						$("#txtReportBrief").val(remark);
+						$("#divForReportBriefAlertfWin").hide();
+						jAlert("保存成功", '提示信息');
+					});
+				}else{
+					jConfirm('确认要保存空的内容吗?','提示信息',function(choice){
+						if(choice){
+							$.post("${ctx}/lab/speResultSaveReportBrief.action", param,function(){
+								$("#txtReportBrief").val(remark);
+								$("#divForReportBriefAlertfWin").hide();
+								jAlert("保存成功", '提示信息');
+							});
+						}
+					});
+				}
+			});
+			$("#btnReportBriefAlertQuit").click(function(){
+				$("#divForReportBriefAlertfWin").hide();
+			});
+			$("#divForReportBriefAlertfWin").show();
+		}
+	}
+	
+	//自动小结快速录入模版
+	function txtReportBriefDbClick(){
+		if(currentId!=null&&currentId!=""){
+			openFastComment('自动小结', 'txtReportBrief','reportBriefSave',true);
+		}
+	}
+	
+	//按钮区
+	//Q键查询
+	function btnQueryFunClick(){
+		$("#divForQ").load("${ctx}/lab/specimenAuditQWin.action",null,function(){
+			bindSelectRow("gridForQ");
+			$("#gridForQ tr").dblclick(function(){
+				instrumentCombo.setValue($(this).attr("id"));
+				var instrumentComboTr = $("#gridInstrument"+" #"+$(this).attr("id"));
+				onInstrumentChange(instrumentComboTr);
+				$("#divForQWin").hide();
+			});
+			$("#btnQuit").click(function(){
+				$("#divForQWin").hide();
+			});
+			$("#divForQWin").show();
+		});
+	}
+	
+	//刷新
+	function btnRefresh(){
+		if(currentInstrument != null && currentInstrument != ""){
+			var instrumentComboTr = $("#gridInstrument"+" #"+currentInstrument);
+			onInstrumentChange(instrumentComboTr);
+			//由于将来是会自动选中第一行,所以这里不需要清空页面
+		}
+	}
+	
+	//审核标本
+	function btnAuditSpecimenClick(){
+		if(currentInstrument != null && currentInstrument != ""){
+			if(!btnControl02){
+				btnControl02 = true;
+				var checkBoxObj = $("#gridList tr:visible input:checked");
+				var checkBoxObjSize = checkBoxObj.size();
+				if(currentIsMic == "true"){
+					//当前仪器是常规仪器
+					//判断左侧子条码有没有已经被勾选的
+					//有已经勾选的
+					if(checkBoxObjSize > 0) {
+						var subBarCodeIdList= "";							//左侧被勾选的子条码Id
+						var subBarCodeIdsArray=new Array();
+						var subBarCodesArray=new Array();
+						var reRunCount = 0;									
+						var reRunBarCode = "";
+						checkBoxObj.each(function(){
+							if($(this).parent().parent().find("td:eq(6)").html() == 'true'){
+								if(reRunCount == 0){
+									reRunBarCode = $(this).parent().parent().find("td:eq(2)").html();
+								}
+								reRunCount++;
+							}
+							subBarCodeIdsArray.push($(this).parent().parent().attr("id"));
+							subBarCodesArray.push($(this).attr("id"));
+						});
+						subBarCodeIdList=subBarCodeIdsArray.join(",");
+						if( (reRunCount == 1 && reRunCount != checkBoxObjSize)||reRunCount>1 ){
+							jAlert("标本:"+reRunBarCode+" 为复查标本，复查标本不能与正常标本进行审核，请对复查标本进行逐个审核.", '提示信息');
+							return false;
+						}
+						//为审核后的选中子条码准备数据
+						var preIndexId="";									//勾选的第一条子条码的上一条子条码的Id
+						var afterIndexId="";								//勾选的最后一条子条码的下一条子条码的Id
+						var preIndex="";		
+						var afterIndex="";	
+						//为审核时的confirm信息做的准备数据
+						var subBarCodeIds=subBarCodeIdList.split(",");
+						var length=subBarCodeIds.length;
+						var subBarCodes="";
+						subBarCodes=subBarCodesArray.join(",");
+						for(var i=0;i<length;i++){
+							if(i==0){
+								preIndex = getRowIndexById("gridList",subBarCodeIds[i]) -1;
+							}
+							if(i==length-1){
+								afterIndex = getRowIndexById("gridList",subBarCodeIds[i]) +1;
+							}
+						}
+						if(preIndex >= 0){
+							preIndexId = $($("#gridList tr").get(preIndex)).attr("id");
+						}
+						if(afterIndex <= $("#gridList tr:visible").size() - 1){
+							afterIndexId =$($("#gridList tr").get(afterIndex)).attr("id");
+						}
+						if(currentId != null && currentId != ""){
+							if( $("#gridList #" + currentId + " input:checked").size() > 0){
+								//若有勾选的,并且当前选中的子条码也被勾选的
+								//则选中子条码审核右边勾的测试项,其他子条码审核审核
+								//将当前选中子条码Id从subBarCodeIdList中移除
+								subBarCodeIdList = "," + subBarCodeIdList + ",";
+								var idIndex = subBarCodeIdList.indexOf("," + currentId + ",");
+								if(idIndex == 0){
+									subBarCodeIdList = subBarCodeIdList.replace("," + currentId + ",","");
+									if(subBarCodeIdList.length > 0){
+										subBarCodeIdList = subBarCodeIdList.substring(0,subBarCodeIdList.length-1);
+									}
+								} else if(idIndex > 0){
+									subBarCodeIdList = subBarCodeIdList.replace("," + currentId + ",",",");
+									subBarCodeIdList = subBarCodeIdList.substring(1,subBarCodeIdList.length-1);
+								} else {
+									btnControl02 = false;
+									jAlert("数据异常", '提示信息');
+									return false;
+								}
+								var testItemList=findCheckedTrIds("gridMicTestItem");
+								var checkRowSize = $("#gridMicTestItem input:checked").size();
+								var allRowSize = $("#gridMicTestItem tr").size();
+								if(subBarCodeIdList==""){
+									//若只有当前选中的子条码被勾选(这种情况就相当于没勾选只有选中)
+									if(testItemList!=null&&testItemList!=""){
+										//有勾选的测试项,则审核被勾选的测试项
+										jConfirm("是否确认要审核子条码:" + currentSubBarCode + "下所勾选的检测项目",'提示信息',function(choice){
+											if(choice){
+												blockUI();
+												var param={"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+												$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+													if(data!=null&&data!=""&&data!='null'){
+														//重新加载标本
+														if(data.indexOf("--") > -1){
+															var tips = data.split("--");
+															if(checkRowSize == allRowSize){
+																//需要移除当前标本
+																$("#gridList #"+tips[1]).remove();
+																if($("#gridList tr:visible").size() > 0){
+																	if(afterIndexId!=""){
+																		$("#gridList #" + afterIndexId).trigger("click");
+																	}else if(preIndexId!=""){
+																		$("#gridList #" + preIndexId).trigger("click");
+																	}
+																}else{
+																	//清空页面
+																	cleanInfo();
+																}
+																$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+															}else{
+																//不需要移除当前标本,需要重新选中
+																$("#gridList #"+tips[1]).removeClass("tablelist_now");
+																$("#gridList #"+tips[1]).removeClass("ico_now");
+																$("#gridList #"+tips[1]).trigger("click");
+															}
+															jAlert(tips[0], '提示信息');
+														}else {
+															//所有条码均未审核成功
+															jAlert(data, '提示信息');
+														}
+													}
+													unblockUI();
+													btnControl02 = false;
+												},"text");
+											}else{
+												btnControl02 = false;
+												return false;
+											}
+										});
+									}else{
+										//没有勾选的测试项,流程结束
+										btnControl02 = false;
+										jAlert("请勾选您所有要审核的检测项目", '提示信息');
+										return false;
+									}
+								}else{
+									//除了当前勾选并选择的子条码,还有其余勾选的子条码
+									if(length<=5){
+										jConfirm("是否确认要审核条码号为:"+subBarCodes+"的标本",'提示信息',function(choice){
+											if(choice){
+												blockUI();
+												var param={"speInstrumentIds":subBarCodeIdList,"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+												$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+													if(data!=null&&data!=""&&data!='null'){
+														//重新加载标本
+														if(data.indexOf("--") > -1){
+															var tips = data.split("--");
+															var sumitIdsArray = tips[1].split(",");
+															if(checkRowSize == allRowSize){
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	$("#gridList #"+sumitIdsArray[m]).remove();
+																}
+															}else{
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	if(sumitIdsArray[m] != currentId){
+																		$("#gridList #"+sumitIdsArray[m]).remove();
+																	}
+																}
+															}
+															if($("#gridList #"+currentId).size() == 0){
+																//当前选中的条码已经完全审核
+																//若勾选的条码并没有全部审核,则对没有审核的条码,按照从上到下的顺序,选中最上面的那条
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	var idIndex = -1;
+																	for(var n=0;n<subBarCodeIdsArray.length;n++){
+																		if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																			idIndex = n;
+																			break;
+																		}
+																	}
+																	if(idIndex > -1){
+																		subBarCodeIdsArray.splice(idIndex, 1);
+																	}
+																}
+																if(subBarCodeIdsArray.length > 0){
+																	$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+																}else{
+																	//若勾选的条码全部审核
+																	if($("#gridList tr:visible").size() > 0){
+																		if(afterIndexId!=""){
+																			$("#gridList #" + afterIndexId).trigger("click");
+																		}else if(preIndexId!=""){
+																			$("#gridList #" + preIndexId).trigger("click");
+																		}
+																	}else{
+																		//清空页面
+																		cleanInfo();
+																	}
+																}
+															}else{
+																//不需要移除当前标本,需要重新选中
+																$("#gridList #"+currentId).removeClass("tablelist_now");
+																$("#gridList #"+currentId).removeClass("ico_now");
+																$("#gridList #"+currentId).trigger("click");
+															}
+															$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+															jAlert(tips[0], '提示信息');
+														}else {
+															//所有条码均未审核成功
+															jAlert(data, '提示信息');
+														}
+													}
+													unblockUI();
+													btnControl02 = false;
+												},"text");
+											}else{
+												btnControl02 = false;
+												return false;
+											}
+										});
+									}else{
+										jConfirm("是否确认要审核所勾选的"+length+"条标本",'提示信息',function(choice){
+											if(choice){
+												blockUI();
+												var param={"speInstrumentIds":subBarCodeIdList,"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+												$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+													if(data!=null&&data!=""&&data!='null'){
+														//重新加载标本
+														if(data.indexOf("--") > -1){
+															var tips = data.split("--");
+															var sumitIdsArray = tips[1].split(",");
+															if(checkRowSize == allRowSize){
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	$("#gridList #"+sumitIdsArray[m]).remove();
+																}
+															}else{
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	if(sumitIdsArray[m] != currentId){
+																		$("#gridList #"+sumitIdsArray[m]).remove();
+																	}
+																}
+															}
+															if($("#gridList #"+currentId).size() == 0){
+																//当前选中的条码已经完全审核
+																//若勾选的条码并没有全部审核,则对没有审核的条码,按照从上到下的顺序,选中最上面的那条
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	var idIndex = -1;
+																	for(var n=0;n<subBarCodeIdsArray.length;n++){
+																		if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																			idIndex = n;
+																			break;
+																		}
+																	}
+																	if(idIndex > -1){
+																		subBarCodeIdsArray.splice(idIndex, 1);
+																	}
+																}
+																if(subBarCodeIdsArray.length > 0){
+																	$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+																}else{
+																	//若勾选的条码全部审核
+																	if($("#gridList tr:visible").size() > 0){
+																		if(afterIndexId!=""){
+																			$("#gridList #" + afterIndexId).trigger("click");
+																		}else if(preIndexId!=""){
+																			$("#gridList #" + preIndexId).trigger("click");
+																		}
+																	}else{
+																		//清空页面
+																		cleanInfo();
+																	}
+																}
+															}else{
+																//不需要移除当前标本,需要重新选中
+																$("#gridList #"+currentId).removeClass("tablelist_now");
+																$("#gridList #"+currentId).removeClass("ico_now");
+																$("#gridList #"+currentId).trigger("click");
+															}
+															$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+															jAlert(tips[0], '提示信息');
+														}else {
+															//所有条码均未审核成功
+															jAlert(data, '提示信息');
+														}
+													}
+													unblockUI();
+													btnControl02 = false;
+												},"text");
+											}else{
+												btnControl02 = false;
+												return false;
+											}
+										});
+									}
+								}
+							} else {
+								//当前子条码没有被勾选,则只审核勾选的子条码
+								if(length<=5){
+									jConfirm("是否确认要审核条码号为:"+subBarCodes+"的标本",'提示信息',function(choice){
+										if(choice){
+											blockUI();
+											var param={"speInstrumentIds":subBarCodeIdList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+											$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+												if(data!=null&&data!=""&&data!='null'){
+													//重新加载标本
+													if(data.indexOf("--") > -1){
+														var tips = data.split("--");
+														//若勾选的条码并没有全部审核,则对没有审核的条码,按照从上到下的顺序,选中最上面的那条
+														var sumitIdsArray = tips[1].split(",");
+														for(var m=0;m<sumitIdsArray.length;m++){
+															var idIndex = -1;
+															$("#gridList #"+sumitIdsArray[m]).remove();
+															for(var n=0;n<subBarCodeIdsArray.length;n++){
+																if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																	idIndex = n;
+																	break;
+																}
+															}
+															if(idIndex > -1){
+																subBarCodeIdsArray.splice(idIndex, 1);
+															}
+														}
+														if(subBarCodeIdsArray.length > 0){
+															$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+														}else{
+															//若勾选的条码全部审核
+															if($("#gridList tr:visible").size() > 0){
+																if(afterIndexId!=""){
+																	$("#gridList #" + afterIndexId).trigger("click");
+																}else if(preIndexId!=""){
+																	$("#gridList #" + preIndexId).trigger("click");
+																}
+															}else{
+																//清空页面
+																cleanInfo();
+															}
+														}
+														$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+														jAlert(tips[0], '提示信息');
+													}else {
+														//所有条码均未审核成功
+														jAlert(data, '提示信息');
+													}
+												}
+												unblockUI();
+												btnControl02 = false;
+											},"text");
+										}else{
+											btnControl02 = false;
+											return false;
+										}
+									});
+								}else{
+									jConfirm("是否确认要审核所勾选的"+length+"条标本",'提示信息',function(choice){
+										if(choice){
+											blockUI();
+											var param={"speInstrumentIds":subBarCodeIdList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+											$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+												if(data!=null&&data!=""&&data!='null'){
+													//重新加载标本
+													if(data.indexOf("--") > -1){
+														var tips = data.split("--");
+														//若勾选的条码并没有全部审核,则对没有审核的条码,按照从上到下的顺序,选中最上面的那条
+														var sumitIdsArray = tips[1].split(",");
+														for(var m=0;m<sumitIdsArray.length;m++){
+															var idIndex = -1;
+															$("#gridList #"+sumitIdsArray[m]).remove();
+															for(var n=0;n<subBarCodeIdsArray.length;n++){
+																if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																	idIndex = n;
+																	break;
+																}
+															}
+															if(idIndex > -1){
+																subBarCodeIdsArray.splice(idIndex, 1);
+															}
+														}
+														if(subBarCodeIdsArray.length > 0){
+															$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+														}else{
+															//若勾选的条码全部审核
+															if($("#gridList tr:visible").size() > 0){
+																if(afterIndexId!=""){
+																	$("#gridList #" + afterIndexId).trigger("click");
+																}else if(preIndexId!=""){
+																	$("#gridList #" + preIndexId).trigger("click");
+																}
+															}else{
+																//清空页面
+																cleanInfo();
+															}
+														}
+														$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+														jAlert(tips[0], '提示信息');
+													}else {
+														//所有条码均未审核成功
+														jAlert(data, '提示信息');
+													}
+												}
+												unblockUI();
+												btnControl02 = false;
+											},"text");
+										}else{
+											btnControl02 = false;
+											return false;
+										}
+									});
+								}
+							}
+						}
+					} else {
+						//左侧子条码没有勾选,则判断有无选中的子条码
+						if(currentId!=null&&currentId!=""){
+							//有选中的子条码,则判断右侧是否是否有勾选的测试项
+							//为提交后的选中子条码准备数据
+							var preIndexId="";								//勾选的第一条子条码的上一条子条码的Id
+							var afterIndexId="";							//勾选的最后一条子条码的下一条子条码的Id
+							var preIndex="";		
+							var afterIndex="";
+							preIndex = getRowIndexById("gridList",currentId) - 1;
+							afterIndex = getRowIndexById("gridList",currentId) + 1;
+							if(preIndex >= 0){
+								preIndexId = $($("#gridList tr").get(preIndex)).attr("id");
+							}
+							if(afterIndex <= $("#gridList tr:visible").size() - 1){
+								afterIndexId = $($("#gridList tr").get(afterIndex)).attr("id");
+							}
+							var testItemList=findCheckedTrIds("gridMicTestItem");
+							var checkRowSize = $("#gridMicTestItem input:checked").size();
+							var allRowSize = $("#gridMicTestItem tr").size();
+							if(testItemList!=null&&testItemList!=""){
+								//有勾选的测试项,则审核被勾选的测试项
+								jConfirm("是否确认要审核所勾选的检测项目",'提示信息',function(choice){
+									if(choice){
+										blockUI();
+										var param={"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+										$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+											if(data!=null&&data!=""&&data!='null'){
+												//重新加载标本
+												if(data.indexOf("--") > -1){
+													var tips = data.split("--");
+													if(checkRowSize == allRowSize && tips[0].indexOf("退单")<0){
+														//需要移除当前标本
+														$("#gridList #"+tips[1]).remove();
+														if($("#gridList tr:visible").size() > 0){
+															if(afterIndexId!=""){
+																$("#gridList #" + afterIndexId).trigger("click");
+															}else if(preIndexId!=""){
+																$("#gridList #" + preIndexId).trigger("click");
+															}
+														}else{
+															//清空页面
+															cleanInfo();
+														}
+														$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+													}else{
+														//不需要移除当前标本,需要重新选中
+														$("#gridList #"+tips[1]).removeClass("tablelist_now");
+														$("#gridList #"+tips[1]).removeClass("ico_now");
+														$("#gridList #"+tips[1]).trigger("click");
+													}
+													jAlert(tips[0], '提示信息');
+												}else {
+													//所有条码均未审核成功
+													jAlert(data, '提示信息');
+												}
+											} 
+											unblockUI();
+											btnControl02 = false;
+										},"text");
+									}else{
+										btnControl02 = false;
+										return false;
+									}
+								});
+							}else{
+								//没有勾选的测试项,流程结束
+								btnControl02 = false;
+								jAlert("请勾选您所有要审核的检测项目", '提示信息');
+								return false;
+							}
+						}else{
+							//没有选中的子条码,流程结束
+							btnControl02 = false;
+							jAlert("请选择您所有要审核的子条码", '提示信息');
+							return false;
+						}
+					}
+				} else {
+					//当前仪器是常规仪器
+					//判断左侧子条码有没有已经被勾选的
+					//有已经勾选的
+					if(checkBoxObjSize > 0) {
+						var subBarCodeIdList= "";							//左侧被勾选的子条码Id
+						var subBarCodeIdsArray=new Array();
+						var subBarCodesArray=new Array();
+						var reRunCount = 0;									
+						var reRunBarCode = "";
+						checkBoxObj.each(function(){
+							if($(this).parent().parent().find("td:eq(6)").html() == 'true'){
+								if(reRunCount == 0){
+									reRunBarCode = $(this).parent().parent().find("td:eq(2)").html();
+								}
+								reRunCount++;
+							}
+							subBarCodeIdsArray.push($(this).parent().parent().attr("id"));
+							subBarCodesArray.push($(this).attr("id"));
+						});
+						subBarCodeIdList=subBarCodeIdsArray.join(",");
+						if(  (reRunCount == 1 && reRunCount != checkBoxObjSize)||reRunCount>1 ){
+							jAlert("标本:"+reRunBarCode+" 为复查标本，复查标本不能与正常标本进行审核，请对复查标本进行逐个审核.", '提示信息');
+							return false;
+						}
+						//为审核后的选中子条码准备数据
+						var preIndexId="";									//勾选的第一条子条码的上一条子条码的Id
+						var afterIndexId="";								//勾选的最后一条子条码的下一条子条码的Id
+						var preIndex="";		
+						var afterIndex="";	
+						//为审核时的confirm信息做的准备数据
+						var subBarCodeIds=subBarCodeIdList.split(",");
+						var length=subBarCodeIds.length;
+						var subBarCodes="";
+						subBarCodes=subBarCodesArray.join(",");
+						for(var i=0;i<length;i++){
+							if(i==0){
+								preIndex = getRowIndexById("gridList",subBarCodeIds[i]) -1;
+							}
+							if(i==length-1){
+								afterIndex = getRowIndexById("gridList",subBarCodeIds[i]) +1;
+							}
+						}
+						if(preIndex >= 0){
+							preIndexId = $($("#gridList tr").get(preIndex)).attr("id");
+						}
+						if(afterIndex <= $("#gridList tr:visible").size() - 1){
+							afterIndexId =$($("#gridList tr").get(afterIndex)).attr("id");
+						}
+						if(currentId != null && currentId != ""){
+							if($("#gridList #" + currentId + " input:checked").size() > 0){
+								//若有勾选的,并且当前选中的子条码也被勾选的
+								//则选中子条码审核右边勾的测试项,其他子条码审核审核
+								//将当前选中子条码Id从subBarCodeIdList中移除
+								subBarCodeIdList = "," + subBarCodeIdList + ",";
+								var idIndex = subBarCodeIdList.indexOf("," + currentId + ",");
+								if(idIndex == 0){
+									subBarCodeIdList = subBarCodeIdList.replace("," + currentId + ",","");
+									if(subBarCodeIdList.length > 0){
+										subBarCodeIdList = subBarCodeIdList.substring(0,subBarCodeIdList.length-1);
+									}
+								} else if(idIndex > 0){
+									subBarCodeIdList = subBarCodeIdList.replace("," + currentId + ",",",");
+									subBarCodeIdList = subBarCodeIdList.substring(1,subBarCodeIdList.length-1);
+								} else {
+									btnControl02 = false;
+									jAlert("数据异常", '提示信息');
+									return false;
+								}
+								var testItemList=findCheckedTrIds("gridTestItem");
+								var checkRowSize = $("#gridTestItem input:checked").size();
+								var allRowSize = $("#gridTestItem tr").size();
+								if(subBarCodeIdList==""){
+									//若只有当前选中的子条码被勾选(这种情况就相当于没勾选只有选中)
+									if(testItemList!=null&&testItemList!=""){
+										//有勾选的测试项,则审核被勾选的测试项
+										jConfirm("是否确认要审核子条码:" + currentSubBarCode + "下所勾选的检测项目",'提示信息',function(choice){
+											if(choice){
+												blockUI();
+												var param={"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+												$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+													if(data!=null&&data!=""&&data!='null'){
+														//重新加载标本
+														if(data.indexOf("--") > -1){
+															var tips = data.split("--");
+															if(checkRowSize == allRowSize){
+																//需要移除当前标本
+																$("#gridList #"+tips[1]).remove();
+																if($("#gridList tr:visible").size() > 0){
+																	if(afterIndexId!=""){
+																		$("#gridList #" + afterIndexId).trigger("click");
+																	}else if(preIndexId!=""){
+																		$("#gridList #" + preIndexId).trigger("click");
+																	}
+																}else{
+																	//清空页面
+																	cleanInfo();
+																}
+																$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+															}else{
+																//不需要移除当前标本,需要重新选中
+																$("#gridList #"+tips[1]).removeClass("tablelist_now");
+																$("#gridList #"+tips[1]).removeClass("ico_now");
+																$("#gridList #"+tips[1]).trigger("click");
+															}
+															jAlert(tips[0], '提示信息');
+														}else {
+															//所有条码均未提交成功
+															jAlert(data, '提示信息');
+														}
+													}
+													unblockUI();
+													btnControl02 = false;
+												},"text");
+											}else{
+												btnControl02 = false;
+												return false;
+											}
+										});
+									}else{
+										//没有勾选的测试项,流程结束
+										btnControl02 = false;
+										jAlert("请勾选您所有要审核的检测项目", '提示信息');
+										return false;
+									}
+								}else{
+									//除了当前勾选并选择的子条码,还有其余勾选的子条码
+									if(length<=5){
+										jConfirm("是否确认要审核条码号为:"+subBarCodes+"的标本",'提示信息',function(choice){
+											if(choice){
+												blockUI();
+												var param={"speInstrumentIds":subBarCodeIdList,"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+												$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+													if(data!=null&&data!=""&&data!='null'){
+														//重新加载标本
+														if(data.indexOf("--") > -1){
+															var tips = data.split("--");
+															var sumitIdsArray = tips[1].split(",");
+															if(checkRowSize == allRowSize){
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	$("#gridList #"+sumitIdsArray[m]).remove();
+																}
+															}else{
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	if(sumitIdsArray[m] != currentId){
+																		$("#gridList #"+sumitIdsArray[m]).remove();
+																	}
+																}
+															}
+															if($("#gridList #"+currentId).size() == 0){
+																//当前选中的条码已经完全审核
+																//若勾选的条码并没有全部审核,则对没有审核的条码,按照从上到下的顺序,选中最上面的那条
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	var idIndex = -1;
+																	for(var n=0;n<subBarCodeIdsArray.length;n++){
+																		if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																			idIndex = n;
+																			break;
+																		}
+																	}
+																	if(idIndex > -1){
+																		subBarCodeIdsArray.splice(idIndex, 1);
+																	}
+																}
+																if(subBarCodeIdsArray.length > 0){
+																	$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+																}else{
+																	//若勾选的条码全部审核
+																	if($("#gridList tr:visible").size() > 0){
+																		if(afterIndexId!=""){
+																			$("#gridList #" + afterIndexId).trigger("click");
+																		}else if(preIndexId!=""){
+																			$("#gridList #" + preIndexId).trigger("click");
+																		}
+																	}else{
+																		//清空页面
+																		cleanInfo();
+																	}
+																}
+															}else{
+																//不需要移除当前标本,需要重新选中
+																$("#gridList #"+currentId).removeClass("tablelist_now");
+																$("#gridList #"+currentId).removeClass("ico_now");
+																$("#gridList #"+currentId).trigger("click");
+															}
+															$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+															jAlert(tips[0], '提示信息');
+														}else {
+															//所有条码均未审核成功
+															jAlert(data, '提示信息');
+														}
+													}
+													unblockUI();
+													btnControl02 = false;
+												},"text");
+											}else{
+												btnControl02 = false;
+												return false;
+											}
+										});
+									}else{
+										jConfirm("是否确认要审核所勾选的"+length+"条标本",'提示信息',function(choice){
+											if(choice){
+												blockUI();
+												var param={"speInstrumentIds":subBarCodeIdList,"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+												$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+													if(data!=null&&data!=""&&data!='null'){
+														//重新加载标本
+														if(data.indexOf("--") > -1){
+															var tips = data.split("--");
+															var sumitIdsArray = tips[1].split(",");
+															if(checkRowSize == allRowSize){
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	$("#gridList #"+sumitIdsArray[m]).remove();
+																}
+															}else{
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	if(sumitIdsArray[m] != currentId){
+																		$("#gridList #"+sumitIdsArray[m]).remove();
+																	}
+																}
+															}
+															if($("#gridList #"+currentId).size() == 0){
+																//当前选中的条码已经完全审核
+																//若勾选的条码并没有全部审核,则对没有审核的条码,按照从上到下的顺序,选中最上面的那条
+																for(var m=0;m<sumitIdsArray.length;m++){
+																	var idIndex = -1;
+																	for(var n=0;n<subBarCodeIdsArray.length;n++){
+																		if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																			idIndex = n;
+																			break;
+																		}
+																	}
+																	if(idIndex > -1){
+																		subBarCodeIdsArray.splice(idIndex, 1);
+																	}
+																}
+																if(subBarCodeIdsArray.length > 0){
+																	$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+																}else{
+																	//若勾选的条码全部审核
+																	if($("#gridList tr:visible").size() > 0){
+																		if(afterIndexId!=""){
+																			$("#gridList #" + afterIndexId).trigger("click");
+																		}else if(preIndexId!=""){
+																			$("#gridList #" + preIndexId).trigger("click");
+																		}
+																	}else{
+																		//清空页面
+																		cleanInfo();
+																	}
+																}
+															}else{
+																//不需要移除当前标本,需要重新选中
+																$("#gridList #"+currentId).removeClass("tablelist_now");
+																$("#gridList #"+currentId).removeClass("ico_now");
+																$("#gridList #"+currentId).trigger("click");
+															}
+															$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+															jAlert(tips[0], '提示信息');
+														}else {
+															//所有条码均未审核成功
+															jAlert(data, '提示信息');
+														}
+													}
+													unblockUI();
+													btnControl02 = false;
+												},"text");
+											}else{
+												btnControl02 = false;
+												return false;
+											}
+										});
+									}
+								}
+							} else {
+								//当前子条码未被勾选
+								if(length<=5){
+									jConfirm("是否确认要审核条码号为:"+subBarCodes+"的标本",'提示信息',function(choice){
+										if(choice){
+											blockUI();
+											var param={"speInstrumentIds":subBarCodeIdList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+											$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+												if(data!=null&&data!=""&&data!='null'){
+													//重新加载标本
+													if(data.indexOf("--") > -1){
+														var tips = data.split("--");
+														//若勾选的条码并没有全部审核,则对没有审核的条码,按照从上到下的顺序,选中最上面的那条
+														var sumitIdsArray = tips[1].split(",");
+														for(var m=0;m<sumitIdsArray.length;m++){
+															var idIndex = -1;
+															$("#gridList #"+sumitIdsArray[m]).remove();
+															for(var n=0;n<subBarCodeIdsArray.length;n++){
+																if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																	idIndex = n;
+																	break;
+																}
+															}
+															if(idIndex > -1){
+																subBarCodeIdsArray.splice(idIndex, 1);
+															}
+														}
+														if(subBarCodeIdsArray.length > 0){
+															$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+														}else{
+															//若勾选的条码全部审核
+															if($("#gridList tr:visible").size() > 0){
+																if(afterIndexId!=""){
+																	$("#gridList #" + afterIndexId).trigger("click");
+																}else if(preIndexId!=""){
+																	$("#gridList #" + preIndexId).trigger("click");
+																}
+															}else{
+																//清空页面
+																cleanInfo();
+															}
+														}
+														$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+														jAlert(tips[0], '提示信息');
+													}else {
+														//所有条码均未审核成功
+														jAlert(data, '提示信息');
+													}
+												}
+												unblockUI();
+												btnControl02 = false;
+											},"text");
+										}else{
+											btnControl02 = false;
+											return false;
+										}
+									});
+								}else{
+									jConfirm("是否确认要审核所勾选的"+length+"条标本",'提示信息',function(choice){
+										if(choice){
+											blockUI();
+											var param={"speInstrumentIds":subBarCodeIdList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+											$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+												if(data!=null&&data!=""&&data!='null'){
+													//重新加载标本
+													if(data.indexOf("--") > -1){
+														var tips = data.split("--");
+														//若勾选的条码并没有全部审核,则对没有提交的审核,按照从上到下的顺序,选中最上面的那条
+														var sumitIdsArray = tips[1].split(",");
+														for(var m=0;m<sumitIdsArray.length;m++){
+															var idIndex = -1;
+															$("#gridList #"+sumitIdsArray[m]).remove();
+															for(var n=0;n<subBarCodeIdsArray.length;n++){
+																if(subBarCodeIdsArray[n]==sumitIdsArray[m]){
+																	idIndex = n;
+																	break;
+																}
+															}
+															if(idIndex > -1){
+																subBarCodeIdsArray.splice(idIndex, 1);
+															}
+														}
+														if(subBarCodeIdsArray.length > 0){
+															$("#gridList #"+subBarCodeIdsArray[0]).trigger("click");
+														}else{
+															//若勾选的条码全部审核
+															if($("#gridList tr:visible").size() > 0){
+																if(afterIndexId!=""){
+																	$("#gridList #" + afterIndexId).trigger("click");
+																}else if(preIndexId!=""){
+																	$("#gridList #" + preIndexId).trigger("click");
+																}
+															}else{
+																//清空页面
+																cleanInfo();
+															}
+														}
+														$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+														jAlert(tips[0], '提示信息');
+													}else {
+														//所有条码均未审核成功
+														jAlert(data, '提示信息');
+													}
+												} 
+												unblockUI();
+												btnControl02 = false;
+											},"text");
+										}else{
+											btnControl02 = false;
+											return false;
+										}
+									});
+								}
+							}
+						}
+					} else {
+						//左侧子条码没有勾选,则判断有无选中的子条码
+						if(currentId!=null&&currentId!=""){
+							//有选中的子条码,则判断右侧是否是否有勾选的测试项
+							//为提交后的选中子条码准备数据
+							var preIndexId="";								//勾选的第一条子条码的上一条子条码的Id
+							var afterIndexId="";							//勾选的最后一条子条码的下一条子条码的Id
+							var preIndex="";		
+							var afterIndex="";
+							preIndex = getRowIndexById("gridList",currentId) - 1;
+							afterIndex = getRowIndexById("gridList",currentId) + 1;
+							if(preIndex >= 0){
+								preIndexId = $($("#gridList tr").get(preIndex)).attr("id");
+							}
+							if(afterIndex <= $("#gridList tr:visible").size() - 1){
+								afterIndexId = $($("#gridList tr").get(afterIndex)).attr("id");
+							}
+							//有选中的子条码,则判断右侧是否是否有勾选的测试项
+							var testItemList=findCheckedTrIds("gridTestItem");
+							var checkRowSize = $("#gridTestItem input:checked").size();
+							var allRowSize = $("#gridTestItem tr").size();
+							if(testItemList!=null&&testItemList!=""){
+								//有勾选的测试项,则审核被勾选的测试项
+								jConfirm("是否确认要审核所勾选的检测项目",'提示信息',function(choice){
+									if(choice){
+										blockUI();
+										var param={"speInstrumentItemIds":testItemList,"currentSpeId":currentId,"instrumentId":currentInstrument,"instrumentName":instrumentCombo.getText()};
+										$.post("${ctx}/lab/specimenAuditAudit.action",param,function(data){
+											if(data!=null&&data!=""&&data!='null'){
+												//重新加载标本
+												if(data.indexOf("--") > -1){
+													var tips = data.split("--");
+													if(checkRowSize == allRowSize && tips[0].indexOf("退单")<0){
+														//需要移除当前标本
+														$("#gridList #"+tips[1]).remove();
+														if($("#gridList tr:visible").size() > 0){
+															if(afterIndexId!=""){
+																$("#gridList #" + afterIndexId).trigger("click");
+															}else if(preIndexId!=""){
+																$("#gridList #" + preIndexId).trigger("click");
+															}
+														}else{
+															//清空页面
+															cleanInfo();
+														}
+														$("#spanTag01").html("&#8250;共有"+$("#gridList tr:visible").size()+"条记&#8249;");
+													}else{
+														//不需要移除当前标本,需要重新选中
+														$("#gridList #"+tips[1]).removeClass("tablelist_now");
+														$("#gridList #"+tips[1]).removeClass("ico_now");
+														$("#gridList #"+tips[1]).trigger("click");
+													}
+													jAlert(tips[0], '提示信息');
+												}else {
+													//所有条码均未提交成功
+													jAlert(data, '提示信息');
+												}
+											}
+											unblockUI();
+											btnControl02 = false;
+										},"text");
+									}else{
+										btnControl02 = false;
+										return false;
+									}
+								});
+							}else{
+								//没有勾选的测试项,流程结束
+								btnControl02 = false;
+								jAlert("请勾选您所有要审核的检测项目", '提示信息');
+								return false;
+							}
+						}else{
+							//没有选中的子条码,流程结束
+							btnControl02 = false;
+							jAlert("请选择您所有要审核的子条码", '提示信息');
+							return false;
+						}
+					}
+				}
+			}else {
+				jAlert("正在审核中...", '提示信息');
+			}
+		} else {
+			jAlert("请选择仪器", '提示信息');
+		}
+	}
+	
+	
+	//重做
+	function btnReDoClick(){
+		if(currentId != null && currentId != ""){
+			if(currentIsMic == 'true'){
+				//当前仪器是微生物仪器
+				var testItemTrObj = $("#gridMicTestItem input:checked");
+				var testItemName = "";
+				//有勾选的项目就重做勾选的项目,没有勾选的就重做选中的项目
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						testItemName += $(this).parent().parent().find("td:eq(4)").attr("title")+",";
+					});
+					if(testItemName.length>0){
+						testItemName = testItemName.substring(0,testItemName.length-1);
+					}
+					$("#txtReDoTips").html("请输入项目  \""+testItemName+"\" 重做的原因");
+					$("#txtReDo").val("重做原因：");
+					//$("#txtReDo").val("重做--子条码号："+$("#gridList tr").filter(".tablelist_now").children("td:nth-child(3)").html()+"  项目："+testItemName+"  重做原因：");
+					$("#divForReDoWin").show();
+				} else {
+					testItemTrObj = $("#gridMicTestItem tr[class='tablelist_now']");
+					if(testItemTrObj.size()>0){
+						testItemName = testItemTrObj.find("td:eq(4)").attr("title");
+						$("#txtReDoTips").html("请输入项目  \""+testItemName+"\" 重做的原因");
+						$("#txtReDo").val("重做原因：");
+						//$("#txtReDo").val("重做--子条码号："+$("#gridList tr").filter(".tablelist_now").children("td:nth-child(3)").html()+"  项目："+testItemName+"  重做原因：");
+						$("#divForReDoWin").show();
+					}else{
+						jAlert("请勾选检测项目", '提示信息');
+					}
+				}
+			} else{
+				//当前仪器是常规仪器
+				var testItemTrObj = $("#gridTestItem input:checked");
+				var testItemName = "";
+				//有勾选的项目就重做勾选的项目,没有勾选的就异常提交选中的项目
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						testItemName += $(this).parent().parent().find("td:eq(4)").attr("title")+",";
+					});
+					if(testItemName.length>0){
+						testItemName = testItemName.substring(0,testItemName.length-1);
+					}
+					$("#txtReDoTips").html("请输入项目  \""+testItemName+"\" 重做的原因");
+					$("#txtReDo").val("重做原因：");
+					//$("#txtReDo").val("重做--子条码号："+$("#gridList tr").filter(".tablelist_now").children("td:nth-child(3)").html()+"  项目："+testItemName+"  重做原因：");
+					$("#divForReDoWin").show();
+				}else {
+					testItemTrObj = $("#gridTestItem tr[class='tablelist_now']");
+					if(testItemTrObj.size()>0){
+						testItemName = testItemTrObj.find("td:eq(4)").attr("title");
+						$("#txtReDoTips").html("请输入项目  \""+testItemName+"\" 重做的原因");
+						$("#txtReDo").val("重做原因：");
+						//$("#txtReDo").val("重做--子条码号："+$("#gridList tr").filter(".tablelist_now").children("td:nth-child(3)").html()+"  项目："+testItemName+"  重做原因：");
+						$("#divForReDoWin").show();
+					}else{
+						jAlert("请勾选检测项目", '提示信息');
+					}
+				}
+			}
+		} else {
+			jAlert("请选择子条码", '提示信息');
+		}
+	}
+	
+	//重做弹出框确认按钮
+	function btnReDoSumitClick(){
+		var remark=$("#txtReDo").val();
+		if(remark!=null && remark!=""){
+			//为重做后的选中子条码准备数据
+			/*var cTr=$("#gridList #"+currentId);
+			var nextTr=getShowTr(cTr,"next");
+			var preTr=getShowTr(cTr,"prev");*/
+			var preIndexId="";								//选中的第一条子条码的上一条子条码的Id
+			var afterIndexId="";							//选中的最后一条子条码的下一条子条码的Id
+			var preIndex="";		
+			var afterIndex="";
+			preIndex = getRowIndexById("gridList",currentId) - 1;
+			afterIndex = getRowIndexById("gridList",currentId) + 1;
+			if(preIndex >= 0){
+				preIndexId = $($("#gridList tr").get(preIndex)).attr("id");
+			}
+			if(afterIndex <= $("#gridList tr:visible").size() - 1){
+				afterIndexId = $($("#gridList tr").get(afterIndex)).attr("id");
+			}
+			if(!btnControl04){
+				btnControl04 = true;
+				var speInsItemId = "";
+				var resultTypeName = "";
+				var testItemTrObj = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" input:checked");
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						speInsItemId += $(this).parent().parent().attr("id")+",";
+						resultTypeName += $(this).parent().parent().find("td:nth-child(14)").find("p:nth-child(3)").html()+",";
+					});
+					if(speInsItemId.length>0){
+						speInsItemId = speInsItemId.substring(0,speInsItemId.length-1);
+					}
+					if(resultTypeName.length>0){
+						resultTypeName = resultTypeName.substring(0,resultTypeName.length-1);
+					}
+				}else{
+					testItemTrObj = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" tr[class='tablelist_now']");
+					if(testItemTrObj.size() > 0){
+						speInsItemId = testItemTrObj.attr("id");
+						resultTypeName = testItemTrObj.find("td:nth-child(14)").find("p:nth-child(3)").html();
+					}
+				}
+				var param = {"currentSpeItemId":speInsItemId,"resultTypeName":resultTypeName,"remark" : remark};
+				$.post("${ctx}/lab/specimenAuditReDo.action",param,function(data){
+					if(data!=null&&data!=""&&data!='null'){
+						var allTrSize = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" tr").size();
+						if(testItemTrObj.size() == allTrSize){
+							//当前页面项目全部重做
+							//在页面上删除当前子条码
+							$("#gridList #" + currentId).remove();
+							//更新页面显示的子条码数量
+							var count = $("#gridList tr:visible").size();
+							$("#spanTag01").html("&#8250;共有" + count + "条记&#8249;");
+							//若子条码数量为0,则清空页面信息;反之,则选中第一条
+							if(count > 0){
+								if(afterIndexId!=""){
+									$("#gridList #" + afterIndexId).trigger("click");
+									$("#gridList #" + afterIndexId).addClass("tablelist_now");
+									$("#gridList #" + afterIndexId + " td:first").addClass("ico_now");
+								}else if(preIndexId!=""){
+									$("#gridList #" + preIndexId).trigger("click");
+									$("#gridList #" + preIndexId).addClass("tablelist_now");
+									$("#gridList #" + preIndexId + " td:first").addClass("ico_now");
+								}
+							}else{
+								//清空页面
+								cleanInfo();
+							}
+							$("#divForReDoWin").hide();
+							jAlert("重做成功", '提示信息');
+						}else{
+							//部分项目重做
+							//更新条码异常栏,未完待续...
+							//刷新当前子条码
+							$("#gridList #"+currentId).removeClass("tablelist_now");
+							$("#gridList #"+currentId).removeClass("ico_now");
+							$("#gridList #"+currentId).trigger("click");
+							$("#divForReDoWin").hide();
+							jAlert("重做成功", '提示信息');
+						}
+					}else{
+						jAlert("重做失败,请刷新重试", '提示信息');
+					}
+					btnControl04 = false;
+				});
+				/*if(currentIsMic == 'true'){
+					param = {"subBarCode" : $("#gridList tr").filter(".tablelist_now").children("td:nth-child(3)").html(),"uniqueCode":$("#gridMicTestItem tr[class='tablelist_now'] td:nth-child(12) p:nth-child(1)").html(),"resultTypeName":$("#gridTestItem tr[class='tablelist_now'] td:nth-child(14) p:nth-child(4)").html(), "remark" : remark, "currentSpeId" : currentId, "instrumentId" : currentInstrument,"itemName":$("#gridMicTestItem tr[class='tablelist_now']").find("td:eq(4)").attr("title")};
+					$.post("${ctx}/lab/specimenAuditReDo.action",param,function(data){
+						if(data !=null&&data!=""){
+							var json=eval("("+data+")");
+							var cTr=$("#gridList #"+currentId);
+							cTr.children("td:nth-child(5)").html(json.auditExceptionText);
+							cTr.children("td:nth-child(6)").html(json.auditCancelText);
+							loadSpecimenData($("#"+currentId)[0]);
+							$("#divForReDoWin").hide();
+							jAlert("重做成功", '提示信息');
+						} else {
+							//在页面上删除当前子条码
+							$("#gridList #" + currentId).remove();
+							//更新页面显示的子条码数量
+							var count = $("#gridList tr:visible").size();
+							$("#spanTag01").html("&#8250;共有" + count + "条记&#8249;");
+							//若子条码数量为0,则清空页面信息;反之,则选中第一条
+							if(count > 0){
+								if(afterIndexId!=""){
+									$("#gridList #" + afterIndexId).trigger("click");
+									$("#gridList #" + afterIndexId).addClass("tablelist_now");
+									$("#gridList #" + afterIndexId + " td:first").addClass("ico_now");
+								}else if(preIndexId!=""){
+									$("#gridList #" + preIndexId).trigger("click");
+									$("#gridList #" + preIndexId).addClass("tablelist_now");
+									$("#gridList #" + preIndexId + " td:first").addClass("ico_now");
+								}
+							}else{
+								//清空页面
+								cleanInfo();
+							}
+							$("#divForReDoWin").hide();
+							jAlert("重做成功", '提示信息');
+						}
+						btnControl04 = false;
+					});
+				}else{
+					param = {"subBarCode" : $("#gridList tr").filter(".tablelist_now").children("td:nth-child(3)").html(),"uniqueCode":$("#gridTestItem tr[class='tablelist_now'] td:nth-child(14) p:nth-child(1)").html(),"resultTypeName":$("#gridTestItem tr[class='tablelist_now'] td:nth-child(14) p:nth-child(3)").html(), "remark" : remark, "currentSpeId" : currentId, "instrumentId" : currentInstrument,"itemName":$("#gridTestItem tr[class='tablelist_now']").find("td:eq(4)").attr("title")};
+					$.post("${ctx}/lab/specimenAuditReDo.action",param,function(data){
+						if(data !=null&&data!=""){
+							var json=eval("("+data+")");
+							var cTr=$("#gridList #"+currentId);
+							cTr.children("td:nth-child(5)").html(json.auditExceptionText);
+							cTr.children("td:nth-child(6)").html(json.auditCancelText);
+							loadSpecimenData($("#"+currentId)[0]);
+							$("#divForReDoWin").hide();
+							jAlert("重做成功", '提示信息');
+						} else {
+							//在页面上删除当前子条码
+							$("#gridList #" + currentId).remove();
+							//更新页面显示的子条码数量
+							var count = $("#gridList tr:visible").size();
+							$("#spanTag01").html("&#8250;共有" + count + "条记&#8249;");
+							//若子条码数量为0,则清空页面信息;反之,则选中第一条
+							if(count > 0){
+								if(afterIndexId!=""){
+									$("#gridList #" + afterIndexId).trigger("click");
+									$("#gridList #" + afterIndexId).addClass("tablelist_now");
+									$("#gridList #" + afterIndexId + " td:first").addClass("ico_now");
+								}else if(preIndexId!=""){
+									$("#gridList #" + preIndexId).trigger("click");
+									$("#gridList #" + preIndexId).addClass("tablelist_now");
+									$("#gridList #" + preIndexId + " td:first").addClass("ico_now");
+								}
+							}else{
+								//清空页面
+								cleanInfo();
+							}
+							$("#divForReDoWin").hide();
+							jAlert("重做成功", '提示信息');
+						}
+						btnControl04 = false;
+					});
+				}*/
+			}else{
+				jAlert("正在进行重做处理,请稍后...", '提示信息');
+			}
+		}else{
+			jAlert("请输入重做的原因", '提示信息');
+		}
+	}
+	//重做弹出框取消按钮
+	function btnReDoQuitClick(){
+		$("#divForReDoWin").hide();
+	}
+	
+	//专家审核
+	function specialistAuditBtnClick(){
+		if(currentId != null && currentId != ""){
+			if(currentIsMic == 'true'){
+				//当前仪器是微生物仪器
+				var testItemTrObj = $("#gridMicTestItem input:checked");
+				var testItemName = "";
+				//有勾选的项目就提交勾选的项目,没有勾选的就提交选中的项目
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						testItemName += $(this).parent().parent().find("td:eq(4)").attr("title")+",";
+					});
+					if(testItemName.length>0){
+						testItemName = testItemName.substring(0,testItemName.length-1);
+					}
+					$("#txtSpecialistAuditTips").html("请输入项目  \""+testItemName+"\" 专家审核的原因");
+					//$("#txtReDo").val("专家审核原因：");
+					$("#divForSpecialistAuditWin").show();
+				} else {
+					testItemTrObj = $("#gridMicTestItem tr[class='tablelist_now']");
+					if(testItemTrObj.size()>0){
+						testItemName = testItemTrObj.find("td:eq(4)").attr("title");
+						$("#txtSpecialistAuditTips").html("请输入项目  \""+testItemName+"\" 专家审核的原因");
+						//$("#txtReDo").val("专家审核原因：");
+						$("#divForSpecialistAuditWin").show();
+					}else{
+						jAlert("请勾选检测项目", '提示信息');
+					}
+				}
+			} else{
+				//当前仪器是常规仪器
+				var testItemTrObj = $("#gridTestItem input:checked");
+				var testItemName = "";
+				//有勾选的项目就提交勾选的项目,没有勾选的就异常提交选中的项目
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						testItemName += $(this).parent().parent().find("td:eq(4)").attr("title")+",";
+					});
+					if(testItemName.length>0){
+						testItemName = testItemName.substring(0,testItemName.length-1);
+					}
+					$("#txtSpecialistAuditTips").html("请输入项目  \""+testItemName+"\" 专家审核的原因");
+					//$("#txtSpecialistAuditDo").val("专家审核原因：");
+					$("#divForSpecialistAuditWin").show();
+				}else {
+					testItemTrObj = $("#gridTestItem tr[class='tablelist_now']");
+					if(testItemTrObj.size()>0){
+						testItemName = testItemTrObj.find("td:eq(4)").attr("title");
+						$("#txtSpecialistAuditTips").html("请输入项目  \""+testItemName+"\" 专家审核的原因");
+						//$("#txtSpecialistAuditDo").val("专家审核原因：");
+						$("#divForSpecialistAuditWin").show();
+					}else{
+						jAlert("请勾选检测项目", '提示信息');
+					}
+				}
+			}
+		} else {
+			jAlert("请选择子条码", '提示信息');
+		}
+	}
+	
+	//专家审核弹出框确认按钮
+	function btnSpecialistAuditSumitClick() {
+		var remark=$("#txtSpecialistAuditDo").val();
+		if(remark !=null && remark !=""){
+			var preIndexId="";								//选中的第一条子条码的上一条子条码的Id
+			var afterIndexId="";							//选中的最后一条子条码的下一条子条码的Id
+			var preIndex="";		
+			var afterIndex="";
+			preIndex = getRowIndexById("gridList",currentId) - 1;
+			afterIndex = getRowIndexById("gridList",currentId) + 1;
+			if(preIndex >= 0){
+				preIndexId = $($("#gridList tr").get(preIndex)).attr("id");
+			}
+			if(afterIndex <= $("#gridList tr:visible").size() - 1){
+				afterIndexId = $($("#gridList tr").get(afterIndex)).attr("id");
+			}
+			if(!btnControl04){
+				btnControl04 = true;
+				var speInsItemId = "";
+				var testItemTrObj = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" input:checked");
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						speInsItemId += $(this).parent().parent().attr("id")+",";
+					});
+					if(speInsItemId.length>0){
+						speInsItemId = speInsItemId.substring(0,speInsItemId.length-1);
+					}
+				}else{
+					testItemTrObj = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" tr[class='tablelist_now']");
+					if(testItemTrObj.size() > 0){
+						speInsItemId = testItemTrObj.attr("id");
+					}
+				}
+				var param = {"currentSpeItemId":speInsItemId,"subBarCode":currentSubBarCode,"remark" : remark, "instrumentId" : currentInstrument};
+				$.post("${ctx}/lab/specimenAuditSpecialistAudit.action",param,function(data){
+					if(data !=null && data !="" && data != 'null'){
+						if(data != "success") {
+							$("#divForSpecialistAuditWin").hide();
+							jAlert(data, '提示信息');
+							btnControl04 = false;
+							$("#txtSpecialistAuditDo").val("");
+							return;
+						}
+						var allTrSize = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" tr").size();
+						if(testItemTrObj.size() == allTrSize){
+							//当前页面项目全部重做
+							//在页面上删除当前子条码
+							$("#gridList #" + currentId).remove();
+							//更新页面显示的子条码数量
+							var count = $("#gridList tr:visible").size();
+							$("#spanTag01").html("&#8250;共有" + count + "条记&#8249;");
+							//若子条码数量为0,则清空页面信息;反之,则选中第一条
+							if(count > 0){
+								if(afterIndexId!=""){
+									$("#gridList #" + afterIndexId).trigger("click");
+									$("#gridList #" + afterIndexId).addClass("tablelist_now");
+									$("#gridList #" + afterIndexId + " td:first").addClass("ico_now");
+								}else if(preIndexId!=""){
+									$("#gridList #" + preIndexId).trigger("click");
+									$("#gridList #" + preIndexId).addClass("tablelist_now");
+									$("#gridList #" + preIndexId + " td:first").addClass("ico_now");
+								}
+							}else{
+								//清空页面
+								cleanInfo();
+							}
+							$("#divForSpecialistAuditWin").hide();
+							jAlert("提交成功!", '提示信息');
+						}else{
+							//部分项目重做
+							//更新条码异常栏,未完待续...
+							//刷新当前子条码
+							$("#gridList #"+currentId).removeClass("tablelist_now");
+							$("#gridList #"+currentId).removeClass("ico_now");
+							$("#gridList #"+currentId).trigger("click");
+							$("#divForSpecialistAuditWin").hide();
+							jAlert("提交成功!", '提示信息');
+						}
+					}else{
+						jAlert("提交失败,请刷新重试", '提示信息');
+					}
+					$("#txtSpecialistAuditDo").val("");
+					btnControl04 = false;
+				});
+			}else{
+				jAlert("正在进行提交处理,请稍后...", '提示信息');
+			}
+		}else{
+			jAlert("请输入专家审核的原因", '提示信息');
+		}
+	}
+	//专家审核弹出框取消按钮
+	function btnSpecialistAuditQuitClick(){
+		$("#divForSpecialistAuditWin").hide();
+	}
+	
+	
+	//删除项目
+	function btnDelItemClick(){
+		if(currentId != null && currentId != ""){
+			if(currentIsMic == 'true'){
+				//当前仪器是微生物仪器
+				var testItemTrObj = $("#gridMicTestItem input:checked");
+				var testItemName = "";
+				var speInsItemId = "";
+				//有勾选的项目就删除勾选的项目,没有勾选的就删除选中的项目
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						testItemName += $(this).parent().parent().find("td:eq(4)").attr("title")+",";
+						speInsItemId += $(this).parent().parent().attr("id")+",";
+					});
+					if(testItemName.length>0){
+						testItemName = testItemName.substring(0,testItemName.length-1);
+					}
+					if(speInsItemId.length>0){
+						speInsItemId = speInsItemId.substring(0,speInsItemId.length-1);
+					}
+				} else {
+					testItemTrObj = $("#gridMicTestItem tr[class='tablelist_now']");
+					if(testItemTrObj.size()>0){
+						testItemName = testItemTrObj.find("td:eq(4)").attr("title");
+						speInsItemId = testItemTrObj.attr("id");
+					}else{
+						jAlert("请勾选检测项目", '提示信息');
+						return false;
+					}
+				}
+				var param={"currentSpeItemId" : speInsItemId};
+				$.post("${ctx}/lab/specimenAuditCanBeDel.action",param,function(data){
+					if(data == 'true') {
+						$("#txtDelItemTips").html("当前选择项目："+testItemName+",请输入这些项目的删除备注:");
+						$("#txtDelItem").val("删除项目原因：");
+						$("#divForDelItemWin").show();
+					}else{
+						jAlert(data, '提示信息');
+					} 
+				});
+			} else{
+				//当前仪器是常规仪器
+				var testItemTrObj = $("#gridTestItem input:checked");
+				var testItemName = "";
+				var speInsItemId = "";
+				//有勾选的项目就删除勾选的项目,没有勾选的就删除选中的项目
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						testItemName += $(this).parent().parent().find("td:eq(4)").attr("title")+",";
+						speInsItemId += $(this).parent().parent().attr("id")+",";
+					});
+					if(testItemName.length>0){
+						testItemName = testItemName.substring(0,testItemName.length-1);
+					}
+					if(speInsItemId.length>0){
+						speInsItemId = speInsItemId.substring(0,speInsItemId.length-1);
+					}
+				} else {
+					testItemTrObj = $("#gridTestItem tr[class='tablelist_now']");
+					if(testItemTrObj.size()>0){
+						testItemName = testItemTrObj.find("td:eq(4)").attr("title");
+						speInsItemId = testItemTrObj.attr("id");
+					}else{
+						jAlert("请勾选检测项目", '提示信息');
+						return false;
+					}
+				}
+				var param={"currentSpeItemId" : speInsItemId};
+				$.post("${ctx}/lab/specimenAuditCanBeDel.action",param,function(data){
+					if(data == 'true') {
+						$("#txtDelItemTips").html("当前选择项目："+testItemName+",请输入这些项目的删除备注:");
+						$("#txtDelItem").val("删除项目原因：");
+						$("#divForDelItemWin").show();
+					}else{
+						jAlert(data, '提示信息');
+					}
+				});
+			}
+		} else {
+			jAlert("请选择子条码", '提示信息');
+		}
+	}
+	
+	//删除项目确认按钮
+	function btnDelItemSumitClick(){
+		var remark=$("#txtDelItem").val();
+		if(remark!=null && remark!=""){
+			var preIndexId="";								//选中的第一条子条码的上一条子条码的Id
+			var afterIndexId="";							//选中的最后一条子条码的下一条子条码的Id
+			var preIndex="";		
+			var afterIndex="";
+			preIndex = getRowIndexById("gridList",currentId) - 1;
+			afterIndex = getRowIndexById("gridList",currentId) + 1;
+			if(preIndex >= 0){
+				preIndexId = $($("#gridList tr").get(preIndex)).attr("id");
+			}
+			if(afterIndex <= $("#gridList tr:visible").size() - 1){
+				afterIndexId = $($("#gridList tr").get(afterIndex)).attr("id");
+			}
+			var cTr=$("#gridList #"+currentId);
+			if(!btnControl05){
+				btnControl05 = true;
+				var speInsItemId = "";
+				var testItemTrObj = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" input:checked");
+				if(testItemTrObj.size() > 0){
+					testItemTrObj.each(function(){
+						speInsItemId += $(this).parent().parent().attr("id")+",";
+					});
+					if(speInsItemId.length>0){
+						speInsItemId = speInsItemId.substring(0,speInsItemId.length-1);
+					}
+				}else{
+					testItemTrObj = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" tr[class='tablelist_now']");
+					if(testItemTrObj.size() > 0){
+						speInsItemId = testItemTrObj.attr("id");
+					}
+				}
+				var	param = {"currentSpeId":currentId,"currentSpeItemId" : speInsItemId, "remark" : remark,"subBarCode" : currentSubBarCode,"instrumentId" : currentInstrument,"itemName":$("#gridMicTestItem tr[class='tablelist_now']").find("td:eq(4)").attr("title")};
+				$.post("${ctx}/lab/specimenAuditDelItem.action",param,function(data){
+					if(data!=null&&data!=""&&data!='null'){
+						var allTrSize = $("#"+(currentIsMic=="true"?"gridMicTestItem":"gridTestItem")+" tr").size();
+						if(testItemTrObj.size() == allTrSize){
+							//当前页面项目全部删除
+							//在页面上删除当前子条码
+							$("#gridList #" + currentId).remove();
+							//更新页面显示的子条码数量
+							var count = $("#gridList tr:visible").size();
+							$("#spanTag01").html("&#8250;共有" + count + "条记&#8249;");
+							//若子条码数量为0,则清空页面信息;反之,则选中第一条
+							if(count > 0){
+								if(afterIndexId!=""){
+									$("#gridList #" + afterIndexId).trigger("click");
+									$("#gridList #" + afterIndexId).addClass("tablelist_now");
+									$("#gridList #" + afterIndexId + " td:first").addClass("ico_now");
+								}else if(preIndexId!=""){
+									$("#gridList #" + preIndexId).trigger("click");
+									$("#gridList #" + preIndexId).addClass("tablelist_now");
+									$("#gridList #" + preIndexId + " td:first").addClass("ico_now");
+								}
+							}else{
+								//清空页面
+								cleanInfo();
+							}
+							$("#divForDelItemWin").hide();
+							jAlert("删除成功", '提示信息');
+						}else{
+							//部分项目删除
+							//更新条码异常栏,未完待续...
+							//刷新当前子条码
+							$("#gridList #"+currentId).removeClass("tablelist_now");
+							$("#gridList #"+currentId).removeClass("ico_now");
+							$("#gridList #"+currentId).trigger("click");
+							$("#divForDelItemWin").hide();
+							jAlert("删除成功", '提示信息');
+						}
+					}else{
+						jAlert("删除失败,请刷新重试", '提示信息');
+					}
+					/*if(data !=null&&data!=""&&data!='null'){
+						var json=eval("("+data+")");
+						cTr.children("td:nth-child(5)").html(json.auditExceptionText);
+						cTr.children("td:nth-child(6)").html(json.auditCancelText);
+						//刷新当前条码
+						loadSpecimenData($("#"+currentId)[0]);
+						$("#divForDelItemWin").hide();
+						jAlert("删除成功", '提示信息');
+					}*/
+					btnControl05 = false;
+				});
+			}else{
+				jAlert("正在进行删除项目,请稍后...", '提示信息');
+			}
+		} else {
+			jAlert("请输入项目的删除备注", '提示信息');
+		}
+	}
+	
+	//删除项目取消按钮
+	function btnDelItemQuitClick(){
+		$("#divForDelItemWin").hide();
+	}
+	
+	//操作日志
+	function btnOperationLogClick(){
+		if(currentId != null && currentId != ""){
+			$("#tableForOperationLog").load("${ctx}/lab/speResultOperationLogWin.action",{"subBarCode" : $("#divList #"+currentId+" td:nth-child(3)").html()},function(){
+				$("#tabForOLNote").removeClass("now_for_alert");
+				$("#tabForOLLog").removeClass("now_for_alert");
+				$("#tabForOLRemark").removeClass("now_for_alert");
+				$("#tabForOLNote").addClass("now_for_alert");
+				//页签切换事件
+				$("#tabForOLNote").click(function(){
+					if($("#tabForOLNote").hasClass("now_for_alert")){
+						return false;
+					}else{
+						$("#tabForOLLog").removeClass("now_for_alert");
+						$("#divForOLLog").hide();
+						
+						$("#tabForOLRemark").removeClass("now_for_alert");
+						$("#divForOLRemark").hide();
+						
+						$("#tabForOLNote").addClass("now_for_alert");
+						$("#divForOLNote").show();
+					}
+				});
+				$("#tabForOLLog").click(function(){
+					if($("#tabForOLLog").hasClass("now_for_alert")){
+						return false;
+					}else{
+						$("#tabForOLNote").removeClass("now_for_alert");
+						$("#divForOLNote").hide();
+						
+						$("#tabForOLRemark").removeClass("now_for_alert");
+						$("#divForOLRemark").hide();
+						
+						$("#tabForOLLog").addClass("now_for_alert");
+						$("#divForOLLog").show();
+					}
+				});
+				$("#tabForOLRemark").click(function(){
+					if($("#tabForOLRemark").hasClass("now_for_alert")){
+						return false;
+					}else{
+						$("#tabForOLNote").removeClass("now_for_alert");
+						$("#divForOLNote").hide();
+						
+						$("#tabForOLLog").removeClass("now_for_alert");
+						$("#divForOLLog").hide();
+						
+						$("#tabForOLRemark").addClass("now_for_alert");
+						$("#divForOLRemark").show();
+					}
+				});
+				//行选中事件
+				bindSelectRow("gridForOLNote");
+				bindSelectRow("gridForOLLog");
+				bindSelectRow("gridForOLRemark");
+				//退出按钮事件
+				$("#btnOperationLogQuit").click(function(){
+					$("#divForOperationLog").hide();
+				});
+				$("#divForOperationLog").show();
+			});
+		} else {
+			jAlert("请选择条码", '提示信息');
+		}
+	}
+	
+	//打开快速录入模板
+	var win;
+	function openFastComment(module, commentId, fun, append) {
+		var dhxWins = new dhtmlXWindows();
+//		dhxWins.enableAutoViewport(false);
+//		dhxWins.setViewport(0, 0, $(parent.document.body).width(), $(parent.document.body).height(), parent.document.body);
+//		dhxWins.attachViewportTo(parent.document.body);
+		var width = 800;
+		var height = 560;
+		var x = ($(document.body).width() - width) / 2;
+		var y = ($(document.body).height() - height) / 15 - 200;
+		win = dhxWins.createWindow("fastComment", x, y, width, height);// 自定义位置和宽度、高度
+		win.setText("快速录入模板");
+		var url = encodeURI('${ctx}/lab/fastComment.action?module=' + module + "&commentId=" + commentId);// module为空则查询所有的录入模板
+		if (fun) {
+			url += "&fun=" + fun;
+		}
+		if (append == true) {
+			url += "&append=" + append;
+		}
+		win.button("minmax1").hide();
+		win.button("park").hide();
+		//win.button("close").attr("");
+		win.attachURL(url);
+		win.setModal(true);
+	}
+
+	
+	//仪器结果
+	function btnInsResultClick(){
+		if(currentId != null && currentId != ""){
+			var param = {"currentSpeId" : currentId,"instrumentId" : currentInstrument};
+			$("#divForInsResult").load("${ctx}/lab/specimenAuditInsResultWin.action",param,function(){
+				bindSelectRow("gridForInsResult");
+				$("#btnInsResultExport").click(function(){
+					$("#insResultCurrentID").val(currentId);
+					$("#insResultInsID").val(currentInstrument);
+					$("#sub_code").val(currentSubBarCode);
+					$("#ins_name").val($($("#gridInstrument #"+instrumentCombo.getValue()).children("td:nth-child(3)")[0]).text());
+					$("#insResultExportForm").submit();
+			});
+				$("#btnInsResultQuit").click(function(){
+					$("#divForInsResultWin").hide();
+				});
+				$("#divForInsResultWin").show();
+			});
+		} else {
+			jAlert("请选择条码", '提示信息');
+		}
+	}
+	
+	//预览报告
+	function loadPDFBtnClick() {
+		if(currentId != null && currentId != "") {
+			var subbarCode = $("#divList #"+currentId+" td:nth-child(3)").html();
+			var instrumentId = instrumentCombo.getValue();
+			$.post("${ctx}/lab/speResultLoadPDF.action",{"instrumentId" : instrumentId, "subBarCode" : subbarCode},function(simpleReportPath) {
+				if(simpleReportPath == null || simpleReportPath == '') {
+					jAlert("非专家审批仪器不能进行报告预览!", '提示信息');
+				} else if(simpleReportPath == '0') {
+					jAlert("条码检测项目结果或图片信息不齐全不能进行报告预览!", '提示信息');
+				} else {
+					$("#divForPreImg").show();
+					var url = simpleReportPath + "?subBarcode=" + subbarCode + "&instrumentId=" + instrumentId;
+					embedPDF(url, 'preImg');
+					//退出按钮事件
+					$("#btnDivForPreImgQuit").click(function(){
+						$("#divForPreImg").hide();
+					});
+				}
+			});
+		} else {
+			jAlert("请选择条码", '提示信息');
+		}
+	}
+	
+	//加载S/CO
+	function LoadScoBtnClick(){
+		var scoPage = "audit";
+		if(currentId != null && currentId != ""){
+			$("#divForLoadSco").load("${ctx}/lab/speResultChangeScoWin.action?currentSpeId="+currentId+"&instrumentId="+currentInstrument+"&scoPage="+scoPage,function(){
+				//弹出窗口 的 关闭按钮
+				$("#btnSpecimenScoQuit").click(function(){
+					$("#divForLoadScoWin").hide();
+				});
+				$("#divForLoadScoWin").show();
+			});
+		} else {
+			jAlert("请选择条码", '提示信息');
+		}
+	}
+	
+	//弹出窗口
+	function openDhtmlWinEx(id,title,url, width, height){
+		var dhxWins = new dhtmlXWindows();
+	    dhxWins.setImagePath("${ctx}/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+		dhxWins.enableAutoViewport(true);
+		if(dhxWins.window(id)==null){
+			var printWin = dhxWins.createWindow(id, 0, 0, width, height);// 自定义位置和宽度、高度
+			printWin.setText(title);
+			printWin.center();
+			printWin.button("minmax1").hide();
+			printWin.button("park").hide();
+			printWin.denyResize();
+			printWin.denyPark();
+			printWin.attachURL(url);
+			printWin.setModal(true);
+		}else{
+			dhxWins.window(id).show();
+		}
+		return dhxWins;
+	}

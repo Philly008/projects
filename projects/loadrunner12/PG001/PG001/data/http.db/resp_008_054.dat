@@ -1,0 +1,1029 @@
+var statusCombo;					//条码状态下拉Grid
+var customerCombo;					//下单客户下拉Grid
+var provinceCombo;					//省份下拉Grid
+var cityCombo;						//城市下拉Grid
+var plansCombo;						//套餐下拉Grid
+var speSourceCombo;                 //标本来源下拉Grid
+var paramsNext;
+var maxSize = 500;					//每次加载条码数(原来是一次加载100条数据)
+//条码状态下拉Grid参数
+var status_param = {
+	/*必填内容*/
+	div_id : "combo_status", 		//对应DIV的id
+	grid_id : "grid_status", 		//对应Grid的Id	
+	name:"",
+	clearOff:false,		 			//是否禁用clear按钮
+	columnShow:1,		 			//将要在文本框中显示的列序号
+	searchColumn:[2,1],
+	onEnter:function(){
+	}
+};
+//下单客户下拉Grid参数
+var customer_param = {
+	/*必填内容*/
+	div_id : "combo_customer", 		//对应DIV的id
+	grid_id : "grid_customer", 		//对应Grid的Id	
+	name:"",
+	clearOff:false,		 			//是否禁用clear按钮
+	columnShow:1,		 			//将要在文本框中显示的列序号
+	searchColumn:[2,1],
+	onEnter:function(){
+	}
+};
+//省份下拉Grid参数
+var onProvinceChange=function(tr){
+	cityCombo.clear();
+	var province = provinceCombo.getText();
+	cityCombo.loadingStart(function(){
+		$("#grid_city .tablelist").load("${ctx}/spe/getCityByProvince.action",{"province":province},function(){
+			cityCombo.loadingOver();
+		});
+	});
+};
+var province_param = {
+	/*必填内容*/
+	div_id : "combo_province", 		//对应DIV的id
+	grid_id : "grid_province", 		//对应Grid的Id	
+	name:"",
+	clearOff:false,		 			//是否禁用clear按钮
+	columnShow:1,		 			//将要在文本框中显示的列序号
+	grid_onChange : onProvinceChange,
+	searchColumn:[1],
+	onEnter:function(){
+	}
+};
+//城市下拉Grid参数
+var city_param = {
+	/*必填内容*/
+	div_id : "combo_city", 			//对应DIV的id
+	grid_id : "grid_city", 			//对应Grid的Id	
+	name:"",
+	clearOff:false,		 			//是否禁用clear按钮
+	columnShow:1,		 			//将要在文本框中显示的列序号
+	searchColumn:[1],
+	onEnter:function(){
+	}
+};
+
+//套餐下拉Grid参数
+var plans_param = {
+	/*必填内容*/
+	div_id : "combo_plans", 		//对应DIV的id
+	grid_id : "grid_plans", 		//对应Grid的Id	
+	name:"",
+	clearOff:false,		 			//是否禁用clear按钮
+	columnShow:1,		 			//将要在文本框中显示的列序号
+	searchColumn:[2,1],
+	onEnter:function(){
+	}
+};
+
+//标本来源下拉Grid参数
+var speSource_param = {
+	/*必填内容*/
+	div_id : "combo_speSource", 		//对应DIV的id
+	grid_id : "grid_speSource", 		//对应Grid的Id	
+	name:"",
+	clearOff:false,		 			//是否禁用clear按钮
+	columnShow:1,		 			//将要在文本框中显示的列序号
+	searchColumn:[1],
+	onEnter:function(){
+	}
+};
+
+var trTmp = $("<tr bgcolor='#d9eafa'>" +
+		"<td style='width: 20px;height: 22px;margin: auto;text-align: center;'><input type='checkbox' /></td>" + 
+		"<td style='width: 60px;height: 28px;margin: auto;text-align: center;'></td>" +
+		"<td style='width: 120px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"<td style='width: 80px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"<td style='width: 80px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"<td style='width: 80px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"<td style='width: 100px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"<td style='width: 200px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"<td style='width: 200px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"<td style='width: 200px;height: 22px;margin: auto;text-align: center;'></td>" + 
+		"</tr>").click(tableListClick);
+var winHeight = 0;
+var right_jbxx =0;
+$(document).ready(function(){
+	winHeight = $(window).height();
+	right_jbxx = $(".right_jbxx").outerHeight(true);
+	initdate();
+	statusCombo = new TextCombo(status_param);			//初始化条码状态下拉GRID
+	customerCombo = new TextCombo(customer_param);		//初始化下单客户下拉GRID
+	provinceCombo = new TextCombo(province_param);		//初始化省份下拉GRID
+	cityCombo = new TextCombo(city_param);				//初始化城市下拉GRID
+	plansCombo = new TextCombo(plans_param);			//初始化套餐下拉GRID
+	speSourceCombo =new TextCombo(speSource_param);	    //初始化标本来源下拉GRID
+	
+	$("#tab_info").click(tabInfoClick);					//基本信息页签点击事件
+	$("#tab_note").click(tabOperationClick);			//操作流程页签点击事件
+	$("#tab_log").click(tabLogClick);					//修改日志页签点击事件
+	$("#tab_report").click(tabReportClick);				//报告预览页签点击事件
+	$("#tab_history").click(tabHistoryClick);			//历史报告页签点击事件
+	
+	$("#btn_search").click(btnSearch);					//查询按钮
+	$("#btn_search_add").click(btnSearchAdd);			//追加查询按钮
+	$("#txt_barcode").keyup(txtBarcodeAdd);				//条码框事件(业务与追加查询一致)
+	$("#btn_clean").click(btnClean);					//清空按钮
+	//$("#btn_export").click(btnExport);					//导出按钮
+	//$("#btn_export_all").click(btnExport);			//导出全部
+	$("#btn_export_1").click(btnExport1);				//导出(出库)
+	$("#btn_export_2").click(btnExport2);				//导出(接收)
+	$("#btn_export_3").click(btnExport3);				//导出(寄送)
+	
+	$("#checkbox_all").click(checkAllClick);			//全选checkbox点击事件
+	
+	//$("#btn_loal_all").click(loalAllData);              //加载全部数据
+	
+	
+	var nScrollHight = 0; //滚动距离总长(注意不是滚动条的长度)
+    var nScrollTop = 0;   //滚动到的当前位置
+    var nDivHight = $("#scrollDiv").height();
+    /**
+     * 滚动加载数据
+     */
+     $("#scrollDiv").bind("scroll",function(){
+    	 nScrollHight = $(this)[0].scrollHeight;
+    	 nScrollTop = $(this)[0].scrollTop;
+    	 if($("#table_list tr:gt(0)").size() == $("#barcodeSize").html()){
+    		 return ;
+    	 }
+    	var sortType = null;
+ 		var orderType = null;
+		if ($("#receiveDateSort").hasClass("sortDesc")) {
+			sortType = "tt.rdate";
+			orderType = "desc";
+		} else if ($("#receiveDateSort").hasClass("sortAsc")) {
+			sortType = "tt.rdate";
+			orderType = "asc";
+		} else if ($("#seqSort").hasClass("sortDesc")) {
+			sortType = "tt.seq";
+			orderType = "desc";
+		} else if ($("#seqSort").hasClass("sortAsc")) {
+			sortType = "tt.seq";
+			orderType = "asc";
+		}else if ($("#statusSort").hasClass("sortDesc")) {
+			sortType = "tt.status";
+			orderType = "desc";
+		} else if ($("#statusSort").hasClass("sortAsc")) {
+			sortType = "tt.status";
+			orderType = "asc";
+		}
+		var speSource=speSourceCombo.getValue();
+    	 if (nScrollTop + nDivHight >= nScrollHight){
+             //滚动条到底部了
+            var startIndex = $("#querySize").val();
+            var displayIndex = $("#displaySize").val();
+            if(startIndex == 0){
+            	return;
+            }
+            //开始组装参数
+    		$.post(
+    		"${ctx}/spe/specimenQueryNext.action?dto.startIndex="+startIndex+"&sortType="+sortType+"&orderType="+orderType+"&speSource="+speSource,
+    		paramsNext,
+    		function(result){
+    			if(result != "0"){
+    				var json=eval("("+result+")");
+    				var tableStr = "";
+    				for(var i = 0;i<json.length;i++){
+    					var includeId = $("#table_list").find("#"+json[i].id).attr("id");
+    					if(includeId == json[i].id){
+    						var barcodeSize = $("#barcodeSize").html()*1-1;
+    						//更新页面条码总数
+    						$("#barcodeSize").html(barcodeSize);
+    						$("#returnMaxSize").val(barcodeSize);   //add by lbj
+//    						$("#div_list_top").html("总计"+barcodeSize+"个条码");
+    					}else{
+	    					var display = displayIndex*1 + i + 1;
+	    					var str = $("<tr id=\""+json[i].id+"\" bgcolor=\"#d9eafa\">" +
+	    					"<td style=\"display: none\" id=\"barcodeSize\">"+json[i].maxSize+"</td>" +
+	    					"<td style=\"width: 20px;height: 28px;margin: auto;text-align: center;\"><input id=\""+json[i].id+"\" type=\"checkbox\" /></td>" +
+	    					"<td style=\"width: 60px;height: 28px;margin: auto;text-align: center;\">"+display+"</td> " +
+	    					"<td style=\"width: 120px;height: 28px;margin: auto;text-align: center;\">"+json[i].subbarcode+"</td>" +
+	    					"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json[i].name+"</td>" +
+	    					"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json[i].receiveDate+"</td>" +
+	    					"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json[i].seq+"</td>" +
+	    					"<td style=\"width: 100px;height: 28px;margin: auto;text-align: center;\" id=\""+json[i].status+"\">"+json[i].chineseStatus+"</td>" +
+	    					"<td style=\"width: 200px;height: 28px;margin: auto;text-align: center;\">"+json[i].plansName+"</td>" +
+	    					"<td style=\"width: 200px;height: 28px;margin: auto;text-align: center;\">"+json[i].sourceOrgname+"</td>" +
+	    					"<td style=\"width: 200px;height: 28px;margin: auto;text-align: center;\">"+json[i].targetOrgname+"</td>" +
+	    				"</tr>").click(tableListClick);
+	    					var trObj=str.clone(true);
+	    					trObj.appendTo($("#table_list"));
+    					}
+    				}
+    				//$("#table_list").append(tableStr);
+    				$("#querySize").val(startIndex*1+maxSize);
+    				$("#displaySize").val($("#table_list tr:gt(0)").size());
+    				$("#div_list_top_current").html("已加载"+$("#table_list tr:gt(0)").size()+"个条码");
+    			}
+    		});
+    	 }
+    });
+});
+
+
+
+	/**
+	 * 加载全部数据  //add by lbj
+	 */
+	/*function loalAllData(){
+		if($("#returnMaxSize").val() != "" && $("#returnMaxSize").val() != 0){
+			var startIndex = $("#querySize").val();   //加载开始索引
+			//查询条件
+			var load_max_size = $("#returnMaxSize").val() - $("#querySize").val();
+			load_max_size = 1000;
+			//开始组装参数
+			var radio_id = $("input:radio:checked").attr("id");
+			var result = $("#vipSearch").is(":checked") ? 1 : 0;
+			var displayIndex = $("#displaySize").val();
+			paramsNext = {
+					"dto.dateType":radio_id,
+					"dto.statrDate":trim($("#startDate").val()),
+					"dto.endDate":trim($("#endDate").val()),
+					"dto.status":statusCombo.getValue(),
+					"dto.customerName":trim(customerCombo.getText()),
+					"dto.sex":$("#combo_sex").val(),
+					"dto.name":trim($("#txt_name").val()),
+					"dto.province":trim(provinceCombo.getText()),
+					"dto.city":trim(cityCombo.getText()),
+					"dto.plansName":trim(plansCombo.getText()),
+					"dto.barcode":trim($("#txt_barcode").val()),
+					"dto.expressNum":trim($("#txt_express_num").val()),
+					"dto.listNum":trim($("#txt_list_num").val()),
+					"dto.batchNum":trim($("#txt_batch_num").val()),
+					"dto.maxSize": load_max_size         //加载最大条数
+					};
+			//开始组装参数
+			$.post(
+				"${ctx}/spe/specimenQueryNext.action?dto.startIndex="+startIndex,
+				paramsNext,
+				function(result){
+					if(result != "0"){
+						var json=eval("("+result+")");
+						var tableStr = "";
+						for(var i = 0;i<json.length;i++){
+							var includeId = $("#table_list").find("#"+json[i].id).attr("id");
+							if(includeId == json[i].id){
+								var barcodeSize = $("#barcodeSize").html()*1-1;
+								//更新页面条码总数
+								$("#barcodeSize").html(barcodeSize);
+								$("#div_list_top").html("总计"+barcodeSize+"个条码");
+							}else{
+								var display = displayIndex*1 + i + 1;
+								var str = $(
+										"<tr id=\""+json[i].id+"\" bgcolor=\"#d9eafa\">" +
+										"<td style=\"display: none\" id=\"barcodeSize\">"+json[i].maxSize+"</td>" +
+										"<td style=\"width: 20px;height: 28px;margin: auto;text-align: center;\"><input id=\""+json[i].id+"\" type=\"checkbox\" /></td>" +
+										"<td style=\"width: 60px;height: 28px;margin: auto;text-align: center;\">"+display+"</td> " +
+										"<td style=\"width: 120px;height: 28px;margin: auto;text-align: center;\">"+json[i].subbarcode+"</td>" +
+										"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json[i].name+"</td>" +
+										"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json[i].rdate+"</td>" +
+										"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json[i].seq+"</td>" +
+										"<td style=\"width: 100px;height: 28px;margin: auto;text-align: center;\" id=\""+json[i].status+"\">"+json[i].chineseStatus+"</td>" +
+										"<td style=\"width: 200px;height: 28px;margin: auto;text-align: center;\">"+json[i].plansName+"</td>" +
+										"</tr>").click(tableListClick);
+								var trObj=str.clone(true);
+								trObj.appendTo($("#table_list"));
+							}
+						}
+						$("#querySize").val(startIndex*1+maxSize);
+						$("#displaySize").val($("#table_list tr:gt(0)").size());
+						$("#div_list_top_current").html("已加载"+$("#table_list tr:gt(0)").size()+"个条码");
+					}
+				}
+			);
+		}
+	}*/
+
+
+
+	/**
+	 * 查询
+	 */
+	function btnSearch(searchType){
+		btnClean();
+		//判断日期是否都选择
+		if(trim($("#startDate").val()) == "" || trim($("#endDate").val()) == ""){
+			showMsg('日期不能为空!');
+			return ;
+		}
+		//开始组装参数
+		var radio_id = $("input:radio:checked").attr("id");
+		var result = $("#vipSearch").is(":checked") ? 1 : 0;
+		var overduePlan = $("#overduePlanSearch").is(":checked") ? "1" : "0";
+		var param = {"dto.dateType":radio_id,
+						"dto.statrDate":trim($("#startDate").val()),
+						"dto.endDate":trim($("#endDate").val()),
+						"dto.status":statusCombo.getValue(),
+						"dto.customerName":trim(customerCombo.getText()),
+						"dto.sex":$("#combo_sex").val(),
+						"dto.name":trim($("#txt_name").val()),
+						"dto.province":trim(provinceCombo.getText()),
+						"dto.city":trim(cityCombo.getText()),
+						"dto.plansName":trim(plansCombo.getText()),
+						"dto.barcode":trim($("#txt_barcode").val()),
+						"dto.expressNum":trim($("#txt_express_num").val()),
+						"dto.listNum":trim($("#txt_list_num").val()),
+						"dto.batchNum":trim($("#txt_batch_num").val()),
+						"dto.startIndex":"0",
+						"dto.vip":result,
+						"dto.seq":trim($("#txt_seq").val()),
+						"dto.reportReceiveBy":trim($("#txt_reportReceiveBy").val()),
+						"dto.overduePlan":overduePlan,
+						"dto.reportSource":$("#combo_reportSource").val(),
+						"dto.maxSize":maxSize};
+		paramsNext = {"dto.dateType":radio_id,
+				"dto.statrDate":trim($("#startDate").val()),
+				"dto.endDate":trim($("#endDate").val()),
+				"dto.status":statusCombo.getValue(),
+				"dto.customerName":trim(customerCombo.getText()),
+				"dto.sex":$("#combo_sex").val(),
+				"dto.name":trim($("#txt_name").val()),
+				"dto.province":trim(provinceCombo.getText()),
+				"dto.city":trim(cityCombo.getText()),
+				"dto.plansName":trim(plansCombo.getText()),
+				"dto.barcode":trim($("#txt_barcode").val()),
+				"dto.expressNum":trim($("#txt_express_num").val()),
+				"dto.listNum":trim($("#txt_list_num").val()),
+				"dto.batchNum":trim($("#txt_batch_num").val()),
+				"dto.vip":result,
+				"dto.seq":trim($("#txt_seq").val()),
+				"dto.reportReceiveBy":trim($("#txt_reportReceiveBy").val()),
+				"dto.overduePlan":overduePlan,
+				"dto.reportSource":$("#combo_reportSource").val(),
+				"dto.maxSize":maxSize
+				};
+		var sortType = null;
+		var orderType = null;
+		if (searchType == "date") {
+			sortType = "tt.rdate";
+			if ($("#receiveDateSort").hasClass("sortAsc")) {
+				$("#receiveDateSort").removeClass("sortAsc").addClass("sortDesc");
+				orderType = "desc";
+			} else if ($("#receiveDateSort").hasClass("sortDesc")) {
+				$("#receiveDateSort").removeClass("sortDesc").addClass("sortAsc");
+				orderType = "asc";
+			}else {
+				$("#receiveDateSort").addClass("sortAsc");
+				orderType = "asc";
+			}
+		} else if (searchType == "seq") {
+			sortType = "tt.seq";
+			if ($("#seqSort").hasClass("sortAsc")) {
+				$("#seqSort").removeClass("sortAsc").addClass("sortDesc");
+				orderType = "desc";
+			} else if ($("#seqSort").hasClass("sortDesc")) {
+				$("#seqSort").removeClass("sortDesc").addClass("sortAsc");
+				orderType = "asc";
+			}else {
+				$("#seqSort").addClass("sortAsc");
+				orderType = "asc";
+			}
+		}else if (searchType == "status") {
+			sortType = "tt.status";
+			if ($("#statusSort").hasClass("sortAsc")) {
+				$("#statusSort").removeClass("sortAsc").addClass("sortDesc");
+				orderType = "desc";
+			} else if ($("#seqSort").hasClass("sortDesc")) {
+				$("#statusSort").removeClass("sortDesc").addClass("sortAsc");
+				orderType = "asc";
+			}else {
+				$("#statusSort").addClass("sortAsc");
+				orderType = "asc";
+			}
+		}
+		var speSource=speSourceCombo.getValue();
+		//与后台交互
+		$("#div_list").load("${ctx}/spe/specimenQueryList.action?sortType="+sortType+"&orderType="+orderType+"&speSource="+speSource,param,function(){
+			if (orderType == "desc") {
+				if (sortType == "tt.rdate") {
+					$("#receiveDateSort").addClass("sortDesc");
+				} else if(sortType == "tt.seq"){
+					$("#seqSort").addClass("sortDesc");
+				} else if (sortType == "tt.status") {
+					$("#statusSort").addClass("sortDesc");
+				}
+			}else {
+				if (sortType == "tt.rdate") {
+					$("#receiveDateSort").addClass("sortAsc");
+				} else if (sortType == "tt.seq"){
+					$("#seqSort").addClass("sortAsc");
+				} else if (sortType == "tt.status") {
+					$("#statusSort").addClass("sortAsc");
+				}else {
+					$(".sortAsc").removeClass("sortAsc");
+					$(".sortDesc").removeClass("sortDesc");
+				}
+			}
+			$("#div_list_top_current").html("已加载"+$("#table_list tr:gt(0)").size()+"个条码");
+			$("#querySize").val(maxSize);
+			$("#displaySize").val($("#table_list tr:gt(0)").size());
+			//绑定左侧列表行点击事件
+			$("#table_list tr:gt(0)").click(tableListClick);
+			//绑定全选checkbox点击事件
+			$("#checkbox_all").click(checkAllClick);
+			//清空信息
+			$("#div_up_info input").val("");
+			$(".right_box_tc").html("套餐:<br/>报告书:");
+			$("#div_down_info tr:gt(0)").remove();
+			$("#div_note_info").html("");
+			$("#div_log_info").html("");
+			$("#div_report").html("");
+			right_jbxx = $(".right_jbxx").outerHeight(true);
+			setDateilTeableHight();
+			if($("#table_list tr:gt(0)").size()<1){
+				showMsg("没有查询出任何数据","提示信息",function(){
+					$("#div_list_top").html("总计0个条码");
+					$("#returnMaxSize").val("0");    //add by lbj
+				});
+				return false;
+			}else{
+				//更新页面条码总数
+				$("#div_list_top").html("总计"+$("#barcodeSize").html()+"个条码");
+				$("#returnMaxSize").val($("#barcodeSize").html());   //add by lbj
+			}
+		});
+	}
+	
+	//设置查询列表中数据表格的高度
+	function setTableHeight(){
+		var tm_top = $(".tm_top").height();
+		var cxtj =$(".cxtj").outerHeight(true);
+		$(".tm_nr").height(winHeight-tm_top-cxtj);
+	}
+	//设置详细信息中数据表格的高度
+	function setDateilTeableHight(){
+		var pagetabs = $(".page_tabs-wrap").height();
+		$(".right_box_tcbg").height(winHeight-right_jbxx-pagetabs);
+	}
+	//设置除其他页签中的页面内容的高度
+	function otherDivHeight(id){
+		var pagetabs = $(".page_tabs-wrap").outerHeight(true);
+		$("#"+id).height(winHeight-pagetabs+12);
+	}
+	
+	/**
+	 * 追加查询
+	 */
+	function btnSearchAdd(){
+		add();
+	}
+	
+	/**
+	 * 条码栏回车事件(与追加查询业务一样)
+	 */
+	function txtBarcodeAdd(e){
+		if(e.keyCode == 13) {
+			add();
+			$("#txt_barcode").select();
+		}
+	}
+	
+	/**
+	 * 追加查询业务
+	 */
+	function add(){
+		//该功能可优化,待续...
+		
+		//条码栏为空,给予提示
+		if(trim($("#txt_barcode").val()) == ""){
+			showMsg("请输入条码号再进行追加查询");
+			return false;
+		}
+		//如果该条码不在页面上,则去后台查询,开始组装参数
+		var param = {"dto.barcode":trim($("#txt_barcode").val())};
+		//与后台交互
+		$.post("${ctx}/spe/specimenQueryAdd.action",param,function(data){
+			//提示是否查询出数据
+			if(data != null && data != "" && data != 'null'){
+				var jsonArr = eval("("+data+")");
+				if(jsonArr.length == 0){
+					showMsg("没有查询出任何数据");
+					return false;
+				}
+				for(var i = 0;i<jsonArr.length;i++){
+					var json = jsonArr[i];
+					if($("#table_list #"+json.id).size()>0){
+						//列表中有该条码,则选中该条码
+						$("#table_list #"+json.id).trigger("click");
+						return false;
+					}
+					//列表中没有该条码,则新增该条码
+					//var trObj=trTmp.clone(true);
+					var display = $("#table_list tr:gt(0)").size()*1+1;
+					var str = $("<tr id=\""+json.id+"\" bgcolor=\"#d9eafa\">" +
+	    					"<td style=\"display: none\" id=\"barcodeSize\">"+json.maxSize+"</td>" +
+	    					"<td style=\"width: 20px;height: 28px;margin: auto;text-align: center;\"><input id=\""+json.id+"\" type=\"checkbox\" /></td>" +
+	    					"<td style=\"width: 60px;height: 28px;margin: auto;text-align: center;\">"+display+"</td> " +
+	    					"<td style=\"width: 120px;height: 28px;margin: auto;text-align: center;\">"+json.subbarcode+"</td>" +
+	    					"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json.name+"</td>" +
+	    					"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json.receiveDate+"</td>" +
+	    					"<td style=\"width: 80px;height: 28px;margin: auto;text-align: center;\">"+json.seq+"</td>" +
+	    					"<td style=\"width: 100px;height: 28px;margin: auto;text-align: center;\" id=\""+json.status+"\">"+json.chineseStatus+"</td>" +
+	    					"<td style=\"width: 200px;height: 28px;margin: auto;text-align: center;\">"+json.plansName+"</td>" +
+	    					"<td style=\"width: 200px;height: 28px;margin: auto;text-align: center;\">"+json.sourceOrgname+"</td>" +
+	    					"<td style=\"width: 200px;height: 28px;margin: auto;text-align: center;\">"+json.targetOrgname+"</td>" +
+	    				"</tr>").click(tableListClick);
+	    					var trObj=str.clone(true);
+	    					$("#checkbox_all").click(checkAllClick);
+	    					trObj.appendTo($("#table_list"));
+					
+					/*trObj.attr("id",json.id);
+					$(trObj.children("td")[1]).html(json.maxSize).attr("id","barcodeSize").css("display","none");
+					$(trObj.children("td")[2]).html($("#table_list tr:gt(0)").size()+1);
+					$(trObj.children("td")[3]).html(json.subbarcode);
+					$(trObj.children("td")[4]).html(json.name);
+					$(trObj.children("td")[5]).html(json.seq);
+					$(trObj.children("td")[6]).html(json.chineseStatus);
+					$(trObj.children("td")[7]).html(json.plansName);
+					$(trObj.find("input:eq(0)")).attr("id",json.id);
+					$(trObj.children("td")[6]).attr("id",json.status);
+					trObj.appendTo($("#table_list"));*/
+				}
+//				var barcodeSize = $("#barcodeSize").html()*1+1;
+				var barcodeSize;
+				if ($("#table_list tr:gt(0)").size() == 1) {
+					barcodeSize = $("#barcodeSize").html()*1;
+				} else {
+					barcodeSize = $("#barcodeSize").html()*1+1;
+				}
+				//更新页面条码总数
+				$("#barcodeSize").html(barcodeSize);
+				$("#div_list_top").html("总计"+barcodeSize+"个条码");
+				$("#displaySize").val($("#table_list tr:gt(0)").size());
+				$("#div_list_top_current").html("已加载"+$("#table_list tr:gt(0)").size()+"个条码");
+			}else{
+				showMsg("没有查询出任何数据");
+				return false;
+			}
+		});
+	}
+	
+	/**
+	 * 清空
+	 */
+	function btnClean(){
+		//清空页面查询出来的数据
+		//$("#table_list tr:gt(0)").remove();
+		$("#div_list").load(ctx+"/pages/spe/specimenQuery/specimenQueryList.jsp");
+		$("#div_list_top").html("总计0个条码");
+		$("#div_up_info input").val("");
+		$(".right_box_tc").html("套餐:<br/>报告书:");
+		$("#div_down_info tr:gt(0)").remove();
+		$("#div_note_info").html("");
+		$("#div_log_info").html("");
+		$("#div_report").html("");
+		$("#querySize").val("0");
+		vipIsCheck(0);
+		$("#div_list_top_current").html("已加载"+$("#querySize").val()+"个条码");
+	}
+	
+	/**
+	 * 导出
+	 */
+//	function btnExport(){
+//		var checkboxObj = $("#table_list tr:gt(0) input:checked");
+//		if(checkboxObj.length<1){
+//			showMsg("请勾选条码");
+//			return false;
+//		}
+//		var idsArray = new Array();
+//		checkboxObj.each(function(){
+//			idsArray.push($(this).attr("id"));
+//		});
+//		$("#ids").val(idsArray.join(","));
+//		$("#type").val("1");
+//		$("#exportForm").submit();
+//	}
+	
+	/**
+	 * 导出
+	 */
+	function btnExport(exportType){
+		var checkFlag=false;
+		var checkboxObj = $("#table_list tr:gt(0) input:checked");
+		/*if (checkboxObj.length>500) {
+			showMsg("超过500条请通过导出全部进行导出");
+			return;
+		}*/
+		if(checkboxObj.length>0){
+			checkFlag=true;
+		}
+		var idsArray = new Array();
+		var orderArray = new Array();
+		checkboxObj.each(function(){
+			idsArray.push($(this).attr("id"));
+			orderArray.push($("#table_list #"+$(this).attr("id")+" td:nth-child(3)").html());
+		});
+		//导出部分
+		if(exportType == 1){
+			if(!checkFlag){
+				showMsg("请先勾选要导出的记录");
+				return;
+			}
+			$("#ids").val(idsArray);
+			$("#type").val("1");
+			$("#exportType").val("");
+			$("#order").val(orderArray.join(","));
+			$("#exportForm").submit();
+		}else{
+			//导出全部
+			if(checkFlag){
+				showMsg("导出全部请不要勾选记录");
+				return;
+			}
+			//判断日期是否都选择
+			if(trim($("#startDate").val()) == "" || trim($("#endDate").val()) == ""){
+				showMsg('日期不能为空!');
+				return ;
+			}
+			var radio_id = $("input:radio:checked").attr("id");
+			var result = $("#vipSearch").is(":checked") ? 1 : 0;
+			var overduePlan = $("#overduePlanSearch").is(":checked") ? "1" : "0";
+			$("#type").val(statusCombo.getValue());
+			$("#radios").val(radio_id);
+			$("#stime").val(trim($("#startDate").val()));
+			$("#etime").val(trim($("#endDate").val()));
+			$("#exCustomerName").val(trim(customerCombo.getText()));
+			$("#exSex").val($("#combo_sex").val());
+			$("#exName").val(trim($("#txt_name").val()));
+			$("#exProvince").val(trim(provinceCombo.getText()));
+			$("#exCity").val(trim(cityCombo.getText()));
+			$("#exPlansName").val(trim(plansCombo.getText()));
+			$("#exBarcode").val(trim($("#txt_barcode").val()));
+			$("#exExpressNum").val(trim($("#txt_express_num").val()));
+			$("#exListNum").val(trim($("#txt_list_num").val()));
+			$("#exBatchNum").val(trim($("#txt_batch_num").val()));
+			$("#exVip").val(result);
+			$("#exOverduePlan").val(overduePlan);
+			$("#exSeq").val(trim($("#txt_seq").val()));
+			$("#exReportReceiveBy").val(trim($("#txt_reportReceiveBy").val()));
+			$("#exSpeSource").val(speSourceCombo.getValue());
+			$("#exReportSource").val($("#combo_reportSource").val());
+			$("#exportType").val("5");
+			$("#exportForm").submit();
+		  }
+	}
+	
+	function btnExport1(){
+		//判断日期是否都选择
+		if(trim($("#startDate").val()) == "" || trim($("#endDate").val()) == ""){
+			showMsg('日期不能为空!');
+			return ;
+		}
+		var msg = "是否要导出"+trim($("#startDate").val())+"至"+trim($("#endDate").val())+"时间段内的出库条码的数据";
+		jConfirm(msg,"提示信息",function(choice){
+			if(choice){
+				$("#stime").val(trim($("#startDate").val()));
+				$("#etime").val(trim($("#endDate").val()));
+				$("#type").val("2");
+				$("#exportType").val("");
+				$("#exportForm").submit();
+			}
+		});
+	}
+	
+	function btnExport2(){
+		//判断日期是否都选择
+		if(trim($("#startDate").val()) == "" || trim($("#endDate").val()) == ""){
+			showMsg('日期不能为空!');
+			return ;
+		}
+		var msg = "是否要导出"+trim($("#startDate").val())+"至"+trim($("#endDate").val())+"时间段内实验室接收的条码信息";
+		jConfirm(msg,"提示信息",function(choice){
+			if(choice){
+				$("#stime").val(trim($("#startDate").val()));
+				$("#etime").val(trim($("#endDate").val()));
+				$("#type").val("3");
+				$("#exportType").val("");
+				$("#exportForm").submit();
+			}
+		});
+	}
+	
+	function btnExport3(){
+		//判断日期是否都选择
+		if(trim($("#startDate").val()) == "" || trim($("#endDate").val()) == ""){
+			showMsg('日期不能为空!');
+			return ;
+		}
+		var msg = "是否要导出"+trim($("#startDate").val())+"至"+trim($("#endDate").val())+"时间段内寄送报告的条码数据";
+		jConfirm(msg,"提示信息",function(choice){
+			if(choice){
+				$("#stime").val(trim($("#startDate").val()));
+				$("#etime").val(trim($("#endDate").val()));
+				$("#type").val("4");
+				$("#exportType").val("");
+				$("#exportForm").submit();
+			}
+		});
+	}
+	
+	/**
+	 * 左侧列表行选中事件
+	 */
+	function tableListClick(){
+		//如果本行已选中,则不进行任何操作
+		if($(this).attr("bgcolor") != "fbeacd"){
+			//首先移除其他行的高亮显示
+			$("#table_list tr:gt(0)").attr("bgcolor","d9eafa");
+			//然后将本行高亮显示
+			$(this).attr("bgcolor","fbeacd");
+			//组装参数
+			var param = {"id":$(this).attr("id"),"barcode":$(this).find("td:eq(3)").html()};
+			setDateilTeableHight();
+			//查询条码基本信息,显示在右侧页面上部
+			$("#div_up_info").load("${ctx}/spe/specimenQueryUpInfo.action",param,function(){
+			});
+			//查询条码套餐信息,显示在右侧页面下部
+			$("#div_down_info").load("${ctx}/spe/specimenQueryDownInfo.action",param,function(){
+				right_jbxx = $(".right_jbxx").outerHeight(true);
+				setDateilTeableHight();
+			});
+			//查询节点信息,显示在右侧页面
+			$("#div_note_info").load("${ctx}/spe/specimenQueryNote.action",param,function(){
+				otherDivHeight("div_log");
+			});
+			//查询修改日志,显示在右侧页面
+			$("#div_log_info").load("${ctx}/spe/specimenQueryLog.action",param,function(){
+				otherDivHeight("div_log_info");
+			});
+			var barCode=$(this).find("td:eq(3)").html();
+			var id=$(this).attr("id");
+			if (barCode != null) {
+				$.ajax({
+					type : "POST",
+					url : "${ctx}/spe/checkBarcodeState.action",
+					data:{barCode:barCode},
+					success : function(result) {
+						if("1"==result){
+							//报告预览
+							otherDivHeight("div_report");
+							var url = "${ctx}/spe/specimenQueryReport.action?id="+id;
+							embedPDF(url,"div_report");
+							//历史报告
+							otherDivHeight("div_history");
+							var url = "${ctx}/spe/specimenQueryHistoryReport.action?id="+id;
+							embedPDF(url,"div_history");
+						} else {
+							//showMsg("条码未审核，不能报告进行预览!","提示信息");
+							return;
+						}
+					}
+				});
+			} else {
+				//报告预览
+				otherDivHeight("div_report");
+				var url = "${ctx}/spe/specimenQueryReport.action?id="+id;
+				embedPDF(url,"div_report");
+				//历史报告
+				otherDivHeight("div_history");
+				var url = "${ctx}/spe/specimenQueryHistoryReport.action?id="+id;
+				embedPDF(url,"div_history");
+			}
+		}
+	}
+	
+	/**
+	 * 全选checkbox
+	 */
+	function checkAllClick(){
+		//注:该事件里不要用return false
+		if($("#checkbox_all").is(":checked")){
+			$("#table_list tr:gt(0) input[type='checkbox']").prop("checked",true);
+		}else{
+			$("#table_list tr:gt(0) input[type='checkbox']").prop("checked",false);
+		}
+	}
+	
+	/**
+	 * 基本信息页签点击事件
+	 */
+	function tabInfoClick(){
+		if($("#tab_info").hasClass("page_tabs-selected")){
+			return false;
+		}
+		$(".page_tabs-wrap li").removeClass("page_tabs-selected");
+		$(".page_tabs-wrap li").removeClass("page_tabs");
+		$("#div_note").hide();
+		$("#div_log").hide();
+		$("#div_report").hide();
+		$("#div_history").hide();
+		
+		$("#tab_note").addClass("page_tabs");
+		$("#tab_log").addClass("page_tabs");
+		$("#tab_report").addClass("page_tabs");
+		$("#tab_history").addClass("page_tabs");
+		$("#tab_info").addClass("page_tabs-selected");
+		
+		$("#div_info").show();
+		
+	}
+	
+	/**
+	 * 操作流程页签点击事件
+	 */
+	function tabOperationClick(){
+		if($("#tab_note").hasClass("page_tabs-selected")){
+			return false;
+		}
+		$(".page_tabs-wrap li").removeClass("page_tabs-selected");
+		$(".page_tabs-wrap li").removeClass("page_tabs");
+		$("#div_info").hide();
+		$("#div_log").hide();
+		$("#div_report").hide();
+		$("#div_history").hide();
+		
+		$("#tab_info").addClass("page_tabs");
+		$("#tab_log").addClass("page_tabs");
+		$("#tab_report").addClass("page_tabs");
+		$("#tab_history").addClass("page_tabs");
+		$("#tab_note").addClass("page_tabs-selected");
+		
+		$("#div_note").show();
+		otherDivHeight("div_note");
+	}
+	
+	/**
+	 * 修改日志页签点击事件
+	 */
+	function tabLogClick(){
+		if($("#tab_log").hasClass("page_tabs-selected")){
+			return false;
+		}
+		$(".page_tabs-wrap li").removeClass("page_tabs-selected");
+		$(".page_tabs-wrap li").removeClass("page_tabs");
+		$("#div_info").hide();
+		$("#div_note").hide();
+		$("#div_report").hide();
+		$("#div_history").hide();
+		
+		$("#tab_info").addClass("page_tabs");
+		$("#tab_note").addClass("page_tabs");
+		$("#tab_report").addClass("page_tabs");
+		$("#tab_history").addClass("page_tabs");
+		$("#tab_log").addClass("page_tabs-selected");
+		
+		$("#div_log").show();
+		otherDivHeight("div_log");
+	}
+	
+	/**
+	 * 报告预览页签点击事件
+	 */
+	function tabReportClick(){
+		var barCode = $("#table_list tr[bgcolor='fbeacd']").find("td:eq(3)").html();
+		if (barCode != null) {
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/spe/checkBarcodeState.action",
+				data:{barCode:barCode},
+				success : function(result) {
+					if("1"==result){
+						if($("#tab_report").hasClass("page_tabs-selected")){
+							return false;
+						}
+						$(".page_tabs-wrap li").removeClass("page_tabs-selected");
+						$(".page_tabs-wrap li").removeClass("page_tabs");
+						$("#div_info").hide();
+						$("#div_note").hide();
+						$("#div_log").hide();
+						$("#div_history").hide();
+						
+						$("#tab_info").addClass("page_tabs");
+						$("#tab_note").addClass("page_tabs");
+						$("#tab_log").addClass("page_tabs");
+						$("#tab_history").addClass("page_tabs");
+						$("#tab_report").addClass("page_tabs-selected");
+						
+						$("#div_report").show();
+						otherDivHeight("div_report");
+					} else {
+						showMsg("条码未财务审核，不能进行报告预览!","提示信息");
+						return;
+					}
+				}
+			});
+		} else {
+			if($("#tab_report").hasClass("page_tabs-selected")){
+				return false;
+			}
+			$(".page_tabs-wrap li").removeClass("page_tabs-selected");
+			$(".page_tabs-wrap li").removeClass("page_tabs");
+			$("#div_info").hide();
+			$("#div_note").hide();
+			$("#div_log").hide();
+			$("#div_history").hide();
+			
+			$("#tab_info").addClass("page_tabs");
+			$("#tab_note").addClass("page_tabs");
+			$("#tab_log").addClass("page_tabs");
+			$("#tab_history").addClass("page_tabs");
+			$("#tab_report").addClass("page_tabs-selected");
+			
+			$("#div_report").show();
+			otherDivHeight("div_report");
+		}
+		
+	}
+	
+	/**
+	 * 历史报告页签点击事件
+	 */
+	function tabHistoryClick(){
+		var barCode = $("#table_list tr[bgcolor='fbeacd']").find("td:eq(3)").html();
+		if (barCode != null) {
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/spe/checkBarcodeState.action",
+				data:{barCode:barCode},
+				success : function(result) {
+					if("1"==result){
+						if($("#tab_history").hasClass("page_tabs-selected")){
+							return false;
+						}
+						$(".page_tabs-wrap li").removeClass("page_tabs-selected");
+						$(".page_tabs-wrap li").removeClass("page_tabs");
+						$("#div_info").hide();
+						$("#div_note").hide();
+						$("#div_log").hide();
+						$("#div_report").hide();
+						
+						$("#tab_info").addClass("page_tabs");
+						$("#tab_note").addClass("page_tabs");
+						$("#tab_log").addClass("page_tabs");
+						$("#tab_report").addClass("page_tabs");
+						$("#tab_history").addClass("page_tabs-selected");
+						
+						$("#div_history").show();
+						otherDivHeight("div_history");
+					} else {
+						showMsg("条码未财务审核，不能进行历史报告预览!","提示信息");
+						return;
+					}
+				}
+			});
+		} else {
+			if($("#tab_history").hasClass("page_tabs-selected")){
+				return false;
+			}
+			$(".page_tabs-wrap li").removeClass("page_tabs-selected");
+			$(".page_tabs-wrap li").removeClass("page_tabs");
+			$("#div_info").hide();
+			$("#div_note").hide();
+			$("#div_log").hide();
+			$("#div_report").hide();
+			
+			$("#tab_info").addClass("page_tabs");
+			$("#tab_note").addClass("page_tabs");
+			$("#tab_log").addClass("page_tabs");
+			$("#tab_report").addClass("page_tabs");
+			$("#tab_history").addClass("page_tabs-selected");
+			
+			$("#div_history").show();
+			otherDivHeight("div_history");
+		}
+	}
+	
+	 /**
+	  * @param VIP复选框是否选中
+	  */
+	 function vipIsCheck(value) {
+		 if(value == 1) {
+			 $("#vip").attr("checked", true);
+			 return;
+		 }
+		 $("#vip").attr("checked", false);
+	 }
+	
+	/**
+	 * 初始化时间区间
+	 */
+    function initdate(){
+    	var myDate = new Date();
+    	var y = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+    	var m = myDate.getMonth() + 1;//获取当前月份(0-11,0代表1月)
+    	var d = myDate.getDate();  //获取当前日(1-31)
+    	
+    	
+    	if (m < 10) {
+    		m = "0" + m;
+    	}
+    	if (d < 10) {
+    		d = "0" + d;
+    	}
+    	
+    	var dateStartInit = y + "-" + m + "-" + d + " 00:00:00";
+    	var dateEndInit = y + "-" + m + "-" + d + " 23:59:59";
+
+		$("#startDate").val(dateStartInit);
+		$("#endDate").val(dateEndInit);
+		//初始化DIV高度
+		setTableHeight();
+		setDateilTeableHight();
+		otherDivHeight("div_log");
+		otherDivHeight("div_log_info");
+		otherDivHeight("div_report");
+    }

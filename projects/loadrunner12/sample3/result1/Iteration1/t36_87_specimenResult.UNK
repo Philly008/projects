@@ -1,0 +1,3522 @@
+/*
+ *  #001  刘嘉炜     2015-9-25  NIP-961   调整结果录入页面的结果备注显示长度 。
+ */
+
+var currentSubBarCode=null;
+var oldSubBarCode = null;
+var currentRadio=null;
+var existAntiCache=new Map();	//已选择的抗生素
+var canF10=false;
+var urineTip=false;
+var sortAsc=true;
+// #001 begin
+var RESULT_COMMENT_LENGTH = 60; //结果备注显示长度
+// #001 end
+
+
+/*-------------------------------------------------------------------------------- 
+	----------------------结果详细下拉Grid参数设置---------------------------------- 
+	--------------------------------开始---------------------------------------------*/
+	var resultDetailCombo=null;
+	var onResultDetailChange=function(tr){
+		
+	};
+	var resultDetail_param = {
+		/*必填内容*/
+		div_id : "comboResultDetail", 	//对应DIV的id
+		grid_id : "divResultDetail", 	//对应Grid的Id	
+		name:"",
+		columnShow:2,					//将要在文本框中显示的列序号
+		clearOff:true,					//是否禁用clear按钮
+		grid_onChange:onResultDetailChange,
+		searchColumn:[1,2],
+		onTextBlur:function(){
+			
+		},
+		onEnter:function(){
+			var isMic=currentIsMic=="true"?true:false;
+			saveTestItemResult($("#comboResultDetail").parent().parent(),resultDetailCombo.getText(),function(){
+				var currentT=$("#comboResultDetail").parent().parent();
+				if(!isMic){
+					while(currentT.next().size()>0&&currentT.next().children("td:nth-child(6)").html()!=""){
+						currentT=currentT.next();
+					}
+					if(currentT.next().size()>0){
+						currentT.next().trigger("click",[true]);
+					}else{
+						$("#txtSearchSubBarCode").focus();
+						$("#txtSearchSubBarCode").select();
+					}
+				}else{
+					$("#txtProjectCode").focus();
+					$("#txtProjectCode").select();
+				}
+//				if(isMic){
+//					while(currentT.next().size()>0&&currentT.next().children("td:nth-child(7)").html()!=""){
+//						currentT=currentT.next();
+//					}
+//				}else{
+//					while(currentT.next().size()>0&&currentT.next().children("td:nth-child(6)").html()!=""){
+//						currentT=currentT.next();
+//					}
+//				}
+//				if(currentT.next().size()>0){
+//					currentT.next().trigger("click",[true]);
+//				}else{
+//					$("#txtSearchSubBarCode").focus();
+//					$("#txtSearchSubBarCode").select();
+//				}
+			});
+		}
+	};
+	/*----------------------------结束------------------------------------------------ 
+	----------------------结果详细下拉Grid参数设置---------------------------------- 
+	---------------------------------------------------------------------------------*/
+	/*-------------------------------------------------------------------------------- 
+	----------------------细菌提示下拉Grid参数设置---------------------------------- 
+	--------------------------------开始---------------------------------------------*/
+	var bacterialTipsCombo=null;
+	var onBacterialTipsChange=function(tr){
+		
+	};
+	var bacterialTips_param = {
+		/*必填内容*/
+		div_id : "comboBacterialTips", 	//对应DIV的id
+		grid_id : "gridBacterialTips", 	//对应Grid的Id	
+		name:"",
+		columnShow:1,					//将要在文本框中显示的列序号
+		clearOff:true,					//是否禁用clear按钮
+		grid_onChange:onBacterialTipsChange,
+		searchColumn:[1],
+		onTextBlur:function(){
+			
+		},
+		onEnter:function(){
+			//回车往下一个细菌提示
+			var bacterialResultId=$("#comboBacterialTips").parent().parent().children("td:nth-child(5)").children("p:nth-child(1)").html();
+			saveBacterialTips(bacterialResultId,bacterialTipsCombo.getText(),function(){
+				//回车跳转
+				if($("#comboBacterialTips").parent().parent().next().size()>0){
+					$("#comboBacterialTips").parent().parent().next().trigger("click");
+					$("#txtBacterialCount").focus();
+				}
+			});
+		}
+	};
+	/*----------------------------结束------------------------------------------------ 
+	----------------------细菌提示下拉Grid参数设置---------------------------------- 
+	---------------------------------------------------------------------------------*/
+	/*-------------------------------------------------------------------------------- 
+	----------------------抗生素结果下拉Grid参数设置---------------------------------- 
+	--------------------------------开始---------------------------------------------*/
+	var antibioticResultCombo=null;
+	var onAntibioticResultChange=function(tr){
+		
+	};
+	var antibioticResult_param = {
+		/*必填内容*/
+		div_id : "comboAntibioticResult", 	//对应DIV的id
+		grid_id : "gridAntibioticResult", 	//对应Grid的Id	
+		name:"",
+		columnShow:1,					//将要在文本框中显示的列序号
+		clearOff:true,					//是否禁用clear按钮
+		grid_onChange:onAntibioticResultChange,
+		searchColumn:[1],
+		onTextBlur:function(){
+			
+		},
+		onEnter:function(){
+			var antiResultId=$("#comboAntibioticResult").parent().parent().children("td:nth-child(13)").children("p:nth-child(1)").html();
+			saveAntibioticResult(antiResultId,antibioticResultCombo.getText(),$("#comboAntibioticResult").parent().parent(),function(){
+				//回车跳转
+				if($("#comboAntibioticResult").parent().parent().next().size()>0){
+					$("#comboAntibioticResult").parent().parent().next().trigger("click");
+					$("#txtKb-Mic").focus();
+				}
+			});
+		}
+	};
+	/*----------------------------结束------------------------------------------------ 
+	----------------------抗生素结果下拉Grid参数设置---------------------------------- 
+	---------------------------------------------------------------------------------*/
+
+	
+	/*-------------------------------------------------------------------------------- 
+	----------------------微生物结果类型下拉Grid参数设置---------------------------------- 
+	--------------------------------开始---------------------------------------------*/
+	var micResultTypeCombo=null;
+	/*var onMicResultTypeChange=function(tr){
+		
+	};*/
+	var micResultType_param = {
+		/*必填内容*/
+		div_id : "comboMicResultType", 	//对应DIV的id
+		grid_id : "divMicResultType", 	//对应Grid的Id	
+		name:"",
+		columnShow:2,					//将要在文本框中显示的列序号
+		clearOff:true,					//是否禁用clear按钮
+		grid_onChange:onMicResultTypeChange,
+		searchColumn:[1,2],
+		onTextBlur:function(){
+			if(trim(micResultTypeCombo.getText()) == ""){
+				var speInstrumentItemId=$("#comboMicResultType").parent().parent().attr("id");
+				var micResultType="";
+				var sbarCode=currentSubBarCode;
+				var itemName=$("#comboMicResultType").parent().parent().children("td:nth-child(5)").attr("title");
+				$.post("${ctx}/lab/speResultSaveMicResultType.action",{"speInstrumentItemId":speInstrumentItemId,"micResultType":micResultType,"itemName":itemName,"subBarCode":sbarCode},function(data){
+					//微生物结果类型保存成功
+					
+				});
+			}
+		},
+		onEnter:function(){
+			setTimeout("resultDetailCombo.focus();",200);
+		}
+	};
+	/*----------------------------结束------------------------------------------------ 
+	----------------------微生物结果类型下拉Grid参数设置---------------------------------- 
+	---------------------------------------------------------------------------------*/
+
+$(function(){
+	resultDetailCombo=new TextCombo(resultDetail_param);
+	bacterialTipsCombo=new TextCombo(bacterialTips_param);
+	antibioticResultCombo=new TextCombo(antibioticResult_param);
+	micResultTypeCombo=new TextCombo(micResultType_param);
+	$("#gridOtherItem .instrumentTitle").click(onOtherItemInstrumentClick);
+	bindSelectRow("gridTestItem");
+	$("#tabTestItem").click(tabTestItemClick);
+	$("#tabMicTestItem").click(tabMicTestItemClick);
+	$("#tabOtherItem").click(tabOtherItemClick);
+	$("#tabOtherMicItem").click(tabOtherMicItemClick);
+	$("#tabTxlrItem").click(tabTxlrItemClick);
+	$("#tabMblrItem").click(tabMblrItemClick);
+	$("#tabRemark").click(tabRemarkClick);
+	$("#chkSeqView").click(chkSeqViewClick);
+	$("#chkNameView").click(chkNameViewClick);
+	$("#chkMicSeqView").click(chkMicSeqViewClick);
+	$("#chkMicNameView").click(chkMicNameViewClick);
+	$("#txtResultRemark").blur(onTxtResultRemarkBlur);
+	$("#txtResultRemark").keyup(function(e){
+		if(e.keyCode==13){
+			$(this).blur();
+		}
+	});
+	$("#txtResultRemark").focus(onTxtResultRemarkFocus);
+	$("#txtProjectCode").keyup(function(e){
+		if(e.keyCode==13){
+			var currentTR=$("#txtProjectCode").parent().parent();
+			if(currentTR.next().size()>0){
+				$("#txtProjectCode").blur();
+				currentTR.next().trigger("click",['RT']);
+			}else{
+				$("#txtSearchSubBarCode").focus();
+				$("#txtSearchSubBarCode").select();
+			}
+		}
+	});
+	$("#txtProjectCode").blur(onTxtProjectCodeBlur);
+	$("#txtBacterialCount").blur(onTxtBacterialCountBlur);
+	$("#txtBacterialCount").keyup(onTxtBacterialCountEnter);
+	$("#txtBacterialCount").focus(function(){
+		$(this).select();
+	});
+	$("#txtKb-Mic").bind("blur",onTxtKbOrMicBlur);
+	$("#txtKb-Mic").keyup(onTxtKbOrMicEnter);
+	$("#txtKb-Mic").focus(function(){
+		$(this).select();
+	});
+	$("#KB").click(radioOnClick);
+	$("#MIC").click(radioOnClick);
+	$("#chkReportOption").click(reportOptionClick);
+	$("#btnMicAddBacterial").click(onAddBacterialBtnForWinClick);
+	$("#txtAddBacterialSearch").keyup(onTxtAddBacterialSearchEnter);
+	$("#btnMicAddAntibiotic").click(onAddAntibioticBtnForWinClick);
+	$("#gridAntibioticGroup tr").click(antibioticGroupClick);
+	$("#btnAddOneAntibiotic").click(addOneBtnClick);
+	$("#btnAddAllAntibiotic").click(addAllBtnClick);
+	$("#btnRemoveAllAntibiotic").click(removeAllBtnClick);
+	$("#btnRemoveOneAntibiotic").click(removeOneBtnClick);
+	$("#btnAddAntibioticCancle").click(addAntibioticCancleClick);
+	$("#btnAddAntibioticOK").click(addAntibioticOKClick);
+	$("#txtAddAntibioticGroupSearch").keyup(onTxtAddAntibioticGroupSearchEnter);
+	$("#txtAddAntibioticSearch").keyup(onTxtAddAntibioticSearchEnter);
+	$("#btnMicDelBacterial").click(delBacterialBtnClick);
+	$("#btnMicDelAntibiotic").click(delAntibioticBtnClick);
+	$("#btnImgInput").click(imgInputBtn_Click);
+	$("#resetReportBrief").dblclick(resetReportBriefDBclick);
+	$("#resultTDWidthSelect").change(onResultWidthChange);
+	$("#hrefOptionLab").attr("title", "※：标本状态异常 \r\n☆：结果异常\r\n★：结果危急\r\n←：重做\r\n→：异常提交\r\n□：结果为空\r\nⅩ：取消审核\r\n淡粉色：迟发一次标本 \r\n深红色：迟发一次以上标本\r\n绿色：结果偏低\r\n红色：结果偏高");
+	$("#box_02").click(function(){
+		$("#focusInput").focus();
+	});
+	
+	 $("#MicResultTD").dblclick(sortTDClick);
+	 $("#MicResultKBTD").dblclick(sortTDClick);
+	 $("#MicResultMICTD").dblclick(sortTDClick);
+	 
+	$("#box_02").keydown(function(e){
+		 e = window.event || e || e.which;
+		 if(e.keyCode==38){
+			 var thisTR=$("#gridList .tablelist_now ");
+			 if(thisTR.size()>0){
+				 var prevTR=getShowTr(thisTR,"prev");//thisTR.prev();//下一条
+				 if(prevTR!=null&&prevTR.size()>0){
+						prevTR.trigger("click");
+						var hp=prevTR.position().top;
+						if(hp<146||hp>497){
+							var hs=$("#divList").scrollTop();
+							$("#divList").scrollTop(hs+hp-146);
+						}
+				 }
+			 }
+			 return false;
+		 }else if(e.keyCode==40){//按向下钮
+			 var thisTR=$("#gridList .tablelist_now");
+			 if(thisTR.size()>0){
+				 //var nextTR=thisTR.next();
+				 var nextTR=getShowTr(thisTR,"next");
+				 if(nextTR!=null&&nextTR.size()>0){
+					 nextTR.trigger("click");
+						var hp=nextTR.position().top;
+						if(hp<146||hp>497){
+							var hs=$("#divList").scrollTop();
+							$("#divList").scrollTop(hs+hp-146);
+						}
+				 }
+			 }
+			 return false;
+		 }else if(e.keyCode==113){
+			 //F2键   //反选条码
+			 var thisTR=$("#gridList .tablelist_now");
+			 if(thisTR!=null&&thisTR.size()>0){
+				 var cbox= thisTR.children("td:nth-child(2)").children("input[type='checkbox']");
+				cbox.prop("checked",!cbox.prop("checked"));
+			 }
+		 }
+	});
+	/**
+	 * 获得显示的行
+	 * type:prev
+	 * 		next
+	 */
+	function getShowTr(selectTr,type){
+		var thisTr = null;
+		if(type=="prev"){
+			thisTr = selectTr.prev();
+		}else{
+			thisTr = selectTr.next();
+		}
+		if(!thisTr.is(':visible')){//可见
+			thisTr = getShowTr(thisTr,type);
+		}
+		return thisTr;
+	}
+	
+	$("#tdClick1").click(function(){
+		if($("#item_div").height()==22||$("#item_div").height()==66){
+//			$("#item_div").height(310);
+//			$("#bacterial_div").height(0);
+//			$("#anti_div").height(0);
+			$("#item_div").animate({height: '310px'}, "fast");
+			$("#bacterial_div").animate({height: '0px'}, "fast");
+			$("#anti_div").animate({height: '0px'}, "fast");
+
+		}else if($("#item_div").height()==310){
+//			$("#item_div").height(66);
+//			$("#bacterial_div").height(66);
+//			$("#anti_div").height(150);
+			$("#item_div").animate({height: '66px'}, "fast");
+			$("#bacterial_div").animate({height: '66px'}, "fast");
+			$("#anti_div").animate({height: '150px'}, "fast");
+		}
+	});
+	$("#tdClick2").click(function(){
+		if($("#bacterial_div").height()==0||$("#bacterial_div").height()==22||$("#bacterial_div").height()==66){
+//			$("#item_div").height(22);
+//			$("#bacterial_div").height(288);
+//			$("#anti_div").height(0);
+			$("#item_div").animate({height: '22px'}, "fast", "linear",function(){
+				if($("#gridMicTestItem .tablelist_now").size()>0){
+					var hp=$("#gridMicTestItem .tablelist_now").position().top;
+					var hs=$("#item_div").scrollTop();
+					$("#item_div").scrollTop(hs+hp-149);
+				}
+			});
+			$("#bacterial_div").animate({height: '288px'}, "fast");
+			$("#anti_div").animate({height: '0px'}, "fast");
+			
+		}else if($("#bacterial_div").height()==288){
+//			$("#item_div").height(66);
+//			$("#bacterial_div").height(66);
+//			$("#anti_div").height(150);
+			$("#item_div").animate({height: '66px'}, "fast");
+			$("#bacterial_div").animate({height: '66px'}, "fast");
+			$("#anti_div").animate({height: '150px'}, "fast");
+		}
+	});
+	$("#tdClick3").click(function(){
+		if($("#anti_div").height()==0||$("#anti_div").height()==150){
+//			$("#item_div").height(22);
+//			$("#bacterial_div").height(22);
+//			$("#anti_div").height(241);
+			$("#item_div").animate({height: '22px'}, "fast", "linear",function(){
+				if($("#gridMicTestItem .tablelist_now").size()>0){
+					var hp=$("#gridMicTestItem .tablelist_now").position().top;
+					var hs=$("#item_div").scrollTop();
+					$("#item_div").scrollTop(hs+hp-149);
+				}
+			});
+			$("#bacterial_div").animate({height: '22px'}, "fast", "linear",function(){
+				if($("#gridMicBacterial .tablelist_now").size()>0){
+					var hp=$("#gridMicBacterial .tablelist_now").position().top;
+					var hs=$("#bacterial_div").scrollTop();
+					$("#bacterial_div").scrollTop(hs+hp-149);
+				}
+			});
+			$("#anti_div").animate({height: '241px'}, "fast");
+		}else if($("#anti_div").height()==241){
+//			$("#item_div").height(66);
+//			$("#bacterial_div").height(66);
+//			$("#anti_div").height(150);
+			$("#item_div").animate({height: '66px'}, "fast");
+			$("#bacterial_div").animate({height: '66px'}, "fast");
+			$("#anti_div").animate({height: '150px'}, "fast");
+		}
+	});
+	$("#tdClickInit").click(function(){
+//		$("#item_div").height(66);
+//		$("#bacterial_div").height(66);
+//		$("#anti_div").height(150);
+		$("#item_div").animate({height: '66px'}, "fast");
+		$("#bacterial_div").animate({height: '66px'}, "fast");
+		$("#anti_div").animate({height: '150px'}, "fast");
+	});
+	
+	$("*").bind("keydown",function(e){
+		if(e.keyCode==121){
+			//F10
+			if(canF10){
+				$("#btnAddBacterialSumit").trigger("click");
+			}
+		}
+	});
+});
+
+/*-------------------------------------------------------------------------------- 
+-------------------------------公用代码---------------------------------- 
+--------------------------------开始-----------------------------------------------*/
+function blockUI(msg){
+	if(msg == null)
+		msg = '<div style="height:60px;font-size:24px;font-weight:bold;color:#000;line-height:60px;"><img src="../images/busy.gif"/> 正在处理,请稍后...</div>';
+	$.blockUI({
+ 		 message: msg,
+ 		 css: {border: '3px solid #a00'}
+   	 	 //,overlayCSS: {backgroundColor: '#E8E8E8'} 
+   		 ,overlayCSS: {opacity:0} 
+  	 });
+}
+
+function unblockUI(){
+	$.unblockUI();
+}
+
+function fadeInMessageDiv(message,color,time,target) {
+	var $m = $('<div style="bottom:0px;right:1px!important;right:18px;line-height:30px;position:fixed;border:1px solid #fff;text-align:center;padding-left:5px;font-size:20px;font-weight:bold;color:red;background:#E0E9F5;"></div>');
+   	//if (message) $m.append('<h2>'+message+'</h2>');
+	if (message) $m.append(message);
+   	$.blockUI({
+		 message: $m,
+		 fadeIn: 700,
+		 fadeOut: 1000,
+		 timeout: 3000,
+		 centerY: false,
+		 showOverlay: false
+		 ,css: { 
+		   		top:		'',
+		    	width:		'300px',
+		    	bottom:		'0px',
+		    	left:		'',
+		    	right:		'2px',
+		    	border:		'none',
+		    	opacity:	0.6,
+		    	cursor:		'default',
+		    	color:		'#fff',
+		    	backgroundColor: '#000'
+             }
+ 	 });
+}
+
+var itemRowTmp=$("<tr></tr>").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:20px;").append($("<input />").attr("type","checkbox").attr("style","margin-top: 4px; margin-left: 4px;"))
+						).append(
+							$("<td></td>").attr("style","width:50px;")	
+						).append(
+							$("<td></td>").attr("style","width:40px;")		
+						).append(
+							$("<td></td>").attr("style","width:70px;")
+						).append(
+							$("<td></td>").attr("style","width:100px;").click(onResultTDClick)		
+						).append(
+							$("<td></td>").attr("style","width:40px;")				
+						).append(
+							$("<td></td>").attr("style","width:100px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:75px;")	
+						).append(
+							$("<td></td>").attr("style","width:100px;").click(onResultRemarkTDClick)	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","display:none;").append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>"))
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).click(testItemClick);
+
+var micItemRowTmp=$("<tr></tr>").append(
+								$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:28px;").append($("<input />").attr("type","checkbox").attr("style","margin-top: 4px; margin-left: 7px;"))
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:40px;")		
+						).append(
+							$("<td></td>").attr("style","width:125px;")
+						).append(
+							$("<td></td>").attr("style","width:70px;").click(onResultTypeSelClick)		
+						).append(
+							$("<td></td>").attr("style","width:100px;").click(onResultTDClick)				
+						).append(
+							$("<td></td>").attr("style","width:70px;").click(onProjectTxtClick)	
+						).append(
+							$("<td></td>").attr("style","width:100px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).append(
+							$("<td></td>").attr("style","display:none;").append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>")).append($("<p></p>"))
+						).click(micTestItemClick);
+
+var micBacterialRowTmp=$("<tr></tr>").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:230px;")	
+						).append(
+							$("<td></td>").attr("style","width:50px;white-space:nowrap;overflow:hidden").click(onBacterialCountTDClick)	
+						).append(
+							$("<td></td>").attr("style","width:auto;").click(onBacterialTipsTDClick)	
+						).append(
+								$("<td></td>").attr("style","display:none;").append($("<p></p>")).append($("<p></p>")).append($("<p></p>"))	
+						).click(micBacterialClick);
+
+var otherMicBacterialRowTmp=$("<tr></tr>").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:180px;")	
+						).append(
+							$("<td></td>").attr("style","width:120px;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).append(
+								$("<td></td>").attr("style","display:none;").append($("<p></p>")).append($("<p></p>")).append($("<p></p>"))	
+						).click(otherMicBacterialClick);
+
+var micAntibioticRowTmp=$("<tr></tr>").append(
+								$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:140px;")	
+						).append(
+							$("<td></td>").attr("style","width:120px;")	
+						).append(
+							$("<td></td>").attr("style","width:55px;").click(onKB_MicTDClick)	
+						).append(
+							$("<td></td>").attr("style","width:55px;").click(onKB_MicTDClick)	
+						).append(
+							$("<td></td>").attr("style","width:70px;").click(onAntiResultTDClick)	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).append(
+							$("<td></td>").attr("style","display:none;").append($("<p></p>"))	
+						).click(micAntibioticClick);
+
+//其他微生物项抗生素结果行
+var otherMicAntibioticRowTmp=$("<tr></tr>").append(
+								$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:140px;")	
+						).append(
+							$("<td></td>").attr("style","width:120px;")	
+						).append(
+							$("<td></td>").attr("style","width:55px;")	
+						).append(
+							$("<td></td>").attr("style","width:55px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).append(
+							$("<td></td>").attr("style","display:none;").append($("<p></p>"))	
+						).click(otherMicAntibioticClick);
+
+//常规其他项中仪器行
+var otherInstrumentRowTmp=$("<tr></tr>").addClass("instrumentTitle").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:10px;").addClass("ico_arrow5")
+						).append(
+							$("<td></td>").attr("colspan",11).attr("style","width:auto;").addClass("text_9")	
+						).click(onOtherItemInstrumentClick);
+//微生物其他项仪器行
+var otherMicInstrumentRowTmp=$("<tr></tr>").addClass("instrumentTitle").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:10px;").addClass("ico_arrow5")
+						).append(
+							$("<td></td>").attr("colspan",10).attr("style","width:auto;").addClass("text_9")	
+						).click(onOtherMicItemInstrumentClick);
+//常规其他项中检测项行
+var otherItemRowTmp=$("<tr></tr>").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:10px;")	
+						).append(
+							$("<td></td>").attr("style","width:99px;")	
+						).append(
+							$("<td></td>").attr("style","width:50px;")	
+						).append(
+							$("<td></td>").attr("style","width:80px;")	
+						).append(
+							$("<td></td>").attr("style","width:40px;")	
+						).append(
+							$("<td></td>").attr("style","width:50px;")	
+						).append(
+							$("<td></td>").attr("style","width:30px;")	
+						).append(
+							$("<td></td>").attr("style","width:100px;")	
+						).append(
+							$("<td></td>").attr("style","width:40px;")	
+						).append(
+							$("<td></td>").attr("style","width:90px;")	
+						).append(
+							$("<td></td>").attr("style","width:110px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","display:none;").append($("<p></p>")).append($("<p></p>"))	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).click(onOtherItemClick);
+
+//微生物其他项中检测项行
+var otherMicItemRowTmp=$("<tr></tr>").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:10px;")	
+						).append(
+							$("<td></td>").attr("style","width:99px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:40px;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:50px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")	
+						).append(
+							$("<td></td>").attr("style","width:auto;")	
+						).append(
+							$("<td></td>").attr("style","display:none;").append($("<p></p>")).append($("<p></p>"))		
+						).click(onOtherMicItemClick);
+
+//添加抗生素页面待添加抗生素grid行
+var antibioticRowTmp=$("<tr></tr>").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:60px;")
+						).append(
+							$("<td></td>").attr("style","width:90px;")
+						).append(
+							$("<td></td>").attr("style","width:auto;")
+						).click(onAntibioticClick);
+
+//添加抗生素页面已选抗生素grid行
+var antibioticSelectedRowTmp=$("<tr></tr>").append(
+							$("<td></td>").attr("style","width:15px;").html("&nbsp;")	
+						).append(
+							$("<td></td>").attr("style","width:70px;")
+						).append(
+							$("<td></td>").attr("style","width:150px;")
+						).append(
+							$("<td></td>").attr("style","width:auto;")
+						).append(
+							$("<td></td>").attr("style","width:0px;display:none;").append($("<p></p>")).append($("<p></p>"))
+						).click(onAntibioticSelectedClick);
+
+//绑定行选择事件，选中后变色。
+function bindSelectRow(tabId) {
+	$("#" + tabId + " tr").click(function(e) {
+		$("#" + tabId + " tr").removeClass("tablelist_now");
+		$("#" + tabId + " tr td:first-child").removeClass("ico_now");
+		$(this).addClass("tablelist_now");
+		$(this).find("td:first").addClass("ico_now");
+	});
+}
+
+//单独为某一行绑定选中变色事件
+function bindSelectForRow(tabId,rowId){
+	$("#" + tabId + " #"+rowId).click(function(e) {
+		$("#" + tabId + " tr").removeClass("tablelist_now");
+		$("#" + tabId + " tr td:first-child").removeClass("ico_now");
+		$(this).addClass("tablelist_now");
+		$(this).find("td:first").addClass("ico_now");
+	});
+}
+
+// 根据行id获取行号。
+function getRowIndexById(tabId, rId) {
+	return $("#" + tabId + " tr").index($("#" + tabId + " #" + rId));
+}
+
+// 根据id移除某一行
+function deleteRowById(tabId, rId) {
+	$("#" + tabId + " #" + rId).remove();
+}
+
+//获得表格中被勾选的行id(返回的是字符串,不是数组)
+function findCheckedTrIds(tabId) {
+	var checkBoxObj = $("#" + tabId + " input:checked");
+	var ids = "";
+	if(checkBoxObj.size() > 0){
+		checkBoxObj.each(function(){
+			ids += $(this).parent().parent().attr("id") + ",";
+		});
+	}
+	if(ids.length > 0){
+		ids = ids.substring(0,ids.length - 1);
+	}
+	return ids;
+}
+
+//备注中标本备注行
+var specimenRemarkRowTmp = $("<tr></tr>").append($("<td></td>").attr("style","width : 15px;").html("&nbsp;")
+												)
+										.append($("<td></td>").attr("style","width : 120px;")
+												)
+										.append($("<td></td>").attr("style","width : 80px;")
+												)
+										.append($("<td></td>").attr("style","width : auto;")
+												).click(specimenRemarkClick);
+
+//备注中项目备注行
+var testItemRemarkRowTmp = $("<tr></tr>").append($("<td></td>").attr("style","width : 15px;").html("&nbsp;")
+												)
+										.append($("<td></td>").attr("style","width : 120px;")
+												)
+										.append($("<td></td>").attr("style","width : 120px;")
+												)
+										.append($("<td></td>").attr("style","width : 80px;")
+												)
+										.append($("<td></td>").attr("style","width : auto;")
+												).click(testItemRemarkClick);
+
+/*------------------------------结束----------------------------------------------- 
+-------------------------------公用代码---------------------------------- 
+---------------------------------------------------------------------------------*/
+//常规检测项添加一行
+function testItemGridAddRow(rId,colArray){
+	var trObj=itemRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i==0){
+			$(trObj.children("td")[1]).children("input[type='checkbox']").prop("checked",colArray[i]);
+		}
+		else if(i>0&&i<12){
+			if(i==3){
+				//名称
+				$(trObj.children("td")[i+1]).html(colArray[i]);
+				$(trObj.children("td")[i+1]).attr("title",colArray[i]);
+			}else if(i==9){
+				//结果备注
+				// #001 begin
+				$(trObj.children("td")[i+1]).html(getSubString(colArray[i],RESULT_COMMENT_LENGTH));
+				// #001 end
+				$(trObj.children("td")[i+1]).attr("title",colArray[i]);
+			}else{
+				$(trObj.children("td")[i+1]).html(colArray[i]);
+			}
+		}else if(i>21){
+			$(trObj.children("td")[i-8]).html(colArray[i]);			
+		}else{
+			$($(trObj.children("td")[13]).children("p")[i-12]).html(colArray[i]);
+		}
+	}
+	trObj.appendTo($("#gridTestItem"));
+}
+
+//微生物检测项添加一行
+function micTestItemGridAddRow(rId,colArray){
+	var trObj=micItemRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i==0){
+			$(trObj.children("td")[1]).children("input[type='checkbox']").prop("checked",colArray[i]);
+		}
+		else if(i>0&&i<10){
+			if(i==3){
+				$(trObj.children("td")[i+1]).html(colArray[i]);
+				$(trObj.children("td")[i+1]).attr("title",colArray[i]);
+			}else{
+				$(trObj.children("td")[i+1]).html(colArray[i]);
+			}
+		}else{
+			$($(trObj.children("td")[11]).children("p")[i-10]).html(colArray[i]);
+		}
+	}
+	trObj.appendTo($("#gridMicTestItem"));
+}
+
+//细菌结果添加一行
+function micBacterialGridAddRow(rId,colArray){
+	var trObj=micBacterialRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i<3){
+			$(trObj.children("td")[i+1]).html(colArray[i]);
+		}else{
+			$($(trObj.children("td")[4]).children("p")[i-3]).html(colArray[i]);
+		}
+	}
+	trObj.appendTo($("#gridMicBacterial"));
+}
+
+//其他微生物项细菌结果添加一行
+function otherMicBacterialGridAddRow(rId,colArray){
+	var trObj=otherMicBacterialRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i<3){
+			$(trObj.children("td")[i+1]).html(colArray[i]);
+		}else{
+			$($(trObj.children("td")[4]).children("p")[i-3]).html(colArray[i]);
+		}
+	}
+	trObj.appendTo($("#gridOtherMicBacterial"));
+}
+
+//抗生素结果添加一行
+function micAntibioticGridAddRow(rId,colArray){
+	var trObj=micAntibioticRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i<11){
+			$(trObj.children("td")[i+1]).html(colArray[i]);
+		}else{
+			$($(trObj.children("td")[12]).children("p")[i-11]).html(colArray[i]);
+		}
+	}
+	trObj.appendTo($("#gridMicAntibiotic"));
+}
+
+//其他微生物项抗生素结果添加一行
+function otherMicAntibioticGridAddRow(rId,colArray){
+	var trObj=otherMicAntibioticRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i<11){
+			$(trObj.children("td")[i+1]).html(colArray[i]);
+		}else{
+			$($(trObj.children("td")[12]).children("p")[i-11]).html(colArray[i]);
+		}
+	}
+	trObj.appendTo($("#gridOtherMicAntibiotic"));
+}
+
+//其他常规项添加一行仪器      插入后 当前插入行  的 index=rowIndex
+function otherItemGridAddInsRow(rId,insName,rowIndex){
+	var trObj=otherInstrumentRowTmp.clone(true);
+	trObj.attr("id",rId);
+	trObj.children("td:nth-child(3)").html(insName);
+	var length=$("#gridOtherItem tr").size();
+	if(rowIndex!=null&&rowIndex>=0&&rowIndex<length){
+		$("#gridOtherItem tr:nth-child("+(rowIndex+1)+")").before(trObj);
+	}else{
+		trObj.appendTo($("#gridOtherItem"));
+	}
+}
+//其他常规项添加一行项目     插入后 当前插入行  的 index=rowIndex+1
+function otherItemGridAddItemRow(rId,colArray,rowIndex){
+	var trObj=otherItemRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i<11){
+			if(i==2){
+				$(trObj.children("td")[i+2]).html(getSubString(colArray[i],8));
+				$(trObj.children("td")[i+2]).attr("title",colArray[i]);
+			}else if(i==9){
+				$(trObj.children("td")[i+2]).html(getSubString(colArray[i],14));
+				$(trObj.children("td")[i+2]).attr("title",colArray[i]);
+			}else{
+				$(trObj.children("td")[i+2]).html(colArray[i]);
+			}			
+		}else{
+			$($(trObj.children("td")[13]).children("p")[i-11]).html(colArray[i]);
+		}
+	}
+	$("#gridOtherItem tr:nth-child("+(rowIndex+1)+")").after(trObj);
+}
+//其他微生物项添加一行仪器      插入后 当前插入行  的 index=rowIndex
+function otherMicItemGridAddInsRow(rId,insName,rowIndex){
+	var trObj=otherMicInstrumentRowTmp.clone(true);
+	trObj.attr("id",rId);
+	trObj.children("td:nth-child(3)").html(insName);
+	var length=$("#gridOtherMicItem tr").size();
+	if(rowIndex!=null&&rowIndex>=0&&rowIndex<length){
+		$("#gridOtherMicItem tr:nth-child("+(rowIndex+1)+")").before(trObj);
+	}else{
+		trObj.appendTo($("#gridOtherMicItem"));
+	}
+}
+//其他微生物项添加一行项目     插入后 当前插入行  的 index=rowIndex+1
+function otherMicItemGridAddItemRow(rId,colArray,rowIndex){
+	var trObj=otherMicItemRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i<9){
+			if(i==3){
+				$(trObj.children("td")[i+2]).html(getSubString(colArray[i],8));
+				$(trObj.children("td")[i+2]).attr("title",colArray[i]);
+			}else{
+				$(trObj.children("td")[i+2]).html(colArray[i]);
+			}
+		}else{
+			$(trObj.children("td:nth-child(12)").children("p:nth-child("+(i-8)+")")).html(colArray[i]);
+		}
+	}
+	$("#gridOtherMicItem tr:nth-child("+(rowIndex+1)+")").after(trObj);
+}
+
+//待添加抗生素grid添加一行项目     插入后 当前插入行  的 index=rowIndex+1    ,如果rowIndex==null则插入最后面，如果rowIndex==-1,则插入最前
+function antibioticGridAddRow(rId,colArray,rowIndex){
+	var trObj=antibioticRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		$(trObj.children("td")[i+1]).html(colArray[i]);
+	}
+	if(rowIndex==null){
+		$("#gridAntibiotic").append(trObj);
+	}else if(rowIndex=-1){
+		$("#gridAntibiotic").prepend(trObj);
+	}else{
+		$("#gridAntibiotic tr:nth-child("+(rowIndex+1)+")").after(trObj);
+	}
+}
+
+//已添加抗生素grid添加一行项目     插入后 当前插入行  的 index=rowIndex+1    ,如果rowIndex==null则插入最后面，如果rowIndex==-1,则插入最前
+function antibioticSelectedGridAddRow(rId,colArray,rowIndex){
+	var trObj=antibioticSelectedRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		if(i<3){
+			$(trObj.children("td")[i+1]).html(colArray[i]);
+		}else{
+			trObj.children("td:nth-child(5)").children("p:nth-child("+(i-2)+")").html(colArray[i]);
+		}
+	}
+	if(rowIndex==null){
+		$("#gridAntibioticSelected").append(trObj);
+	}else if(rowIndex=-1){
+		$("#gridAntibioticSelected").prepend(trObj);
+	}else{
+		$("#gridAntibioticSelected tr:nth-child("+(rowIndex+1)+")").after(trObj);
+	}
+}
+
+//备注中标本备注添加一行
+function specimenRemarkGridAddRow(rId,colArray,rowIndex){
+	var trObj=specimenRemarkRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		$(trObj.children("td")[i+1]).html(colArray[i]);
+	}
+	if(rowIndex==null){
+		$("#gridSpecimenRemark").append(trObj);
+	}else if(rowIndex=-1){
+		$("#gridSpecimenRemark").prepend(trObj);
+	}
+}
+
+
+//备注中项目备注添加一行
+function testItemRemarkGridAddRow(rId,colArray,rowIndex){
+	var trObj=testItemRemarkRowTmp.clone(true);
+	trObj.attr("id",rId);
+	if(colArray==null||colArray.length<=0)return;
+	for(var i=0;i<colArray.length;i++){
+		$(trObj.children("td")[i+1]).html(colArray[i]);
+	}
+	if(rowIndex==null){
+		$("#gridTestItemRemark").append(trObj);
+	}else if(rowIndex=-1){
+		$("#gridTestItemRemark").prepend(trObj);
+	}
+}
+
+//*********************行点击事件********************
+//常规项检测项目选中事件
+function testItemClick(e,isResultFocus){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridTestItem tr").removeClass("tablelist_now");
+	$("#gridTestItem tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+	onTestItemRowClick(this,isResultFocus);
+}
+//微生物检测项目选中事件
+function micTestItemClick(e,isResultFocus){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridMicTestItem tr").removeClass("tablelist_now");
+	$("#gridMicTestItem tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+	onMicTestItemRowClick(this,isResultFocus);
+	onMicTestItemRowClickForBac(this);
+}
+//结果TD选中事件
+function onResultTDClick(){
+	$(this).parent("tr").trigger("click",[true]);
+	return false;
+}
+//结果类型TD选中事件
+function onResultTypeSelClick(){
+	$(this).parent("tr").trigger("click",['RT']);
+	return false;
+}
+//微生物仪器下 项目编号TD选中事件
+function onProjectTxtClick(){
+	$(this).parent("tr").trigger("click",["PROJECT"]);
+	return false;
+}
+//结果备注TD选中事件
+function onResultRemarkTDClick(){
+	$(this).parent("tr").trigger("click",["REMARK"]);
+	return false;
+}
+//菌落计数TD选中事件
+function onBacterialCountTDClick(){
+	$(this).parent("tr").trigger("click",["COUNT"]);
+	return false;
+}
+//细菌提示TD选中事件
+function onBacterialTipsTDClick(){
+	$(this).parent("tr").trigger("click",["TIP"]);
+	return false;
+}
+//抗生素KB/MIC  TD选中事件
+function onKB_MicTDClick(){
+	$(this).parent("tr").trigger("click",["KM"]);
+	return false;
+}
+//抗生素结果框 TD选中事件
+function onAntiResultTDClick(){
+	$(this).parent("tr").trigger("click",["RESULT"]);
+	return false;
+}
+//微生物细菌选中事件
+function micBacterialClick(e,focus){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridMicBacterial tr").removeClass("tablelist_now");
+	$("#gridMicBacterial tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+	onMicBacterialClick(this,focus);
+	onMicBacterialClickForAnti(this);
+}
+//抗生素结果选中事件
+function micAntibioticClick(e,focus){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridMicAntibiotic tr").removeClass("tablelist_now");
+	$("#gridMicAntibiotic tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+	onMicAntibioticClick(this,focus);   //控制文本框和下拉grid
+}
+//其他常规项中仪器点击事件	
+function onOtherItemInstrumentClick(){
+	$("#gridOtherItem tr").removeClass("tablelist_now");
+	$("#gridOtherItem tr td:nth-child(1)").removeClass("ico_now");
+//	$("#gridOtherMicItem tr td:nth-child(2)").removeClass("text_9_now");
+	$("#gridOtherItem tr td:nth-child(3)").removeClass("text_9_now");
+	$(this).children("td:nth-child(3)").addClass("text_9_now");
+	$(this).children("td:nth-child(1)").addClass("ico_now");
+	$(this).addClass("tablelist_now");
+	
+/* 	//只显示一个仪器的
+	var currentTr=$(this);
+	var nextItems=currentTr.nextAll(".instrumentTitle");
+	if(nextItems!=null&&nextItems.size()>0){
+		$("#gridOtherItem tr:not(.instrumentTitle)").hide();
+		var thisIndex=currentTr.index();
+		var nextIndex=$(nextItems[0]).index();
+		var count=nextIndex-thisIndex-1;
+		$("#gridOtherItem tr:gt("+thisIndex+")").each(function(index){
+			if(index<count){
+				$(this).show();
+			}
+		});
+	}else{
+		$("#gridOtherItem tr:not(.instrumentTitle)").hide();
+		currentTr.nextAll().show();
+	} */
+	//显示多个仪器
+	var currentTr=$(this);
+	var nextItems=currentTr.nextAll(".instrumentTitle");
+	if(nextItems!=null&&nextItems.size()>0){
+		var thisIndex=currentTr.index();
+		var nextIndex=$(nextItems[0]).index();
+		var count=nextIndex-thisIndex-1;
+		$("#gridOtherItem tr:gt("+thisIndex+")").each(function(index){
+			if(index<count){
+				$(this).toggle();
+			}
+		});
+	}else{
+		currentTr.nextAll().toggle();
+	}
+}
+
+//其他微生物项中仪器点击事件	
+function onOtherMicItemInstrumentClick(){
+	$("#gridOtherMicItem tr").removeClass("tablelist_now");
+	$("#gridOtherMicItem tr td:nth-child(1)").removeClass("ico_now");
+//	$("#gridOtherMicItem tr td:nth-child(2)").removeClass("text_9_now");
+	$("#gridOtherMicItem tr td:nth-child(3)").removeClass("text_9_now");
+	$(this).children("td:nth-child(3)").addClass("text_9_now");
+	$(this).children("td:nth-child(1)").addClass("ico_now");
+	$(this).addClass("tablelist_now");
+	//显示多个仪器
+	var currentTr=$(this);
+	var nextItems=currentTr.nextAll(".instrumentTitle");
+	if(nextItems!=null&&nextItems.size()>0){
+		var thisIndex=currentTr.index();
+		var nextIndex=$(nextItems[0]).index();
+		var count=nextIndex-thisIndex-1;
+		$("#gridOtherMicItem tr:gt("+thisIndex+")").each(function(index){
+			if(index<count){
+				$(this).toggle();
+			}
+		});
+	}else{
+		currentTr.nextAll().toggle();
+	}
+}
+
+//其他常规项行点击事件
+function onOtherItemClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridOtherItem tr").removeClass("tablelist_now");
+	$("#gridOtherItem tr td:nth-child(1)").removeClass("ico_now");
+	$(this).children("td:nth-child(1)").addClass("ico_now");
+	$(this).addClass("tablelist_now");
+}
+
+//非微生物当前项行点击事件
+function onTestItemRowClick(_this,isResultFocus){
+	if($(_this).children("td").children("#comboResultDetail").size()<=0){
+		var result=$(_this).children("td:nth-child(6)").text();
+		$(_this).children("td:nth-child(6)").html("");
+		var lastTD=$("#comboResultDetail").parent("td");
+		var lastText=resultDetailCombo.getText();
+		resultDetailCombo.clear();
+		$(_this).children("td:nth-child(6)").append($("#comboResultDetail"));
+		if(lastTD!=null&&lastTD.size()>0){
+			lastTD.text(lastTD.parent("tr").children("td:nth-child(14)").children("p:nth-child(9)").text());
+		}
+		var actValue="";
+		if($("#datasource_"+$(_this).children("td:nth-child(14)").children("p:nth-child(2)").html()).size()<=0){
+			resultDetailCombo.rebind("divResultDetail");
+		}else{
+			var gridID=$(_this).children("td:nth-child(14)").children("p:nth-child(2)").html();
+			resultDetailCombo.rebind("datasource_"+gridID);
+			if(result!=""){
+				$("#"+gridID+" .tablelist table tr").each(function(){
+					if($(this).children("td:nth-child(3)").text()==result){
+						actValue=$(this).attr("id");
+					}
+				});
+			}
+		}
+		$("#comboResultDetail").show();
+		if(actValue!=""){
+			resultDetailCombo.setValue(actValue);
+		}else{
+			resultDetailCombo.setText(result);
+		}
+		
+		var mediDeptName=$(_this).children("td:nth-child(14)").children("p:nth-child(10)").html();
+		if(mediDeptName!="肿瘤标志物"){
+			//不为肿瘤标志物（即TM15唐氏筛查）可以改项目
+			var rRemark=$(_this).children("td:nth-child(11)").attr("title");
+			$(_this).children("td:nth-child(11)").html("");
+			var lastTD_remark=$("#txtResultRemark").parent("td");
+			var lastText_remark=$("#txtResultRemark").val();
+			$("#txtResultRemark").val("");
+			$(_this).children("td:nth-child(11)").append($("#txtResultRemark"));
+			if(lastTD_remark!=null&&lastTD_remark.size()>0){
+				// #001 begin
+				lastTD_remark.text(getSubString(lastText_remark,RESULT_COMMENT_LENGTH));
+				// #001 end
+				lastTD_remark.attr("title",lastText_remark);
+			}
+			$("#txtResultRemark").show();
+			$("#txtResultRemark").val(rRemark);
+		}else{
+			var rRemark=$(_this).children("td:nth-child(11)").attr("title");
+			var lastTD_remark=$("#txtResultRemark").parent("td");
+			var lastText_remark=$("#txtResultRemark").val();
+			$("#txtResultRemark").val("");
+			$("#txtResultRemark").hide();
+			if(lastTD_remark!=null&&lastTD_remark.size()>0){
+				$("body").prepend($("#txtResultRemark"));
+				// #001 begin
+				lastTD_remark.text(getSubString(lastText_remark,RESULT_COMMENT_LENGTH));
+				// #001 end
+				lastTD_remark.attr("title",lastText_remark);
+			}
+			$("#txtResultRemark").val(rRemark);
+		}
+		
+		if(isResultFocus==true){
+			resultDetailCombo.focus();
+		}else if(isResultFocus=="REMARK"){
+			$("#txtResultRemark").focus();
+		}
+	}
+}
+
+//微生物当前项行点击事件（控制下拉grid）
+function onMicTestItemRowClick(_this,isResultFocus){
+	if($(_this).children("td").children("#comboResultDetail").size()<=0){
+		var result=$(_this).children("td:nth-child(7)").text();
+		var micResultType=$(_this).children("td:nth-child(6)").text();
+		var projectCode=$(_this).children("td:nth-child(8)").text();
+		
+		$(_this).children("td:nth-child(7)").html("");
+		$(_this).children("td:nth-child(6)").html("");
+		$(_this).children("td:nth-child(8)").html("");
+		
+		var lastTD=$("#comboResultDetail").parent("td");
+		var lastTD_micResultType=$("#comboMicResultType").parent("td");
+		var lastTD_projectCode=$("#txtProjectCode").parent("td");
+		
+		var lastText=resultDetailCombo.getText();
+		var lastText_micResultType=micResultTypeCombo.getText();
+		var lastText_projectCode=$("#txtProjectCode").val();
+		
+		
+		resultDetailCombo.clear();
+		micResultTypeCombo.clear();
+		$("#txtProjectCode").val("");
+		
+		$(_this).children("td:nth-child(7)").append($("#comboResultDetail"));
+		$(_this).children("td:nth-child(6)").append($("#comboMicResultType"));
+		$(_this).children("td:nth-child(8)").append($("#txtProjectCode"));
+		
+		if(lastTD!=null&&lastTD.size()>0){
+			lastTD.text(lastTD.parent("tr").children("td:nth-child(12)").children("p:nth-child(6)").text());
+		}
+		if(lastTD_micResultType!=null&&lastTD_micResultType.size()>0){
+			lastTD_micResultType.text(lastText_micResultType);
+		}
+		if(lastTD_projectCode!=null&&lastTD_projectCode.size()>0){
+			lastTD_projectCode.text(lastText_projectCode);
+		}
+		
+		if($("#datasource_"+$(_this).children("td:nth-child(12)").children("p:nth-child(2)").html()).size()<=0){
+			resultDetailCombo.rebind("divResultDetail");
+		}else{
+			resultDetailCombo.rebind("datasource_"+$(_this).children("td:nth-child(12)").children("p:nth-child(2)").html());
+		}
+		
+		$("#comboResultDetail").show();
+		$("#comboMicResultType").show();
+		$("#txtProjectCode").show();
+		
+		resultDetailCombo.setText(result);
+		micResultTypeCombo.setText(micResultType);
+		$("#txtProjectCode").val(projectCode);
+		
+		if(isResultFocus==true){
+			resultDetailCombo.focus();
+		}else if(isResultFocus=="PROJECT"){
+			$("#txtProjectCode").focus();
+		}else if(isResultFocus=="RT"){
+			micResultTypeCombo.focus();
+		}
+	}
+}
+//微生物当前项行点击事件（控制显示细菌结果）
+function onMicTestItemRowClickForBac(_this){
+//	if(rId!=currentItemId){
+//		currentItemId=rId;
+//		currentBacterialId="";
+		moveBacterialCombo();
+		$("#gridMicBacterial tr").remove();
+		moveAntibioticCombo();
+		$("#gridMicAntibiotic tr").remove();
+		$("#chkReportOption").prop("checked",false);
+//		rTab0AntibioticGrid.clearAll();
+//		$("#reportOption").prop("checked",false);
+		var specimenResultId=$(_this).children("td:nth-child(12)").children("p:nth-child(3)").html();	//获取specimenResult的Id,根据其Id获取细菌结果。
+		param={"specimenResultId":specimenResultId};			
+		$.post("${ctx}/lab/speResultBacterials.action",param,function(data){
+			if(data!=null&&data!="null"&&data!=""){
+					var jsonData=eval('('+data+')');
+					if(jsonData.length>0){
+						for(var i=0;i<jsonData.length;i++){
+							//以细菌ID为rowId,方便加菌株时是否重复的判断。然后第一列为细菌结果的ID，隐藏，为查询抗生素结果的关键字。
+							micBacterialGridAddRow(jsonData[i].organismId,[jsonData[i].organismCnName,jsonData[i].organismCount,jsonData[i].tips,jsonData[i].id,jsonData[i].testMethod,jsonData[i].reportOption]);
+						}
+						if($("#gridMicBacterial tr").size()>0){
+							$("#gridMicBacterial tr:nth-child(1)").trigger("click");
+							//------宽度始终跟表头一致
+							var gridMicBacterialHead=document.getElementById('gridMicBacterialHead').rows[0].cells;
+							var gridMicBacterial=document.getElementById('gridMicBacterial').rows[0].cells;
+							 var rows=document.getElementById('gridMicBacterial').getElementsByTagName("tr");
+							for (var i=0; i<gridMicBacterialHead.length; i++) {
+								gridMicBacterial[i].style.width = gridMicBacterialHead[i].style.width;
+								if(i==2){
+									for(var j in rows){
+								    	  if(rows[j].className=="tablelist_now"){
+								    		  $("#gridMicBacterial tr:eq("+j+") td:eq(2) > input").width($("#gridMicBacterial tr:eq("+j+") td:eq(2)").width()-2);
+								    	  }
+								     }
+								}
+							}
+							$("#bacterial_div").css({"overflow-x":"hidden","width":$("#gridMicBacterial").width()});
+							$("#xijunid").width($("#gridMicBacterial").width()+'px');
+							$("#gridMicBacterial tr td").css({"white-space":"nowrap","overflow":"hidden"});
+							//-----
+						}
+					}
+				}
+			}); 
+//	}
+}
+//细菌结果项点击事件(控制下拉grid)
+function onMicBacterialClick(_this,focus){
+	if($(_this).children("td").children("#txtBacterialCount").size()<=0){
+		var count=$(_this).children("td:nth-child(3)").text();
+		var tips=$(_this).children("td:nth-child(4)").text();
+		
+		$(_this).children("td:nth-child(3)").html("");
+		$(_this).children("td:nth-child(4)").html("");
+		
+		var lastTD_count=$("#txtBacterialCount").parent("td");
+		var lastTD_tips=$("#comboBacterialTips").parent("td");
+		
+		var lastText_count=$("#txtBacterialCount").val();
+		var lastText_tips=bacterialTipsCombo.getText();
+		
+		
+		$("#txtBacterialCount").val("");
+		bacterialTipsCombo.clear();
+		
+		$(_this).children("td:nth-child(3)").append($("#txtBacterialCount"));
+		$(_this).children("td:nth-child(4)").append($("#comboBacterialTips"));
+		
+		if(lastTD_count!=null&&lastTD_count.size()>0){
+			lastTD_count.text(lastText_count);
+		}
+		if(lastTD_tips!=null&&lastTD_tips.size()>0){
+			lastTD_tips.text(lastText_tips);
+		}
+		
+		$("#txtBacterialCount").show();
+		$("#comboBacterialTips").show();
+		
+		$("#txtBacterialCount").val(count);
+		bacterialTipsCombo.setText(tips);
+		
+		if(focus=="COUNT"){
+			$("#txtBacterialCount").focus();
+		}else if(focus=="TIP"){
+			bacterialTipsCombo.focus();
+		}
+	}
+}
+//细菌结果点击事件（控制显示抗生素结果）
+function onMicBacterialClickForAnti(_this){
+	moveAntibioticCombo();
+	$("#gridMicAntibiotic tr").remove();
+	currentRadio=$(_this).children("td:nth-child(5)").children("p:nth-child(2)").html();
+	document.getElementById(currentRadio).checked=true;
+	if(currentRadio=="KB"){
+		$("#labReportOption").html("以KB值为报告结果");
+	}else{
+		$("#labReportOption").html("以MIC值为报告结果");
+	}
+	if($(_this).children("td:nth-child(5)").children("p:nth-child(3)").html()=="1"){
+		$("#chkReportOption").prop("checked",true);
+	}else{
+		$("#chkReportOption").prop("checked",false);
+	}
+	//加载 rTab0AntibioticGrid 数据
+	var bacterialResultId=$(_this).children("td:nth-child(5)").children("p:nth-child(1)").html();   //在这里获取细菌结果ID,作为获取抗生素结果的关键字。
+	param={"bacterialResultId":bacterialResultId,"testMethod":currentRadio};			
+	$.post("${ctx}/lab/speResultAntibiotics.action",param,function(data){
+		if(data!=null&&data!="null"&&data!=""){
+				var jsonArray=eval('('+data+')');
+				for(var i=0;i<jsonArray.length;i++){
+					var json=jsonArray[i];
+					micAntibioticGridAddRow(json.antibioticId,[json.antibioticEnName,json.antibioticCnName,json.micResult,json.kbResult,json.result,json.micSensitive,json.kbResistance,json.micMiddle,json.kbMiddle,json.micResistance,json.kbSensitive,json.id]);			
+				}
+			}
+		controlMicOrKbView("gridMicAntibiotic",currentRadio);
+		$("#gridMicAntibiotic tr:first-child").trigger("click");
+		}); 
+}
+
+//抗生素点击选中事件（控制文本框和下拉grid的显示）
+function onMicAntibioticClick(_this,focus){
+	if($(_this).children("td").children("#txtKb-Mic").size()<=0){
+		if(currentRadio=="KB"){
+			var kbOrMic=$(_this).children("td:nth-child(5)").text();
+			$(_this).children("td:nth-child(5)").html("");
+			var lastTD_kbOrMic=$("#txtKb-Mic").parent("td");
+			var lastText_kbOrMic=$("#txtKb-Mic").val();
+			$("#txtKb-Mic").val("");
+			$(_this).children("td:nth-child(5)").append($("#txtKb-Mic"));
+			if(lastTD_kbOrMic!=null&&lastTD_kbOrMic.size()>0){
+				lastTD_kbOrMic.text(lastText_kbOrMic);
+			}
+			$("#txtKb-Mic").show();
+			$("#txtKb-Mic").val(kbOrMic);
+		}else{
+			var kbOrMic=$(_this).children("td:nth-child(4)").text();
+			$(_this).children("td:nth-child(4)").html("");
+			var lastTD_kbOrMic=$("#txtKb-Mic").parent("td");
+			var lastText_kbOrMic=$("#txtKb-Mic").val();
+			$("#txtKb-Mic").val("");
+			$(_this).children("td:nth-child(4)").append($("#txtKb-Mic"));
+			if(lastTD_kbOrMic!=null&&lastTD_kbOrMic.size()>0){
+				lastTD_kbOrMic.text(lastText_kbOrMic);
+			}
+			$("#txtKb-Mic").show();
+			$("#txtKb-Mic").val(kbOrMic);
+		}
+
+		var result=$(_this).children("td:nth-child(6)").text();
+		$(_this).children("td:nth-child(6)").html("");
+		var lastTD_result=$("#comboAntibioticResult").parent("td");
+		var lastText_result=antibioticResultCombo.getText();
+		antibioticResultCombo.clear();
+		$(_this).children("td:nth-child(6)").append($("#comboAntibioticResult"));	
+		if(lastTD_result!=null&&lastTD_result.size()>0){
+			lastTD_result.text(lastText_result);
+		}		
+		$("#comboAntibioticResult").show();
+		antibioticResultCombo.setText(result);
+		
+		if(focus=="KM"){
+			$("#txtKb-Mic").focus();
+		}else if(focus=="RESULT"){
+			antibioticResultCombo.focus();
+		}
+	}
+}
+
+
+//其他微生物项点击事件
+function onOtherMicItemClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridOtherMicItem tr").removeClass("tablelist_now");
+	$("#gridOtherMicItem tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+	
+	//下面控制显示细菌
+	$("#gridOtherMicBacterial tr").remove();
+	$("#gridOtherMicAntibiotic tr").remove();
+	var specimenResultId=$(this).children("td:nth-child(12)").children("p:nth-child(1)").html();	//获取specimenResult的Id,根据其Id获取细菌结果。
+	param={"specimenResultId":specimenResultId};			
+	$.post("${ctx}/lab/speResultBacterials.action",param,function(data){
+		if(data!=null&&data!="null"&&data!=""){
+				var jsonData=eval('('+data+')');
+				if(jsonData.length>0){
+					for(var i=0;i<jsonData.length;i++){
+						//以细菌ID为rowId,方便加菌株时是否重复的判断。然后第一列为细菌结果的ID，隐藏，为查询抗生素结果的关键字。
+						otherMicBacterialGridAddRow(jsonData[i].organismId,[jsonData[i].organismCnName,jsonData[i].organismCount,jsonData[i].tips,jsonData[i].id,jsonData[i].testMethod,jsonData[i].reportOption]);
+					}
+					if($("#gridOtherMicBacterial tr").size()>0){
+						$("#gridOtherMicBacterial tr:nth-child(1)").trigger("click");
+					}
+				}
+			}
+		}); 
+//}
+}
+
+//其他微生物项细菌结果点击事件
+function otherMicBacterialClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridOtherMicBacterial tr").removeClass("tablelist_now");
+	$("#gridOtherMicBacterial tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+	
+	//下面控制显示抗生素结果
+	$("#gridOtherMicAntibiotic tr").remove();
+	var tMethod=$(this).children("td:nth-child(5)").children("p:nth-child(2)").html();
+	
+	//加载 rTab0AntibioticGrid 数据
+	var bacterialResultId=$(this).children("td:nth-child(5)").children("p:nth-child(1)").html();   //在这里获取细菌结果ID,作为获取抗生素结果的关键字。
+	param={"bacterialResultId":bacterialResultId,"testMethod":tMethod};			
+	$.post("${ctx}/lab/speResultAntibiotics.action",param,function(data){
+		if(data!=null&&data!="null"&&data!=""){
+				var jsonArray=eval('('+data+')');
+				for(var i=0;i<jsonArray.length;i++){
+					var json=jsonArray[i];
+					otherMicAntibioticGridAddRow(json.antibioticId,[json.antibioticEnName,json.antibioticCnName,json.micResult,json.kbResult,json.result,json.micSensitive,json.kbResistance,json.micMiddle,json.kbMiddle,json.micResistance,json.kbSensitive,json.id]);			
+				}
+			}
+		controlMicOrKbView("gridOtherMicAntibiotic",tMethod);
+		}); 
+}
+
+//其他微生物项抗生素结果选中事件
+function otherMicAntibioticClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridOtherMicAntibiotic tr").removeClass("tablelist_now");
+	$("#gridOtherMicAntibiotic tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+}
+
+//备注中标本备注行点击事件
+function specimenRemarkClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridSpecimenRemark tr").removeClass("tablelist_now");
+	$("#gridSpecimenRemark tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+}
+
+//备注中项目备注行点击事件
+function testItemRemarkClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridTestItemRemark tr").removeClass("tablelist_now");
+	$("#gridTestItemRemark tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+}
+
+//****************************页签点击事件****************
+//非微生物测试项页签点击事件
+function tabTestItemClick(){
+	if($(this).hasClass("now")) return;
+	$("#tabForItem li").removeClass("now");
+	$(this).addClass("now");
+	$("#qiehuan_02").hide();
+	$("#qiehuan_03").hide();
+	$("#qiehuan_04").hide();
+	$("#qiehuan_05").hide();
+	$("#qiehuan_06").hide();
+	$("#qiehuan_07").hide();
+	$("#qiehuan_01").show();
+}
+//微生物测试项页签点击事件
+function tabMicTestItemClick(){
+	if($(this).hasClass("now")) return;
+	$("#tabForItem li").removeClass("now");
+	$(this).addClass("now");
+	$("#qiehuan_01").hide();
+	$("#qiehuan_03").hide();
+	$("#qiehuan_04").hide();
+	$("#qiehuan_05").hide();
+	$("#qiehuan_06").hide();
+	$("#qiehuan_07").hide();
+	$("#qiehuan_02").show();
+}
+//其他常规项点击事件
+function tabOtherItemClick(){
+	if($(this).hasClass("now")) return;
+	$("#tabForItem li").removeClass("now");
+	$(this).addClass("now");
+	$("#qiehuan_01").hide();
+	$("#qiehuan_02").hide();
+	$("#qiehuan_04").hide();
+	$("#qiehuan_05").hide();
+	$("#qiehuan_06").hide();
+	$("#qiehuan_07").hide();
+	$("#qiehuan_03").show();
+}
+//其他微生物项点击事件
+function tabOtherMicItemClick(){
+	if($(this).hasClass("now")) return;
+	$("#tabForItem li").removeClass("now");
+	$(this).addClass("now");
+	$("#qiehuan_01").hide();
+	$("#qiehuan_02").hide();
+	$("#qiehuan_03").hide();
+	$("#qiehuan_05").hide();
+	$("#qiehuan_06").hide();
+	$("#qiehuan_07").hide();
+	$("#qiehuan_04").show();
+}
+
+//图像录入页签点击事件
+function tabTxlrItemClick(){
+	if($(this).hasClass("now")) return;
+	$("#tabForItem li").removeClass("now");
+	$(this).addClass("now");
+	$("#qiehuan_01").hide();
+	$("#qiehuan_02").hide();
+	$("#qiehuan_03").hide();
+	$("#qiehuan_04").hide();
+	$("#qiehuan_06").hide();
+	$("#qiehuan_07").hide();
+	$("#qiehuan_05").show();
+}
+
+//模板录入页签
+function tabMblrItemClick(){
+	if($(this).hasClass("now")) return;
+	$("#tabForItem li").removeClass("now");
+	$(this).addClass("now");
+	$("#qiehuan_01").hide();
+	$("#qiehuan_02").hide();
+	$("#qiehuan_03").hide();
+	$("#qiehuan_04").hide();
+	$("#qiehuan_05").hide();
+	$("#qiehuan_07").hide();
+	$("#qiehuan_06").show();
+}
+//备注页签点击事件
+function  tabRemarkClick(){
+	if($(this).hasClass("now")) return;
+	$("#tabForItem li").removeClass("now");
+	$(this).addClass("now");
+	$("#qiehuan_01").hide();
+	$("#qiehuan_02").hide();
+	$("#qiehuan_03").hide();
+	$("#qiehuan_04").hide();
+	$("#qiehuan_05").hide();
+	$("#qiehuan_06").hide();
+	$("#qiehuan_07").show();
+}
+
+//把检测项目table中的下拉grid移到table外面，防止清空table的时候把下拉grid也删掉了。
+function moveTestItemCombo(){
+//结果下拉grid
+	var lastTD=$("#comboResultDetail").parent("td");
+	var lastText=resultDetailCombo.getText();
+	resultDetailCombo.clear();
+	$("#comboResultDetail").hide();
+	if(lastTD!=null&&lastTD.size()>0){
+		$("body").prepend($("#comboResultDetail"));
+		lastTD.text(lastText);
+	}
+	
+//结果备注	
+	var lastTD_remark=$("#txtResultRemark").parent("td");
+	var lastText_remark=$("#txtResultRemark").val();
+	$("#txtResultRemark").val("");
+	$("#txtResultRemark").hide();
+	if(lastTD_remark!=null&&lastTD_remark.size()>0){
+		$("body").prepend($("#txtResultRemark"));
+		// #001 begin
+		lastTD_remark.text(getSubString(lastText_remark,RESULT_COMMENT_LENGTH));
+		// #001 end
+		lastTD_remark.attr("title",lastText_remark);
+	}
+	
+//微生物结果类型
+	var lastTD_micResultType=$("#comboMicResultType").parent("td");
+	var lastText_micResultType=micResultTypeCombo.getText();
+	micResultTypeCombo.clear();
+	$("#comboMicResultType").hide();
+	if(lastTD_micResultType!=null&&lastTD_micResultType.size()>0){
+		$("body").prepend($("#comboMicResultType"));
+		lastTD_micResultType.text(lastText_micResultType);
+	}
+
+//微生物项目编号
+	var lastTD_projectCode=$("#txtProjectCode").parent("td");
+	var lastText_projectCode=$("#txtProjectCode").val();
+	$("#txtProjectCode").val("");
+	$("#txtProjectCode").hide();
+	if(lastTD_projectCode!=null&&lastTD_projectCode.size()>0){
+		$("body").prepend($("#txtProjectCode"));
+		lastTD_projectCode.text(lastText_projectCode);
+	}
+}
+
+//把微生物的细菌结果table中的下拉grid移到table外面，防止清空table的时候把下拉grid也删掉了。
+function moveBacterialCombo(){
+	//tips下拉grid
+	var lastTD=$("#comboBacterialTips").parent("td");
+	var lastText=bacterialTipsCombo.getText();
+	bacterialTipsCombo.clear();
+	$("#comboBacterialTips").hide();
+	if(lastTD!=null&&lastTD.size()>0){
+		$("body").prepend($("#comboBacterialTips"));
+		lastTD.text(lastText);
+	}
+	
+	//菌落计数
+	var lastTD_count=$("#txtBacterialCount").parent("td");
+	var lastText_count=$("#txtBacterialCount").val();
+	$("#txtBacterialCount").val("");
+	$("#txtBacterialCount").hide();
+	if(lastTD_count!=null&&lastTD_count.size()>0){
+		$("body").prepend($("#txtBacterialCount"));
+		lastTD_count.text(lastText_count);
+	}
+}
+
+//把抗生素结果table中的下拉grid移到table外面，防止清空table的时候把下拉grid也删掉了。
+function moveAntibioticCombo(){
+	//KB  -   MIC
+	var lastTD_kbOrMic=$("#txtKb-Mic").parent("td");
+	var lastText_kbOrMic=$("#txtKb-Mic").val();
+	$("#txtKb-Mic").val("");
+	$("#txtKb-Mic").hide();
+	if(lastTD_kbOrMic!=null&&lastTD_kbOrMic.size()>0){
+		$("body").prepend($("#txtKb-Mic"));
+		lastTD_kbOrMic.text(lastText_kbOrMic);
+	}
+	
+	//抗生素结果
+	var lastTD_result=$("#comboAntibioticResult").parent("td");
+	var lastText_result=antibioticResultCombo.getText();
+	antibioticResultCombo.clear();
+	$("#comboAntibioticResult").hide();
+	if(lastTD_result!=null&&lastTD_result.size()>0){
+		$("body").prepend($("#comboAntibioticResult"));
+		lastTD_result.text(lastText_result);
+	}
+}
+
+//往一个有序数组里面添加一项。    这里的排序为降序(子条码号)。因为其他项里插入的时候直接往仪器后面插，先插进去的是大的就挪到下面去了。
+function addItemToSerialArray(arr,json){
+	//此方法存其他项的数组专用。
+	if(arr==null){
+		arr=new Array();
+	}
+	arr.push(json);
+	var length=arr.length;
+	for(var i=length-1;i>0;i--){
+		if(parseInt(arr[i].subBarCode)>parseInt(arr[i-1].subBarCode)){
+			//后面一项大于前面一项，换位
+			var tmp=arr[i];
+			arr[i]=arr[i-1];
+			arr[i-1]=tmp;
+		}else{
+			//否则终止比对
+			break;
+		}
+	}
+	return arr;
+}
+
+//常规是否显示流水号
+function chkSeqViewClick(){
+	$("#gridTestItemHead tr td:nth-child(4)").toggle();
+	$("#gridTestItem tr td:nth-child(4)").toggle();
+}
+
+//常规是否显示中文名
+function chkNameViewClick(){
+	$("#gridTestItemHead tr td:nth-child(5)").toggle();
+	$("#gridTestItem tr td:nth-child(5)").toggle();
+}
+
+//微生物是否显示流水号
+function chkMicSeqViewClick(){
+	$("#gridMicTestItemHead tr td:nth-child(4)").toggle();
+	$("#gridMicTestItem tr td:nth-child(4)").toggle();
+}
+
+//微生物是否显示中文名
+function chkMicNameViewClick(){
+	$("#gridMicTestItemHead tr td:nth-child(5)").toggle();
+	$("#gridMicTestItem tr td:nth-child(5)").toggle();
+}
+
+function checkResultComment(comment,insName){
+	if((trim(comment)=="高风险"||trim(comment)=="临界风险")&&(insName=="产前筛查风险评估系统"||insName=="唐氏筛查")){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+//初始化常规当前项
+function initTestItemTab(testItems,isResultFocus){
+	var coldStore=false;
+	urineTip=false;
+	moveTestItemCombo();
+	//首先清空检测项目栏
+	$("#gridTestItem tr").remove();
+	if(testItems==null||testItems.length==0) return false;
+    //如果选择了设备
+	if(isDrag){
+		resetWidth();//重置常规项表头
+	}	
+	for(var i=0;i<testItems.length;i++){
+		testItemGridAddRow(testItems[i].id,[true,testItems[i].engName,testItems[i].seq,testItems[i].testName,testItems[i].result,testItems[i].prompt,testItems[i].refString,testItems[i].unit,testItems[i].specimenTypeName,testItems[i].resultComment,testItems[i].statusView,testItems[i].isReportView,testItems[i].uniqueCode,testItems[i].speResultTypeId,testItems[i].speResultTypeName,testItems[i].limitLow,testItems[i].limitHigh,testItems[i].precision,testItems[i].forceResult,testItems[i].message,testItems[i].result,testItems[i].mediDeptName,testItems[i].originalResult,testItems[i].historyResult1,testItems[i].historyResult2,testItems[i].historyResult3]);
+		if(testItems[i].coldStore=="true"){
+			coldStore=true;
+		}
+		var cuItemTr=$("#gridTestItem #"+testItems[i].id);
+		if(testItems[i].forceResult=="1"){
+			cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+			cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+			cuItemTr.children("td:nth-child(7)").addClass("resultForce");
+			cuItemTr.children("td:nth-child(6)").removeClass("tdUp");
+			cuItemTr.children("td:nth-child(6)").removeClass("tdDown");
+			cuItemTr.children("td:nth-child(6)").addClass("resultForce");
+		}else{
+			if(testItems[i].color=="red"){
+				cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+				cuItemTr.children("td:nth-child(7)").addClass("tdUp");
+				cuItemTr.children("td:nth-child(6)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(6)").removeClass("tdDown");
+				cuItemTr.children("td:nth-child(6)").addClass("tdUp");
+			}else if(testItems[i].color=="green"){
+				cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+				cuItemTr.children("td:nth-child(7)").addClass("tdDown");
+				cuItemTr.children("td:nth-child(6)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(6)").removeClass("tdUp");
+				cuItemTr.children("td:nth-child(6)").addClass("tdDown");
+			}else{
+				cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+				cuItemTr.children("td:nth-child(6)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(6)").removeClass("tdUp");
+				cuItemTr.children("td:nth-child(6)").removeClass("tdDown");
+			}
+		}
+		if(checkResultComment(testItems[i].resultComment,testItems[i].instrumentName)){
+			cuItemTr.children("td:nth-child(11)").addClass("tdUp");
+		}else{
+			cuItemTr.children("td:nth-child(11)").removeClass("tdUp");
+		}
+		if(testItems[i].refString==null||testItems[i].refString=="null"||testItems[i].refString==""){
+			$("#gridTestItem #"+testItems[i].id+" td:nth-child(8)").css({background:"#A9A9A9"});
+		}
+		if(testItems[i].unit==null||testItems[i].unit=="null"||testItems[i].unit==""){
+			$("#gridTestItem #"+testItems[i].id+" td:nth-child(9)").css({background:"#A9A9A9"});
+		}else{
+			if(testItems[i].unit.indexOf("/24H")>=0||testItems[i].unit.indexOf("/24h")>=0&&!urineTip){
+				urineTip=true;
+			}
+		}
+	}
+	if($("#chkSeqView:checked").size()<=0){
+		$("#gridTestItem tr td:nth-child(4)").hide();
+	}
+	if($("#chkNameView:checked").size()<=0){
+		$("#gridTestItem tr td:nth-child(5)").hide();
+	}
+	initResultTDWidth();
+	
+	//下拉选了设备重置表格宽度,否则不需重置
+	if(isDrag){
+		$("#gridTestItemHead,#itemlistdiv").width(1115+"px");
+	}else{
+		var headColumns=document.getElementById('gridTestItemHead').rows[0].cells;
+		var itemlistdiv=document.getElementById('gridTestItem').rows[0].cells;
+		for (var i=0; i<headColumns.length; i++) {
+			itemlistdiv[i].style.width = headColumns[i].style.width;
+		}
+//		$("#gridTestItem tr td:nth-child(5)").each(function(){
+//			$(this).children("input[type='text']").width($(this).width()-2);
+//		});
+	}
+	$("#itemlistdiv").css({"overflow-x":"hidden"});
+	$("#gridTestItem tr td").css({"white-space":"nowrap","overflow":"hidden"});
+		if($("#gridTestItem tr").size()>0){
+			if(isResultFocus!=null&&isResultFocus==true){
+				var currentT=$("#gridTestItem tr:eq(0)");
+				while(currentT.size()>0&&currentT.children("td:nth-child(6)").html()!=""){
+					currentT=currentT.next();
+				}
+				if(currentT!=null&&currentT.children("td:nth-child(6)").html()!=""){
+					$("#txtSearchSubBarCode").focus();
+					$("#txtSearchSubBarCode").select();
+				}else{
+					currentT.trigger("click",[isResultFocus]);
+				}
+			}else{
+				$("#gridTestItem tr:eq(0)").trigger("click",[isResultFocus]);
+			}
+		}
+	isDrag=false;	
+	return coldStore;
+}
+
+//初始化微生物当前项
+function initMicTestItemTab(testItems,isResultFocus){
+	var coldStore=false;
+	moveTestItemCombo();
+	//首先清空检测项目栏
+	$("#gridMicTestItem tr").remove();
+	if(testItems==null||testItems.length==0) return false;
+	//选择下拉设备
+	if(isDrag){
+	   resetMicWidth();//重置表头宽度
+	}
+	for(var i=0;i<testItems.length;i++){
+		micTestItemGridAddRow(testItems[i].id, ["1", testItems[i].engName,testItems[i].seq,
+		                      				 testItems[i].testName,
+		                      				testItems[i].resultType, testItems[i].result, testItems[i].projectCode,
+		                      				testItems[i].specimenTypeName,testItems[i].statusView,testItems[i].isReportView,
+		                      				testItems[i].uniqueCode,testItems[i].speResultTypeId,testItems[i].specimenResultId,testItems[i].speResultTypeName,testItems[i].precision, testItems[i].result ]);
+		if(testItems[i].coldStore=="true"){
+			coldStore=true;
+		}
+	}
+	if($("#chkMicSeqView:checked").size()<=0){
+		$("#gridMicTestItem tr td:nth-child(4)").hide();
+	}
+	if($("#chkMicNameView:checked").size()<=0){
+		$("#gridMicTestItem tr td:nth-child(5)").hide();
+	}
+	initResultTDWidth();
+	
+	//下拉选择设备,否则不需重置拖动的表头
+	if(isDrag){
+		$("#gridMicTestItemHead,#item_div,#micItemOuterDiv").width(860+"px");
+		resetgridMicBacterialHead();//重置细菌表头
+	}else{
+		var headColumns=document.getElementById('gridMicTestItemHead').rows[0].cells;
+		var gridMicTestdiv=document.getElementById('gridMicTestItem').rows[0].cells;
+		for (var i=0; i<headColumns.length; i++) {
+			gridMicTestdiv[i].style.width = headColumns[i].style.width;
+		}
+//		$("#gridMicTestItem tr td:nth-child(5)").each(function(){
+//			$(this).children("input[type='text']").width($(this).width()-2);
+//		});
+	}
+	$("#item_div").css({"overflow-x":"hidden"});
+	$("#gridMicTestItem tr td").css({"white-space":"nowrap","overflow":"hidden"});
+	if($("#gridMicTestItem tr").size()>0){
+		if(isResultFocus!=null&&isResultFocus==true){
+			var currentT=$("#gridMicTestItem tr:eq(0)");
+			while(currentT.size()>0&&currentT.children("td:nth-child(7)").html()!=""){
+				currentT=currentT.next();
+			}
+			if(currentT!=null&&currentT.children("td:nth-child(7)").html()!=""){
+				$("#txtSearchSubBarCode").focus();
+				$("#txtSearchSubBarCode").select();
+			}else{
+				currentT.trigger("click",[isResultFocus]);
+			}
+		}else{
+			$("#gridMicTestItem tr:eq(0)").trigger("click",[isResultFocus]);
+		}
+	}
+	isDrag=false;
+	return coldStore;
+}
+
+//初始化其他微生物项
+function initOtherMicItemGrid(micOtherItems){
+	$("#gridOtherMicItem tr").remove();
+	for ( var i = 0; i < micOtherItems.length; i++) {
+		var item = micOtherItems[i];
+		if ($("#gridOtherMicItem #"+item.instrumentId).size() <= 0) {
+			//如果该仪器没添加，则判断当前仪器是否已添加。若已添加，则在当前仪器前面添加该仪器，否则直接添加。
+			if ($("#gridOtherMicItem #"+currentInstrument).size() <= 0) {
+				otherMicItemGridAddInsRow(item.instrumentId,item.instrumentName,null);
+			} else {
+				otherMicItemGridAddInsRow(item.instrumentId,item.instrumentName,$("#gridOtherMicItem #"+currentInstrument).index());
+				//rOtherItemGrid.addRow(item.instrumentId,[item.instrumentName,"" ],rOtherItemGrid.getRowIndex(currentInstrument));
+			}
+		}
+		otherMicItemGridAddItemRow(item.id,[ item.subBarCode,item.engName,item.seq,item.testName,item.resultType,item.result,item.projectCode,item.specimenTypeName,item.statusView,item.specimenResultId ],$("#gridOtherMicItem #"+item.instrumentId).index());
+	}
+}
+
+//初始化其他常规项
+function initOtherTestItemGrid(otherItems){
+	$("#gridOtherItem tr").remove();
+	for ( var i = 0; i < otherItems.length; i++) {
+		var item = otherItems[i];
+		if ($("#gridOtherItem #"+item.instrumentId).size() <= 0) {
+			//如果该仪器没添加，则判断当前仪器是否已添加。若已添加，则在当前仪器前面添加该仪器，否则直接添加。
+			if ($("#gridOtherItem #"+currentInstrument).size() <= 0) {
+				otherItemGridAddInsRow(item.instrumentId,item.instrumentName,null);
+			} else {
+				otherItemGridAddInsRow(item.instrumentId,item.instrumentName,$("#gridOtherItem #"+currentInstrument).index());
+				//rOtherItemGrid.addRow(item.instrumentId,[item.instrumentName,"" ],rOtherItemGrid.getRowIndex(currentInstrument));
+			}
+		}
+		otherItemGridAddItemRow(item.id,[ item.subBarCode,item.engName,item.testName,item.seq,item.result,item.prompt,item.refString,item.unit,item.specimenTypeName,item.resultComment,item.statusView,item.forceResult,item.message ],$("#gridOtherItem #"+item.instrumentId).index());
+		var cuItemTr=$("#gridOtherItem #"+item.id);
+		if(item.forceResult=="1"){
+			cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+			cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+			cuItemTr.children("td:nth-child(7)").addClass("resultForce");
+		}else{
+			if(item.color=="red"){
+				cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+				cuItemTr.children("td:nth-child(7)").addClass("tdUp");
+			}else if(item.color=="green"){
+				cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+				cuItemTr.children("td:nth-child(7)").addClass("tdDown");
+			}else{
+				cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+				cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+			}
+		}
+		if(checkResultComment(item.resultComment,item.instrumentName)){
+			cuItemTr.children("td:nth-child(12)").addClass("tdUp");
+		}else{
+			cuItemTr.children("td:nth-child(12)").removeClass("tdUp");
+		}
+		if(item.refString==null||item.refString=="null"||item.refString==""){
+			$("#gridOtherItem #"+item.id+" td:nth-child(9)").addClass("noElement");
+		}
+		if(item.unit==null||item.unit=="null"||item.unit==""){
+			$("#gridOtherItem #"+item.id+" td:nth-child(10)").addClass("noElement");
+		}else{
+			if(item.unit.indexOf("/24H")>=0||item.unit.indexOf("/24h")>=0&&!urineTip){
+				urineTip=true;
+			}
+		}
+	}
+}
+
+//初始化备注
+function initRemarkTab(remarks){
+	financialRemarkAll="";
+	//先清除所有行
+	$("#gridSpecimenRemark tr").remove();
+	$("#gridTestItemRemark tr").remove();
+	if(remarks != null){
+		//开始添加数据
+		for(var i = 0;i < remarks.length;i++){
+			var remark = remarks[i];
+			if(remark.testName != null && remark.testName != ""){
+				//添加项目备注
+				testItemRemarkGridAddRow(remark.id,[remark.testName,remark.operateDate,remark.operater,remark.remark]);
+			}else{
+				//添加标本备注
+				specimenRemarkGridAddRow(remark.id,[remark.operateDate,remark.operater,remark.remark]);
+				financialRemarkAll=remark.remark;
+			}
+		}
+	}
+}
+
+function listRowSelected(){
+	if($(this).hasClass("tablelist_now")){
+		
+	}else{
+		loadSpecimenData(this);
+	}
+}
+
+//左侧条码单击选中后加载条码信息   _this 为当前行对象
+function loadSpecimenData(_this,focusResult){
+	$("#reportRemark").css("color","blue");
+	$("#reportBrief").css("color","blue");
+	$("#labStatus").css("color","blue");
+	urineTip=false;
+	searchControl = true;
+	currentId =	$(_this).attr("id");
+	currentSubBarCode = $(_this).find("td:eq(2)").html();
+	var param = {"subBarCode":$(_this).find("td:eq(2)").html(),"instrumentId":currentInstrument};
+	//加载病人信息
+	$("#main_mid").load("${ctx}/lab/speResultPatientInfo.action?subBarCodeForPatient="+currentSubBarCode,function(){
+		currentSpecimenStatus = $("#specimenStatus").val();
+		//样本状态下拉框change事件
+		$("#specimenStatus").change(specimenStatusChange);
+		if($("#isHighRisk").val()=="1"){
+			$("div[name='highRisk']").show();
+		}else{
+			$("div[name='highRisk']").hide();
+		}
+		if($("#txtBabyCountView").val()=="单胞胎"){
+			$("#txtBabyCountView").css("color","black");
+		}else{
+			$("#txtBabyCountView").css("color","red");
+		}
+		if($("#gridList #"+currentId+" td:nth-child(7) p:nth-child(1)").text()=="true"){
+			//标本状态，不正常则红色显示
+			$("#specimenStatus").css("color","red");	
+			$("#specimenStatus option").css("color","black");
+			$("#specimenStatus option:selected").css("color","red");
+		}else{
+			$("#specimenStatus").css("color","black");	
+		}
+		//控制冰冻，复查，报告语言
+		$(".specialTips").hide();
+		if($("#txtReRun").val()=='true'){			
+			$("div[name='labRerun']").show();
+		}
+		if($("#txtReportName").val()=='1'){
+			//英文报告
+			$("div[name='labEnReport']").show();
+		}else if($("#txtReportName").val()=='2'){
+			//中英文报告
+			$("div[name='labCEnReport']").show();
+		}
+		if(urineTip&&$("#txtUrineVolume").val()==""){
+			$("#txtUrineVolume").css("backgroundColor","red");
+		}
+	});
+	//加载测试项
+	$.post("${ctx}/lab/speResultDetails.action",param,function(data){
+		if(data!=null&&data!=""&&data!="null"){
+			var json = eval('('+data+')');
+			//加载自动小结和建议解释
+			$("#txtReportRemark").val(json.statusInfo.reportRemark);
+			$("#txtReportBrief").val(json.statusInfo.reportBrief);
+			$("#gestationalWeeksCalculation").val(json.statusInfo.gestationalWeeksCalculation);
+			if(currentIsMic=="true"){
+				$("#tabMicTestItem").trigger("click");
+				if(initMicTestItemTab(json.testItems,focusResult)){
+					$("div[name='labColdStore']").show();
+				}
+			}else{
+				$("#tabTestItem").trigger("click");
+				if(initTestItemTab(json.testItems,focusResult)){
+					$("div[name='labColdStore']").show();
+				}
+			}
+			
+			if(json.otherTestItems!=null){
+				var otherItems=new Array();
+				var micOtherItems=new Array();
+				for(var n=0;n<json.otherTestItems.length;n++){
+					if(json.otherTestItems[n].isMic=="true"){
+						micOtherItems=addItemToSerialArray(micOtherItems,json.otherTestItems[n]);
+					}else{
+						otherItems=addItemToSerialArray(otherItems,json.otherTestItems[n]);
+					}
+				}
+				if(otherItems!=null&&otherItems.length>0){
+					$("#tabOtherItem").show();
+					initOtherTestItemGrid(otherItems);
+				}else{
+					$("#gridOtherItem tr").remove();
+					$("#tabOtherItem").hide();
+				}
+				
+				if(micOtherItems!=null&&micOtherItems.length>0){
+					$("#tabOtherMicItem").show();
+					initOtherMicItemGrid(micOtherItems);
+					$("#gridOtherMicBacterial tr").remove();
+					$("#gridOtherMicAntibiotic tr").remove();
+				}else{
+					$("#gridOtherMicItem tr").remove();
+					$("#tabOtherMicItem").hide();
+				}
+			}else{
+				$("#gridOtherItem tr").remove();
+				$("#tabOtherItem").hide();
+				$("#gridOtherMicItem tr").remove();
+				$("#tabOtherMicItem").hide();
+			}
+			//加载模板
+			if(json.inputTemplates!=null&&json.inputTemplates.length>0){
+				$("#tabMblrItem").show();
+				//alert(json.inputTemplates.length);
+				//加载模板数据
+				mbInit(json.inputTemplates);
+			}else{
+				//需要清空历史数据
+				$("#templateDiv").empty();
+				$("#loadTbody").empty();
+				$("#tabMblrItem").hide();
+			}
+			
+			//加载图像
+			if(json.pictures!=null&&json.pictures.length>0){
+				$("#tabTxlrItem").show();
+				//alert(JSON.stringify(json.pictures));
+				//加载图像数据
+				tpInit(json.pictures);
+			}else{
+				//清空可能存在的图片
+				$("#resultImgDiv table:first").find("tr:first").empty();
+				$("#tabTxlrItem").hide();
+			}
+			
+			//加载备注
+			if(json.remarks!=null){
+				//加载备注
+				initRemarkTab(json.remarks);
+				$("#tabRemark").show();
+			} else {
+				//清空备注
+				financialRemarkAll="";
+				$("#tabRemark").hide();
+				$("#gridSpecimenRemark tr").remove();
+				$("#gridTestItemRemark tr").remove();
+			}
+			if(focusResult=="false"||focusResult==false){
+				$("#txtSearchSubBarCode").focus();
+				$("#txtSearchSubBarCode").select();
+			}
+			if(urineTip&&$("#txtUrineVolume").val()==""){
+				$("#txtUrineVolume").css("backgroundColor","red");
+			}
+		}
+	});
+	//加载其他项
+	//加载图像
+	//加载模板
+	
+	
+
+}
+
+//
+
+//KB-MIC的radio点击事件
+function radioOnClick(){
+	var cuTr=$("#gridMicBacterial .tablelist_now");
+	if(cuTr.size()<=0){
+		document.getElementById("MIC").attr("checked","checked");
+		$("#labReportOption").html("以MIC值为报告结果");
+		jAlert("请选择一条细菌结果", '提示信息');
+		return;
+	} 
+	var thisRadio=$(this).val();
+	if(currentRadio!=thisRadio){
+		jConfirm('是否更改检验方法？','提示信息',function(choice){
+			if(choice){
+				currentRadio=thisRadio;
+				if(currentRadio=="KB"){
+					$("#labReportOption").html("以KB值为报告结果");
+				}else{
+					$("#labReportOption").html("以MIC值为报告结果");
+				}
+				cuTr.children("td:nth-child(5)").children("p:nth-child(2)").html(currentRadio);
+				//后台操作
+				bacterialResultId=cuTr.children("td:nth-child(5)").children("p:nth-child(1)").html();   //在这里获取细菌结果ID,作为获取抗生素结果的关键字。
+				var sbarCode=currentSubBarCode;
+				var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+				var bacterialName=$("#txtBacterialCount").parent().parent().children("td:nth-child(2)").html();
+				param={"bacterialResultId":bacterialResultId,"testMethod":currentRadio,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName};			
+				$.post("${ctx}/lab/speResultChangeTestMethod.action",param,function(data){
+					moveAntibioticCombo();
+					$("#gridMicAntibiotic tr").remove();
+					if(data!=null&&data!="null"&&data!=""){
+						var jsonArray=eval('('+data+')');
+						for(var i=0;i<jsonArray.length;i++){
+							var json=jsonArray[i];
+							micAntibioticGridAddRow(json.antibioticId,[json.antibioticEnName,json.antibioticCnName,json.micResult,json.kbResult,json.result,json.micSensitive,json.kbResistance,json.micMiddle,json.kbMiddle,json.micResistance,json.kbSensitive,json.id]);			
+						}
+						}
+					controlMicOrKbView("gridMicAntibiotic",currentRadio);
+					$("#gridMicAntibiotic tr:first-child").trigger("click");
+					});  
+			}else{
+				document.getElementById(currentRadio).checked=true;
+			}
+		});
+
+	}
+}
+
+//KB/MIC   checkbox点击事件
+function reportOptionClick(){
+	var rowId=$("#gridMicBacterial .tablelist_now").attr("id");
+	if(rowId==null){
+		jAlert("请选择一条细菌结果", '提示信息');
+		$("#chkReportOption").prop("checked",false);
+		return;
+	}else{
+		var reportOption=$("#chkReportOption:checked").size();
+		var bacterialResultId=$("#gridMicBacterial .tablelist_now").children("td:nth-child(5)").children("p:nth-child(1)").html();	//获取organismResult的Id
+		var sbarCode=currentSubBarCode;
+		var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+		var bacterialName=$("#txtBacterialCount").parent().parent().children("td:nth-child(2)").html();
+		param={"bacterialResultId":bacterialResultId,"reportOption":reportOption,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName};			
+		$.post("${ctx}/lab/speResultReportOption.action",param,function(data){
+			$("#gridMicBacterial .tablelist_now").children("td:nth-child(5)").children("p:nth-child(3)").html(reportOption);
+			});
+	}
+}
+
+//根据radio的值控制rTab0AntibioticGrid的显示
+function controlMicOrKbView(tabId,cuRadio){
+	if(cuRadio=="KB"){
+		$("#"+tabId+"Head tr td:nth-child(4)").hide();
+		$("#"+tabId+"Head tr td:nth-child(7)").hide();
+		$("#"+tabId+"Head tr td:nth-child(9)").hide();
+		$("#"+tabId+"Head tr td:nth-child(11)").hide();
+		$("#"+tabId+"Head tr td:nth-child(5)").show();
+		$("#"+tabId+"Head tr td:nth-child(8)").show();
+		$("#"+tabId+"Head tr td:nth-child(10)").show();
+		$("#"+tabId+"Head tr td:nth-child(12)").show();
+		$("#"+tabId+" tr td:nth-child(4)").hide();
+		$("#"+tabId+" tr td:nth-child(7)").hide();
+		$("#"+tabId+" tr td:nth-child(9)").hide();
+		$("#"+tabId+" tr td:nth-child(11)").hide();
+		$("#"+tabId+" tr td:nth-child(5)").show();
+		$("#"+tabId+" tr td:nth-child(8)").show();
+		$("#"+tabId+" tr td:nth-child(10)").show();
+		$("#"+tabId+" tr td:nth-child(12)").show();
+	}else{
+		$("#"+tabId+"Head tr td:nth-child(5)").hide();
+		$("#"+tabId+"Head tr td:nth-child(8)").hide();
+		$("#"+tabId+"Head tr td:nth-child(10)").hide();
+		$("#"+tabId+"Head tr td:nth-child(12)").hide();
+		$("#"+tabId+"Head tr td:nth-child(4)").show();
+		$("#"+tabId+"Head tr td:nth-child(7)").show();
+		$("#"+tabId+"Head tr td:nth-child(9)").show();
+		$("#"+tabId+"Head tr td:nth-child(11)").show();
+		$("#"+tabId+" tr td:nth-child(5)").hide();
+		$("#"+tabId+" tr td:nth-child(8)").hide();
+		$("#"+tabId+" tr td:nth-child(10)").hide();
+		$("#"+tabId+" tr td:nth-child(12)").hide();
+		$("#"+tabId+" tr td:nth-child(4)").show();
+		$("#"+tabId+" tr td:nth-child(7)").show();
+		$("#"+tabId+" tr td:nth-child(9)").show();
+		$("#"+tabId+" tr td:nth-child(11)").show();
+	}
+}
+
+//根据是否微生物初始化要展示的页签
+function initTabViewForItemGrid(isMic){
+	if(isMic=="true"){
+		$("#tabForItem li[id!='tabMicTestItem']").removeClass("now");
+		$("#tabForItem li[id!='tabMicTestItem']").hide();
+		$("#tabForItem #tabResultWidthSelect").show();
+		$("#tabMicTestItem").addClass("now");
+		$("#tabMicTestItem").show();
+		$("#qiehuan_01").hide();
+		$("#qiehuan_03").hide();
+		$("#qiehuan_04").hide();
+		$("#qiehuan_05").hide();
+		$("#qiehuan_06").hide();
+		$("#qiehuan_07").hide();
+		$("#qiehuan_02").show();
+	}else{
+		$("#tabForItem li[id!='tabTestItem']").removeClass("now");
+		$("#tabForItem li[id!='tabTestItem']").hide();
+		$("#tabForItem #tabResultWidthSelect").show();
+		$("#tabTestItem").addClass("now");
+		$("#tabTestItem").show();
+		$("#qiehuan_02").hide();
+		$("#qiehuan_03").hide();
+		$("#qiehuan_04").hide();
+		$("#qiehuan_05").hide();
+		$("#qiehuan_06").hide();
+		$("#qiehuan_07").hide();
+		$("#qiehuan_01").show();
+	}
+}
+
+//结果下拉grid失去焦点
+function onResultDetailBlur(){
+
+}
+
+//保存结果
+function saveTestItemResult(currentTr,result,callback){
+	var resultTypeName="";
+	var uniqueCode="";
+	var itemName=currentTr.children("td:nth-child(5)").attr("title");
+	if(currentIsMic=="true"){
+		uniqueCode=currentTr.children("td:nth-child(12)").children("p:nth-child(1)").html();
+		resultTypeName=currentTr.children("td:nth-child(12)").children("p:nth-child(4)").html();
+	}else{
+		uniqueCode=currentTr.children("td:nth-child(14)").children("p:nth-child(1)").html();
+		resultTypeName=currentTr.children("td:nth-child(14)").children("p:nth-child(3)").html();
+	}
+	if(resultTypeName!=null&&resultTypeName=="数值型"&&resultDetailCombo.getText()!=""&&!(currentIsMic=="true")){
+		//如果结果为数值型，就要判断是否合法。
+		
+		//正则表达式
+		var reg_1=/^((\+?)|(-?))\d+\.?\d*$/;      
+		var reg_2=/^>=\d+\.?\d*$/; 
+		var reg_3=/^<=\d+\.?\d*$/;
+		var reg_4=/^>\d+\.?\d*$/;
+		var reg_5=/^<\d+\.?\d*$/;
+		var reg_6=/^\+{2,}\d+\.?\d*$/;
+		var reg_7=/^\d+\.?\d*\++$/;
+		var reg_8=/^-{2,}\d+\.?\d*$/;
+		var reg_9=/^\d+\.?\d*-+$/;
+		var reg_10=/^\d+\.?\d*[eE]((\+?)|(-?))[0-9]*[1-9][0-9]*$/;
+		var reg_11=/^\d+\.?\d*:[0-9]*[1-9][0-9]*$/;
+		var reg_11_1=/^>=\d+\.?\d*:[0-9]*[1-9][0-9]*$/;
+		var reg_11_2=/^<=\d+\.?\d*:[0-9]*[1-9][0-9]*$/;
+		var reg_11_3=/^>\d+\.?\d*:[0-9]*[1-9][0-9]*$/;
+		var reg_11_4=/^<\d+\.?\d*:[0-9]*[1-9][0-9]*$/;
+		var reg_12=/^((\+?)|(-?))\d+\.?\d*\/\d+\.?\d*$/;
+		var reg_12_1=/^>=((\+?)|(-?))\d+\.?\d*\/\d+\.?\d*$/;
+		var reg_12_2=/^<=((\+?)|(-?))\d+\.?\d*\/\d+\.?\d*$/;
+		var reg_12_3=/^>((\+?)|(-?))\d+\.?\d*\/\d+\.?\d*$/;
+		var reg_12_4=/^<((\+?)|(-?))\d+\.?\d*\/\d+\.?\d*$/;
+		
+		var caclResult=0;
+		var type=null;
+		if(reg_1.test(result)){
+			//正规数字
+			caclResult=new Number(result);
+			type=1;
+		}else if(reg_2.test(result)){
+			//>=
+			caclResult=new Number(result.substring(result.indexOf("=")+1));
+			type=2;
+		}else if(reg_3.test(result)){
+			//<=
+			caclResult=new Number(result.substring(result.indexOf("=")+1));
+			type=3;
+		}else if(reg_4.test(result)){
+			//>
+			caclResult=new Number(result.substring(result.indexOf(">")+1));
+			type=4;
+		}else if(reg_5.test(result)){
+			//<
+			caclResult=new Number(result.substring(result.indexOf("<")+1));
+			type=5;
+		}else if(reg_6.test(result)){
+			//++++n
+			caclResult=new Number(result.substring(result.lastIndexOf("+")+1));
+			type=6;
+		}else if(reg_7.test(result)){
+			//n+++++
+			caclResult=new Number(result.substring(0,result.indexOf("+")));
+			type=7;
+		}else if(reg_8.test(result)){
+			//----n
+			caclResult=new Number(result.substring(result.lastIndexOf("-")+1));
+			type=8;
+		}else if(reg_9.test(result)){
+			//n----
+			caclResult=new Number(result.substring(0,result.indexOf("-")));
+			type=9;
+		}else if(reg_10.test(result)){
+			//xEn
+//			var x=new Number(result.substring(0,result.toLocaleLowerCase().indexOf("e"));
+//			var n=new Number(result.substring(result.toLocaleLowerCase().indexOf("e")+1);
+			caclResult=result;
+			type=10;
+		}else if(reg_11.test(result)){
+			//a:b
+			var a=new Number(result.substring(0,result.toLocaleLowerCase().indexOf(":")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf(":")+1));
+			caclResult=b;
+			type=11;
+		}else if(reg_11_1.test(result)){
+			//>=a:b
+			var a=new Number(result.substring(2,result.toLocaleLowerCase().indexOf(":")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf(":")+1));
+			caclResult=b;
+			type=11;
+		}else if(reg_11_2.test(result)){
+			//<=a:b
+			var a=new Number(result.substring(2,result.toLocaleLowerCase().indexOf(":")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf(":")+1));
+			caclResult=b;
+			type=11;
+		}else if(reg_11_3.test(result)){
+			//>a:b
+			var a=new Number(result.substring(1,result.toLocaleLowerCase().indexOf(":")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf(":")+1));
+			caclResult=b;
+			type=11;
+		}else if(reg_11_4.test(result)){
+			//<a:b
+			var a=new Number(result.substring(1,result.toLocaleLowerCase().indexOf(":")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf(":")+1));
+			caclResult=b;
+			type=11;
+		}else if(reg_12.test(result)){
+			//a/b
+			var a=new Number(result.substring(0,result.toLocaleLowerCase().indexOf("\/")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf("\/")+1));
+			if(b==0){
+				jAlert("输入非法,分母不能为0", '提示信息',function(){
+					resultDetailCombo.clear();
+					resultDetailCombo.focus();
+					return false;
+				});
+				return false;
+			}
+			caclResult=a/b;
+			type=12;
+		}else if(reg_12_1.test(result)){
+			//>=a/b
+			var a=new Number(result.substring(2,result.toLocaleLowerCase().indexOf("\/")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf("\/")+1));
+			if(b==0){
+				jAlert("输入非法,分母不能为0", '提示信息',function(){
+					resultDetailCombo.clear();
+					resultDetailCombo.focus();
+					return false;
+				});
+				return false;
+			}
+			caclResult=a/b;
+			type=12;
+		}else if(reg_12_2.test(result)){
+			//<=a/b
+			var a=new Number(result.substring(2,result.toLocaleLowerCase().indexOf("\/")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf("\/")+1));
+			if(b==0){
+				jAlert("输入非法,分母不能为0", '提示信息',function(){
+					resultDetailCombo.clear();
+					resultDetailCombo.focus();
+					return false;
+				});
+				return false;
+			}
+			caclResult=a/b;
+			type=12;
+		}else if(reg_12_3.test(result)){
+			//>a/b
+			var a=new Number(result.substring(1,result.toLocaleLowerCase().indexOf("\/")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf("\/")+1));
+			if(b==0){
+				jAlert("输入非法,分母不能为0", '提示信息',function(){
+					resultDetailCombo.clear();
+					resultDetailCombo.focus();
+					return false;
+				});
+				return false;
+			}
+			caclResult=a/b;
+			type=12;
+		}else if(reg_12_4.test(result)){
+			//<a/b
+			var a=new Number(result.substring(1,result.toLocaleLowerCase().indexOf("\/")));
+			var b=new Number(result.substring(result.toLocaleLowerCase().indexOf("\/")+1));
+			if(b==0){
+				jAlert("输入非法,分母不能为0", '提示信息',function(){
+					resultDetailCombo.clear();
+					resultDetailCombo.focus();
+					return false;
+				});
+				return false;
+			}
+			caclResult=a/b;
+			type=12;
+		}else{
+			jAlert("结果类型为数值型的请填写数值结果", '提示信息',function(){
+				resultDetailCombo.clear();
+				resultDetailCombo.focus();
+				return false;
+			});
+			return false;
+		}
+		
+		var limitHigh=parseFloat(currentTr.children("td:nth-child(14)").children("p:nth-child(5)").html());
+		var limitLow=parseFloat(currentTr.children("td:nth-child(14)").children("p:nth-child(4)").html());
+
+		if(type==1){
+			//小数位数处理
+			var presion=currentTr.children("td:nth-child(14)").children("p:nth-child(6)").html();
+			var pre=null;
+			if(result.indexOf("+")>=0){
+				pre="+";
+			}
+			result=new Number(result);
+			if(presion!=null&&presion!=""&&result!=null){
+				result=result.toFixed(parseInt(presion));
+				caclResult=caclResult.toFixed(parseInt(presion));
+			}
+			if(pre!=null){
+				result=pre+result;
+			}
+		}
+		//限制高值低值判断
+		if(caclResult>limitHigh||caclResult<limitLow){
+			jAlert("结果超过限制范围，无法保存！", '提示信息',function(){
+				resultDetailCombo.clear();
+				resultDetailCombo.focus();
+				return false;
+			});
+			return false;
+		}
+		
+	}else if(resultTypeName!=null&&resultTypeName!="数值型"&&resultTypeName!="ADSEA"&&resultTypeName!="AD3.7"&&resultTypeName!="B地贫基因诊断"&&resultTypeName!="ADDTB"&&resultTypeName!="AD27.6"&&resultTypeName!="AD4.2"&&resultTypeName!="文字型"&&resultTypeName!="微生物录入(手工)"&&resultTypeName!="微生物录入(非手工)"&&resultDetailCombo.getText()!=""){
+		if(!resultDetailCombo.checkValue(false)){
+			jAlert("请选择输入下拉框中的结果", '提示信息',function(){
+				resultDetailCombo.clear();
+				resultDetailCombo.focus();
+				return false;
+			});
+			return false;
+		}
+	}
+
+	//这里保存结果
+	$.post("${ctx}/lab/speResultSaveResult.action",{"resultTypeName":resultTypeName,"subBarCode":currentSubBarCode,"uniqueCode":uniqueCode,"testItemResult":result,"subBarCode":currentSubBarCode,"instrumentId":currentInstrument,"itemName":itemName},function(data){
+		if(data!=null&&data!=""){
+			var jsonData=eval('('+data+')');
+			var canEnter=true;
+			if(jsonData.message!=null&&jsonData.message!=""){
+				jAlert(jsonData.message,"提示信息");
+				canEnter=false;
+			}
+			//无刷新式更新基础信息和当前检测项。
+			var ruleMsg=updateAfterSaveResultByNoRefresh(jsonData);
+			if(ruleMsg!=""&&canEnter){
+				jAlert(ruleMsg,"提示信息");
+			}
+			if(callback!=null&&canEnter)callback();
+		}
+	});
+}
+
+//结果备注框获取焦点
+function onTxtResultRemarkFocus(){
+	var currentTr=$("#txtResultRemark").parent("td").parent("tr");
+	if(currentTr.size()>0){
+		if(trim(currentTr.children("td:nth-child(14)").children("p:nth-child(9)").text())!=""){
+			//有结果
+			$("#txtResultRemark").removeAttr("readOnly");
+		}else{
+			//无结果
+			$("#txtResultRemark").attr({ readonly: 'true' });
+		}
+	}
+}
+
+//保存结果备注
+function onTxtResultRemarkBlur(){
+	var speInstrumentItemId=$("#txtResultRemark").parent().parent().attr("id");
+	var resultRemark=$("#txtResultRemark").val();
+	var sbarCode=currentSubBarCode;
+	if(checkResultComment(resultRemark,instrumentCombo.getText())){
+		$("#txtResultRemark").parent().addClass("tdUp");
+	}else{
+		$("#txtResultRemark").parent().removeClass("tdUp");
+	}
+	var itemName=$("#txtResultRemark").parent().parent().children("td:nth-child(5)").attr("title");
+	$.post("${ctx}/lab/speResultSaveResultRemark.action",{"speInstrumentItemId":speInstrumentItemId,"testItemResultRemark":resultRemark,"itemName":itemName,"subBarCode":sbarCode,"instrumentId":currentInstrument},function(data){
+		//备注保存成功
+		if(data!=null){
+			json=eval("("+data+")");
+			$("#gridList #"+json.id+" td:nth-child(5)").html(json.inputExceptionText);
+			$("#gridList #"+json.id+" td:nth-child(6)").html(json.inputEmptyText);
+			$("#gridList #"+json.id+" td:nth-child(7) p").html(json.statusAbnormal);
+		}
+	});
+}
+
+//保存微生物结果类型
+function onMicResultTypeChange(){
+	var speInstrumentItemId=$("#comboMicResultType").parent().parent().attr("id");
+	var micResultType=micResultTypeCombo.getText();
+	var sbarCode=currentSubBarCode;
+	var itemName=$("#comboMicResultType").parent().parent().children("td:nth-child(5)").attr("title");
+	$.post("${ctx}/lab/speResultSaveMicResultType.action",{"speInstrumentItemId":speInstrumentItemId,"micResultType":micResultType,"itemName":itemName,"subBarCode":sbarCode},function(data){
+		//备注保存成功
+		
+	});
+}
+
+//保存项目编号
+function onTxtProjectCodeBlur(){
+	var speInstrumentItemId=$("#txtProjectCode").parent().parent().attr("id");
+	var projectCode=$("#txtProjectCode").val();
+	var sbarCode=currentSubBarCode;
+	var itemName=$("#txtProjectCode").parent().parent().children("td:nth-child(5)").attr("title");
+	$.post("${ctx}/lab/speResultSaveProjectCode.action",{"speInstrumentItemId":speInstrumentItemId,"projectCode":projectCode,"itemName":itemName,"subBarCode":sbarCode},function(data){
+		//备注保存成功
+		
+	});
+}
+
+//保存菌落计数
+function onTxtBacterialCountBlur(e,isEnter){
+	var bacterialResultId=$("#txtBacterialCount").parent().parent().children("td:nth-child(5)").children("p:nth-child(1)").html();
+	var bacCount=$("#txtBacterialCount").val();
+	var sbarCode=currentSubBarCode;
+	var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+	var bacterialName=$("#txtBacterialCount").parent().parent().children("td:nth-child(2)").html();
+	param={"bacterialResultId":bacterialResultId,"bacterialCount":bacCount,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName};			
+	$.post("${ctx}/lab/speResultSaveBacterialCount.action",param,function(data){
+			if(isEnter){
+				bacterialTipsCombo.focus();
+			}
+		});
+}
+
+//菌落计数回车
+function onTxtBacterialCountEnter(e){
+	if(e.keyCode==13){
+		onTxtBacterialCountBlur(null,true);
+	}
+}
+
+//保存细菌提示
+function saveBacterialTips(bacterialResultId,tips,callback){
+	var sbarCode=currentSubBarCode;
+	var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+	var bacterialName=$("#txtBacterialCount").parent().parent().children("td:nth-child(2)").html();
+	param={"bacterialResultId":bacterialResultId,"bacterialTips":tips,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName};			
+	$.post("${ctx}/lab/speResultSaveBacterialTips.action",param,function(data){
+		if(callback!=null){
+			callback();
+		}
+	});
+}
+
+//保存抗生素kb-mic
+function onTxtKbOrMicBlur(e,isEnter){
+	$("#txtKb-Mic").unbind("blur");
+	$("#txtKb-Mic").unbind("keyup");
+	var antiResultId=$("#txtKb-Mic").parent().parent().children("td:nth-child(13)").children("p:nth-child(1)").html();
+	var thisId=$("#txtKb-Mic").parent().parent().attr("id");  //当前抗生素结果行id
+	var nValue=$("#txtKb-Mic").val();
+	var isNan=isNaN(nValue);
+	var sbarCode=currentSubBarCode;
+	var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+	var bacterialName=$("#gridMicBacterial .tablelist_now").children("td:nth-child(2)").html();
+	var antiName=$("#txtKb-Mic").parent().parent().children("td:nth-child(3)").html();
+	param={"antibioticResultId":antiResultId,"testMethod":currentRadio,"kbOrMic":nValue,"isNaN":isNan,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName,"antiName":antiName};			
+	$.post("${ctx}/lab/speResultSaveAntibioticKbOrMic.action",param,function(data){
+		if(data!=null&&data!="null"&&data!=""){
+				var jsonData=eval('('+data+')');
+				$("#txtKb-Mic").val(nValue);
+				if($("#gridMicAntibiotic #"+thisId+" td:nth-child(6) #comboAntibioticResult").size()>0){
+					antibioticResultCombo.setText(jsonData.result);
+				}else{
+					$("#gridMicAntibiotic #"+thisId+" td:nth-child(6)").html(jsonData.result);
+				}
+				if(isEnter){
+					if(trim(antibioticResultCombo.getText())==""){
+						antibioticResultCombo.focus();
+					}else{
+						$("#txtKb-Mic").parent().parent().next().trigger("click");
+						$("#txtKb-Mic").focus();
+					}
+				}
+			}
+		$("#txtKb-Mic").bind("blur",onTxtKbOrMicBlur);
+		$("#txtKb-Mic").keyup(onTxtKbOrMicEnter);
+		}); 
+}
+
+//抗生素kb-mic文本框回车
+function onTxtKbOrMicEnter(e){
+	if(e.keyCode==13){
+		onTxtKbOrMicBlur(null,true);
+	}
+}
+
+//保存抗生素结果
+function saveAntibioticResult(antiResultId,result,cuTR,callback){
+	var sbarCode=currentSubBarCode;
+	var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+	var bacterialName=$("#gridMicBacterial .tablelist_now").children("td:nth-child(2)").html();
+	var antiName=cuTR.children("td:nth-child(3)").html();
+	param={"antibioticResultId":antiResultId,"antiResult":result,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName,"antiName":antiName};			
+	$.post("${ctx}/lab/speResultSaveAntibioticResult.action",param,function(data){
+		if(callback!=null){
+			callback();
+		}
+	});
+}
+
+//添加细菌按钮点击事件
+function onAddBacterialBtnForWinClick(){
+	if($("#gridMicTestItem .tablelist_now").size()>0){
+		$("#txtAddBacterialSearch").val("");
+		var speResultId=$("#gridMicTestItem .tablelist_now").children("td:nth-child(12)").children("p:nth-child(3)").html();		//检测项结果id，用于查出其已有的细菌
+		$("#divForAddBacterial").load("${ctx}/lab/speResultAddBacterialWin.action",{"specimenResultId":speResultId},function(){
+			bindSelectRow("gridForAddBacterial");
+			$("#gridForAddBacterial tr").click(addBacterialRowClick);
+			$("#btnAddBacterialSumit").click(onBtnAddBacterialSumitClick);
+			$("#btnAddBacterialQuit").click(function(){
+				canF10=false;
+				$("#divForAddBacterialWin").hide();
+			});
+			$("#gridForAddBacterial tr:eq(0)").trigger("click");
+			$("#divForAddBacterialWin").show();
+			canF10=true;
+		});
+	}else{
+		jAlert("请选择需要添加细菌的检测项", '提示信息');
+	}
+}
+
+//添加细菌搜索框回车事件
+function onTxtAddBacterialSearchEnter(e){
+	if(e.keyCode==13){
+		var speResultId=$("#gridMicTestItem .tablelist_now").children("td:nth-child(12)").children("p:nth-child(3)").html();		//检测项结果id，用于查出其已有的细菌
+		$("#divForAddBacterial").load("${ctx}/lab/speResultAddBacterialWin.action",{"specimenResultId":speResultId,"bacterialSearchStr":$("#txtAddBacterialSearch").val()},function(){
+			bindSelectRow("gridForAddBacterial");
+			$("#gridForAddBacterial tr").click(addBacterialRowClick);
+			$("#btnAddBacterialSumit").click(onBtnAddBacterialSumitClick);
+			$("#btnAddBacterialQuit").click(function(){
+				$("#divForAddBacterialWin").hide();
+			});
+			$("#gridForAddBacterial tr:eq(0)").trigger("click");
+			$("#divForAddBacterialWin").show();
+		});
+	}
+}
+
+//添加细菌页面行选中事件
+function addBacterialRowClick(){
+	$("#divAddBacterialTips").text("选择： ("+$("#gridForAddBacterial .tablelist_now").children("td:nth-child(3)").html()+")"+$("#gridForAddBacterial .tablelist_now").children("td:nth-child(4)").html());
+}
+
+//添加菌株界面确定按钮点击事件
+function onBtnAddBacterialSumitClick(){
+	canF10=false;
+	var bacterialId=$("#gridForAddBacterial .tablelist_now").attr("id");
+	var specimenResultId=$("#gridMicTestItem .tablelist_now").children("td:nth-child(12)").children("p:nth-child(3)").html();		//检测项结果id，用于查出其已有的细菌
+	if(bacterialId==null||bacterialId==""||specimenResultId==null||specimenResultId=="") return;
+	//添加细菌
+	addBacterial(specimenResultId,bacterialId);
+	$("#divForAddBacterialWin").hide();
+}
+
+function addBacterial(specimenResultId,bacterialId){
+	var sbarCode=currentSubBarCode;
+	var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+	$.post("${ctx}/lab/speResultAddBacterial.action",{"specimenResultId":specimenResultId,"bacterialId":bacterialId,"itemName":itemName,"subBarCode":sbarCode},function(data){
+		if(data!=null&&data!="null"&&data!=""){
+				var jsonData=eval('('+data+')');
+				//以细菌ID为rowId,方便加菌株时是否重复的判断。然后第一列为细菌结果的ID，隐藏，为查询抗生素结果的关键字。
+				micBacterialGridAddRow(jsonData.organismId,[jsonData.organismCnName,jsonData.organismCount,jsonData.tips,jsonData.id,jsonData.testMethod,jsonData.reportOption]);//				rTab0BacterialGrid.selectRowById(jsonData.organismId,true,true,true);
+				if($("#gridMicBacterial .tablelist_now").size()<=0){
+					$("#gridMicBacterial tr:first-child").trigger("click");
+					//宽度始终跟表头一致
+					var gridMicBacterialHead=document.getElementById('gridMicBacterialHead').rows[0].cells;
+					var gridMicBacterial=document.getElementById('gridMicBacterial').rows[0].cells;
+					for (var i=0; i<gridMicBacterialHead.length; i++) {
+						gridMicBacterial[i].style.width = gridMicBacterialHead[i].style.width;
+					}
+				}
+			}
+		}); 
+}
+
+//添加抗生素按钮点击事件
+function onAddAntibioticBtnForWinClick(){
+	if($("#gridMicBacterial .tablelist_now").size()>0){
+		$("#txtAddAntibioticGroupSearch").val("");
+		$("#txtAddAntibioticSearch").val("");
+		existAntiCache.clear();
+		$("#gridAntibioticSelected tr").remove();
+		$("#openwindiv_01").show();
+	}else{
+		jAlert("请选择需要添加抗生素的细菌项", '提示信息');
+	}
+}
+
+//抗生素分组行点击事件--
+function antibioticGroupClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridAntibioticGroup tr").removeClass("tablelist_now");
+	$("#gridAntibioticGroup tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+	onAntibioticGroupClickForAnti(this);
+}
+
+//抗生素分组行点击事件--查询抗生素
+function onAntibioticGroupClickForAnti(_this){
+	var antiGroupId=$(_this).attr("id");
+	$("#gridAntibiotic tr").remove();	
+	$.post("${ctx}/lab/speResultAntibioticList.action",{"antiGroupId":antiGroupId,"antibioticSearchStr":""},function(data){
+		if(data!=null&&data!="null"&&data!=""){
+			var jsonArray= eval("("+data+")");
+			initAntibioticGrid(jsonArray);
+		}
+	});
+}
+
+//往中间待添加的抗生素grid添加数据。
+function initAntibioticGrid(jsonArray){
+	$("#gridAntibiotic tr").remove();	
+	if(jsonArray!=null&&jsonArray.length>0){
+		var antiGroup=$("#gridAntibioticGroup .tablelist_now").attr("id");
+		if(antiGroup==null||antiGroup=="") return false;
+		if(existAntiCache.containsKey(antiGroup)){
+			var antiArray=existAntiCache.get(antiGroup);
+			for(var i=0;i<jsonArray.length;i++){
+				var json=jsonArray[i];
+				var canAdd=true;
+				for(var j=0;j<antiArray.length;j++){
+					if(json.id==antiArray[j]){
+						canAdd=false;
+						break;
+					}
+				}
+				if(canAdd){
+					antibioticGridAddRow(json.id,[json.enName,json.cnName,json.fastCode]);
+				}
+			}
+		}else{
+			for(var i=0;i<jsonArray.length;i++){
+				var json=jsonArray[i];
+				antibioticGridAddRow(json.id,[json.enName,json.cnName,json.fastCode]);
+			}
+		}
+		$("#gridAntibiotic tr:eq(0)").trigger("click");
+	}	
+}
+
+//待选抗生素行点击事件
+function onAntibioticClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridAntibiotic tr").removeClass("tablelist_now");
+	$("#gridAntibiotic tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+//	onAntibioticGroupClickForAnti(this);
+}
+
+//已选抗生素行点击事件
+function onAntibioticSelectedClick(){
+	if($(this).hasClass("tablelist_now")) return;
+	$("#gridAntibioticSelected tr").removeClass("tablelist_now");
+	$("#gridAntibioticSelected tr td:first-child").removeClass("ico_now");
+	$(this).addClass("tablelist_now");
+	$(this).find("td:first").addClass("ico_now");
+}
+
+//从左向右添加一行抗生素
+function addOneBtnClick(){
+	var antibioticId=$("#gridAntibiotic .tablelist_now").attr("id");
+	if(antibioticId!=null&&antibioticId!=""){
+		if($("#gridAntibioticSelected #"+antibioticId).size()<=0){
+			//可以添加
+			var cuTr=$("#gridAntibiotic #"+antibioticId);
+			var enName=cuTr.children("td:nth-child(2)").html();
+			var cnName=cuTr.children("td:nth-child(3)").html();
+			var groupId=$("#gridAntibioticGroup .tablelist_now").attr("id");
+			var group=$("#gridAntibioticGroup #"+groupId+" td:nth-child(2)").html();
+			var fastCode=cuTr.children("td:nth-child(4)").html();
+			var nextTr=cuTr.next();
+			var preTr=cuTr.prev();
+			cuTr.remove();
+			//已选抗生素列表增加一行
+			antibioticSelectedGridAddRow(antibioticId,[enName,cnName,group,groupId,fastCode],-1);
+			$("#gridAntibioticSelected #"+antibioticId).trigger("click");
+			if(existAntiCache.containsKey(groupId)){
+				existAntiCache.get(groupId).push(antibioticId);
+			}else{
+				var tempArray=new Array();
+				tempArray.push(antibioticId);
+				existAntiCache.put(groupId,tempArray);
+			}
+			if(nextTr.size()>0){
+				nextTr.trigger("click");
+			}else{
+				preTr.trigger("click");
+			}
+		}else{
+			//已存在
+			jAlert("该抗生素已选择~", '提示信息');
+		}
+	}else{
+		jAlert("请选择要添加的抗生素", '提示信息');
+	}
+}
+
+//全部添加
+function addAllBtnClick(){
+	$("#gridAntibiotic tr").each(function(index){
+		var id=$(this).attr("id");
+		var groupId=$("#gridAntibioticGroup .tablelist_now").attr("id");
+		var group=$("#gridAntibioticGroup #"+groupId+" td:nth-child(2)").html();
+		if($("#gridAntibioticSelected #"+id).size()<=0){
+			//可以添加
+			var enName=$(this).children("td:nth-child(2)").html();
+			var cnName=$(this).children("td:nth-child(3)").html();
+			var fastCode=$(this).children("td:nth-child(4)").html();
+			//已选抗生素列表增加一行
+			antibioticSelectedGridAddRow(id,[enName,cnName,group,groupId,fastCode],-1);
+			$(this).remove();
+			if(existAntiCache.containsKey(groupId)){
+				existAntiCache.get(groupId).push(id);
+			}else{
+				var tempArray=new Array();
+				tempArray.push(id);
+				existAntiCache.put(groupId,tempArray);
+			}
+		}
+	});
+	$("#gridAntibioticSelected tr:first-child").trigger("click");
+}
+
+//移除一条
+function removeOneBtnClick(){
+	var selectRowId=$("#gridAntibioticSelected .tablelist_now").attr("id");
+	if(selectRowId!=null&&selectRowId!=""){
+		var cuTr=$("#gridAntibioticSelected #"+selectRowId);
+		var enName=cuTr.children("td:nth-child(2)").html();
+		var cnName=cuTr.children("td:nth-child(3)").html();
+		var fastCode=cuTr.children("td:nth-child(5)").children("p:nth-child(2)").html();
+		var groupId=cuTr.children("td:nth-child(5)").children("p:nth-child(1)").html();
+		var nextTr=cuTr.next();
+		var preTr=cuTr.prev();
+		cuTr.remove();
+		if(nextTr.size()>0){
+			nextTr.trigger("click");
+		}else{
+			preTr.trigger("click");
+		}
+		existAntiCache.get(groupId).pop(selectRowId);
+		if(existAntiCache.get(groupId).length<=0){
+			existAntiCache.removeByKey(groupId);
+		}
+		if($("#gridAntibioticGroup .tablelist_now").attr("id")==groupId){
+			antibioticGridAddRow(selectRowId,[enName,cnName,fastCode]);
+			$("#gridAntibiotic #"+selectRowId).trigger("click");
+		}
+	}else{
+		//未选择
+	}
+}
+
+//全部移除
+function removeAllBtnClick(){
+	$("#gridAntibioticSelected tr").remove();
+	existAntiCache.clear();
+	onAntibioticGroupClickForAnti($("#gridAntibioticGroup .tablelist_now")[0]);
+}
+
+//添加抗生素取消按钮点击事件
+function addAntibioticCancleClick(){
+	document.getElementById('openwindiv_01').style.display='none';
+	existAntiCache.clear();
+	$("#gridAntibiotic tr").remove();
+	$("#gridAntibioticSelected tr").remove();
+	clearSelectionForGrid("gridAntibioticGroup");
+}
+
+//添加抗生素 确定按钮点击事件
+function addAntibioticOKClick(){
+	addAntibiotics(existAntiCache);
+	document.getElementById('openwindiv_01').style.display='none';
+}
+
+//grid取消选中
+function clearSelectionForGrid(tabId){
+	$("#"+tabId+" tr").removeClass("tablelist_now");
+	$("#"+tabId+" tr td:first-child").removeClass("ico_now");
+}
+
+//增加抗生素
+function addAntibiotics(tempAntiMap){
+	var tempArray=tempAntiMap.keys();  //(groupid,[id,id])
+	var existAnti="";
+	var existCount=0;
+	if(tempArray!=null&&tempArray.length>0){
+		var ids=new Array();
+		//剔除抗生素结果表中已存在的抗生素id
+		for(var i=0;i<tempArray.length;i++){
+			var antiArray=tempAntiMap.get(tempArray[i]);
+			for(var j=0;j<antiArray.length;j++){
+				if($("#gridMicAntibiotic #"+antiArray[j]).size()<=0){
+					ids.push(antiArray[j]+"-"+tempArray[i]);
+				}else{
+					if(existCount<5){
+						if(existCount<4){
+							existAnti+="  "+$("#gridMicAntibiotic #"+antiArray[j]+" td:nth-child(3)").html()+",";
+						}else{
+							existAnti+="  "+$("#gridMicAntibiotic #"+antiArray[j]+" td:nth-child(3)").html();
+						}
+						existCount++;
+					}
+				}
+			}
+		}
+		if(ids==null||ids.length==0){
+			if(existCount>0&&existCount<5){
+				jAlert("抗生素 \n"+existAnti+"\n已存在", '提示信息');
+			}else if(existCount==5){
+				jAlert("抗生素 \n"+existAnti+"\n等已存在", '提示信息');
+			}
+			return;
+		} 
+		//提交后台 ，，参数2个：细菌结果 id , 抗生素 id 的数组    
+		var bacterialResultId=$("#gridMicBacterial .tablelist_now").children("td:nth-child(5)").children("p:nth-child(1)").html();	//获取organismResult的Id,根据其Id添加抗生素结果。
+		var tMethod=$("#gridMicBacterial .tablelist_now").children("td:nth-child(5)").children("p:nth-child(2)").html();
+		var sbarCode=currentSubBarCode;
+		var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+		var bacterialName=$("#gridMicBacterial .tablelist_now").children("td:nth-child(2)").html();
+		param={"bacterialResultId":bacterialResultId,"antibioticIds":ids.toString(),"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName};			
+		$.post("${ctx}/lab/speResultAddAntibiotic.action",param,function(data){
+			if(data!=null&&data!="null"&&data!=""){
+					var jsonArray=eval('('+data+')');
+					//后台返回抗生素结果对象json集合。
+					for(var i=0;i<jsonArray.length;i++){
+						var json=jsonArray[i];
+						micAntibioticGridAddRow(json.antibioticId,[json.antibioticEnName,json.antibioticCnName,json.micResult,json.kbResult,json.result,json.micSensitive,json.kbResistance,json.micMiddle,json.kbMiddle,json.micResistance,json.kbSensitive,json.id]);			
+					}
+					addAntibioticCancleClick();
+				}
+			controlMicOrKbView("gridMicAntibiotic",tMethod);
+			if($("#gridMicAntibiotic .tablelist_now").size()<=0){
+				$("#gridMicAntibiotic tr:first-child").trigger("click");
+			}
+			if(existCount==5){
+				jAlert("添加成功，其中抗生素 \n"+existAnti+"\n等已存在", '提示信息');
+			}else if(existCount>0&&existCount<5){
+				jAlert("添加成功，其中抗生素 \n"+existAnti+"\n已存在", '提示信息');
+			}
+			});
+	}
+}
+
+//添加抗生素页面抗生素分组查询框回车
+function onTxtAddAntibioticGroupSearchEnter(){
+	if($("#txtAddAntibioticGroupSearch").val()=="") return;
+	var tempTr=$($("#gridAntibioticGroup tr td:contains('"+$("#txtAddAntibioticGroupSearch").val()+"')")[0]).parent();
+	if(tempTr.size()>0){
+		tempTr.trigger("click");
+	}
+}
+
+//添加抗生素页面抗生素查询框回车
+function onTxtAddAntibioticSearchEnter(e){
+	if(e.keyCode==13){
+		var antiGroupId=$("#gridAntibioticGroup .tablelist_now").attr("id");
+		$("#gridAntibiotic tr").remove();	
+		$.post("${ctx}/lab/speResultAntibioticList.action",{"antiGroupId":antiGroupId,"antibioticSearchStr":$("#txtAddAntibioticSearch").val()},function(data){
+			if(data!=null&&data!="null"&&data!=""){
+				var jsonArray= eval("("+data+")");
+				initAntibioticGrid(jsonArray);
+			}
+		});
+	}
+}
+
+//删除细菌
+function delBacterialBtnClick(){
+	var cuTr=$("#gridMicBacterial .tablelist_now");
+	var bacName=cuTr.children("td:nth-child(2)").html();
+	var bacterialResultId=cuTr.children("td:nth-child(5)").children("p:nth-child(1)").html();
+	if (bacterialResultId == null||bacterialResultId=="") {
+		jAlert("请选择菌株", '提示信息');
+		return false;
+	} else {
+		jConfirm("是否删除项目  \""+bacName+"\" 及其药敏结果？\n选择  \"确定\" 删除选择的细菌结果",'提示信息',function(choice){
+			if(choice){
+				var sbarCode=currentSubBarCode;
+				var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+				param={"bacterialResultId":bacterialResultId,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacName};			
+				$.post("${ctx}/lab/speResultDelBacterial.action",param,function(data){								
+						moveBacterialCombo();
+						moveAntibioticCombo();	
+						var nextTr=cuTr.next();
+						var preTr=cuTr.prev();
+						cuTr.remove();
+						$("#gridMicAntibiotic tr").remove();
+						$("#chkReportOption").prop("checked",false);
+						if(nextTr.size()>0){
+							nextTr.trigger("click");
+						}else{
+							preTr.trigger("click");
+						}
+					}); 
+			}
+		});
+	}
+}
+
+//删除抗生素
+function delAntibioticBtnClick(){
+	var cuTr=$("#gridMicAntibiotic .tablelist_now");
+	var antiName=cuTr.children("td:nth-child(3)").html();
+	var antibioticResultId =cuTr.children("td:nth-child(13)").children("p:nth-child(1)").html();
+	if (antibioticResultId == null||antibioticResultId=="") {
+		jAlert("请选择抗生素", '提示信息');
+		return false;
+	} else {
+		jConfirm("是否删除抗生素项目  \""+antiName+"\" ?\n选择  \"确定\" 删除该项目。",'提示信息',function(choice){
+			if(choice){
+				var sbarCode=currentSubBarCode;
+				var itemName=$("#gridMicTestItem .tablelist_now").children("td:nth-child(5)").attr("title");
+				var bacterialName=$("#gridMicBacterial .tablelist_now").children("td:nth-child(2)").html();
+				param={"antibioticResultId":antibioticResultId,"itemName":itemName,"subBarCode":sbarCode,"bacterialName":bacterialName,"antiName":antiName};			
+				$.post("${ctx}/lab/speResultDelAntibiotic.action",param,function(data){
+					moveAntibioticCombo();
+					var nextTr=cuTr.next();
+					var preTr=cuTr.prev();
+					cuTr.remove();
+					if(nextTr.size()>0){
+						nextTr.trigger("click");
+					}else{
+						preTr.trigger("click");
+					}
+				}); 
+			}
+		});
+		
+	}
+}
+
+//图像录入按钮点击事件
+function imgInputBtn_Click(){
+	if($("#gridList .tablelist_now").size()<=0) return;
+	$("#tabTxlrItem").show();
+	$("#tabTxlrItem").trigger("click");
+}
+
+//保存结果后无刷新式更新当前条码状态和当前检测项数据。
+function updateAfterSaveResultByNoRefresh(json){
+	if(json==null) return;
+	var msg="";
+	if(json.statusInfo!=null){
+		var cuTr=$("#gridList #"+json.statusInfo.id);
+//		cuTr.children("td:nth-child(4)").text(json.statusInfo.seq);
+		cuTr.children("td:nth-child(5)").text(json.statusInfo.inputExceptionText);
+		cuTr.children("td:nth-child(6)").text(json.statusInfo.inputEmptyText);
+		cuTr.children("td:nth-child(7)").children("p:nth-child(1)").text(json.statusInfo.statusAbnormal);
+		//自动小结				
+
+		$("#txtReportBrief").val(json.statusInfo.reportBrief);
+		//建议解释
+		$("#txtReportRemark").val(json.statusInfo.reportRemark);
+		//基因说明
+		$("#txtGeneRemark").val(json.statusInfo.geneRemark);
+	}
+	if(currentIsMic!="true"){
+		if(json.testItems!=null){
+			for(var i=0;i<json.testItems.length;i++){
+				var item=json.testItems[i];
+				var cuItemTr=$("#gridTestItem #"+item.id);
+				cuItemTr.children("td:nth-child(15)").html(item.originalResult);
+				if(cuItemTr.children("td:nth-child(6)").children("#comboResultDetail").size()>0){
+					resultDetailCombo.setText(item.result);
+				}else{
+					cuItemTr.children("td:nth-child(6)").html(item.result);			
+				}
+				if(item.forceResult=="1"){
+					cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+					cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+					cuItemTr.children("td:nth-child(7)").addClass("resultForce");
+					cuItemTr.children("td:nth-child(6)").removeClass("tdUp");
+					cuItemTr.children("td:nth-child(6)").removeClass("tdDown");
+					cuItemTr.children("td:nth-child(6)").addClass("resultForce");
+				}else{
+					if(item.color=="red"){
+						cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+						cuItemTr.children("td:nth-child(7)").addClass("tdUp");
+						cuItemTr.children("td:nth-child(6)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(6)").removeClass("tdDown");
+						cuItemTr.children("td:nth-child(6)").addClass("tdUp");
+					}else if(item.color=="green"){
+						cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+						cuItemTr.children("td:nth-child(7)").addClass("tdDown");
+						cuItemTr.children("td:nth-child(6)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(6)").removeClass("tdUp");
+						cuItemTr.children("td:nth-child(6)").addClass("tdDown");
+					}else{
+						cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+						cuItemTr.children("td:nth-child(6)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(6)").removeClass("tdUp");
+						cuItemTr.children("td:nth-child(6)").removeClass("tdDown");
+					}
+				}
+				cuItemTr.children("td:nth-child(7)").html(item.prompt);
+				if(cuItemTr.children("td:nth-child(11)").children("#txtResultRemark").size()>0){
+					$("#txtResultRemark").val(item.resultComment);
+					cuItemTr.children("td:nth-child(11)").attr("title",item.resultComment);//结果备注
+				}else{
+					// #001 begin
+					cuItemTr.children("td:nth-child(11)").html(getSubString(item.resultComment,RESULT_COMMENT_LENGTH));//结果备注
+					// #001 end
+					cuItemTr.children("td:nth-child(11)").attr("title",item.resultComment);//结果备注
+				}
+				if(checkResultComment(item.resultComment,item.instrumentName)){
+					cuItemTr.children("td:nth-child(11)").addClass("tdUp");
+				}else{
+					cuItemTr.children("td:nth-child(11)").removeClass("tdUp");
+				}
+				if(item.message!=null&&item.message!=""&&item.message!=cuItemTr.children("td:nth-child(14)").children("p:nth-child(8)").text()){
+					msg+=item.message+" \n";
+				}
+				cuItemTr.children("td:nth-child(14)").children("p:nth-child(7)").html(item.forceResult);
+				cuItemTr.children("td:nth-child(14)").children("p:nth-child(8)").html(item.message);
+				cuItemTr.children("td:nth-child(14)").children("p:nth-child(9)").text(item.result);
+				if(item.forceResult=="1"){
+					//违反强制规则公式
+					cuItemTr.children("td:nth-child(7)").addClass("resultForce");
+					cuItemTr.children("td:nth-child(6)").addClass("resultForce");
+				}else{
+					cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+					cuItemTr.children("td:nth-child(6)").removeClass("resultForce");
+				}
+			}
+		}
+		if(json.otherTestItems!=null){
+			for(var n=0;n<json.otherTestItems.length;n++){
+				var item = json.otherTestItems[n];
+				var cuItemTr=$("#gridOtherItem #"+item.id);
+				cuItemTr.children("td:nth-child(7)").html(item.result);
+				cuItemTr.children("td:nth-child(8)").html(item.prompt);
+				if(item.forceResult=="1"){
+					cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+					cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+					cuItemTr.children("td:nth-child(7)").addClass("resultForce");
+				}else{
+					if(item.color=="red"){
+						cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+						cuItemTr.children("td:nth-child(7)").addClass("tdUp");
+					}else if(item.color=="green"){
+						cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+						cuItemTr.children("td:nth-child(7)").addClass("tdDown");
+					}else{
+						cuItemTr.children("td:nth-child(7)").removeClass("resultForce");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdUp");
+						cuItemTr.children("td:nth-child(7)").removeClass("tdDown");
+					}
+				}
+				if(checkResultComment(item.resultComment,item.instrumentName)){
+					cuItemTr.children("td:nth-child(12)").addClass("tdUp");
+				}else{
+					cuItemTr.children("td:nth-child(12)").removeClass("tdUp");
+				}
+				if(item.message!=null&&item.message!=""&&item.message!=cuItemTr.children("td:nth-child(14)").children("p:nth-child(2)").text()){
+					msg+=item.message+" \n";
+				}
+				cuItemTr.children("td:nth-child(14)").children("p:nth-child(1)").html(item.forceResult);
+				cuItemTr.children("td:nth-child(14)").children("p:nth-child(2)").html(item.message);
+			}
+		}
+	}else{
+		if(json.testItems!=null){
+			for(var i=0;i<json.testItems.length;i++){
+				var item=json.testItems[i];
+				var cuItemTr=$("#gridMicTestItem #"+item.id);
+				cuItemTr.children("td:nth-child(12)").children("p:nth-child(6)").text(item.result);
+			}
+		}
+	}
+	return msg;
+}
+
+
+//清楚页面信息
+function cleanInfo(){
+	currentSubBarCode=null;
+	currentRadio=null;
+	currentId=null;
+	urineTip=false;
+	existAntiCache.clear();
+	$("#main_mid input").val("");
+	$("#main_mid textarea").val("");
+	$("#main_mid select").val("");
+	$("#txtReportBrief").val("");
+	$("#txtReportRemark").val("");
+	$("#txtGeneRemark").val("");
+	$("#reportRemark").css("color","black");
+	$("#txtUrineVolume").css("backgroundColor","");
+	$("#reportBrief").css("color","black");
+	$("#labStatus").css("color","black");
+	$(".specialTips").hide();
+	moveTestItemCombo();
+	moveBacterialCombo();
+	moveAntibioticCombo();
+	$("#chkReportOption").prop("checked",false);
+//	initTabViewForItemGrid(currentIsMic);
+	$("#gridTestItem tr").remove();
+	$("#gridMicTestItem tr").remove();
+	$("#gridOtherItem tr").remove();
+	$("#gridOtherMicItem tr").remove();
+	$("#gridMicBacterial tr").remove();
+	$("#gridMicAntibiotic tr").remove();
+	$("#gridOtherMicBacterial tr").remove();
+	$("#gridOtherMicAntibiotic tr").remove();
+	$("#gridSpecimenRemark tr").remove();
+}
+
+//获取从第一个开始的指定长度字串，中文算两长度
+function getSubString(str,length){
+	var j=0;
+	var i;
+	for(i=0;i<str.length;i++){
+		if(/[\u4e00-\u9fa5]+/.test(str.charAt(i))){
+			//中文算两长度
+			j+=2;
+			if(j>length){
+				break;
+			}
+		}else{
+			j+=1;
+			if(j>length){
+				break;
+			}
+		}
+	}
+	if(j>length){
+		return str.substring(0,i)+"..";
+	}else{
+		return str;
+	}
+}
+
+function onResultWidthChange(){
+	resizeResultTDWidth($("#resultTDWidthSelect").val());
+}
+
+function resizeResultTDWidth(nWidth){
+	var changedWidth=nWidth-resultDetailCombo.getWidth();
+	$("#micItemOuterDiv").width($("#micItemOuterDiv").width()+changedWidth);
+	var oTDWidth=$("#gridMicTestItemHead tr:nth-child(1) td:nth-child(7)").width();
+	$("#gridMicTestItemHead tr td:nth-child(7)").width(oTDWidth+changedWidth);
+	$("#gridMicTestItem tr td:nth-child(7)").width(oTDWidth+changedWidth);
+	$("#gridMicTestItemHead").width($("#gridMicTestItemHead").width()+changedWidth);
+	
+	$("#itemOuterDiv").width($("#itemOuterDiv").width()+changedWidth);
+	oTDWidth=$("#gridTestItemHead tr:nth-child(1) td:nth-child(6)").width();
+	$("#gridTestItemHead tr td:nth-child(6)").width(oTDWidth+changedWidth);
+	$("#gridTestItem tr td:nth-child(6)").width(oTDWidth+changedWidth);
+	$("#gridTestItemHead").width($("#gridTestItemHead").width()+changedWidth);
+	resultDetailCombo.resizeWidth(nWidth);
+}
+
+function initResultTDWidth(){
+	var oTDWidth=$("#gridMicTestItemHead tr:nth-child(1) td:nth-child(7)").width();
+	$("#gridMicTestItem tr td:nth-child(7)").width(oTDWidth);
+	oTDWidth=$("#gridTestItemHead tr:nth-child(1) td:nth-child(6)").width();
+	$("#gridTestItem tr td:nth-child(6)").width(oTDWidth);
+}
+
+/**
+ * 根据规则公式重置自动小结双击事件
+ */
+function resetReportBriefDBclick(){
+	if($("#gridList tr").filter(".tablelist_now").size()<=0) return;
+	var subBarCode=currentSubBarCode;
+	$.post("${ctx}/lab/speResultResetReportBriefByRule.action",{"subBarCode":subBarCode, "currentSpeId" : currentId},function(data){
+		if(subBarCode==currentSubBarCode){
+			$("#txtReportBrief").val(data);
+		}
+	});
+}
+
+/**
+ * 抗生素排序
+ */
+function sortTDClick(){
+	var array=$("#gridMicAntibiotic tr");
+	if(array==null||array.size()<0)return;
+	moveAntibioticCombo();
+	array=sortArray(array,$(this).index(),sortAsc);
+	 $("#MicResultTD").html("结果");
+	 $("#MicResultKBTD").html("KB");
+	 $("#MicResultMICTD").html("MIC");
+	if(sortAsc){
+		$(this).append($("<img src='"+ctx+"/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/sort_asc.gif' style='display: inline;  left: 5px; top: 2px;'>"));
+	}else{
+		$(this).append($("<img src='"+ctx+"/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/sort_desc.gif' style='display: inline;  left: 5px; top: 2px;'>"));
+	}
+	sortAsc=!sortAsc;
+	for(var i=0;i<array.length;i++){
+		if(i==0){
+			$("#gridMicAntibiotic").append($(array[i]));
+		}else{
+			$(array[i-1]).after($(array[i]));
+		}
+	}
+}
+
+/**
+ * 给抗生素行进行排序
+ * @param array
+ * @param colIndex
+ * @param sortType
+ * @returns
+ */
+function sortArray(array,colIndex,sortType){
+	if(array==null||array.length==0) return;
+	for(var i=0;i<array.length;i++){
+		for(var j=0;j<array.length;j++){
+			var stri=$(array[i]).children("td:eq("+colIndex+")").text();
+			var strj=$(array[j]).children("td:eq("+colIndex+")").text();
+			if(stri<strj){
+				var tmp=array[j];
+				array[j]=array[i];
+				array[i]=tmp;    
+			}
+		}
+	}
+	if(!sortAsc){
+		var arraytmp=new Array();
+		for(var i=array.length-1;i>=0;i--){
+			arraytmp.push(array[i]);
+		}
+		return arraytmp;
+	}else{
+		return array;
+	}
+}

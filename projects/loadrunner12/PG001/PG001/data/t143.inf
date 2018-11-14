@@ -1,0 +1,11 @@
+[t143]
+FileName1=t143.html
+URL1=http://192.168.14.35/PG/spe/speInputSexLinkagePlans.action
+Total=1
+RequestHeaderFile=t143_RequestHeader.txt
+RequestBodyFile=t143_RequestBody.txt
+ResponseHeaderFile=t143_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_143.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

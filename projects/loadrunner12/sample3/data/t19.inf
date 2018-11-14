@@ -1,0 +1,17 @@
+[t19]
+FileName1=t19.html
+URL1=http://202.116.104.161/NIP/dis/${ctx}/dis/speInputInfoTestItem.action
+Total=4
+RequestHeaderFile=t19_RequestHeader.txt
+RequestBodyFile=t19_RequestBody.txt
+ResponseHeaderFile=t19_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_19.xml
+FileName2=t19_button_bg1b.jpg
+URL2=http://202.116.104.161/NIP/pages/test/images/button_bg1b.jpg
+FileName3=t19_clear-hover.jpg
+URL3=http://202.116.104.161/NIP/pages/test/images/clear-hover.jpg
+FileName4=t19_busy.gif
+URL4=http://202.116.104.161/NIP/images/busy.gif
+[ProtocolInfo]
+ProtocolId=QTWeb

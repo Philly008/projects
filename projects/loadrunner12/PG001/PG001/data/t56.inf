@@ -1,0 +1,11 @@
+[t56]
+FileName1=t56.html
+URL1=http://192.168.14.35/PG/spe/speInputSexLinkagePlans.action
+Total=1
+RequestHeaderFile=t56_RequestHeader.txt
+RequestBodyFile=t56_RequestBody.txt
+ResponseHeaderFile=t56_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_56.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

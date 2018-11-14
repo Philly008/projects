@@ -1,0 +1,3 @@
+"resultTypeName=%E6%95%B0%E5%80%BC%E5%9E%8B&subBarCode=000000771100&uniqueCode=CERX1000001007&t"
+"estItemResult=1.00&instrumentId=20192&itemName=%E8%A1%80%E6%B8%85C%E8%82%BD%E6%B5%8B%E5%AE%9A("
+"CP)"

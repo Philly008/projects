@@ -1,0 +1,4 @@
+"userDto.id=&userDto.organization=1&userDto.organizationName=%E8%BE%BE%E5%AE%89%E5%81%A5%E5%BA%"
+"B7%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&userDto.active=1&userDto.lockFlag=0&userDto.fakeUser=0&"
+"userDto.salesUser=0&userDto.isSupperDoctor=0&userDto.userName=liu061b&userDto.name=nliu061b&us"
+"erDto.email=&userDto.physicsLab=&userDto.organization1=1&userDto.mobiel=&search_userName="

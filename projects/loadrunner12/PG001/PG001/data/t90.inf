@@ -1,0 +1,15 @@
+[t90]
+FileName1=t90.html
+URL1=http://192.168.14.35/PG/spe/salesorderList.action
+Total=3
+RequestHeaderFile=t90_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t90_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_90.xml
+FileName2=t90_group_2.png
+URL2=http://192.168.14.35/PG/images/group_2.png
+FileName3=t90_group_1.png
+URL3=http://192.168.14.35/PG/images/group_1.png
+[ProtocolInfo]
+ProtocolId=QTWeb

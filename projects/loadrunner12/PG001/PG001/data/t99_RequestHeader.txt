@@ -1,0 +1,11 @@
+GET http://192.168.14.35/PG/spe/findSalesOrderByConditions.action?applyTime_start=2018-11-12+00%3A00%3A00&applyTime_end=2018-11-12+23%3A59%3A59&searchdto.applyUserid=&searchdto.areaid=&detaildto.productId=&checkbutton=on&status=300&status=310&status=310&status=320&page.pageNo=1&searchdto.name=&searchdto.state=&row=13 HTTP/1.1
+Host: 192.168.14.35
+Proxy-Connection: keep-alive
+Accept: text/html, */*; q=0.01
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36
+Referer: http://192.168.14.35/PG/spe/salesorder.action
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: JSESSIONID=2F6565A8F0637FB587C097021DA92BF4.tomcat2
+

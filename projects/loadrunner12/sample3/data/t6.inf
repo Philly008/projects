@@ -1,0 +1,15 @@
+[t6]
+FileName1=t6.html
+URL1=http://202.116.104.161/NIP/rpt/searchdanger.action
+Total=3
+RequestHeaderFile=t6_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t6_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_6.xml
+FileName2=t6_iconUncheckAll.gif
+URL2=http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/iconUncheckAll.gif
+FileName3=t6_line3.gif
+URL3=http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line3.gif
+[ProtocolInfo]
+ProtocolId=QTWeb

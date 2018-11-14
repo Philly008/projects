@@ -1,0 +1,137 @@
+Virtual User Script started at : 2018/11/9 17:27:11
+Starting action vuser_init.
+Web Turbo Replay of LoadRunner 12.0.0 for Windows 8; build 2739 (Nov 30 2014 23:13:05)  	[MsgId: MMSG-27143]
+Run mode: HTML  	[MsgId: MMSG-26993]
+Run-Time Settings file: "D:\HP\exercises\sample4_50save\\default.cfg"  	[MsgId: MMSG-27141]
+Ending action vuser_init.
+Running Vuser...
+Starting iteration 1.
+Maximum number of concurrent connections per server: 2  	[MsgId: MMSG-26989]
+Starting action sample_save.
+sample_save.c(4): Notify: Transaction "登录" started.
+sample_save.c(5): web_url("login.action") started  	[MsgId: MMSG-26355]
+sample_save.c(5): Found resource "http://202.116.104.161/NIP/scripts/pdfobject.js" in HTML "http://202.116.104.161/NIP/login.action"  	[MsgId: MMSG-26659]
+sample_save.c(5): Found resource "http://202.116.104.161/NIP/css/css.css" in HTML "http://202.116.104.161/NIP/login.action"  	[MsgId: MMSG-26659]
+sample_save.c(5): Found resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" in HTML "http://202.116.104.161/NIP/login.action"  	[MsgId: MMSG-26659]
+sample_save.c(5): Downloading resource "http://202.116.104.161/NIP/images/new/bgd_login_2.jpg" (specified by argument number 9)  	[MsgId: MMSG-26577]
+sample_save.c(5): Downloading resource "http://202.116.104.161/NIP/images/new/bgd_login3_0.jpg" (specified by argument number 11)  	[MsgId: MMSG-26577]
+sample_save.c(5): Downloading resource "http://202.116.104.161/NIP/images/new/input.gif" (specified by argument number 13)  	[MsgId: MMSG-26577]
+sample_save.c(5): Downloading resource "http://202.116.104.161/NIP/images/new/btn_login.png" (specified by argument number 15)  	[MsgId: MMSG-26577]
+sample_save.c(5): web_url("login.action") was successful, 368618 body bytes, 2473 header bytes, 24 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(19): web_submit_form("login.action_2") started  	[MsgId: MMSG-26355]
+sample_save.c(19): Notify: Parameter Substitution: parameter "user_name" =  "liu010b"
+sample_save.c(19): Submitting form to "http://202.116.104.161/NIP/login.action", Target Frame=""  	[MsgId: MMSG-27978]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/pdfobject.js?_=1541395994665" (specified by argument number 11)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js?_=1541395994666" (specified by argument number 14)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/pdfobject.js?_=1541395994667" (specified by argument number 17)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js?_=1541395994668" (specified by argument number 20)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/jquery.blockUI.js?_=1541395994669" (specified by argument number 23)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/common.js?_=1541395994670" (specified by argument number 26)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js?_=1541395994671" (specified by argument number 29)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/images/new/main_top_bgd.jpg" (specified by argument number 32)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/images/new/main_top.jpg" (specified by argument number 35)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/iconUncheckAll.gif" (specified by argument number 38)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line3.gif" (specified by argument number 41)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line2.gif" (specified by argument number 44)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus3.gif" (specified by argument number 47)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus2.gif" (specified by argument number 50)  	[MsgId: MMSG-26577]
+sample_save.c(19): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus4.gif" (specified by argument number 53)  	[MsgId: MMSG-26577]
+sample_save.c(19): Redirecting "http://202.116.104.161/NIP/login.action" (redirection depth is 0)  	[MsgId: MMSG-26694]
+sample_save.c(19): To location "http://202.116.104.161/NIP/home.action"  	[MsgId: MMSG-26693]
+sample_save.c(19): Resource "http://202.116.104.161/NIP/scripts/pdfobject.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_save.c(19): Resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_save.c(19): Found resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" in HTML "http://202.116.104.161/NIP/home.action"  	[MsgId: MMSG-26659]
+sample_save.c(19): web_submit_form("login.action_2") was successful, 2713988 body bytes, 5193 header bytes, 23 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(43): web_custom_request("searchdanger.action") started  	[MsgId: MMSG-26355]
+sample_save.c(43): web_custom_request("searchdanger.action") was successful, 21 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(54): web_custom_request("noticeNewSearch.action") started  	[MsgId: MMSG-26355]
+sample_save.c(54): web_custom_request("noticeNewSearch.action") was successful, 115 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(65): web_custom_request("searchdelay.action") started  	[MsgId: MMSG-26355]
+sample_save.c(65): web_custom_request("searchdelay.action") was successful, 21 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(76): web_custom_request("rateMatured.action") started  	[MsgId: MMSG-26355]
+sample_save.c(76): web_custom_request("rateMatured.action") was successful, 23 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(86): Notify: Transaction "登录" ended with a "Pass" status (Duration: 2.4644 Wasted Time: 0.2323).
+sample_save.c(88): Notify: Transaction "打开样本录入页面" started.
+sample_save.c(93): web_url("speInput.action") started  	[MsgId: MMSG-26355]
+sample_save.c(93): Resource "http://202.116.104.161/NIP/scripts/pdfobject.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/pages/test/css/style.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/pages/test/css/text_style.css?v=0.1.3" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/pages/test/css/input_style.css?v=0.3.6" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/pages/test/css/text_grid.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/pages/test/css/newStyle.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/css/inputTips.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/jalert/jquery.alerts.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Resource "http://202.116.104.161/NIP/scripts/jquery-1.8.2.min.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/input_common.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/common.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/jalert/jquery.alerts.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/specimenInput/specimenInput.js?v=1.2.84" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/jquery.blockUI.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" is in the cache already and will not be downloaded again  	[MsgId: MMSG-26655]
+sample_save.c(93): Found resource "http://202.116.104.161/NIP/scripts/nipDhtmlx.js" in HTML "http://202.116.104.161/NIP/dis/speInput.action"  	[MsgId: MMSG-26659]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button01a.jpg" (specified by argument number 9)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button02a.jpg" (specified by argument number 11)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/line_01.jpg" (specified by argument number 13)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button_bg1a.jpg" (specified by argument number 15)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/ico_lock_2.jpg" (specified by argument number 17)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/select-basic.jpg" (specified by argument number 19)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/clear-basic.jpg" (specified by argument number 21)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/loading.gif" (specified by argument number 23)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/dhtmlxcalendar_dhx_skyblue/bg_main.png" (specified by argument number 25)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/ico_01.jpg" (specified by argument number 27)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/select-hover.jpg" (specified by argument number 29)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/select-click.jpg" (specified by argument number 31)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/button_bg1b.jpg" (specified by argument number 33)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/pages/test/images/clear-hover.jpg" (specified by argument number 35)  	[MsgId: MMSG-26577]
+sample_save.c(93): Downloading resource "http://202.116.104.161/NIP/images/busy.gif" (specified by argument number 37)  	[MsgId: MMSG-26577]
+sample_save.c(93): web_url("speInput.action") was successful, 753309 body bytes, 8930 header bytes, 202 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(119): Notify: Transaction "打开样本录入页面" ended with a "Pass" status (Duration: 6.7436 Wasted Time: 0.2649).
+sample_save.c(126): Notify: Saving Parameter "barCode_add1 = 1200".
+sample_save.c(128): Notify: Parameter Substitution: parameter "barCode_add2" =  "00000086"
+sample_save.c(128): Notify: Parameter Substitution: parameter "barCode_add1" =  "1200"
+sample_save.c(128): Notify: Saving Parameter "barCode_add = 000000861200".
+sample_save.c(129): Notify: Parameter Substitution: parameter "barCode_add" =  "000000861200"
+sample_save.c(129): 000000861200
+sample_save.c(131): Notify: Parameter Substitution: parameter "barCode_add" =  "000000861200"
+sample_save.c(131): Notify: Saving Parameter "barCode_add = 000000861200".
+sample_save.c(135): Notify: Transaction "保存" started.
+sample_save.c(137): web_submit_data("speInputLoadDetailByBarCode.action") started  	[MsgId: MMSG-26355]
+sample_save.c(137): Warning: The string 'ctx' with parameter delimiters is not a parameter.
+sample_save.c(137): Notify: Parameter Substitution: parameter "barCode_add" =  "000000861200"
+sample_save.c(137): web_submit_data("speInputLoadDetailByBarCode.action") was successful, 33 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(148): web_submit_data("speInputCustomerInputTips.action") started  	[MsgId: MMSG-26355]
+sample_save.c(148): web_submit_data("speInputCustomerInputTips.action") was successful, 20 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(159): web_submit_data("speInputLocation.action") started  	[MsgId: MMSG-26355]
+sample_save.c(159): web_submit_data("speInputLocation.action") was successful, 713 body bytes, 216 header bytes, 12 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(170): web_submit_data("speInputDoctor.action") started  	[MsgId: MMSG-26355]
+sample_save.c(170): web_submit_data("speInputDoctor.action") was successful, 511 body bytes, 216 header bytes, 12 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(181): web_submit_data("speInputItem.action") started  	[MsgId: MMSG-26355]
+sample_save.c(181): web_submit_data("speInputItem.action") was successful, 94867 body bytes, 216 header bytes, 37 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(194): web_submit_data("speInputInfoTestItem.action") started  	[MsgId: MMSG-26355]
+sample_save.c(194): Warning: The string 'ctx' with parameter delimiters is not a parameter.
+sample_save.c(194): web_submit_data("speInputInfoTestItem.action") was successful, 24 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(210): web_reg_save_param_ex started  	[MsgId: MMSG-26355]
+sample_save.c(210): Registering web_reg_save_param_ex was successful  	[MsgId: MMSG-26390]
+sample_save.c(218): web_reg_save_param_ex started  	[MsgId: MMSG-26355]
+sample_save.c(218): Registering web_reg_save_param_ex was successful  	[MsgId: MMSG-26390]
+sample_save.c(228): Notify: Saving Parameter "time1 = 2018-11-09 17:27:26".
+sample_save.c(229): Notify: Saving Parameter "time2 = 2018-11-08 17:27:26".
+sample_save.c(316): web_custom_request("speInputValidateSetLab.action") started  	[MsgId: MMSG-26355]
+sample_save.c(316): Warning: The string 'ctx' with parameter delimiters is not a parameter.
+sample_save.c(316): Notify: Parameter Substitution: parameter "barCode_add" =  "000000861200"
+sample_save.c(316): Notify: Parameter Substitution: parameter "time1" =  "2018-11-09 17:27:26"
+sample_save.c(316): Notify: Parameter Substitution: parameter "time2" =  "2018-11-08 17:27:26"
+sample_save.c(316): Notify: Parameter Substitution: parameter "user_name" =  "liu010b"
+sample_save.c(316): Notify: Parameter Substitution: parameter "patient_name" =  "01"
+sample_save.c(316): Notify: Saving Parameter "spe_id = 5be55271308f2e37cf28fce9".
+sample_save.c(316): Notify: Saving Parameter "bar_code = 000000861200".
+sample_save.c(316): web_custom_request("speInputValidateSetLab.action") was successful, 235 body bytes, 216 header bytes, 11 chunking overhead bytes  	[MsgId: MMSG-26385]
+sample_save.c(397): Notify: Transaction "保存" ended with a "Pass" status (Duration: 5.7014 Wasted Time: 0.0232).
+Ending action sample_save.
+Ending iteration 1.
+Ending Vuser...
+Starting action vuser_end.
+Ending action vuser_end.
+Vuser Terminated.
+Vuser 0 (thread 21460), ended OK."

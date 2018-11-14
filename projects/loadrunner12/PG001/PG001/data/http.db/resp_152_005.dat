@@ -1,0 +1,1766 @@
+1ff8
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<script type="text/javascript">
+//*****************************下拉GRID定义开始
+var applyerCombo;
+var seriesForSchCombo;
+var saleOrdersForSchCombo;
+
+var currApplicantForSch; //当前的申请人
+var currDate;
+var onApplyerChange = function(tr){
+};
+var onSeriesForSchChange = function(tr){
+};
+var onSaleOrdersForSchChange = function(tr){
+};
+var applyer_param = {
+	/*必填内容*/
+	div_id : "comboApplyer", 	//对应DIV的id
+	grid_id : "gridApplyer", 	//对应Grid的Id	
+	name:"searchDto.applicant",
+	width : 280, 		 //Combo的宽度
+	clearOff:false,		 //是否禁用clear按钮
+	columnShow:2,		 //将要在文本框中显示的列序号
+	grid_onChange : onApplyerChange,
+	searchColumn:[1,2],
+	onEnter:function(){
+	}
+};
+var seriesForSch_param = {
+	/*必填内容*/
+	div_id : "comboSeriesForSch", 	//对应DIV的id
+	grid_id : "gridSeriesForSch", 	//对应Grid的Id	
+	name:"searchDetailDto.seriesId",
+	width : 120, 		 //Combo的宽度
+	clearOff:false,		 //是否禁用clear按钮
+	columnShow:1,		 //将要在文本框中显示的列序号
+	grid_onChange : onSeriesForSchChange,
+	searchColumn:[1,2],
+	onEnter:function(){
+	}
+};
+
+//*****************************下拉GRID定义结束
+
+	$(function(){
+		//$("#leftTable tr[class!='trTitle']").click(rowSelected);
+		$("#btnSearch").click(doSearch);
+		//$("#checkAll").click(function() {
+	    //     $('input[name="checkbutton"]').attr("checked",this.checked); 
+	    //});
+		//初始化日期
+		//initdate();
+		applyerCombo = new TextCombo(applyer_param);//初始化下拉GRID
+		seriesForSchCombo = new TextCombo(seriesForSch_param);//初始化下拉GRID
+		
+		currApplicantForSch = "4af4e88a53df21e50153e509d7c6117c";
+		currDate = "2018-11-12";
+		$("#applyTime_start").val(currDate + " 00:00:00");
+		$("#applyTime_end").val(currDate + " 23:59:59");
+		setTimeout(function(){
+			applyerCombo.setValue(currApplicantForSch);
+			pageQuery();
+		},500);
+	});
+	function doSearch(){
+		$("#pageNo").val(1);
+		pageQuery();
+	}
+</script>
+<!--组开始-->
+<form id="pageForm" name="pageForm" method="post" >
+<!--组开始-->
+<div class="group_left_one">
+	<div class="tab_bg_1" style="width:auto">
+    <span>查询条件</span>
+     </div>
+     <div class="area_comm">
+    <table class="inputTable">
+	  <tr>
+		<td class="itemLabel">申请时间</td>
+		<td colspan="3">
+			<input style="width: 126px" id="applyTime_start" name="applyTime_start" class="inputColumn4 Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  />
+			- <input style="width: 126px" id="applyTime_end" name="applyTime_end" class="inputColumn4 Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"  />
+		</td>
+	  </tr>
+	  <tr>
+		<td class="itemLabel">申请人</td>
+		<td>
+			<div id="comboApplyer" style="width:133px;"></div>
+			<input type="hidden" name="" value="" />
+		</td>
+		<td class="itemLabel">采购单名称</td>
+		<td>
+			<input id="search_purchaseOrderName" name="searchDto.purchaseOrderName" type="text" class="inputComment" style="width:70px; " value=""/>
+		</td>
+	  </tr>
+	  <tr>
+		<!-- <td class="itemLabel">销售订单</td>
+		<td><div id="comboSaleOrdersForSch" style="width:133px;"></div></td> -->
+		<td class="itemLabel">系列</td>
+		<td colspan="1">
+			<div id="comboSeriesForSch" style="width:133px;"></div>
+		</td>
+		<td class="itemLabel">状态</td>
+		<td>
+			<select id="status" name="searchDto.orderState">
+				<option value=""></option>
+				
+					<option value="400" >已申请</option>
+				
+					<option value="410" >采购中</option>
+				
+					<option value="420" >采购完成</option>
+				
+					<option value="430" >部分入库</option>
+				
+					<option value="440" >全部入库</option>
+				
+			</select>
+		</td>
+	  </tr>
+	  <tr>
+		
+			<td class="itemLabel" colspan="4">
+				<button id="btnSearch" type="button" class="btnComment blue round">查询</button>
+			</td>
+		
+	  </tr>
+	</table>
+  </div>
+</div>
+<!--组结束-->
+
+<!--<hr class="padTB10px">组之间的分隔，上下分隔-->
+<!--组开始-->
+<div class="group_left_one" id="tableList">
+        <div class="tab_bg_2" style="width:auto">
+    	<span>查询列表(共-1条)</span>
+     </div>
+     <div class="area_comm">
+    	<!--div滚动区域开始-->
+	    <div style="width:342px; overflow-x:auto;" class="scrollDiv"><!--需要根据内容合理控制DIV滚动宽度和高度，手动输入-->
+			<table id="leftTable" class="dataTable" style="width:325px;"><!--需要根据内容合理控制表格宽度，手动输入-->
+			  <tr class="trTitle">
+				<td width="30px"><input id="checkAll" type="checkbox"/></td>
+				<td width="100px" nowrap>采购单名称</td>
+				<td width="80px" nowrap>采购单状态</td>
+				<td width="80px" nowrap>申请时间</td>
+			  </tr>
+
+			  
+			</table>
+			
+		</div>
+		<!--div滚动区域结束-->
+		<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<script type="text/javascript">
+	function nextPage(){
+		var lastPage = parseInt($("#lastPageNo").val());
+		var currentPage = parseInt($("#pageNo").val());
+		if(currentPage<lastPage){
+			$("#pageNo").val(currentPage+1);
+			pageQuery();
+		}
+	}
+
+	function previousPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		if(currentPage>1){
+			$("#pageNo").val(currentPage-1);
+			pageQuery();
+		}
+	}
+
+	function firstPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		if(currentPage!=1){
+			$("#pageNo").val(1);
+			pageQuery();	
+		}
+	}
+
+	function lastPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		var lastPage=parseInt($("#lastPageNo").val());
+		if(currentPage!=lastPage){
+			$("#pageNo").val(lastPage);
+			pageQuery();	
+		}
+	}
+
+	function selectPage(){
+		var currentPage = parseInt($("#pageNo").val());
+		var selectPageNo = $("#pageSelect").val();
+		if(currentPage!=selectPageNo){
+			$("#pageNo").val(selectPageNo);
+			pageQuery();	
+		}		
+	}
+	
+</script>
+<input type="hidden" id="pageNo" name="page.pageNo" value="1">
+<input type="hidden" id="lastPageNo" value="0">
+<input type="hidden" id="totalPageNo" value="0">
+
+<ul class="page">
+  <li><input type="button" value="首页" class="btnPage" onclick="firstPage();" /></li>
+  <li><input type="button" value="上一页" class="btnPageLong" onclick="previousPage();" /></li>
+  <li>
+  	<select id="pageSelect" class="selectPage" onchange="selectPage();">
+  		 
+	</select>
+  </li>
+  <li><input type="button" value="下一页" class="btnPageLong" onclick="nextPage();"/></li>
+  <li id="lastpage"><input value="尾页" type="button" class="btnPage"   onclick="lastPage();" /></li>
+</ul>
+
+		
+     </div>
+</div>
+
+<div class="btns">
+	<ul>
+	
+       <li><button type="button" class="btnComment blue round" style="width:78px" onclick="surePurchaseOrders()">采购单确认</button></li>
+    
+    
+       <li><button type="button" class="btnComment blue round" style="width:63px" onclick="cancelSureOrders()">取消确认</button></li>
+    
+    
+       <li><button type="button" class="btnComment blue round" style="width:63px" onclick="completePurchaseOrders()">采购完成</button></li>
+    
+    
+       <li><button type="button" class="btnComment blue round" style="width:63px" onclick="cancelCompleteOrders()">取消完成</button></li>
+    
+    
+       <li><button type="button" class="btnComment blue round" style="width:7
+1ff8
+5px" onclick="exportExcel()">导出Excel</button></li>
+	
+	</ul>
+</div>
+<!--组结束-->
+</form>
+
+<!----------------------------申请人下拉Grid数据源---------------------------------->
+<div id="gridApplyer" class="tablebox_02" style="width: 250px; height: 200px;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr class="tablehead">
+			<td style="width: 9px;">&nbsp;</td>
+			<td style="width: 100px;">工号</td>
+			<td style="width: auto;">姓名</td>
+		</tr>
+	</table>
+	<div class="tablelist" style="width: 100%; height: 176px;">
+		<!--tablebox_02 tablelist start-->
+		<table cellspacing="0" cellpadding="0">
+			
+				<tr id="103136">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103136</td>
+					<td style="width: auto;">林逢龙</td>
+				</tr>
+			
+				<tr id="201072">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100137</td>
+					<td style="width: auto;">邓雪晖</td>
+				</tr>
+			
+				<tr id="2014100500000037">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102262</td>
+					<td style="width: auto;">张吉凤</td>
+				</tr>
+			
+				<tr id="201801">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102061</td>
+					<td style="width: auto;">徐志萍</td>
+				</tr>
+			
+				<tr id="2060">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">200091</td>
+					<td style="width: auto;">王燕</td>
+				</tr>
+			
+				<tr id="20973">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100102</td>
+					<td style="width: auto;">闫修魁</td>
+				</tr>
+			
+				<tr id="4af4e8894a5c68b4014a711db72c3ea6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102519</td>
+					<td style="width: auto;">陈灿成</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b633e1001e">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">linzihui</td>
+					<td style="width: auto;">林紫慧</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b7d6a40048">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">zengli</td>
+					<td style="width: auto;">曾莉</td>
+				</tr>
+			
+				<tr id="4af4e8894ec8977c014ece8e9e9e04ba">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102776</td>
+					<td style="width: auto;">陈茂发</td>
+				</tr>
+			
+				<tr id="4af4e889548d60e10154a2a1e20c2784">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103315</td>
+					<td style="width: auto;">王轩宇</td>
+				</tr>
+			
+				<tr id="4af4e88954d826d50154dc51537172cb">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500371</td>
+					<td style="width: auto;">曾林</td>
+				</tr>
+			
+				<tr id="4af4e88a497887de014978e4bac30be9">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102523</td>
+					<td style="width: auto;">李小威</td>
+				</tr>
+			
+				<tr id="4af4e88a4b34e127014b393bbbac0608">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102564</td>
+					<td style="width: auto;">卢森</td>
+				</tr>
+			
+				<tr id="4af4e88a5084eaa401508d826f9d4b7c">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102858</td>
+					<td style="width: auto;">彭玲玲</td>
+				</tr>
+			
+				<tr id="4af4e88a513e9977015157a0f7f7191d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102816</td>
+					<td style="width: auto;">莫亚勤</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e52867ee14d7">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103112</td>
+					<td style="width: auto;">满伟明</td>
+				</tr>
+			
+				<tr id="4af4e8bd47251a10014732ab8a9f0104">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101074</td>
+					<td style="width: auto;">刘楠</td>
+				</tr>
+			
+				<tr id="900001">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">900001</td>
+					<td style="width: auto;">兼职录单员1</td>
+				</tr>
+			
+				<tr id="ff8080815a11e096015a11e347410001">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">yxb</td>
+					<td style="width: auto;">医学部管理员</td>
+				</tr>
+			
+				<tr id="ff8080815d2baf68015d39bb303f00f3">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">test</td>
+					<td style="width: auto;">test</td>
+				</tr>
+			
+				<tr id="102782">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102782</td>
+					<td style="width: auto;">班周利</td>
+				</tr>
+			
+				<tr id="103173">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103173</td>
+					<td style="width: auto;">陈飞华</td>
+				</tr>
+			
+				<tr id="103541">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103541</td>
+					<td style="width: auto;">梁雪飞</td>
+				</tr>
+			
+				<tr id="201453">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100937</td>
+					<td style="width: auto;">陈国平</td>
+				</tr>
+			
+				<tr id="20181">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">200184</td>
+					<td style="width: auto;">齐国梅</td>
+				</tr>
+			
+				<tr id="202303">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100789</td>
+					<td style="width: auto;">丁洁</td>
+				</tr>
+			
+				<tr id="4028908a53d6db3c0153ef4b26b833e6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103163</td>
+					<td style="width: auto;">张美容</td>
+				</tr>
+			
+				<tr id="4af4e88948e3adb30148eda7dffc7a3d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102279</td>
+					<td style="width: auto;">梁虎</td>
+				</tr>
+			
+				<tr id="4af4e8894afbaef2014b00b545a173bf">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">ywc01</td>
+					<td style="width: auto;">严文超</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b56c5b000c">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">wujiali</td>
+					<td style="width: auto;">吴嘉莉</td>
+				</tr>
+			
+				<tr id="4af4e8894d3d33f4014d510c46a27993">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">yhptzh</td>
+					<td style="width: auto;">医护平台</td>
+				</tr>
+			
+				<tr id="4af4e8894ea91afc014eb897d4f63dc2">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102737</td>
+					<td style="width: auto;">万庚海</td>
+				</tr>
+			
+				<tr id="4af4e889505b580b01505b5f87bd0034">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102870</td>
+					<td style="width: auto;">王鑫</td>
+				</tr>
+			
+				<tr id="4af4e88954573cf201545b9c3c387dc3">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103178</td>
+					<td style="width: auto;">丁祥明</td>
+				</tr>
+			
+				<tr id="4af4e88954573d0001545fa1bea97ad4">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103296</td>
+					<td style="width: auto;">黄晓君</td>
+				</tr>
+			
+				<tr id="4af4e88954d826d50154dc526e5772df">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500376</td>
+					<td style="width: auto;">褚捷</td>
+				</tr>
+			
+				<tr id="4af4e88a4e3881b8014e6b3a513f2866">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">181569</td>
+					<td style="width: auto;">史春燕</td>
+				</tr>
+			
+				<tr id="4af4e88a5295e35001531ce8a1d34ed6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102851</td>
+					<td style="width: auto;">戴其强</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e52ebdc215df">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103113</td>
+					<td style="width: auto;">张柳平</td>
+				</tr>
+			
+				<tr id="ff8080815e600ff00
+1ff8
+15e60147d030001">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">tbal</td>
+					<td style="width: auto;">太保对接</td>
+				</tr>
+			
+				<tr id="102783">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102783</td>
+					<td style="width: auto;">秦云清</td>
+				</tr>
+			
+				<tr id="102836">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102836</td>
+					<td style="width: auto;">何旭明</td>
+				</tr>
+			
+				<tr id="103424">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103424</td>
+					<td style="width: auto;">何翠园</td>
+				</tr>
+			
+				<tr id="103626">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103626</td>
+					<td style="width: auto;">刘斯骁</td>
+				</tr>
+			
+				<tr id="20150">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100015</td>
+					<td style="width: auto;">李湘庭</td>
+				</tr>
+			
+				<tr id="201652">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101682</td>
+					<td style="width: auto;">梁瑞仪</td>
+				</tr>
+			
+				<tr id="202401">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100440</td>
+					<td style="width: auto;">刘金祥</td>
+				</tr>
+			
+				<tr id="4028908a488c7ef001489bd114d83bb5">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">cz01</td>
+					<td style="width: auto;">chengzhi</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25af2f307f32">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100214</td>
+					<td style="width: auto;">喻蝶舞</td>
+				</tr>
+			
+				<tr id="4af4e8894b29cc03014b2f60811a1f56">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102576</td>
+					<td style="width: auto;">魏巍</td>
+				</tr>
+			
+				<tr id="4af4e889527d70ef01528c00c6e360a5">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102995</td>
+					<td style="width: auto;">牛鹏飞</td>
+				</tr>
+			
+				<tr id="4af4e88a462a034e01462a5b987e193c">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101061</td>
+					<td style="width: auto;">苏金福</td>
+				</tr>
+			
+				<tr id="4af4e88a4a2e95fb014a375ce3046b54">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102551</td>
+					<td style="width: auto;">肖剑梅</td>
+				</tr>
+			
+				<tr id="4af4e88a4e80a020014e8b56a3195f1f">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102779</td>
+					<td style="width: auto;">王晓敏</td>
+				</tr>
+			
+				<tr id="4af4e88a50cae7db0150cbebd4b00601">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102886</td>
+					<td style="width: auto;">杨词海</td>
+				</tr>
+			
+				<tr id="4af4e88a51bdaac30151cdf6988535c7">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102842</td>
+					<td style="width: auto;">李娟</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e508601a1156">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">printer2</td>
+					<td style="width: auto;">印刷商2</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e50958e1116e">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">105129</td>
+					<td style="width: auto;">曹建勇</td>
+				</tr>
+			
+				<tr id="4af4e88a548d66d5015499d24603176b">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">900025</td>
+					<td style="width: auto;">亮剑易感基因对接</td>
+				</tr>
+			
+				<tr id="4af4e88a54a499340154a88c0e683cd9">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103270</td>
+					<td style="width: auto;">徐烨</td>
+				</tr>
+			
+				<tr id="ff8080815770765e0157709213e30017">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">ljt</td>
+					<td style="width: auto;">ljt</td>
+				</tr>
+			
+				<tr id="ff80808158dc56f60158dd5807ce044a">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">kk04</td>
+					<td style="width: auto;">kk客服</td>
+				</tr>
+			
+				<tr id="165144">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">165144</td>
+					<td style="width: auto;">苏欣</td>
+				</tr>
+			
+				<tr id="201044">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100171</td>
+					<td style="width: auto;">薛穗莹</td>
+				</tr>
+			
+				<tr id="202332">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102217</td>
+					<td style="width: auto;">冼夏婵</td>
+				</tr>
+			
+				<tr id="20892">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100076</td>
+					<td style="width: auto;">黎运红</td>
+				</tr>
+			
+				<tr id="4af4e8894add4e7b014ae1d91601664d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102568</td>
+					<td style="width: auto;">陈佳纯</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25abe69d7eea">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102512</td>
+					<td style="width: auto;">李子平</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b336037fcc">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100593</td>
+					<td style="width: auto;">朱素捷</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b39ecf7fe0">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102078</td>
+					<td style="width: auto;">黄利锋</td>
+				</tr>
+			
+				<tr id="4af4e8894b147189014b16586c272189">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">lishapeng</td>
+					<td style="width: auto;">李沙澎</td>
+				</tr>
+			
+				<tr id="4af4e8894b147189014b1658f348219d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">zhuyuanfeng</td>
+					<td style="width: auto;">朱元锋</td>
+				</tr>
+			
+				<tr id="4af4e8894c8eae1a014c980049242d98">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102630</td>
+					<td style="width: auto;">区梓超</td>
+				</tr>
+			
+				<tr id="4af4e88954573d000154758f57a87b41">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103181</td>
+					<td style="width: auto;">杜涛</td>
+				</tr>
+			
+				<tr id="4af4e88954d826d50154dc4cf0a47282">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500378</td>
+					<td style="width: auto;">余霞</td>
+				</tr>
+			
+				<tr id="4af4e88954d826db0154dc9c340541f0">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500379</td>
+					<td style="width: auto;">扬帆</td>
+				</tr>
+			
+				<tr id="4af4e88a490e18b301491d0b7d9f57e4">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102348</td>
+					<td style="width: auto;">谭斌</td>
+				</tr>
+			
+				<tr id="4af4e88a4a5cea81014a6faa70a412f9">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102509</td>
+					<td style="width: auto;">顾燕</td>
+				</tr>
+			
+				<tr id="4af4e88a5084eaa401508d83f4b64b85">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">610013</td>
+					<td style="width: auto;">常双双</td>
+				</tr>
+			
+				<tr id="4af4e88a5125fadc015137f10d8c04b9">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102910</td>
+					<td style="width: auto;">戴礼仪</td>
+				</tr>
+			
+				<tr id="4af4e88a513e9977015157ba38ee1cf0">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102605</td>
+					<td style="width: auto;">向阳海</td>
+				</tr>
+			
+				<tr id="4af4e88a53689cd801537d7c50e363b8">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103056</td>
+					<td style="width: auto;">王汝枫</td>
+				</tr>
+			
+				<tr id="4af4e88a540cb98d015414758ea705d5">
+					<td style="width: 9px;">&nbsp;</td>
+1ff8
+
+					<td style="width: 100px;">102967</td>
+					<td style="width: auto;">汤思捷</td>
+				</tr>
+			
+				<tr id="900005">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">900005</td>
+					<td style="width: auto;">兼职录单员5</td>
+				</tr>
+			
+				<tr id="ff8080815a5f98c9015aa256b30f0097">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">jps</td>
+					<td style="width: auto;">上海精皮士专用</td>
+				</tr>
+			
+				<tr id="ff8080815dc9c6eb015dcaa37f610073">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">ceshi</td>
+					<td style="width: auto;">PG测试</td>
+				</tr>
+			
+				<tr id="healthcarduser">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">jkk</td>
+					<td style="width: auto;">健康卡对接专用</td>
+				</tr>
+			
+				<tr id="102590">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102590</td>
+					<td style="width: auto;">何佩珊</td>
+				</tr>
+			
+				<tr id="103392">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103392</td>
+					<td style="width: auto;">陈就成</td>
+				</tr>
+			
+				<tr id="103446">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103446</td>
+					<td style="width: auto;">何梅娟</td>
+				</tr>
+			
+				<tr id="103459">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103459</td>
+					<td style="width: auto;">钟淑娴</td>
+				</tr>
+			
+				<tr id="103638">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103638</td>
+					<td style="width: auto;">陈江奇</td>
+				</tr>
+			
+				<tr id="201045">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100175</td>
+					<td style="width: auto;">罗利利</td>
+				</tr>
+			
+				<tr id="201053">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100211</td>
+					<td style="width: auto;">袁正香</td>
+				</tr>
+			
+				<tr id="201204">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100475</td>
+					<td style="width: auto;">陈卫光</td>
+				</tr>
+			
+				<tr id="201480">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101486</td>
+					<td style="width: auto;">邹颖</td>
+				</tr>
+			
+				<tr id="20174">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">200089</td>
+					<td style="width: auto;">刘依云</td>
+				</tr>
+			
+				<tr id="201800">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102077</td>
+					<td style="width: auto;">李友娜</td>
+				</tr>
+			
+				<tr id="20201">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">200030</td>
+					<td style="width: auto;">谢泉芳</td>
+				</tr>
+			
+				<tr id="202186">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102171</td>
+					<td style="width: auto;">钟艳娟</td>
+				</tr>
+			
+				<tr id="20750">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100177</td>
+					<td style="width: auto;">路林巧</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25ac68dc7f05">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102130</td>
+					<td style="width: auto;">陈哲</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b125727f6f">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101253</td>
+					<td style="width: auto;">孔婷婷</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25ba3c980073">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102566</td>
+					<td style="width: auto;">刘杰</td>
+				</tr>
+			
+				<tr id="4af4e8894b147189014b165705052161">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102008</td>
+					<td style="width: auto;">齐增恒</td>
+				</tr>
+			
+				<tr id="4af4e8894b626898014b6d4bb5ac6bce">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102314</td>
+					<td style="width: auto;">周永红</td>
+				</tr>
+			
+				<tr id="4af4e8894f1a5f25014f2b8d13dd7032">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102820</td>
+					<td style="width: auto;">王慧娟</td>
+				</tr>
+			
+				<tr id="4af4e8895211ceb0015214adadf11cd7">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102956</td>
+					<td style="width: auto;">关则婷</td>
+				</tr>
+			
+				<tr id="4af4e88a46b0a3e20146b1f19a8e1b05">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">300141</td>
+					<td style="width: auto;">宁召峰</td>
+				</tr>
+			
+				<tr id="4af4e88a49ef7f750149f532cc06157f">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102524</td>
+					<td style="width: auto;">廖秀媚</td>
+				</tr>
+			
+				<tr id="4af4e88a4de37e85014e05923e985de6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102704</td>
+					<td style="width: auto;">谭枚琼</td>
+				</tr>
+			
+				<tr id="4af4e88a4f34c2b8014f3ee15e183cd7">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102676</td>
+					<td style="width: auto;">刘春林</td>
+				</tr>
+			
+				<tr id="4af4e88a51bdaac30151cdfa0d1a35cd">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">610030</td>
+					<td style="width: auto;">闫斐</td>
+				</tr>
+			
+				<tr id="4af4e88a535d7052015364ae6d5b1b0e">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102586</td>
+					<td style="width: auto;">梁华蕾</td>
+				</tr>
+			
+				<tr id="900004">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">900004</td>
+					<td style="width: auto;">兼职录单员4</td>
+				</tr>
+			
+				<tr id="103027">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103027</td>
+					<td style="width: auto;">曾雪娜</td>
+				</tr>
+			
+				<tr id="103149">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103149</td>
+					<td style="width: auto;">谭赠起</td>
+				</tr>
+			
+				<tr id="103208">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103208</td>
+					<td style="width: auto;">钟漂晶</td>
+				</tr>
+			
+				<tr id="103433">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103433</td>
+					<td style="width: auto;">钟玉琛</td>
+				</tr>
+			
+				<tr id="103478">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103478</td>
+					<td style="width: auto;">柳艺意</td>
+				</tr>
+			
+				<tr id="103480">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103480</td>
+					<td style="width: auto;">彭思超</td>
+				</tr>
+			
+				<tr id="201071">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100485</td>
+					<td style="width: auto;">林欣欣</td>
+				</tr>
+			
+				<tr id="202367">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102228</td>
+					<td style="width: auto;">范国良</td>
+				</tr>
+			
+				<tr id="4af4e8894b147189014b1659757821b1">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">liuqixiang</td>
+					<td style="width: auto;">刘启祥</td>
+				</tr>
+			
+				<tr id="4af4e88954d826d50154dc50518272b6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500377</td>
+					<td style="width: auto;">冯国建</td>
+				</tr>
+			
+				<tr id="4af4e88a4a5cea81014a6fbc0c171768">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102526</td>
+					<td style="width: auto;">刘阳燕</td>
+				</tr>
+			
+				<tr id="4af4e88a5084eaa401508d8140064b76">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102607</td>
+					<td style="width: auto;">郭纯</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e508e41f1161">
+					<td style="width: 9px;">&
+1ff8
+nbsp;</td>
+					<td style="width: 100px;">printer3</td>
+					<td style="width: auto;">印刷商3</td>
+				</tr>
+			
+				<tr id="ff808081589476480158b33d94c30408">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">kk01</td>
+					<td style="width: auto;">kk印刷厂</td>
+				</tr>
+			
+				<tr id="ff80808163c8d35c0163f1b113cd009b">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">tk</td>
+					<td style="width: auto;">泰康对接专用</td>
+				</tr>
+			
+				<tr id="103268">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103268</td>
+					<td style="width: auto;">洪德毅</td>
+				</tr>
+			
+				<tr id="103423">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103423</td>
+					<td style="width: auto;">翁漫婷</td>
+				</tr>
+			
+				<tr id="201104">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100428</td>
+					<td style="width: auto;">程雪明</td>
+				</tr>
+			
+				<tr id="201202">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100478</td>
+					<td style="width: auto;">周一晓</td>
+				</tr>
+			
+				<tr id="201253">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100446</td>
+					<td style="width: auto;">梁伟</td>
+				</tr>
+			
+				<tr id="202326">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101240</td>
+					<td style="width: auto;">卢永祥</td>
+				</tr>
+			
+				<tr id="202435">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102181</td>
+					<td style="width: auto;">刘佳华</td>
+				</tr>
+			
+				<tr id="20356">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500006</td>
+					<td style="width: auto;">陶维井</td>
+				</tr>
+			
+				<tr id="2061">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">200092</td>
+					<td style="width: auto;">梁雪容</td>
+				</tr>
+			
+				<tr id="4af4e889492d6fb70149305650812e2f">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102477</td>
+					<td style="width: auto;">徐敏华</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b250667f9d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102202</td>
+					<td style="width: auto;">陆洁平</td>
+				</tr>
+			
+				<tr id="4af4e8894b147189014b1657b26c2177">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102118</td>
+					<td style="width: auto;">潘敏健</td>
+				</tr>
+			
+				<tr id="4af4e8894d3d32e1014d469e2c5e2344">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102671</td>
+					<td style="width: auto;">周廷杰</td>
+				</tr>
+			
+				<tr id="4af4e8894d3d32e1014d469f3bca2476">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102668</td>
+					<td style="width: auto;">李明昌</td>
+				</tr>
+			
+				<tr id="4af4e88950ae26f70150c75a6f9a3dc6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102885</td>
+					<td style="width: auto;">赖秀珍</td>
+				</tr>
+			
+				<tr id="4af4e88954d826db0154dc9dbac542a6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500344</td>
+					<td style="width: auto;">李凌</td>
+				</tr>
+			
+				<tr id="4af4e88a4ec8a225014ecec7e2aa0f47">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102803</td>
+					<td style="width: auto;">刘美洪</td>
+				</tr>
+			
+				<tr id="4af4e88a53689cd801537d1eb0cf62ce">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103076</td>
+					<td style="width: auto;">黄受剑</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e507bd231146">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">printer1</td>
+					<td style="width: auto;">印刷商1</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e509d7c6117c">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">xxb</td>
+					<td style="width: auto;">信息部专用</td>
+				</tr>
+			
+				<tr id="4af4e88a53df21e50153e52faf3615e8">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103122</td>
+					<td style="width: auto;">薛鹏飞</td>
+				</tr>
+			
+				<tr id="500271">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">500271</td>
+					<td style="width: auto;">潘凯</td>
+				</tr>
+			
+				<tr id="900003">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">900003</td>
+					<td style="width: auto;">兼职录单员3</td>
+				</tr>
+			
+				<tr id="ff8080815770765e01577089e1680014">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102662</td>
+					<td style="width: auto;">梁荣流</td>
+				</tr>
+			
+				<tr id="103407">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103407</td>
+					<td style="width: auto;">张高胜</td>
+				</tr>
+			
+				<tr id="201544">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101350</td>
+					<td style="width: auto;">张舒媚</td>
+				</tr>
+			
+				<tr id="201648">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">101347</td>
+					<td style="width: auto;">郭永林</td>
+				</tr>
+			
+				<tr id="20195">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">700040</td>
+					<td style="width: auto;">朱文娟</td>
+				</tr>
+			
+				<tr id="202185">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102167</td>
+					<td style="width: auto;">孔梓霞</td>
+				</tr>
+			
+				<tr id="202206">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102186</td>
+					<td style="width: auto;">丘彩婵</td>
+				</tr>
+			
+				<tr id="202338">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102156</td>
+					<td style="width: auto;">胡兰芳</td>
+				</tr>
+			
+				<tr id="20316">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">200181</td>
+					<td style="width: auto;">唐明珠</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b1b53f7f86">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100216</td>
+					<td style="width: auto;">邓慧贤</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b2bcdb7fb2">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">100591</td>
+					<td style="width: auto;">梅玉军</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25b75d2f0036">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">caoyanyang</td>
+					<td style="width: auto;">曹艳阳</td>
+				</tr>
+			
+				<tr id="4af4e8894b14717c014b25baaa850089">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102516</td>
+					<td style="width: auto;">钟雪武</td>
+				</tr>
+			
+				<tr id="4af4e8894cc07d74014ce9d0bf0036c6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102596</td>
+					<td style="width: auto;">唐美河</td>
+				</tr>
+			
+				<tr id="4af4e8894d712ebd014d7564fa3c5431">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">900016</td>
+					<td style="width: auto;">黄异珍</td>
+				</tr>
+			
+				<tr id="4af4e88954573cf201545b9d99767de6">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">103092</td>
+					<td style="width: auto;">施真</td>
+				</tr>
+			
+				<tr id="4af4e88a4b6b9b04014b7cdbafdc382b">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">102583</td>
+					<td style="width: auto;">许文娇</td>
+				</tr>
+			
+				<tr id="900002">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">900002</td>
+					<td style="width: auto;">兼职录单员2</td>
+				</tr>
+			
+				<tr id="ff8080815aa7df42015aa816b1f90003">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">kk</td>
+					<td styl
+1ff8
+e="width: auto;">kk超级测试</td>
+				</tr>
+			
+				<tr id="ff808081614b7b1e01614f34bfd00125">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 100px;">kk05</td>
+					<td style="width: auto;">kk财务</td>
+				</tr>
+			
+		</table>
+	</div>
+</div>
+
+<!----------------------------系列下拉Grid数据源---------------------------------->
+<div id="gridSeriesForSch" class="tablebox_02" style="width: 250px; height: 200px;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr class="tablehead">
+			<td style="width: 9px;">&nbsp;</td>
+			<td style="width: 120px;">系列名称</td>
+			<td style="width: auto;">系列代码</td>
+		</tr>
+	</table>
+	<div class="tablelist" style="width: 100%; height: 176px;">
+		<!--tablebox_02 tablelist start-->
+		<table cellspacing="0" cellpadding="0">
+			
+				<tr id="4028908b4b1fa6eb014b2a7f2b4f00d8">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">京康系列</td>
+					<td style="width: auto;">jingkang</td>
+				</tr>
+			
+				<tr id="4028908b4c4688fb014c59b72a170091">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">太平系列</td>
+					<td style="width: auto;">taiping</td>
+				</tr>
+			
+				<tr id="4028908b4c4688b8014c59ba4ef200f2">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">广东冠昊系列</td>
+					<td style="width: auto;">guanhao</td>
+				</tr>
+			
+				<tr id="4028908b4c4688fb014c59bb80a60097">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">君康系列</td>
+					<td style="width: auto;">junkang</td>
+				</tr>
+			
+				<tr id="4028908b4c4688fb014c59bd5b9a009d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">大地保险系列</td>
+					<td style="width: auto;">dadibaoxian</td>
+				</tr>
+			
+				<tr id="4028908b5355d214015358f9044d00ae">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">C14（幽门螺旋杆菌感染检测）</td>
+					<td style="width: auto;">TY0038</td>
+				</tr>
+			
+				<tr id="4028908b53d025220153d0dc4623078f">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">C13（幽门螺旋杆菌感染检测）</td>
+					<td style="width: auto;">12570001</td>
+				</tr>
+			
+				<tr id="4028908b54320273015436bcb5272d1f">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">基因检测测试系列</td>
+					<td style="width: auto;">ceshixilie</td>
+				</tr>
+			
+				<tr id="4028908b549a2d550154a30ae24b4d31">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">泰康系列</td>
+					<td style="width: auto;">taikang</td>
+				</tr>
+			
+				<tr id="4028908b55ee46e30155fc0ad58e0f2e">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">无创</td>
+					<td style="width: auto;">nipt</td>
+				</tr>
+			
+				<tr id="4028908b525306ef0152e42c5aeb02c5">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">云康系列</td>
+					<td style="width: auto;">yunkangxilie</td>
+				</tr>
+			
+				<tr id="4028908b4b54014e014bd83738fb00c2">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">护美系列</td>
+					<td style="width: auto;">HUMEI </td>
+				</tr>
+			
+				<tr id="4028908b4b540199014bd83acc990094">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">乐力策系列</td>
+					<td style="width: auto;">156416</td>
+				</tr>
+			
+				<tr id="4028908b4c68e3ba014c7424d5ab0d19">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">中宏系列</td>
+					<td style="width: auto;">zhonghong</td>
+				</tr>
+			
+				<tr id="402882fb4d1c9911014d1d5940cf005e">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">药物代谢基因检测</td>
+					<td style="width: auto;">medcgenetest</td>
+				</tr>
+			
+				<tr id="4028908b4d56d3bd014d6f5e36fc169a">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">泛华系列</td>
+					<td style="width: auto;">fanhua</td>
+				</tr>
+			
+				<tr id="4028908b5474e100015475a2a3c0012a">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">小云血压计</td>
+					<td style="width: auto;">小云血压计</td>
+				</tr>
+			
+				<tr id="4028908b55ee46e301560627080329eb">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">云康管家</td>
+					<td style="width: auto;">ykgj</td>
+				</tr>
+			
+				<tr id="4028908b567986c901569c2ad5536b70">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">精准医疗</td>
+					<td style="width: auto;">JZYL</td>
+				</tr>
+			
+				<tr id="4028908b4b1fa6a2014b2920b8a30041">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">太平85系列</td>
+					<td style="width: auto;">taiping85</td>
+				</tr>
+			
+				<tr id="4028908b4c4688fb014c4e8abdc70079">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">护康系列</td>
+					<td style="width: auto;">hukang</td>
+				</tr>
+			
+				<tr id="4028908b530776c00153078473d50004">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">上海JPS系列</td>
+					<td style="width: auto;">shjps</td>
+				</tr>
+			
+				<tr id="4028908b4b1fa6a2014b29227eba0048">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">蓓康系列</td>
+					<td style="width: auto;">beikang</td>
+				</tr>
+			
+				<tr id="4028908b4b1fa6a2014b2923260d004a">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">媛康系列</td>
+					<td style="width: auto;">yuankang</td>
+				</tr>
+			
+				<tr id="4028908b4c4688b8014c4ea6149500e5">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">防癌检测系列</td>
+					<td style="width: auto;">TM</td>
+				</tr>
+			
+				<tr id="4028908b4cbc5d7f014d02fb2cc20bc3">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">耗材与设备</td>
+					<td style="width: auto;">HDdev</td>
+				</tr>
+			
+				<tr id="4028908b53d022f00153e999e8b607bd">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">系统自动</td>
+					<td style="width: auto;">sysauto</td>
+				</tr>
+			
+				<tr id="4028908b5658ed8601566ddb25aa6eef">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">甲状腺B超检查卡</td>
+					<td style="width: auto;">甲状腺</td>
+				</tr>
+			
+				<tr id="4028908b567986c90156b10f70e344cb">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">精准医疗检测</td>
+					<td style="width: auto;">jjly</td>
+				</tr>
+			
+				<tr id="ff808081582d4a3d01582d6240af000d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">A</td>
+					<td style="width: auto;">A</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0b4857003d">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">常规常用基因检测系列</td>
+					<td style="width: auto;">常规常用基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0ba33f0040">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">常规儿童基因检测系列</td>
+					<td style="width: auto;">常规儿童基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0c09800043">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">酒精耐力基因检测系列</td>
+					<td style="width: auto;">酒精耐力基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0d683b0046">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">儿童天赋与潜能基因检测系列</td>
+					<td style="width: auto;">儿童天赋与潜能基因检</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0db85e0049">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">美容黑色素基因检测系列</td>
+					<td style="width: auto;">美容黑色素基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b
+18b3
+2e01582e0e01ef004c">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">药物代谢类基因检测系列</td>
+					<td style="width: auto;">药物代谢类基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0e4acf004f">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">北京儿童基因检测系列</td>
+					<td style="width: auto;">北京儿童基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0ea56d0052">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">上海精皮士乳腺癌基因检测系列</td>
+					<td style="width: auto;">上海精皮士乳腺癌基因</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0efad50055">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">上海精皮二型糖尿病基因检测系列</td>
+					<td style="width: auto;">上海精皮二型糖尿病基</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0f55240058">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">上海精皮士儿童天赋基因检测系列</td>
+					<td style="width: auto;">上海精皮士儿童天赋基</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e0fb98e005b">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">酒精耐受力基因检测系列</td>
+					<td style="width: auto;">酒精耐受力基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e1005c7005e">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">女性基因检测系列</td>
+					<td style="width: auto;">女性基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e109e150061">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">多癌检测基因检测系列</td>
+					<td style="width: auto;">多癌检测基因检测</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01582e11cd0a0064">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">儿童营养吸收基因检测系列</td>
+					<td style="width: auto;">儿童营养吸收基因检测</td>
+				</tr>
+			
+				<tr id="ff808081602a958c01605329481201d4">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">P53抑癌系列</td>
+					<td style="width: auto;">P53抑癌系列</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583de8adc805a7">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因防癌检测组合（女性）系列</td>
+					<td style="width: auto;">易感基因防癌检测组合</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583de9995a05aa">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因防癌检测组合（男性）系列</td>
+					<td style="width: auto;">易感基因防癌检测男</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583de9d3e305ad">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因儿童健康成长组合系列</td>
+					<td style="width: auto;">易感基因儿童健康成长</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583dea158005b0">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因儿童天赋组合系列</td>
+					<td style="width: auto;">易感基因儿童天赋组合</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583dea8c9e05b4">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因男性肿瘤系列</td>
+					<td style="width: auto;">易感基因男性肿瘤</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583deac3ba05b7">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因女性肿瘤系列</td>
+					<td style="width: auto;">易感基因女性肿瘤</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583deb0db705ba">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因慢性病系列</td>
+					<td style="width: auto;">易感基因慢性病</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583deb717205bd">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因儿童健康成长系列</td>
+					<td style="width: auto;">易感基因儿童健康单</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583deba7c505c0">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因儿童天赋潜能系列</td>
+					<td style="width: auto;">易感基因儿童天赋潜能</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01583debe1c505c3">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">易感基因慢性病检测组合系列</td>
+					<td style="width: auto;">易感基因慢性病检测组</td>
+				</tr>
+			
+				<tr id="ff80808160da54f40160de80d90100ed">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">ApoE</td>
+					<td style="width: auto;">ApoE</td>
+				</tr>
+			
+				<tr id="ff8080815889bae201588fadc50e31c8">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">运动猝死系列</td>
+					<td style="width: auto;">运动猝死系列</td>
+				</tr>
+			
+				<tr id="ff8080815889bae201588fae0ffc31cb">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">运动耐力系列</td>
+					<td style="width: auto;">运动耐力系列</td>
+				</tr>
+			
+				<tr id="ff8080815f9504e1015f95214e6c0064">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">上海精皮士测试</td>
+					<td style="width: auto;">上海精皮士测试</td>
+				</tr>
+			
+				<tr id="ff808081582d4b2e01584d41eb5c12ff">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">常规套餐系列</td>
+					<td style="width: auto;">常规套餐</td>
+				</tr>
+			
+				<tr id="ff8080815d7e6a77015da74ea631005b">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">PAC系列</td>
+					<td style="width: auto;">PAC系列</td>
+				</tr>
+			
+				<tr id="ff80808161d4e5f40161d53774fb00d4">
+					<td style="width: 9px;">&nbsp;</td>
+					<td style="width: 120px;">脂联素系列</td>
+					<td style="width: auto;">脂联素系列</td>
+				</tr>
+			
+		</table>
+	</div>
+</div>
+
+0
+

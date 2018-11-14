@@ -1,0 +1,11 @@
+[t61]
+FileName1=t61.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/checkTestItemSex.action?ids=ff8080815d7e6a77015da76d0f690094&planId=ff8080815f4c6938015f4d417db402ca&patientSex=male
+Total=1
+RequestHeaderFile=t61_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t61_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_61.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

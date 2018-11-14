@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<table style="width: 100%;" border="0" cellspacing="1" cellpadding="0">
+	<tr bgcolor="#9dcdfa" style="height: 30px;">
+		<td style="width: 10%;margin: auto;text-align: center;">操作类型</td>
+		<td style="width: 15%;margin: auto;text-align: center;">操作时间</td>
+		<td style="width: 50%;margin: auto;text-align: center;">操作内容</td>
+		<td style="width: 15%;margin: auto;text-align: center;">部门</td>
+		<td style="width: 10%;margin: auto;text-align: center;">操作员</td>
+	</tr>
+	
+		<tr style="height: 24px;" bgcolor="#d9eafa">
+			<td style="width: 10%;margin: auto;text-align: left;">产品出库-新增</td>
+			<td style="width: 15%;margin: auto;text-align: left;">2018-11-12 16:17:36</td>
+			<td style="width: 50%;margin: auto;text-align: left;">出库申请-条码号：[201811125200]，<br>耗材申请单：[201811125300]，<br>申请人：[信息部专用]，<br>申请时间：[2018-11-12 16:17:36]，<br>下单客户：[杭州蓝胜健康咨询有限公司]，<br>签收人姓名：[说到底]，<br>签收电话：[13556453456]，<br>仓库：[南仓]，<br>去向区域：[亮剑]，<br>寄送快递单号：[22233444]，<br>寄送快递公司：[尔尔v让他]，<br>套餐所属系列：[PAC系列]，<br>状态：[已申请]。</td>
+			<td style="width: 15%;margin: auto;text-align: center;">财务部</td>
+			<td style="width: 10%;margin: auto;text-align: center;">信息部专用</td>
+		</tr>
+	
+		<tr style="height: 24px;" bgcolor="#d9eafa">
+			<td style="width: 10%;margin: auto;text-align: left;">产品出库-确认出库</td>
+			<td style="width: 15%;margin: auto;text-align: left;">2018-11-12 16:18:24</td>
+			<td style="width: 50%;margin: auto;text-align: left;">确认出库-条码号[201811125200]</td>
+			<td style="width: 15%;margin: auto;text-align: center;">财务部</td>
+			<td style="width: 10%;margin: auto;text-align: center;">信息部专用</td>
+		</tr>
+	
+		<tr style="height: 24px;" bgcolor="#d9eafa">
+			<td style="width: 10%;margin: auto;text-align: left;">易感基因录入-修改</td>
+			<td style="width: 15%;margin: auto;text-align: left;">2018-11-12 16:21:14</td>
+			<td style="width: 50%;margin: auto;text-align: left;">修改-姓名：由[]更改为[0511]，<br>性别：由[]更改为[男]，<br>手机号：由[]更改为[13554453456]，<br>出生日期：由[]更改为[2013-11-05]，<br>快递单号：由[]更改为[22233444]，<br>采样日期：由[]更改为[2018-10-29]，<br>内勤接收时间：由[]更改为[2018-11-12 16:20:00]，<br>省份：由[]更改为[黑龙江省]，<br>城市：由[]更改为[哈尔滨市]，<br>地区：由[]更改为[道里区]，<br>报告接收人：由[]更改为[www2]，<br>报告接收人电话：由[]更改为[13456787656]，<br>报告寄送地址：由[]更改为[黑龙江省哈尔滨市道里区]，<br>备注：由[]更改为[套餐共有：7个项目。<br>具体项目为：PAC胃癌3、PAC前列腺癌2、PAC肝癌3、PAC结直肠癌4、PAC食管癌3、PAC胰腺癌3、PAC肺癌4<br>]，出库套餐：由[PAC防癌6项女]更改为[PAC防癌10项男]，<br></td>
+			<td style="width: 15%;margin: auto;text-align: center;">财务部</td>
+			<td style="width: 10%;margin: auto;text-align: center;">信息部专用</td>
+		</tr>
+	
+		<tr style="height: 24px;" bgcolor="#d9eafa">
+			<td style="width: 10%;margin: auto;text-align: left;">易感基因录入-内勤接收</td>
+			<td style="width: 15%;margin: auto;text-align: left;">2018-11-12 16:21:37</td>
+			<td style="width: 50%;margin: auto;text-align: left;">[信息部专用]接收标本[201811125200]。</td>
+			<td style="width: 15%;margin: auto;text-align: center;">财务部</td>
+			<td style="width: 10%;margin: auto;text-align: center;">信息部专用</td>
+		</tr>
+	
+		<tr style="height: 24px;" bgcolor="#d9eafa">
+			<td style="width: 10%;margin: auto;text-align: left;">实验室接收-扫描条码</td>
+			<td style="width: 15%;margin: auto;text-align: left;">2018-11-12 16:22:38</td>
+			<td style="width: 50%;margin: auto;text-align: left;">[信息部专用]扫描条码[201811125200]。</td>
+			<td style="width: 15%;margin: auto;text-align: center;">财务部</td>
+			<td style="width: 10%;margin: auto;text-align: center;">信息部专用</td>
+		</tr>
+	
+		<tr style="height: 24px;" bgcolor="#d9eafa">
+			<td style="width: 10%;margin: auto;text-align: left;">实验室接收-接收标本</td>
+			<td style="width: 15%;margin: auto;text-align: left;">2018-11-12 16:23:13</td>
+			<td style="width: 50%;margin: auto;text-align: left;">实验室接收标本-条码号：201811125200，<br>接收人：信息部专用。</td>
+			<td style="width: 15%;margin: auto;text-align: center;">财务部</td>
+			<td style="width: 10%;margin: auto;text-align: center;">信息部专用</td>
+		</tr>
+	
+		<tr style="height: 24px;" bgcolor="#d9eafa">
+			<td style="width: 10%;margin: auto;text-align: left;">实验室接收-扫描条码</td>
+			<td style="width: 15%;margin: auto;text-align: left;">2018-11-12 16:25:01</td>
+			<td style="width: 50%;margin: auto;text-align: left;">[信息部专用]扫描条码[201811125200]。</td>
+			<td style="width: 15%;margin: auto;text-align: center;">财务部</td>
+			<td style="width: 10%;margin: auto;text-align: center;">信息部专用</td>
+		</tr>
+	
+</table>

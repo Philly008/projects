@@ -1,0 +1,13 @@
+[t153]
+FileName1=t153.html
+URL1=http://192.168.14.35/PG/spe/speReceiveMain.action
+Total=2
+RequestHeaderFile=t153_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t153_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_153.xml
+FileName2=t153_specimenReceive.html
+URL2=http://192.168.14.35/PG/pages/spe/specimenReceive/scripts/specimenReceive.js?version=2.5.6
+[ProtocolInfo]
+ProtocolId=QTWeb

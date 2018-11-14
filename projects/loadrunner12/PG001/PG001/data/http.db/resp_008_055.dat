@@ -1,0 +1,341 @@
+1ff8
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<table style="width: 100%;" border="0" cellspacing="1" cellpadding="0">
+	<tr bgcolor="#9dcdfa">
+		<td class="box_tc">病种</td>
+		<td class="box_tc">基因座</td>
+		<td class="box_jywd">基因位点（项目名称）</td>
+		<td class="box_tc">参考范围</td>
+		<td class="box_OR">OR值</td>
+		<td class="box_tc">人群频数</td>
+		<td class="box_OR">结果</td>
+		<td class="box_tc">项目类型</td>
+	</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胃癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">Pf-C199</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胃癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胃癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">Pf-C724</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胃癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胃癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">Pf-CA</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胃癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胃癌3</td>
+			<td class="box_tc"></td>
+			<td class="box_jywd">相对遗传危险度</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胃癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC前列腺癌2</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">Pf-CA</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC前列腺癌2</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC前列腺癌2</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">Pf-P-f</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC前列腺癌2</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC前列腺癌2</td>
+			<td class="box_tc"></td>
+			<td class="box_jywd">相对遗传危险度</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC前列腺癌2</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肝癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">AFP</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肝癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肝癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CEA</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肝癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肝癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">GP73</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肝癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肝癌3</td>
+			<td class="box_tc"></td>
+			<td class="box_jywd">相对遗传风险度</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肝癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC结直肠癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CA125</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC结直肠癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC结直肠癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CA199</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC结直肠癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC结直肠癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CA724</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC结直肠癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC结直肠癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CEA</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC结直肠癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC结直肠癌4</td>
+			<td class="box_tc"></td>
+			<td class="box_jywd">相对遗传风险度</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC结直肠癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC食管癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CA199</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC食管癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC食管癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CEA</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC食管癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC食管癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">SCCA1</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC食管癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC食管癌3</td>
+			<td class="box_tc"></td>
+			<td class="box_jywd">相对遗传风险度</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC食管癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胰腺癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CA125</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胰腺癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胰腺癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CA199</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胰腺癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胰腺癌3</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CEA</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胰腺癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC胰腺癌3</td>
+			<td class="box_tc"></td>
+			<td class="box_jywd">相对遗传危险度</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC胰腺癌3</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肺癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">CA125</td>
+			<td class="box_tc"></td>
+			<td clas
+544
+s="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肺癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肺癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">NSE</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肺癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肺癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">SCCA1</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肺癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肺癌4</td>
+			<td class="box_tc">PAC</td>
+			<td class="box_jywd">pro-GRP</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肺癌4</td>
+		</tr>
+	
+		<tr bgcolor="#d9eafa">
+			<td class="box_tc">PAC肺癌4</td>
+			<td class="box_tc"></td>
+			<td class="box_jywd">相对遗传风险度</td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc"></td>
+			<td class="box_OR"></td>
+			<td class="box_tc">PAC肺癌4</td>
+		</tr>
+	
+</table>
+0
+

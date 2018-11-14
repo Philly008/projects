@@ -1,0 +1,9 @@
+-+
+-DCCI
+-D_IDA_XL
+-DWINNT
+-ID:\HP\exercises\PG001\PG001
+-ID:\HP\LR12\include
+-ed:\hp\exercises\pg001\pg001\\logfile.log
+d:\hp\exercises\pg001\pg001\\combined_PG001.c
+d:\hp\exercises\pg001\pg001\\pre_cci.c

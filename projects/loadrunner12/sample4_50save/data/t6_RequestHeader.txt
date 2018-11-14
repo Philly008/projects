@@ -1,0 +1,13 @@
+POST /NIP/rpt/searchdanger.action HTTP/1.1
+Host: 202.116.104.161
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
+Content-Length: 0
+Accept: */*
+Origin: http://202.116.104.161
+X-Requested-With: XMLHttpRequest
+Referer: http://202.116.104.161/NIP/home.action
+Accept-Language: zh-CN
+Accept-Encoding: gzip, deflate
+Cookie: JSESSIONID=4F5CE2C78180109875988BD1CA8113D8
+Connection: keep-alive
+

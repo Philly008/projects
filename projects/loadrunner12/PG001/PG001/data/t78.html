@@ -1,0 +1,3306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+
+
+<script src="/PG/scripts/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery.blockUI.js" type="text/javascript"></script>
+<script src="/PG/scripts/common.js" type="text/javascript"></script>
+<script src="/PG/scripts/input_common.js" type="text/javascript"></script>
+<script src="/PG/scripts/qcm_common.js" type="text/javascript"></script>
+<script src="/PG/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<script src="/PG/scripts/datepicker/WdatePicker.js" type="text/javascript"></script>
+<script src="/PG/scripts/aa.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
+<link rel="stylesheet" href="/PG/css/master.css" type="text/css" />
+<link href="/PG/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+
+<link href="/PG/pages/test/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/text_style.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/text_grid.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/newStyle.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/icon.css" />
+<style>
+	.operationLogShowDiv 
+</style>
+<script type="text/javascript">
+function errorHandle(XMLHttpRequest){
+	var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
+	if(sessionstatus == "timeout"){
+	   	   parent.location.href = ctx+"/login.action";
+	    }
+	var errirstatus = XMLHttpRequest.getResponseHeader("error");
+	if(errirstatus == "true"){
+		jAlert("系统错误,请联系管理员.","提示信息");
+	}
+}
+$.ajaxSetup({     
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",     
+    beforeSend: function(XMLHttpRequest){
+    	$.blockUI.defaults.title = null;
+    	blockUI();
+	},
+	error: function(xhr,status,error){
+	},
+    complete:function(XMLHttpRequest,textStatus){
+	    if($.blockUI.defaults.title == null){
+	    	$.unblockUI({ 
+		        onUnblock: function(){ 
+					errorHandle(XMLHttpRequest);
+		        } 
+			});
+	    }
+		
+    }
+});
+
+	//tableId：  table id
+	//     td: get td
+	// isNote: 0：非节点/1：节点
+	function operationNote(tableId,td,isNote,modleType){
+		var selectData = null;
+		if(isNote=="1"){//是节点就取id或者barcode查询
+			if(td=="id"){
+				selectData = $("#"+tableId+" tr[class='oddbg selectedbg'],#"+tableId+" tr[class='evenbg selectedbg']").attr("id");
+			}else{
+				selectData = $("#"+tableId+" tr[class='oddbg selectedbg'],#"+tableId+" tr[class='evenbg selectedbg']").children('td').eq(td).html();
+			}
+			
+			if(selectData==null || selectData==''){
+				showMsg("请先选中要查看日志的记录！");
+				return ;
+			}
+		}
+		$("#operationLogShowDiv").load("/PG/ref/pgOperationLog.action?time=" + new Date().getTime(), {id:selectData,isNote:isNote,modleType:modleType}, function(){
+			$("#operationLogShowDiv").show();
+			$('#operationLogShowDiv').dialog({
+			    title: '操作记录',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'关闭',
+					handler:function(){
+						$('#operationLogShowDiv').dialog( "close" );
+					}
+				}]
+			});
+		});
+	}
+	
+	//     td: get td
+	//     isNote: 0：非节点/1：节点
+	function operationNoteTwo(selectData,isNote,modleType){
+		if(isNote=="1"){
+			if(selectData==null || selectData==''){
+				showMsg("请先选中要查看日志的记录！");
+				return ;
+			}
+		}
+		$("#operationLogShowDiv").load("/PG/ref/pgOperationLog.action?time=" + new Date().getTime(), {id:selectData,isNote:isNote,modleType:modleType}, function(){
+			$("#operationLogShowDiv").show();
+			$('#operationLogShowDiv').dialog({
+			    title: '操作记录',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'关闭',
+					handler:function(){
+						$('#operationLogShowDiv').dialog( "close" );
+					}
+				}]
+			});
+		});
+	}
+
+	function pdfViewShow(printArgs){
+		
+		   $("#pdf_view_print").html('');
+			$("#pdfViewShowDiv").show();
+			$('#pdfViewShowDiv').dialog({
+			    title: '清单打印',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true
+			});
+			$("#pdfViewShowDiv").load("/PG/pdfViewShowDiv.action?time=" + new Date().getTime(), {}, function(){
+				embedPDF(printArgs,"pdf_view_print"); 
+			}); 
+			
+	}
+	function jingDongExcelShow(x,y,ids,cancelOrders,uploads){
+		var height=($(window).height()-y)/2;
+		var width=($(window).width()-x)/2;
+			$("#jingDongExcelDiv").load("/PG/spe/jingDongExcel.action?time=" + new Date().getTime(), 
+			{"ids":ids,"cancelOrders":cancelOrders,"uploads":uploads}, 
+			function(){
+				$("#jingDongExcelDiv").show();
+				$('#jingDongExcelDiv').dialog({
+				    title: '导出',
+				    left: width,
+				    top:height,
+				    width: x,
+				    height: y,
+				    closed: false,
+				    cache: false,
+				    modal: true
+				   /*  buttons:[{
+						text:'关闭',
+						handler:function(){
+							$('#jingDongExcelDiv').dialog( "close" );
+						}
+					}] */
+				});
+			});
+	}
+	
+	
+	function jingSupplyproductionorderShow(x,y,ids,cancelOrders){
+		var height=($(window).height()-y)/2;
+		var width=($(window).width()-x)/2;
+			$("#Supplyproductionorder").load("/PG/spe/jingDongSupplyproductionorder.action?time=" + new Date().getTime(), 
+			{"ids":ids}, 
+			function(){
+				$("#Supplyproductionorder").show();
+				$('#Supplyproductionorder').dialog({
+				    title: '生成领料单',
+				    left: width,
+				    top:height,
+				    width: x,
+				    height: y,
+				    closed: false,
+				    cache: false,
+				    modal: true
+				  
+				});
+			});
+	}
+	
+</script>
+<div id="operationLogShowDiv" title="操作记录" style="display: none;"></div>
+<div id="pdfViewShowDiv" title="清单打印 " style="display: none;"></div>
+<div id="jingDongExcelDiv" title="excel导出" style="display: none;"></div>
+<div id="Supplyproductionorder" title="生成领料单" style="display: none;"></div>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="/PG/pages/spe/specimenReceive/scripts/specimenReceive.js?version=2.5.6" type="text/javascript"></script>
+<link href="/PG/css/easyUI.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	
+</script>
+<title>实验室接收</title>
+<style>
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+.btnComment_larger {
+	width: 90px;
+	line-height: 26px;
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 1px 1px 1px #333;
+	border-radius: 5px;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.btnComment_larger:hover {
+	color: #82ff2e;
+}
+
+.box_main_m {
+	display: block;
+	clear: both;
+	position: relative;
+	height: auto;
+	background-color: #e5f3fe;
+	border: 1px solid #a9c6dd;
+}
+
+.btnComment_larger.blue {
+	border: 1px solid #1e7db9;
+	box-shadow: 0 1px 2px #8fcaee inset, 0 -1px 0 #497897 inset, 0 -2px 3px
+		#8fcaee inset;
+	background: -webkit-linear-gradient(top, #42a4e0, #2e88c0);
+	background: -moz-linear-gradient(top, #42a4e0, #2e88c0);
+	background: linear-gradient(top, #42a4e0, #2e88c0);
+}
+
+.tab{border:1px solid #b8cedc;padding: 5px} 
+.testItemType{
+	display: block; 
+	width:400px;
+	overflow: hidden; 
+	text-overflow: ellipsis;
+}
+</style>
+</head>
+<body>
+	<input type="hidden" id="loginUserID" value="4af4e88a53df21e50153e509d7c6117c"></input>
+	<input type="hidden" id="loginUserOrg" value="广州达安"></input>
+	<!--outArea开始-->
+	<div class="outArea">
+		<!--预留开始-->
+		<div class="public">
+			<!--主区域开始-->
+			<div class="box_main">
+
+				<!--工作区域开始-->
+				<div class="box_main_main">
+					<!--主区域开始-->
+					<div class='group_right_one_oneLeft' style="width: 99.9%; margin: 0px;">
+						<!--工作区域开始-->
+						<table style="width: 99%; margin: 0.5%;" border="0" class="tab" cellspacing="0" cellpadding="0" id = "searchTab">
+							<tr>
+								<td width="5%" align="right">快递单号&nbsp;&nbsp;</td>
+								<td width="20%" align="left"><input id=txtExpressNum type="text" onkeypress='onExpressNumEnter();' class="inputColumn2" style="width: 200px;" 
+								value=""></input></td>
+								<td width="10%" align="right">扫描条码&nbsp;&nbsp;</td>
+								<td width="30%" align="left"><input id="txtBarCode" type="text" onkeypress='onBarCodeEnter();' class="inputColumn2" style="width: 200px;"></input></td>
+								<td width="5%" align="right">扫描人&nbsp;&nbsp;</td>
+								<td width="20%" align="left"><div id="comboScanUser" style="width: 103px;" class="comboDiv"></div></td>
+								<td width="5%" align="right">标本去向&nbsp;&nbsp;</td>
+								<td width="10%" align="left"><div id="comboPlansArea" style="width: 103px;" class="comboDiv"></div></td>
+							</tr>
+						</table>
+
+						<div id="searchListDiv" style="width: 98.8%;margin: 0.5%; align: center;border:1px solid #b8cedc;">
+							<div class="tab_bg_2" style="width: 99%;background: none;" id="seachTitle">
+								<table width="95%">
+									<tbody>
+										<tr>
+											
+											<td width="30%"><span id="noScanlistCountLabel" style="margin-left: 30px;"><font size="3" color="black">实验室待扫描标本：共54条</font></span></td>
+											<td width="70%"><span id="listCountLabel" style="margin-left: 300px;"><font size="3" color="black">广州达安 待接收标本：共0条</font></span></td>
+											<!-- <td><span id=""><font size="3" color="black">实验室待接收标本</font></span></td> -->
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="area_comm" style="width: 99%;">
+								<div style="width: 30%;float: left;overflow-x: auto;" class="scrollDiv" >
+									<!--需要根据内容合理控制DIV滚动宽度和高度，手动输入-->
+									<div style="width: 99%;float: left;overflow-x: auto;" id="noScanDiv">
+										<table id="noScanListTable" class="dataTable" style="width: 98%;">
+											<!--需要根据内容合理控制表格宽度，手动输入-->
+											<tr class="trTitle">
+												<!-- <td width="50"><input id="checkAll" type="checkbox" onclick="checkAllClick();"/></td> -->
+												<td width="150">条码号</td>
+												<td width="auto">录单日期</td>
+											</tr>
+											
+												
+													<tr id="201811125400" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201811125400">
+													201811125400</td>
+												<td title="2018-11-12 15:58:00">
+													2018-11-12 15:58:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201811072200" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201811072200">
+													201811072200</td>
+												<td title="2018-11-07 19:33:00">
+													2018-11-07 19:33:00</td>
+												</tr>
+											
+												
+													<tr id="201806220500" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201806220500">
+													201806220500</td>
+												<td title="2018-06-22 14:58:00">
+													2018-06-22 14:58:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201804110400" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201804110400">
+													201804110400</td>
+												<td title="2018-04-11 14:16:00">
+													2018-04-11 14:16:00</td>
+												</tr>
+											
+												
+													<tr id="201804102600" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201804102600">
+													201804102600</td>
+												<td title="2018-04-10 17:22:00">
+													2018-04-10 17:22:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201804102400" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201804102400">
+													201804102400</td>
+												<td title="2018-04-10 17:22:00">
+													2018-04-10 17:22:00</td>
+												</tr>
+											
+												
+													<tr id="201804102300" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201804102300">
+													201804102300</td>
+												<td title="2018-04-10 17:20:00">
+													2018-04-10 17:20:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201804102200" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201804102200">
+													201804102200</td>
+												<td title="2018-04-10 17:20:00">
+													2018-04-10 17:20:00</td>
+												</tr>
+											
+												
+													<tr id="201804102100" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201804102100">
+													201804102100</td>
+												<td title="2018-04-10 17:20:00">
+													2018-04-10 17:20:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201803219900" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201803219900">
+													201803219900</td>
+												<td title="2018-03-21 15:08:00">
+													2018-03-21 15:08:00</td>
+												</tr>
+											
+												
+													<tr id="201803219800" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201803219800">
+													201803219800</td>
+												<td title="2018-03-21 15:08:00">
+													2018-03-21 15:08:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201803081200" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201803081200">
+													201803081200</td>
+												<td title="2018-03-08 16:44:00">
+													2018-03-08 16:44:00</td>
+												</tr>
+											
+												
+													<tr id="201803081100" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201803081100">
+													201803081100</td>
+												<td title="2018-03-08 16:43:00">
+													2018-03-08 16:43:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201802053700" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201802053700">
+													201802053700</td>
+												<td title="2018-02-05 16:21:00">
+													2018-02-05 16:21:00</td>
+												</tr>
+											
+												
+													<tr id="201802053500" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201802053500">
+													201802053500</td>
+												<td title="2018-02-05 16:03:00">
+													2018-02-05 16:03:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201802052800" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201802052800">
+													201802052800</td>
+												<td title="2018-02-05 15:01:00">
+													2018-02-05 15:01:00</td>
+												</tr>
+											
+												
+													<tr id="201802052200" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201802052200">
+													201802052200</td>
+												<td title="2018-02-05 14:12:00">
+													2018-02-05 14:12:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201802052000" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201802052000">
+													201802052000</td>
+												<td title="2018-02-05 13:45:00">
+													2018-02-05 13:45:00</td>
+												</tr>
+											
+												
+													<tr id="201711270200" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201711270200">
+													201711270200</td>
+												<td title="2017-11-27 13:59:00">
+													2017-11-27 13:59:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201711070100" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201711070100">
+													201711070100</td>
+												<td title="2017-11-07 14:10:00">
+													2017-11-07 14:10:00</td>
+												</tr>
+											
+												
+													<tr id="201708119800" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201708119800">
+													201708119800</td>
+												<td title="2017-08-11 15:31:00">
+													2017-08-11 15:31:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201703101200" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201703101200">
+													201703101200</td>
+												<td title="2017-03-10 14:45:00">
+													2017-03-10 14:45:00</td>
+												</tr>
+											
+												
+													<tr id="201611290200" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201611290200">
+													201611290200</td>
+												<td title="2016-11-29 09:34:00">
+													2016-11-29 09:34:00</td>
+												</tr>
+											
+												
+												
+													<tr id="001123110700" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="001123110700">
+													001123110700</td>
+												<td title="2016-11-23 11:24:00">
+													2016-11-23 11:24:00</td>
+												</tr>
+											
+												
+													<tr id="001123110500" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="001123110500">
+													001123110500</td>
+												<td title="2016-11-23 11:22:00">
+													2016-11-23 11:22:00</td>
+												</tr>
+											
+												
+												
+													<tr id="111500000300" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="111500000300">
+													111500000300</td>
+												<td title="2016-11-15 10:35:00">
+													2016-11-15 10:35:00</td>
+												</tr>
+											
+												
+													<tr id="111511150400" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="111511150400">
+													111511150400</td>
+												<td title="2016-11-15 10:21:00">
+													2016-11-15 10:21:00</td>
+												</tr>
+											
+												
+												
+													<tr id="111511150300" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="111511150300">
+													111511150300</td>
+												<td title="2016-11-15 10:21:00">
+													2016-11-15 10:21:00</td>
+												</tr>
+											
+												
+													<tr id="111511150100" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="111511150100">
+													111511150100</td>
+												<td title="2016-11-15 10:11:00">
+													2016-11-15 10:11:00</td>
+												</tr>
+											
+												
+												
+													<tr id="121212322400" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="121212322400">
+													121212322400</td>
+												<td title="2016-11-12 15:20:00">
+													2016-11-12 15:20:00</td>
+												</tr>
+											
+												
+													<tr id="201611020500" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201611020500">
+													201611020500</td>
+												<td title="2016-11-02 13:19:00">
+													2016-11-02 13:19:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201611010700" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201611010700">
+													201611010700</td>
+												<td title="2016-11-01 16:48:00">
+													2016-11-01 16:48:00</td>
+												</tr>
+											
+												
+													<tr id="201610319600" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610319600">
+													201610319600</td>
+												<td title="2016-11-01 13:26:00">
+													2016-11-01 13:26:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610311800" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610311800">
+													201610311800</td>
+												<td title="2016-11-01 11:42:00">
+													2016-11-01 11:42:00</td>
+												</tr>
+											
+												
+													<tr id="201610311700" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610311700">
+													201610311700</td>
+												<td title="2016-11-01 11:42:00">
+													2016-11-01 11:42:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610250500" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610250500">
+													201610250500</td>
+												<td title="2016-10-25 09:48:00">
+													2016-10-25 09:48:00</td>
+												</tr>
+											
+												
+													<tr id="201610250400" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610250400">
+													201610250400</td>
+												<td title="2016-10-25 09:47:00">
+													2016-10-25 09:47:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610250300" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610250300">
+													201610250300</td>
+												<td title="2016-10-25 09:46:00">
+													2016-10-25 09:46:00</td>
+												</tr>
+											
+												
+													<tr id="201610250100" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610250100">
+													201610250100</td>
+												<td title="2016-10-25 09:34:00">
+													2016-10-25 09:34:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610185400" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610185400">
+													201610185400</td>
+												<td title="2016-10-19 15:16:00">
+													2016-10-19 15:16:00</td>
+												</tr>
+											
+												
+													<tr id="101610191500" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="101610191500">
+													101610191500</td>
+												<td title="2016-10-19 15:11:00">
+													2016-10-19 15:11:00</td>
+												</tr>
+											
+												
+												
+													<tr id="101610191300" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="101610191300">
+													101610191300</td>
+												<td title="2016-10-19 15:06:00">
+													2016-10-19 15:06:00</td>
+												</tr>
+											
+												
+													<tr id="101610191100" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="101610191100">
+													101610191100</td>
+												<td title="2016-10-19 15:06:00">
+													2016-10-19 15:06:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610193100" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610193100">
+													201610193100</td>
+												<td title="2016-10-19 15:04:00">
+													2016-10-19 15:04:00</td>
+												</tr>
+											
+												
+													<tr id="201610190200" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610190200">
+													201610190200</td>
+												<td title="2016-10-19 15:02:00">
+													2016-10-19 15:02:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610190100" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610190100">
+													201610190100</td>
+												<td title="2016-10-19 10:40:00">
+													2016-10-19 10:40:00</td>
+												</tr>
+											
+												
+													<tr id="201610182900" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610182900">
+													201610182900</td>
+												<td title="2016-10-18 13:59:00">
+													2016-10-18 13:59:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610181600" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610181600">
+													201610181600</td>
+												<td title="2016-10-18 11:03:00">
+													2016-10-18 11:03:00</td>
+												</tr>
+											
+												
+													<tr id="201610170400" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610170400">
+													201610170400</td>
+												<td title="2016-10-17 15:33:00">
+													2016-10-17 15:33:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610170300" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610170300">
+													201610170300</td>
+												<td title="2016-10-17 15:32:00">
+													2016-10-17 15:32:00</td>
+												</tr>
+											
+												
+													<tr id="201610170100" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610170100">
+													201610170100</td>
+												<td title="2016-10-17 15:23:00">
+													2016-10-17 15:23:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610170000" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610170000">
+													201610170000</td>
+												<td title="2016-10-17 15:20:00">
+													2016-10-17 15:20:00</td>
+												</tr>
+											
+												
+													<tr id="201610140100" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610140100">
+													201610140100</td>
+												<td title="2016-10-14 11:03:00">
+													2016-10-14 11:03:00</td>
+												</tr>
+											
+												
+												
+													<tr id="201610122100" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="201610122100">
+													201610122100</td>
+												<td title="2016-10-12 15:00:00">
+													2016-10-12 15:00:00</td>
+												</tr>
+											
+										</table>
+									</div>
+									<div style="width: 99%;float: left;overflow-x: auto;margin-top: 40px;" id="areaDiv">
+										<table id="areaListTable" class="dataTable" style="width: 98%;">
+											<!--需要根据内容合理控制表格宽度，手动输入-->
+											<tr class="trTitle">
+												<!-- <td width="50"><input id="checkAll" type="checkbox" onclick="checkAllClick();"/></td> -->
+												<td width="150">标本去向</td>
+												<td width="auto">数量</td>
+											</tr>
+											
+												
+													<tr id="" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="广州达安">
+													广州达安</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+												
+													<tr id="4028908b547b2e0701547fef27390af2" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="浙江嘉兴雅康博">
+													浙江嘉兴雅康博</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+													<tr id="4028908b567986c901569c5dc51b738e" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="北京毅新博创">
+													北京毅新博创</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+												
+													<tr id="4028908b530c6eab0153116ef8af4d64" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="云康液相芯片平台">
+													云康液相芯片平台</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+													<tr id="2015122300010001" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="达瑞研究院">
+													达瑞研究院</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+												
+													<tr id="2015122300010002" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="上海精皮士">
+													上海精皮士</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+													<tr id="ff8080815819a500015819a99d120001" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="上海PCR">
+													上海PCR</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+												
+													<tr id="ff8080815d7e6a77015da755065c005e" class="evenbg">
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="瑞博奥">
+													瑞博奥</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+												
+													<tr id="ff8080815bad3491015bb356766804c7" class="oddbg">
+												
+												
+												<!-- <td class="itemCheck"><input name="checkbutton" type="checkbox" /></td> -->
+												<td title="上海骇泰">
+													上海骇泰</td>
+												<td title="0">
+													0</td>
+												</tr>
+											
+										</table>
+									</div>
+								</div>
+								<!--div滚动区域开始-->
+								<div style="width: 70%; float: left; overflow-x: auto;" class="scrollDiv" id="dataDiv">
+									<!--需要根据内容合理控制DIV滚动宽度和高度，手动输入-->
+									<table id="searchListTable" class="dataTable" style="width: 98%;">
+										<!--需要根据内容合理控制表格宽度，手动输入-->
+										<tr class="trTitle">
+											<td width="50"><input id="checkAll" type="checkbox" onclick="checkAllClick();"/></td>
+											<td width="180">条码号</td>
+											<td width="32%">套餐</td>
+											<td width="100">标本去向</td>
+											<td width="180">扫描人</td>
+											<td>项目</td>
+										</tr>
+										
+
+									</table>
+								</div>
+								<!--div滚动区域结束-->
+							</div>
+						</div>
+						<!--工作区域结束-->
+						<table style="width: 99%; margin: 0.5%;" border="0" cellpadding="0" cellspacing="0" class="tab" id = "btnTab">
+							<tbody>
+								<tr>
+									<td align="center" width="50%">
+										
+											<button id="btnRefresh" type="button" class="btnComment blue round" onclick="search();">刷新</button>
+										
+										
+											<button id="btnDelete" type="button" class="btnComment blue round" onclick="deleteBtnClick();">删除</button>
+										
+									</td>
+									<td width="40">用户名</td>
+									<td width="115"><div id="comboReceiveUser" style="width: 103px;" class="comboDiv"></div></td>
+									<td width="125">密码<input id="txtPassword" type="password" class="inputComment" style="width: 70px;" onkeyup="next2Submit();"/>
+									</td>
+									<td>
+										
+											<button id="btnReceive" type="button" class="btnComment_larger blue round" onclick="receiveBtnClick();">接收</button>
+										
+									</td>
+									
+								</tr>
+							</tbody>
+						</table>
+						<!--主区域结束-->
+						<!--预留结束-->
+					</div>
+					<form id="exportExcel" name="exportExcel"
+						action="/PG/spe/spePrepareExportExcell.action">
+						<input type="hidden" name="IDs" id="exportExcelIDs" />
+					</form>
+
+
+					<div class="midBlock"></div>
+					<!--区域打底控制-->
+
+				</div>
+				<!--工作区域结束-->
+
+			</div>
+			<!--主区域结束-->
+		</div>
+		<!--预留结束-->
+
+	</div>
+	<!--outArea结束-->
+
+	<!--底部信息开始-->
+	<!--底部信息结束-->
+
+
+	<!----------------------------接收人Grid数据源---------------------------------->
+	<div id="gridReceiveUser" class="tablebox_02"
+		style="width: 250px; height: 200px; display: none;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr class="tablehead">
+				<td style="width: 10px;">&nbsp;</td>
+				<td style="width: 100px;">姓名</td>
+				<td style="width: 150px;">工号</td>
+			</tr>
+		</table>
+		<div class="tablelist" style="width: 100%; height: 176px;">
+			<table cellspacing="0" cellpadding="0">
+				
+					<tr id="103136">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">林逢龙</td>
+						<td style="width: auto;">103136</td>
+					</tr>
+				
+					<tr id="201072">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">邓雪晖</td>
+						<td style="width: auto;">100137</td>
+					</tr>
+				
+					<tr id="2014100500000037">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张吉凤</td>
+						<td style="width: auto;">102262</td>
+					</tr>
+				
+					<tr id="201801">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">徐志萍</td>
+						<td style="width: auto;">102061</td>
+					</tr>
+				
+					<tr id="2060">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王燕</td>
+						<td style="width: auto;">200091</td>
+					</tr>
+				
+					<tr id="20973">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">闫修魁</td>
+						<td style="width: auto;">100102</td>
+					</tr>
+				
+					<tr id="4af4e8894a5c68b4014a711db72c3ea6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈灿成</td>
+						<td style="width: auto;">102519</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b633e1001e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">林紫慧</td>
+						<td style="width: auto;">linzihui</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b7d6a40048">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曾莉</td>
+						<td style="width: auto;">zengli</td>
+					</tr>
+				
+					<tr id="4af4e8894ec8977c014ece8e9e9e04ba">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈茂发</td>
+						<td style="width: auto;">102776</td>
+					</tr>
+				
+					<tr id="4af4e889548d60e10154a2a1e20c2784">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王轩宇</td>
+						<td style="width: auto;">103315</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc51537172cb">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曾林</td>
+						<td style="width: auto;">500371</td>
+					</tr>
+				
+					<tr id="4af4e88a497887de014978e4bac30be9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李小威</td>
+						<td style="width: auto;">102523</td>
+					</tr>
+				
+					<tr id="4af4e88a4b34e127014b393bbbac0608">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">卢森</td>
+						<td style="width: auto;">102564</td>
+					</tr>
+				
+					<tr id="4af4e88a5084eaa401508d826f9d4b7c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">彭玲玲</td>
+						<td style="width: auto;">102858</td>
+					</tr>
+				
+					<tr id="4af4e88a513e9977015157a0f7f7191d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">莫亚勤</td>
+						<td style="width: auto;">102816</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e52867ee14d7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">满伟明</td>
+						<td style="width: auto;">103112</td>
+					</tr>
+				
+					<tr id="4af4e8bd47251a10014732ab8a9f0104">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘楠</td>
+						<td style="width: auto;">101074</td>
+					</tr>
+				
+					<tr id="900001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员1</td>
+						<td style="width: auto;">900001</td>
+					</tr>
+				
+					<tr id="ff8080815a11e096015a11e347410001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">医学部管理员</td>
+						<td style="width: auto;">yxb</td>
+					</tr>
+				
+					<tr id="ff8080815d2baf68015d39bb303f00f3">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">test</td>
+						<td style="width: auto;">test</td>
+					</tr>
+				
+					<tr id="102782">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">班周利</td>
+						<td style="width: auto;">102782</td>
+					</tr>
+				
+					<tr id="103173">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈飞华</td>
+						<td style="width: auto;">103173</td>
+					</tr>
+				
+					<tr id="103541">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁雪飞</td>
+						<td style="width: auto;">103541</td>
+					</tr>
+				
+					<tr id="201453">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈国平</td>
+						<td style="width: auto;">100937</td>
+					</tr>
+				
+					<tr id="20181">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">齐国梅</td>
+						<td style="width: auto;">200184</td>
+					</tr>
+				
+					<tr id="202303">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">丁洁</td>
+						<td style="width: auto;">100789</td>
+					</tr>
+				
+					<tr id="4028908a53d6db3c0153ef4b26b833e6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张美容</td>
+						<td style="width: auto;">103163</td>
+					</tr>
+				
+					<tr id="4af4e88948e3adb30148eda7dffc7a3d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁虎</td>
+						<td style="width: auto;">102279</td>
+					</tr>
+				
+					<tr id="4af4e8894afbaef2014b00b545a173bf">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">严文超</td>
+						<td style="width: auto;">ywc01</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b56c5b000c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">吴嘉莉</td>
+						<td style="width: auto;">wujiali</td>
+					</tr>
+				
+					<tr id="4af4e8894d3d33f4014d510c46a27993">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">医护平台</td>
+						<td style="width: auto;">yhptzh</td>
+					</tr>
+				
+					<tr id="4af4e8894ea91afc014eb897d4f63dc2">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">万庚海</td>
+						<td style="width: auto;">102737</td>
+					</tr>
+				
+					<tr id="4af4e889505b580b01505b5f87bd0034">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王鑫</td>
+						<td style="width: auto;">102870</td>
+					</tr>
+				
+					<tr id="4af4e88954573cf201545b9c3c387dc3">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">丁祥明</td>
+						<td style="width: auto;">103178</td>
+					</tr>
+				
+					<tr id="4af4e88954573d0001545fa1bea97ad4">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄晓君</td>
+						<td style="width: auto;">103296</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc526e5772df">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">褚捷</td>
+						<td style="width: auto;">500376</td>
+					</tr>
+				
+					<tr id="4af4e88a4e3881b8014e6b3a513f2866">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">史春燕</td>
+						<td style="width: auto;">181569</td>
+					</tr>
+				
+					<tr id="4af4e88a5295e35001531ce8a1d34ed6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">戴其强</td>
+						<td style="width: auto;">102851</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e52ebdc215df">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张柳平</td>
+						<td style="width: auto;">103113</td>
+					</tr>
+				
+					<tr id="ff8080815e600ff0015e60147d030001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">太保对接</td>
+						<td style="width: auto;">tbal</td>
+					</tr>
+				
+					<tr id="102783">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">秦云清</td>
+						<td style="width: auto;">102783</td>
+					</tr>
+				
+					<tr id="102836">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何旭明</td>
+						<td style="width: auto;">102836</td>
+					</tr>
+				
+					<tr id="103424">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何翠园</td>
+						<td style="width: auto;">103424</td>
+					</tr>
+				
+					<tr id="103626">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘斯骁</td>
+						<td style="width: auto;">103626</td>
+					</tr>
+				
+					<tr id="20150">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李湘庭</td>
+						<td style="width: auto;">100015</td>
+					</tr>
+				
+					<tr id="201652">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁瑞仪</td>
+						<td style="width: auto;">101682</td>
+					</tr>
+				
+					<tr id="202401">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘金祥</td>
+						<td style="width: auto;">100440</td>
+					</tr>
+				
+					<tr id="4028908a488c7ef001489bd114d83bb5">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">chengzhi</td>
+						<td style="width: auto;">cz01</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25af2f307f32">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">喻蝶舞</td>
+						<td style="width: auto;">100214</td>
+					</tr>
+				
+					<tr id="4af4e8894b29cc03014b2f60811a1f56">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">魏巍</td>
+						<td style="width: auto;">102576</td>
+					</tr>
+				
+					<tr id="4af4e889527d70ef01528c00c6e360a5">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">牛鹏飞</td>
+						<td style="width: auto;">102995</td>
+					</tr>
+				
+					<tr id="4af4e88a462a034e01462a5b987e193c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">苏金福</td>
+						<td style="width: auto;">101061</td>
+					</tr>
+				
+					<tr id="4af4e88a4a2e95fb014a375ce3046b54">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">肖剑梅</td>
+						<td style="width: auto;">102551</td>
+					</tr>
+				
+					<tr id="4af4e88a4e80a020014e8b56a3195f1f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王晓敏</td>
+						<td style="width: auto;">102779</td>
+					</tr>
+				
+					<tr id="4af4e88a50cae7db0150cbebd4b00601">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">杨词海</td>
+						<td style="width: auto;">102886</td>
+					</tr>
+				
+					<tr id="4af4e88a51bdaac30151cdf6988535c7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李娟</td>
+						<td style="width: auto;">102842</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e508601a1156">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">印刷商2</td>
+						<td style="width: auto;">printer2</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e50958e1116e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曹建勇</td>
+						<td style="width: auto;">105129</td>
+					</tr>
+				
+					<tr id="4af4e88a548d66d5015499d24603176b">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">亮剑易感基因对接</td>
+						<td style="width: auto;">900025</td>
+					</tr>
+				
+					<tr id="4af4e88a54a499340154a88c0e683cd9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">徐烨</td>
+						<td style="width: auto;">103270</td>
+					</tr>
+				
+					<tr id="ff8080815770765e0157709213e30017">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">ljt</td>
+						<td style="width: auto;">ljt</td>
+					</tr>
+				
+					<tr id="ff80808158dc56f60158dd5807ce044a">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk客服</td>
+						<td style="width: auto;">kk04</td>
+					</tr>
+				
+					<tr id="165144">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">苏欣</td>
+						<td style="width: auto;">165144</td>
+					</tr>
+				
+					<tr id="201044">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">薛穗莹</td>
+						<td style="width: auto;">100171</td>
+					</tr>
+				
+					<tr id="202332">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">冼夏婵</td>
+						<td style="width: auto;">102217</td>
+					</tr>
+				
+					<tr id="20892">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黎运红</td>
+						<td style="width: auto;">100076</td>
+					</tr>
+				
+					<tr id="4af4e8894add4e7b014ae1d91601664d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈佳纯</td>
+						<td style="width: auto;">102568</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25abe69d7eea">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李子平</td>
+						<td style="width: auto;">102512</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b336037fcc">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">朱素捷</td>
+						<td style="width: auto;">100593</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b39ecf7fe0">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄利锋</td>
+						<td style="width: auto;">102078</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b16586c272189">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李沙澎</td>
+						<td style="width: auto;">lishapeng</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b1658f348219d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">朱元锋</td>
+						<td style="width: auto;">zhuyuanfeng</td>
+					</tr>
+				
+					<tr id="4af4e8894c8eae1a014c980049242d98">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">区梓超</td>
+						<td style="width: auto;">102630</td>
+					</tr>
+				
+					<tr id="4af4e88954573d000154758f57a87b41">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">杜涛</td>
+						<td style="width: auto;">103181</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc4cf0a47282">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">余霞</td>
+						<td style="width: auto;">500378</td>
+					</tr>
+				
+					<tr id="4af4e88954d826db0154dc9c340541f0">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">扬帆</td>
+						<td style="width: auto;">500379</td>
+					</tr>
+				
+					<tr id="4af4e88a490e18b301491d0b7d9f57e4">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谭斌</td>
+						<td style="width: auto;">102348</td>
+					</tr>
+				
+					<tr id="4af4e88a4a5cea81014a6faa70a412f9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">顾燕</td>
+						<td style="width: auto;">102509</td>
+					</tr>
+				
+					<tr id="4af4e88a5084eaa401508d83f4b64b85">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">常双双</td>
+						<td style="width: auto;">610013</td>
+					</tr>
+				
+					<tr id="4af4e88a5125fadc015137f10d8c04b9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">戴礼仪</td>
+						<td style="width: auto;">102910</td>
+					</tr>
+				
+					<tr id="4af4e88a513e9977015157ba38ee1cf0">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">向阳海</td>
+						<td style="width: auto;">102605</td>
+					</tr>
+				
+					<tr id="4af4e88a53689cd801537d7c50e363b8">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王汝枫</td>
+						<td style="width: auto;">103056</td>
+					</tr>
+				
+					<tr id="4af4e88a540cb98d015414758ea705d5">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">汤思捷</td>
+						<td style="width: auto;">102967</td>
+					</tr>
+				
+					<tr id="900005">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员5</td>
+						<td style="width: auto;">900005</td>
+					</tr>
+				
+					<tr id="ff8080815a5f98c9015aa256b30f0097">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">上海精皮士专用</td>
+						<td style="width: auto;">jps</td>
+					</tr>
+				
+					<tr id="ff8080815dc9c6eb015dcaa37f610073">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">PG测试</td>
+						<td style="width: auto;">ceshi</td>
+					</tr>
+				
+					<tr id="healthcarduser">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">健康卡对接专用</td>
+						<td style="width: auto;">jkk</td>
+					</tr>
+				
+					<tr id="102590">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何佩珊</td>
+						<td style="width: auto;">102590</td>
+					</tr>
+				
+					<tr id="103392">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈就成</td>
+						<td style="width: auto;">103392</td>
+					</tr>
+				
+					<tr id="103446">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何梅娟</td>
+						<td style="width: auto;">103446</td>
+					</tr>
+				
+					<tr id="103459">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟淑娴</td>
+						<td style="width: auto;">103459</td>
+					</tr>
+				
+					<tr id="103638">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈江奇</td>
+						<td style="width: auto;">103638</td>
+					</tr>
+				
+					<tr id="201045">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">罗利利</td>
+						<td style="width: auto;">100175</td>
+					</tr>
+				
+					<tr id="201053">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">袁正香</td>
+						<td style="width: auto;">100211</td>
+					</tr>
+				
+					<tr id="201204">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈卫光</td>
+						<td style="width: auto;">100475</td>
+					</tr>
+				
+					<tr id="201480">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">邹颖</td>
+						<td style="width: auto;">101486</td>
+					</tr>
+				
+					<tr id="20174">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘依云</td>
+						<td style="width: auto;">200089</td>
+					</tr>
+				
+					<tr id="201800">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李友娜</td>
+						<td style="width: auto;">102077</td>
+					</tr>
+				
+					<tr id="20201">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谢泉芳</td>
+						<td style="width: auto;">200030</td>
+					</tr>
+				
+					<tr id="202186">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟艳娟</td>
+						<td style="width: auto;">102171</td>
+					</tr>
+				
+					<tr id="20750">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">路林巧</td>
+						<td style="width: auto;">100177</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25ac68dc7f05">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈哲</td>
+						<td style="width: auto;">102130</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b125727f6f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">孔婷婷</td>
+						<td style="width: auto;">101253</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25ba3c980073">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘杰</td>
+						<td style="width: auto;">102566</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b165705052161">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">齐增恒</td>
+						<td style="width: auto;">102008</td>
+					</tr>
+				
+					<tr id="4af4e8894b626898014b6d4bb5ac6bce">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">周永红</td>
+						<td style="width: auto;">102314</td>
+					</tr>
+				
+					<tr id="4af4e8894f1a5f25014f2b8d13dd7032">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王慧娟</td>
+						<td style="width: auto;">102820</td>
+					</tr>
+				
+					<tr id="4af4e8895211ceb0015214adadf11cd7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">关则婷</td>
+						<td style="width: auto;">102956</td>
+					</tr>
+				
+					<tr id="4af4e88a46b0a3e20146b1f19a8e1b05">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">宁召峰</td>
+						<td style="width: auto;">300141</td>
+					</tr>
+				
+					<tr id="4af4e88a49ef7f750149f532cc06157f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">廖秀媚</td>
+						<td style="width: auto;">102524</td>
+					</tr>
+				
+					<tr id="4af4e88a4de37e85014e05923e985de6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谭枚琼</td>
+						<td style="width: auto;">102704</td>
+					</tr>
+				
+					<tr id="4af4e88a4f34c2b8014f3ee15e183cd7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘春林</td>
+						<td style="width: auto;">102676</td>
+					</tr>
+				
+					<tr id="4af4e88a51bdaac30151cdfa0d1a35cd">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">闫斐</td>
+						<td style="width: auto;">610030</td>
+					</tr>
+				
+					<tr id="4af4e88a535d7052015364ae6d5b1b0e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁华蕾</td>
+						<td style="width: auto;">102586</td>
+					</tr>
+				
+					<tr id="900004">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员4</td>
+						<td style="width: auto;">900004</td>
+					</tr>
+				
+					<tr id="103027">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曾雪娜</td>
+						<td style="width: auto;">103027</td>
+					</tr>
+				
+					<tr id="103149">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谭赠起</td>
+						<td style="width: auto;">103149</td>
+					</tr>
+				
+					<tr id="103208">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟漂晶</td>
+						<td style="width: auto;">103208</td>
+					</tr>
+				
+					<tr id="103433">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟玉琛</td>
+						<td style="width: auto;">103433</td>
+					</tr>
+				
+					<tr id="103478">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">柳艺意</td>
+						<td style="width: auto;">103478</td>
+					</tr>
+				
+					<tr id="103480">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">彭思超</td>
+						<td style="width: auto;">103480</td>
+					</tr>
+				
+					<tr id="201071">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">林欣欣</td>
+						<td style="width: auto;">100485</td>
+					</tr>
+				
+					<tr id="202367">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">范国良</td>
+						<td style="width: auto;">102228</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b1659757821b1">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘启祥</td>
+						<td style="width: auto;">liuqixiang</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc50518272b6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">冯国建</td>
+						<td style="width: auto;">500377</td>
+					</tr>
+				
+					<tr id="4af4e88a4a5cea81014a6fbc0c171768">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘阳燕</td>
+						<td style="width: auto;">102526</td>
+					</tr>
+				
+					<tr id="4af4e88a5084eaa401508d8140064b76">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">郭纯</td>
+						<td style="width: auto;">102607</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e508e41f1161">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">印刷商3</td>
+						<td style="width: auto;">printer3</td>
+					</tr>
+				
+					<tr id="ff808081589476480158b33d94c30408">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk印刷厂</td>
+						<td style="width: auto;">kk01</td>
+					</tr>
+				
+					<tr id="ff80808163c8d35c0163f1b113cd009b">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">泰康对接专用</td>
+						<td style="width: auto;">tk</td>
+					</tr>
+				
+					<tr id="103268">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">洪德毅</td>
+						<td style="width: auto;">103268</td>
+					</tr>
+				
+					<tr id="103423">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">翁漫婷</td>
+						<td style="width: auto;">103423</td>
+					</tr>
+				
+					<tr id="201104">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">程雪明</td>
+						<td style="width: auto;">100428</td>
+					</tr>
+				
+					<tr id="201202">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">周一晓</td>
+						<td style="width: auto;">100478</td>
+					</tr>
+				
+					<tr id="201253">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁伟</td>
+						<td style="width: auto;">100446</td>
+					</tr>
+				
+					<tr id="202326">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">卢永祥</td>
+						<td style="width: auto;">101240</td>
+					</tr>
+				
+					<tr id="202435">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘佳华</td>
+						<td style="width: auto;">102181</td>
+					</tr>
+				
+					<tr id="20356">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陶维井</td>
+						<td style="width: auto;">500006</td>
+					</tr>
+				
+					<tr id="2061">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁雪容</td>
+						<td style="width: auto;">200092</td>
+					</tr>
+				
+					<tr id="4af4e889492d6fb70149305650812e2f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">徐敏华</td>
+						<td style="width: auto;">102477</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b250667f9d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陆洁平</td>
+						<td style="width: auto;">102202</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b1657b26c2177">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">潘敏健</td>
+						<td style="width: auto;">102118</td>
+					</tr>
+				
+					<tr id="4af4e8894d3d32e1014d469e2c5e2344">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">周廷杰</td>
+						<td style="width: auto;">102671</td>
+					</tr>
+				
+					<tr id="4af4e8894d3d32e1014d469f3bca2476">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李明昌</td>
+						<td style="width: auto;">102668</td>
+					</tr>
+				
+					<tr id="4af4e88950ae26f70150c75a6f9a3dc6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">赖秀珍</td>
+						<td style="width: auto;">102885</td>
+					</tr>
+				
+					<tr id="4af4e88954d826db0154dc9dbac542a6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李凌</td>
+						<td style="width: auto;">500344</td>
+					</tr>
+				
+					<tr id="4af4e88a4ec8a225014ecec7e2aa0f47">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘美洪</td>
+						<td style="width: auto;">102803</td>
+					</tr>
+				
+					<tr id="4af4e88a53689cd801537d1eb0cf62ce">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄受剑</td>
+						<td style="width: auto;">103076</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e507bd231146">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">印刷商1</td>
+						<td style="width: auto;">printer1</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e509d7c6117c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">信息部专用</td>
+						<td style="width: auto;">xxb</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e52faf3615e8">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">薛鹏飞</td>
+						<td style="width: auto;">103122</td>
+					</tr>
+				
+					<tr id="500271">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">潘凯</td>
+						<td style="width: auto;">500271</td>
+					</tr>
+				
+					<tr id="900003">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员3</td>
+						<td style="width: auto;">900003</td>
+					</tr>
+				
+					<tr id="ff8080815770765e01577089e1680014">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁荣流</td>
+						<td style="width: auto;">102662</td>
+					</tr>
+				
+					<tr id="103407">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张高胜</td>
+						<td style="width: auto;">103407</td>
+					</tr>
+				
+					<tr id="201544">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张舒媚</td>
+						<td style="width: auto;">101350</td>
+					</tr>
+				
+					<tr id="201648">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">郭永林</td>
+						<td style="width: auto;">101347</td>
+					</tr>
+				
+					<tr id="20195">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">朱文娟</td>
+						<td style="width: auto;">700040</td>
+					</tr>
+				
+					<tr id="202185">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">孔梓霞</td>
+						<td style="width: auto;">102167</td>
+					</tr>
+				
+					<tr id="202206">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">丘彩婵</td>
+						<td style="width: auto;">102186</td>
+					</tr>
+				
+					<tr id="202338">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">胡兰芳</td>
+						<td style="width: auto;">102156</td>
+					</tr>
+				
+					<tr id="20316">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">唐明珠</td>
+						<td style="width: auto;">200181</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b1b53f7f86">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">邓慧贤</td>
+						<td style="width: auto;">100216</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b2bcdb7fb2">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梅玉军</td>
+						<td style="width: auto;">100591</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b75d2f0036">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曹艳阳</td>
+						<td style="width: auto;">caoyanyang</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25baaa850089">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟雪武</td>
+						<td style="width: auto;">102516</td>
+					</tr>
+				
+					<tr id="4af4e8894cc07d74014ce9d0bf0036c6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">唐美河</td>
+						<td style="width: auto;">102596</td>
+					</tr>
+				
+					<tr id="4af4e8894d712ebd014d7564fa3c5431">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄异珍</td>
+						<td style="width: auto;">900016</td>
+					</tr>
+				
+					<tr id="4af4e88954573cf201545b9d99767de6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">施真</td>
+						<td style="width: auto;">103092</td>
+					</tr>
+				
+					<tr id="4af4e88a4b6b9b04014b7cdbafdc382b">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">许文娇</td>
+						<td style="width: auto;">102583</td>
+					</tr>
+				
+					<tr id="900002">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员2</td>
+						<td style="width: auto;">900002</td>
+					</tr>
+				
+					<tr id="ff8080815aa7df42015aa816b1f90003">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk超级测试</td>
+						<td style="width: auto;">kk</td>
+					</tr>
+				
+					<tr id="ff808081614b7b1e01614f34bfd00125">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk财务</td>
+						<td style="width: auto;">kk05</td>
+					</tr>
+				
+			</table>
+		</div>
+	</div>
+
+	<!----------------------------扫描人Grid数据源---------------------------------->
+	<div id="gridScanUser" class="tablebox_02"
+		style="width: 250px; height: 200px; display: none;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr class="tablehead">
+				<td style="width: 10px;">&nbsp;</td>
+				<td style="width: 100px;">姓名</td>
+				<td style="width: 150px;">工号</td>
+			</tr>
+		</table>
+		<div class="tablelist" style="width: 100%; height: 176px;">
+			<table cellspacing="0" cellpadding="0">
+				<tr id="">
+					<td style="width: 10px;">&nbsp;</td>
+					<td style="width: 100px;">全部</td>
+					<td style="width: auto;">全部</td>
+				</tr>
+				
+					<tr id="103136">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">林逢龙</td>
+						<td style="width: auto;">103136</td>
+					</tr>
+				
+					<tr id="201072">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">邓雪晖</td>
+						<td style="width: auto;">100137</td>
+					</tr>
+				
+					<tr id="2014100500000037">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张吉凤</td>
+						<td style="width: auto;">102262</td>
+					</tr>
+				
+					<tr id="201801">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">徐志萍</td>
+						<td style="width: auto;">102061</td>
+					</tr>
+				
+					<tr id="2060">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王燕</td>
+						<td style="width: auto;">200091</td>
+					</tr>
+				
+					<tr id="20973">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">闫修魁</td>
+						<td style="width: auto;">100102</td>
+					</tr>
+				
+					<tr id="4af4e8894a5c68b4014a711db72c3ea6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈灿成</td>
+						<td style="width: auto;">102519</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b633e1001e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">林紫慧</td>
+						<td style="width: auto;">linzihui</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b7d6a40048">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曾莉</td>
+						<td style="width: auto;">zengli</td>
+					</tr>
+				
+					<tr id="4af4e8894ec8977c014ece8e9e9e04ba">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈茂发</td>
+						<td style="width: auto;">102776</td>
+					</tr>
+				
+					<tr id="4af4e889548d60e10154a2a1e20c2784">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王轩宇</td>
+						<td style="width: auto;">103315</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc51537172cb">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曾林</td>
+						<td style="width: auto;">500371</td>
+					</tr>
+				
+					<tr id="4af4e88a497887de014978e4bac30be9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李小威</td>
+						<td style="width: auto;">102523</td>
+					</tr>
+				
+					<tr id="4af4e88a4b34e127014b393bbbac0608">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">卢森</td>
+						<td style="width: auto;">102564</td>
+					</tr>
+				
+					<tr id="4af4e88a5084eaa401508d826f9d4b7c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">彭玲玲</td>
+						<td style="width: auto;">102858</td>
+					</tr>
+				
+					<tr id="4af4e88a513e9977015157a0f7f7191d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">莫亚勤</td>
+						<td style="width: auto;">102816</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e52867ee14d7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">满伟明</td>
+						<td style="width: auto;">103112</td>
+					</tr>
+				
+					<tr id="4af4e8bd47251a10014732ab8a9f0104">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘楠</td>
+						<td style="width: auto;">101074</td>
+					</tr>
+				
+					<tr id="900001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员1</td>
+						<td style="width: auto;">900001</td>
+					</tr>
+				
+					<tr id="ff8080815a11e096015a11e347410001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">医学部管理员</td>
+						<td style="width: auto;">yxb</td>
+					</tr>
+				
+					<tr id="ff8080815d2baf68015d39bb303f00f3">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">test</td>
+						<td style="width: auto;">test</td>
+					</tr>
+				
+					<tr id="102782">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">班周利</td>
+						<td style="width: auto;">102782</td>
+					</tr>
+				
+					<tr id="103173">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈飞华</td>
+						<td style="width: auto;">103173</td>
+					</tr>
+				
+					<tr id="103541">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁雪飞</td>
+						<td style="width: auto;">103541</td>
+					</tr>
+				
+					<tr id="201453">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈国平</td>
+						<td style="width: auto;">100937</td>
+					</tr>
+				
+					<tr id="20181">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">齐国梅</td>
+						<td style="width: auto;">200184</td>
+					</tr>
+				
+					<tr id="202303">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">丁洁</td>
+						<td style="width: auto;">100789</td>
+					</tr>
+				
+					<tr id="4028908a53d6db3c0153ef4b26b833e6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张美容</td>
+						<td style="width: auto;">103163</td>
+					</tr>
+				
+					<tr id="4af4e88948e3adb30148eda7dffc7a3d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁虎</td>
+						<td style="width: auto;">102279</td>
+					</tr>
+				
+					<tr id="4af4e8894afbaef2014b00b545a173bf">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">严文超</td>
+						<td style="width: auto;">ywc01</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b56c5b000c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">吴嘉莉</td>
+						<td style="width: auto;">wujiali</td>
+					</tr>
+				
+					<tr id="4af4e8894d3d33f4014d510c46a27993">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">医护平台</td>
+						<td style="width: auto;">yhptzh</td>
+					</tr>
+				
+					<tr id="4af4e8894ea91afc014eb897d4f63dc2">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">万庚海</td>
+						<td style="width: auto;">102737</td>
+					</tr>
+				
+					<tr id="4af4e889505b580b01505b5f87bd0034">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王鑫</td>
+						<td style="width: auto;">102870</td>
+					</tr>
+				
+					<tr id="4af4e88954573cf201545b9c3c387dc3">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">丁祥明</td>
+						<td style="width: auto;">103178</td>
+					</tr>
+				
+					<tr id="4af4e88954573d0001545fa1bea97ad4">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄晓君</td>
+						<td style="width: auto;">103296</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc526e5772df">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">褚捷</td>
+						<td style="width: auto;">500376</td>
+					</tr>
+				
+					<tr id="4af4e88a4e3881b8014e6b3a513f2866">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">史春燕</td>
+						<td style="width: auto;">181569</td>
+					</tr>
+				
+					<tr id="4af4e88a5295e35001531ce8a1d34ed6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">戴其强</td>
+						<td style="width: auto;">102851</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e52ebdc215df">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张柳平</td>
+						<td style="width: auto;">103113</td>
+					</tr>
+				
+					<tr id="ff8080815e600ff0015e60147d030001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">太保对接</td>
+						<td style="width: auto;">tbal</td>
+					</tr>
+				
+					<tr id="102783">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">秦云清</td>
+						<td style="width: auto;">102783</td>
+					</tr>
+				
+					<tr id="102836">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何旭明</td>
+						<td style="width: auto;">102836</td>
+					</tr>
+				
+					<tr id="103424">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何翠园</td>
+						<td style="width: auto;">103424</td>
+					</tr>
+				
+					<tr id="103626">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘斯骁</td>
+						<td style="width: auto;">103626</td>
+					</tr>
+				
+					<tr id="20150">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李湘庭</td>
+						<td style="width: auto;">100015</td>
+					</tr>
+				
+					<tr id="201652">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁瑞仪</td>
+						<td style="width: auto;">101682</td>
+					</tr>
+				
+					<tr id="202401">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘金祥</td>
+						<td style="width: auto;">100440</td>
+					</tr>
+				
+					<tr id="4028908a488c7ef001489bd114d83bb5">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">chengzhi</td>
+						<td style="width: auto;">cz01</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25af2f307f32">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">喻蝶舞</td>
+						<td style="width: auto;">100214</td>
+					</tr>
+				
+					<tr id="4af4e8894b29cc03014b2f60811a1f56">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">魏巍</td>
+						<td style="width: auto;">102576</td>
+					</tr>
+				
+					<tr id="4af4e889527d70ef01528c00c6e360a5">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">牛鹏飞</td>
+						<td style="width: auto;">102995</td>
+					</tr>
+				
+					<tr id="4af4e88a462a034e01462a5b987e193c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">苏金福</td>
+						<td style="width: auto;">101061</td>
+					</tr>
+				
+					<tr id="4af4e88a4a2e95fb014a375ce3046b54">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">肖剑梅</td>
+						<td style="width: auto;">102551</td>
+					</tr>
+				
+					<tr id="4af4e88a4e80a020014e8b56a3195f1f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王晓敏</td>
+						<td style="width: auto;">102779</td>
+					</tr>
+				
+					<tr id="4af4e88a50cae7db0150cbebd4b00601">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">杨词海</td>
+						<td style="width: auto;">102886</td>
+					</tr>
+				
+					<tr id="4af4e88a51bdaac30151cdf6988535c7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李娟</td>
+						<td style="width: auto;">102842</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e508601a1156">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">印刷商2</td>
+						<td style="width: auto;">printer2</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e50958e1116e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曹建勇</td>
+						<td style="width: auto;">105129</td>
+					</tr>
+				
+					<tr id="4af4e88a548d66d5015499d24603176b">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">亮剑易感基因对接</td>
+						<td style="width: auto;">900025</td>
+					</tr>
+				
+					<tr id="4af4e88a54a499340154a88c0e683cd9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">徐烨</td>
+						<td style="width: auto;">103270</td>
+					</tr>
+				
+					<tr id="ff8080815770765e0157709213e30017">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">ljt</td>
+						<td style="width: auto;">ljt</td>
+					</tr>
+				
+					<tr id="ff80808158dc56f60158dd5807ce044a">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk客服</td>
+						<td style="width: auto;">kk04</td>
+					</tr>
+				
+					<tr id="165144">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">苏欣</td>
+						<td style="width: auto;">165144</td>
+					</tr>
+				
+					<tr id="201044">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">薛穗莹</td>
+						<td style="width: auto;">100171</td>
+					</tr>
+				
+					<tr id="202332">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">冼夏婵</td>
+						<td style="width: auto;">102217</td>
+					</tr>
+				
+					<tr id="20892">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黎运红</td>
+						<td style="width: auto;">100076</td>
+					</tr>
+				
+					<tr id="4af4e8894add4e7b014ae1d91601664d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈佳纯</td>
+						<td style="width: auto;">102568</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25abe69d7eea">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李子平</td>
+						<td style="width: auto;">102512</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b336037fcc">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">朱素捷</td>
+						<td style="width: auto;">100593</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b39ecf7fe0">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄利锋</td>
+						<td style="width: auto;">102078</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b16586c272189">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李沙澎</td>
+						<td style="width: auto;">lishapeng</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b1658f348219d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">朱元锋</td>
+						<td style="width: auto;">zhuyuanfeng</td>
+					</tr>
+				
+					<tr id="4af4e8894c8eae1a014c980049242d98">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">区梓超</td>
+						<td style="width: auto;">102630</td>
+					</tr>
+				
+					<tr id="4af4e88954573d000154758f57a87b41">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">杜涛</td>
+						<td style="width: auto;">103181</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc4cf0a47282">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">余霞</td>
+						<td style="width: auto;">500378</td>
+					</tr>
+				
+					<tr id="4af4e88954d826db0154dc9c340541f0">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">扬帆</td>
+						<td style="width: auto;">500379</td>
+					</tr>
+				
+					<tr id="4af4e88a490e18b301491d0b7d9f57e4">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谭斌</td>
+						<td style="width: auto;">102348</td>
+					</tr>
+				
+					<tr id="4af4e88a4a5cea81014a6faa70a412f9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">顾燕</td>
+						<td style="width: auto;">102509</td>
+					</tr>
+				
+					<tr id="4af4e88a5084eaa401508d83f4b64b85">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">常双双</td>
+						<td style="width: auto;">610013</td>
+					</tr>
+				
+					<tr id="4af4e88a5125fadc015137f10d8c04b9">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">戴礼仪</td>
+						<td style="width: auto;">102910</td>
+					</tr>
+				
+					<tr id="4af4e88a513e9977015157ba38ee1cf0">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">向阳海</td>
+						<td style="width: auto;">102605</td>
+					</tr>
+				
+					<tr id="4af4e88a53689cd801537d7c50e363b8">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王汝枫</td>
+						<td style="width: auto;">103056</td>
+					</tr>
+				
+					<tr id="4af4e88a540cb98d015414758ea705d5">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">汤思捷</td>
+						<td style="width: auto;">102967</td>
+					</tr>
+				
+					<tr id="900005">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员5</td>
+						<td style="width: auto;">900005</td>
+					</tr>
+				
+					<tr id="ff8080815a5f98c9015aa256b30f0097">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">上海精皮士专用</td>
+						<td style="width: auto;">jps</td>
+					</tr>
+				
+					<tr id="ff8080815dc9c6eb015dcaa37f610073">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">PG测试</td>
+						<td style="width: auto;">ceshi</td>
+					</tr>
+				
+					<tr id="healthcarduser">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">健康卡对接专用</td>
+						<td style="width: auto;">jkk</td>
+					</tr>
+				
+					<tr id="102590">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何佩珊</td>
+						<td style="width: auto;">102590</td>
+					</tr>
+				
+					<tr id="103392">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈就成</td>
+						<td style="width: auto;">103392</td>
+					</tr>
+				
+					<tr id="103446">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">何梅娟</td>
+						<td style="width: auto;">103446</td>
+					</tr>
+				
+					<tr id="103459">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟淑娴</td>
+						<td style="width: auto;">103459</td>
+					</tr>
+				
+					<tr id="103638">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈江奇</td>
+						<td style="width: auto;">103638</td>
+					</tr>
+				
+					<tr id="201045">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">罗利利</td>
+						<td style="width: auto;">100175</td>
+					</tr>
+				
+					<tr id="201053">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">袁正香</td>
+						<td style="width: auto;">100211</td>
+					</tr>
+				
+					<tr id="201204">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈卫光</td>
+						<td style="width: auto;">100475</td>
+					</tr>
+				
+					<tr id="201480">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">邹颖</td>
+						<td style="width: auto;">101486</td>
+					</tr>
+				
+					<tr id="20174">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘依云</td>
+						<td style="width: auto;">200089</td>
+					</tr>
+				
+					<tr id="201800">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李友娜</td>
+						<td style="width: auto;">102077</td>
+					</tr>
+				
+					<tr id="20201">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谢泉芳</td>
+						<td style="width: auto;">200030</td>
+					</tr>
+				
+					<tr id="202186">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟艳娟</td>
+						<td style="width: auto;">102171</td>
+					</tr>
+				
+					<tr id="20750">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">路林巧</td>
+						<td style="width: auto;">100177</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25ac68dc7f05">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陈哲</td>
+						<td style="width: auto;">102130</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b125727f6f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">孔婷婷</td>
+						<td style="width: auto;">101253</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25ba3c980073">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘杰</td>
+						<td style="width: auto;">102566</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b165705052161">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">齐增恒</td>
+						<td style="width: auto;">102008</td>
+					</tr>
+				
+					<tr id="4af4e8894b626898014b6d4bb5ac6bce">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">周永红</td>
+						<td style="width: auto;">102314</td>
+					</tr>
+				
+					<tr id="4af4e8894f1a5f25014f2b8d13dd7032">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">王慧娟</td>
+						<td style="width: auto;">102820</td>
+					</tr>
+				
+					<tr id="4af4e8895211ceb0015214adadf11cd7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">关则婷</td>
+						<td style="width: auto;">102956</td>
+					</tr>
+				
+					<tr id="4af4e88a46b0a3e20146b1f19a8e1b05">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">宁召峰</td>
+						<td style="width: auto;">300141</td>
+					</tr>
+				
+					<tr id="4af4e88a49ef7f750149f532cc06157f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">廖秀媚</td>
+						<td style="width: auto;">102524</td>
+					</tr>
+				
+					<tr id="4af4e88a4de37e85014e05923e985de6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谭枚琼</td>
+						<td style="width: auto;">102704</td>
+					</tr>
+				
+					<tr id="4af4e88a4f34c2b8014f3ee15e183cd7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘春林</td>
+						<td style="width: auto;">102676</td>
+					</tr>
+				
+					<tr id="4af4e88a51bdaac30151cdfa0d1a35cd">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">闫斐</td>
+						<td style="width: auto;">610030</td>
+					</tr>
+				
+					<tr id="4af4e88a535d7052015364ae6d5b1b0e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁华蕾</td>
+						<td style="width: auto;">102586</td>
+					</tr>
+				
+					<tr id="900004">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员4</td>
+						<td style="width: auto;">900004</td>
+					</tr>
+				
+					<tr id="103027">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曾雪娜</td>
+						<td style="width: auto;">103027</td>
+					</tr>
+				
+					<tr id="103149">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">谭赠起</td>
+						<td style="width: auto;">103149</td>
+					</tr>
+				
+					<tr id="103208">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟漂晶</td>
+						<td style="width: auto;">103208</td>
+					</tr>
+				
+					<tr id="103433">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟玉琛</td>
+						<td style="width: auto;">103433</td>
+					</tr>
+				
+					<tr id="103478">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">柳艺意</td>
+						<td style="width: auto;">103478</td>
+					</tr>
+				
+					<tr id="103480">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">彭思超</td>
+						<td style="width: auto;">103480</td>
+					</tr>
+				
+					<tr id="201071">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">林欣欣</td>
+						<td style="width: auto;">100485</td>
+					</tr>
+				
+					<tr id="202367">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">范国良</td>
+						<td style="width: auto;">102228</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b1659757821b1">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘启祥</td>
+						<td style="width: auto;">liuqixiang</td>
+					</tr>
+				
+					<tr id="4af4e88954d826d50154dc50518272b6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">冯国建</td>
+						<td style="width: auto;">500377</td>
+					</tr>
+				
+					<tr id="4af4e88a4a5cea81014a6fbc0c171768">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘阳燕</td>
+						<td style="width: auto;">102526</td>
+					</tr>
+				
+					<tr id="4af4e88a5084eaa401508d8140064b76">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">郭纯</td>
+						<td style="width: auto;">102607</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e508e41f1161">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">印刷商3</td>
+						<td style="width: auto;">printer3</td>
+					</tr>
+				
+					<tr id="ff808081589476480158b33d94c30408">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk印刷厂</td>
+						<td style="width: auto;">kk01</td>
+					</tr>
+				
+					<tr id="ff80808163c8d35c0163f1b113cd009b">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">泰康对接专用</td>
+						<td style="width: auto;">tk</td>
+					</tr>
+				
+					<tr id="103268">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">洪德毅</td>
+						<td style="width: auto;">103268</td>
+					</tr>
+				
+					<tr id="103423">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">翁漫婷</td>
+						<td style="width: auto;">103423</td>
+					</tr>
+				
+					<tr id="201104">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">程雪明</td>
+						<td style="width: auto;">100428</td>
+					</tr>
+				
+					<tr id="201202">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">周一晓</td>
+						<td style="width: auto;">100478</td>
+					</tr>
+				
+					<tr id="201253">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁伟</td>
+						<td style="width: auto;">100446</td>
+					</tr>
+				
+					<tr id="202326">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">卢永祥</td>
+						<td style="width: auto;">101240</td>
+					</tr>
+				
+					<tr id="202435">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘佳华</td>
+						<td style="width: auto;">102181</td>
+					</tr>
+				
+					<tr id="20356">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陶维井</td>
+						<td style="width: auto;">500006</td>
+					</tr>
+				
+					<tr id="2061">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁雪容</td>
+						<td style="width: auto;">200092</td>
+					</tr>
+				
+					<tr id="4af4e889492d6fb70149305650812e2f">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">徐敏华</td>
+						<td style="width: auto;">102477</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b250667f9d">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">陆洁平</td>
+						<td style="width: auto;">102202</td>
+					</tr>
+				
+					<tr id="4af4e8894b147189014b1657b26c2177">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">潘敏健</td>
+						<td style="width: auto;">102118</td>
+					</tr>
+				
+					<tr id="4af4e8894d3d32e1014d469e2c5e2344">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">周廷杰</td>
+						<td style="width: auto;">102671</td>
+					</tr>
+				
+					<tr id="4af4e8894d3d32e1014d469f3bca2476">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李明昌</td>
+						<td style="width: auto;">102668</td>
+					</tr>
+				
+					<tr id="4af4e88950ae26f70150c75a6f9a3dc6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">赖秀珍</td>
+						<td style="width: auto;">102885</td>
+					</tr>
+				
+					<tr id="4af4e88954d826db0154dc9dbac542a6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">李凌</td>
+						<td style="width: auto;">500344</td>
+					</tr>
+				
+					<tr id="4af4e88a4ec8a225014ecec7e2aa0f47">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">刘美洪</td>
+						<td style="width: auto;">102803</td>
+					</tr>
+				
+					<tr id="4af4e88a53689cd801537d1eb0cf62ce">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄受剑</td>
+						<td style="width: auto;">103076</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e507bd231146">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">印刷商1</td>
+						<td style="width: auto;">printer1</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e509d7c6117c">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">信息部专用</td>
+						<td style="width: auto;">xxb</td>
+					</tr>
+				
+					<tr id="4af4e88a53df21e50153e52faf3615e8">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">薛鹏飞</td>
+						<td style="width: auto;">103122</td>
+					</tr>
+				
+					<tr id="500271">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">潘凯</td>
+						<td style="width: auto;">500271</td>
+					</tr>
+				
+					<tr id="900003">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员3</td>
+						<td style="width: auto;">900003</td>
+					</tr>
+				
+					<tr id="ff8080815770765e01577089e1680014">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梁荣流</td>
+						<td style="width: auto;">102662</td>
+					</tr>
+				
+					<tr id="103407">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张高胜</td>
+						<td style="width: auto;">103407</td>
+					</tr>
+				
+					<tr id="201544">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">张舒媚</td>
+						<td style="width: auto;">101350</td>
+					</tr>
+				
+					<tr id="201648">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">郭永林</td>
+						<td style="width: auto;">101347</td>
+					</tr>
+				
+					<tr id="20195">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">朱文娟</td>
+						<td style="width: auto;">700040</td>
+					</tr>
+				
+					<tr id="202185">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">孔梓霞</td>
+						<td style="width: auto;">102167</td>
+					</tr>
+				
+					<tr id="202206">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">丘彩婵</td>
+						<td style="width: auto;">102186</td>
+					</tr>
+				
+					<tr id="202338">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">胡兰芳</td>
+						<td style="width: auto;">102156</td>
+					</tr>
+				
+					<tr id="20316">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">唐明珠</td>
+						<td style="width: auto;">200181</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b1b53f7f86">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">邓慧贤</td>
+						<td style="width: auto;">100216</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b2bcdb7fb2">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">梅玉军</td>
+						<td style="width: auto;">100591</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25b75d2f0036">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">曹艳阳</td>
+						<td style="width: auto;">caoyanyang</td>
+					</tr>
+				
+					<tr id="4af4e8894b14717c014b25baaa850089">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">钟雪武</td>
+						<td style="width: auto;">102516</td>
+					</tr>
+				
+					<tr id="4af4e8894cc07d74014ce9d0bf0036c6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">唐美河</td>
+						<td style="width: auto;">102596</td>
+					</tr>
+				
+					<tr id="4af4e8894d712ebd014d7564fa3c5431">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">黄异珍</td>
+						<td style="width: auto;">900016</td>
+					</tr>
+				
+					<tr id="4af4e88954573cf201545b9d99767de6">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">施真</td>
+						<td style="width: auto;">103092</td>
+					</tr>
+				
+					<tr id="4af4e88a4b6b9b04014b7cdbafdc382b">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">许文娇</td>
+						<td style="width: auto;">102583</td>
+					</tr>
+				
+					<tr id="900002">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">兼职录单员2</td>
+						<td style="width: auto;">900002</td>
+					</tr>
+				
+					<tr id="ff8080815aa7df42015aa816b1f90003">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk超级测试</td>
+						<td style="width: auto;">kk</td>
+					</tr>
+				
+					<tr id="ff808081614b7b1e01614f34bfd00125">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: 100px;">kk财务</td>
+						<td style="width: auto;">kk05</td>
+					</tr>
+				
+			</table>
+		</div>
+	</div>
+	<!----------------------------标本去向Grid数据源---------------------------------->
+	<div id="gridPlansArea" class="tablebox_02"
+		style="width: 150px; height: 200px; display: none;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr class="tablehead">
+				<td style="width: 10px;">&nbsp;</td>
+				<td style="width: auto;">名称</td>
+			</tr>
+		</table>
+		<div class="tablelist" style="width: 100%; height: 176px;">
+			<table cellspacing="0" cellpadding="0">
+				<tr id="">
+					<td style="width: 10px;">&nbsp;</td>
+					<td style="width: auto;">全部</td>
+				</tr>
+				
+					<tr id="4028908b547b2e0701547fef27390af2">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">浙江嘉兴雅康博</td>
+					</tr>
+				
+					<tr id="4028908b567986c901569c5dc51b738e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">北京毅新博创</td>
+					</tr>
+				
+					<tr id="4028908b530c6eab0153116ef8af4d64">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">云康液相芯片平台</td>
+					</tr>
+				
+					<tr id="2015122300010001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">达瑞研究院</td>
+					</tr>
+				
+					<tr id="2015122300010002">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">上海精皮士</td>
+					</tr>
+				
+					<tr id="ff8080815819a500015819a99d120001">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">上海PCR</td>
+					</tr>
+				
+					<tr id="ff8080815d7e6a77015da755065c005e">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">瑞博奥</td>
+					</tr>
+				
+					<tr id="ff8080815bad3491015bb356766804c7">
+						<td style="width: 10px;">&nbsp;</td>
+						<td style="width: auto;">上海骇泰</td>
+					</tr>
+				
+			</table>
+		</div>
+	</div>
+</body>
+</html>

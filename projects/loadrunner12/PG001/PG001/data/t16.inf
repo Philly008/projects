@@ -1,0 +1,11 @@
+[t16]
+FileName1=t16.html
+URL1=http://192.168.14.35/PG/spe/findSalesOrderByConditions.action?applyTime_start=2018-11-12+00%3A00%3A00&applyTime_end=2018-11-12+23%3A59%3A59&searchdto.applyUserid=&searchdto.areaid=&detaildto.productId=&checkbutton=on&status=300&status=310&status=320&page.pageNo=1&searchdto.name=&searchdto.state=&row=13
+Total=1
+RequestHeaderFile=t16_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t16_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_16.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

@@ -1,0 +1,11 @@
+[t152]
+FileName1=t152.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speInputAuditSpecimen.action
+Total=1
+RequestHeaderFile=t152_RequestHeader.txt
+RequestBodyFile=t152_RequestBody.txt
+ResponseHeaderFile=t152_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_152.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

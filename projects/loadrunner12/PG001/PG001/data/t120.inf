@@ -1,0 +1,11 @@
+[t120]
+FileName1=t120.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundSure.action?OutboundType=1&time=1542010556277
+Total=1
+RequestHeaderFile=t120_RequestHeader.txt
+RequestBodyFile=t120_RequestBody.txt
+ResponseHeaderFile=t120_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_120.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

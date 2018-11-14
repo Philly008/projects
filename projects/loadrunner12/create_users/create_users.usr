@@ -1,0 +1,75 @@
+[General]
+Type=Multi
+DefaultCfg=default.cfg
+ParameterFile=create_users.prm
+GlobalParameterFile=
+NewFunctionHeader=1
+RunType=cci
+ActionLogicExt=action_logic
+MajorVersion=12
+MinorVersion=2
+LastActiveAction=Action
+ActiveTypes=QTWeb
+GenerateTypes=QTWeb
+AdditionalTypes=QTWeb
+DevelopTool=Vugen
+LastModifyVer=12.2.0.0
+ParamLeftBrace={
+ParamRightBrace=}
+ScriptLanguage=C
+DisableRegenerate=0
+Description=
+[Actions]
+vuser_init=vuser_init.c
+Action=Action.c
+vuser_end=vuser_end.c
+[RunLogicFiles]
+Default Profile=default.usp
+[VuserProfiles]
+Profiles=Default Profile
+[CfgFiles]
+Default Profile=default.cfg
+[ExtraFiles]
+globals.h=
+[Modified Actions]
+vuser_init=1
+Action=1
+vuser_end=0
+[Recorded Actions]
+vuser_init=1
+Action=1
+vuser_end=0
+[Replayed Actions]
+vuser_init=1
+Action=1
+vuser_end=1
+[Interpreters]
+vuser_init=cci
+Action=cci
+vuser_end=cci
+[TransactionsOrder]
+Order="登录系统__*delimiter*__打开用户信息菜单__*delimiter*__新增用户__*delimiter*__查找用户__*delimiter*__职能分配__*delimiter*__用户角色__*delimiter*__操作仪器__*delimiter*__病理医生__*delimiter*__操作病理类型__*delimiter*__重置密码__*delimiter*__退出登录__*delimiter*__用新账号登录"
+[StateManagement]
+LastReplayStatus=1
+[ActiveReplay]
+LastReplayedRunName=result1
+ActiveRunName=result1
+[Transactions]
+登录系统=
+打开用户信息菜单=
+新增用户=
+查找用户=
+职能分配=
+用户角色=
+操作仪器=
+病理医生=
+操作病理类型=
+重置密码=
+退出登录=
+用新账号登录=
+[ParameterSimulation]
+NumVusers=10
+IsDurationIndefinite=0
+NumIterationsUntilCompletion=1
+IterationFromRTS=0
+NumIterationIndefinitely=1

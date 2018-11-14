@@ -1,0 +1,2 @@
+sample_save.c(128): 201400531200	[MsgId: MMSG-17999]
+sample_save.c(180): Error -27780: Timeout (120 seconds) exceeded while waiting to receive data for URL "http://202.116.104.161/NIP/dis/speInputItem.action"  	[MsgId: MERR-27780]

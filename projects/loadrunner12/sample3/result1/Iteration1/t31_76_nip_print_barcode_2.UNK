@@ -1,0 +1,550 @@
+
+/**目前只有[自定义打印条码]使用*/
+function printSpeSplitBarCodeOldArray(barcodeStr){
+	//var barcodeArray = new Array();
+	//barcodeArray = barcodeStr.split(",");
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 50 mm, 20 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	//设定标签的宽度50、高度20、列印速度5、列印浓度10、感应器类别5、gap/black mark垂直间距、gap/black mark
+	var setup={'setup':'50, 20, 5, 10, 1, 2, 0'};
+	var barcode = {'barcode':[{'0':'105, 25, 128, 60, 0, 0, 2, 4,'+barcodeStr}]};
+	
+	//var barcode ={'barcode':[{'0':'105,15,128,60,1,0,2,4,'+barCode}]};
+	var head = {'text':[{ '0':'105, 85, 32, 0, 2, 0, "Arial",' + barcodeStr }]};
+	var head_two = null;
+	var label={'label':'1'};
+	var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label,head_two);
+	//console.log(pr);   
+	 
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+
+/**打印病理条码,[标本预处理-批量打印-批量打印-标签]*/
+function printBarCodeArray(dataArray,copy){
+	var codeArray = new Array();
+	var headArray = new Array();
+	var seqArray = new Array();
+	for (i in dataArray) {
+		codeArray.push(dataArray[i].barcode);
+		seqArray.push("病理号："+dataArray[i].seq);
+		headArray.push("条码号："+dataArray[i].barcode);
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 50 mm, 20 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var speed ={'speed':'SPEED 3'};	//清楚打印机内部记忆体
+	var setup={'setup':'50, 20, 3, 6, 1, 2, 0'};
+	var seqcode ={'text':[{ '0':'40, 5, 38, 0, 2, 0, "Arial", ' + seqArray +'' },
+			       		  { '1':'65, 105, 32, 0, 2, 0, "Arial",' + headArray +'' }]};
+	var barcode ={'barcode':[{ '0':'105,50,128,55,0,0,2,4,' + codeArray}]};
+	var label={'label':copy};  
+	var pr = $.extend({}, printName,size,refe,cls,speed,setup,seqcode,barcode,label);
+	console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+//[自定义打印条码]打印二维码
+function twoDimensionalCodeArray(value){
+	var seqArray = new Array();
+	for(var i = 0; i<value.length; i++){
+		seqArray.push("");
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 35 mm, 40 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	//设定标签的宽度50、高度20、列印速度5、列印浓度10、感应器类别5、gap/black mark垂直间距、gap/black mark
+	var setup={'setup':'35, 40, 5, 10, 5, 2, 0'};
+	var qrcode = {'qrcode':[
+	                         { '0':'QRCODE 45,72,L,8,A,0,M2,S3,' + (value) +'' }
+	]};
+	var head = {'text':[{ '0':'45, 85, 0, 0, 2, 0, "Arial",' + seqArray }]};
+	var label={'label':"1"};
+	var head_two = null;
+	var pr = $.extend({}, printName,size,refe,cls,setup,qrcode,head,label,head_two);
+	//console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+//样本打码
+function printBarCodeAndSeqArray(barCode,seq){
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 50 mm, 20 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	//设定标签的宽度50、高度20、列印速度5、列印浓度10、感应器类别5、gap/black mark垂直间距、gap/black mark
+	var setup={'setup':'50, 20, 5, 10, 1, 2, 0'};
+	
+    var barcode ={'barcode':[
+                             { '0':'20, 20, 128, 50, 1, 0, 1, 1,' + barCode},
+                             { '1':'240, 20, 128, 50, 1, 0, 1, 1,' + barCode}
+    						]};
+    var seqcode ={'text':[
+                             { '0':'20,  90, 25, 0, 0, 0, "Arial",' + seq +''},
+							 { '1':'240, 90, 25, 0, 0, 0, "Arial",' + seq +''}	                             
+                             ]};
+    var label={'label':'1'};  
+    var head_two = null;
+	var pr = $.extend({}, printName,size,refe,cls,setup,barcode,seqcode,label,head_two);
+	//console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+//样本准备-条码打印
+function printBarcodeAndSeqPre(dateArray){
+	var codeArray = new Array();
+	var seqArray = new Array();
+	for (i in dataArray) {
+		var arr = dataArray[i].split(",");
+		if(arr!=null&&arr.length>0){
+			if(arr[0]==null){
+				arr[0]=="";
+			}
+			if(arr[1]==null){
+				arr[1]=="";
+			}
+		}
+		codeArray.push(arr[0]);
+		seqArray.push(arr[1]);
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 50 mm, 20 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'50, 20, 3, 10, 1, 2, 0'};
+	var barcode ={'barcode':[{ '0':'10,55,128,60,1,0,2,4,' + codeArray}]};
+	var head ={'text':[{ '0':'10, 25, 32, 0, 2, 0, "Arial",' + seqArray +'' },
+						]};
+	var label={'label':'1'};  
+	var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+	//console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+//样本准备-条码打印(宽)
+function printWinBarcodeAndSeqPre(dateArray){
+	var codeArray = new Array();//条码
+	var labArray = new Array();//实验室
+	var deptArray = new Array();//科室
+	var sexArray = new Array();//病人性别
+	var ageArray = new Array();//年龄
+	var testItemArrayA = new Array();//项目1
+	var testItemArrayB = new Array();//项目2
+	var testItemArrayC = new Array();//项目3
+	var testItemArrayD = new Array();//项目4
+	
+	for ( var i in dateArray) {
+		var specimenInfo = dateArray[i];
+		var code = specimenInfo.code;
+		codeArray.push(code==null?"":code);
+		var lab = specimenInfo.laboratory;
+		labArray.push(lab==null?"":lab);
+		var dept = specimenInfo.deptName;
+		deptArray.push(dept==null?"":dept);
+		var sex = specimenInfo.sex;
+		sexArray.push(sex==null?"":sex);
+		//
+		var age = specimenInfo.age;
+		var ageLen = strlen(age);
+		if (ageLen > 8 ){ //超过8个字符，需要截取
+	   		
+		   	if(age.indexOf('岁') >= 0 && age.indexOf('月') >= 0 && age.indexOf('日') >= 0) {
+		   		//如果是有n岁n月n日的，取n岁n月
+		   		age = age.substr(0, age.indexOf('月')+1);
+		   	} else if(age.indexOf('岁') < 0 && age.indexOf('月') >= 0 && age.indexOf('日') >= 0 && age.indexOf('时') >= 0){
+		   		//如果没有n岁，有n月n日n时，取n月n日
+		   		age = age.substr(0, age.indexOf('日')+1);
+		   	}
+	   	}
+		ageArray.push(age==null?"":age);
+		//
+		var item = specimenInfo.testItem;
+		item = item.replace(/,/g,"，");
+		item = subStringByLen(item, 28, "，", "**");
+		var printStr = item.split("**");
+		var len = printStr.length;
+		switch(len){
+		case 0:
+			testItemArrayA.push("");
+			testItemArrayB.push("");
+			testItemArrayC.push("");
+			testItemArrayD.push("");
+			break;
+		case 1:
+			var str1 = subStrFor(printStr[0]);
+			//alert(str1);
+			testItemArrayA.push(str1);
+			testItemArrayB.push("");
+			testItemArrayC.push("");
+			testItemArrayD.push("");
+			break;
+		case 2:
+			var str1 = subStrFor(printStr[0]);
+			var str2 = subStrFor(printStr[1]);
+			//alert(str1+"\n"+str2);
+			testItemArrayA.push(str1);
+			testItemArrayB.push(str2);
+			testItemArrayC.push("");
+			testItemArrayD.push("");
+			break;
+		case 3:
+			var str1 = subStrFor(printStr[0]);
+			var str2 = subStrFor(printStr[1]);
+			var str3 = subStrFor(printStr[2]);
+			//alert(str1+"\n"+str2+"\n"+str3);
+			testItemArrayA.push(str1);
+			testItemArrayB.push(str2);
+			testItemArrayC.push(str3);
+			testItemArrayD.push("");
+			break;
+		default:
+			var str1 = subStrFor(printStr[0]);
+			var str2 = subStrFor(printStr[1]);
+			var str3 = subStrFor(printStr[2]);
+			var str4 = subStrFor(printStr[3]);
+			//alert(str1+"\n"+str2+"\n"+str3+"\n"+str4);
+			testItemArrayA.push(str1);
+			testItemArrayB.push(str2);
+			testItemArrayC.push(str3);
+			testItemArrayD.push(str4+"★");
+		}
+	}
+	var textArray = new Array();
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 55 mm, 30 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'55, 30, 3, 12, 1, 2, 0'};
+	var barcode ={'barcode':[{'0':'10,25,128,90,0,0,2,4,'+codeArray}]};
+	textArray.push({ '0':'215, 25, 32, 0, 2, 0, "Arial", '+ (codeArray)});
+   	textArray.push({ '1':'215, 55, 32, 0, 2, 0, "Arial", '+ (labArray) });
+   	textArray.push({ '2':'280, 55, 32, 0, 2, 0, "Arial", '+ (deptArray)});
+   	textArray.push({ '3':'215, 85, 32, 0, 2, 0, "Arial", '+ (ageArray)});
+   	textArray.push({ '4':'360, 85, 32, 0, 2, 0, "Arial", '+ (sexArray)});
+   	textArray.push({ '5':'15, 120, 28, 0, 0, 0, "Arial", '+ (testItemArrayA)});
+   	textArray.push({ '6':'15, 148, 28, 0, 0, 0, "Arial", '+ (testItemArrayB)});
+   	textArray.push({ '7':'15, 176, 28, 0, 0, 0, "Arial", '+ (testItemArrayC)});
+   	textArray.push({ '8':'15, 204, 28, 0, 0, 0, "Arial", '+ (testItemArrayD)});
+	console.log(textArray);
+	var head ={'text':textArray};
+	console.log(head);
+	var label={'label':'1'};
+  
+	var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+	//console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+//样本准备-补打条码（玻片）
+function printBarCodeAndSeqNewArray(dataArray){
+	var codeArray = new Array();
+	var seqArray = new Array();
+	for (i in dataArray) {
+		codeArray.push(dataArray[i][0]);
+		seqArray.push(dataArray[i][1]);
+	}
+	
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 50 mm, 20 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	//设定标签的宽度50、高度20、列印速度5、列印浓度10、感应器类别5、gap/black mark垂直间距、gap/black mark
+	var setup={'setup':'50, 20, 5, 10, 1, 2, 0'};
+	
+    var barcode ={'barcode':[
+                             { '0':'20, 20, 128, 50, 1, 0, 1, 1,' + codeArray},
+                             { '1':'240, 20, 128, 50, 1, 0, 1, 1,' + codeArray}
+    						]};
+    var seqcode ={'text':[
+                             { '0':'20,  100, 25, 0, 0, 0, "Arial",' + seqArray +''},
+							 { '1':'240, 100, 25, 0, 0, 0, "Arial",' + seqArray +''}	                             
+                             ]};
+    var label={'label':'1'};  
+    var head_two = null;
+	var pr = $.extend({}, printName,size,refe,cls,setup,barcode,seqcode,label,head_two);
+	console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+
+/**打印分子病理资源码，[分子病理资源码打印-批量打印-批量打印-玻片标识码、蜡块标识码]*/
+function fzblPrintCodeAndHeadArray(dataArray, numPrint) {
+	var codeArray = new Array();
+	var headArray = new Array();
+	var seqArray = new Array();
+	var testItem = new Array();
+	var subcodeArr = new Array();
+	var testItemLen = "";
+	for (i in dataArray) {
+		headArray.push(dataArray[i].head);
+		subcodeArr.push(dataArray[i].subBarcode); //子条码号
+		codeArray.push((dataArray[i].resourceCode)); //资源码
+		seqArray.push(dataArray[i].seq); //病理号（条形码的内容）
+		//testItem.push(dataArray[i].testItem);
+		testItemLen = dataArray[i].testItem;
+		testItemLen = testItemLen.replace(/,/g,"，");
+		if(testItemLen.length > 13){
+			//项目名称太长，用...代替
+			testItemLen = testItemLen.substr(0,10)+"···";
+		}
+		testItem.push(testItemLen);
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 25 mm, 25 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'25, 25, 5, 35, 1, 2, 0'};
+	var	head ={'text':[{'0':'185, 192, 28, 180, 2, 0, "Arial", ' + headArray},
+					  { '1':'175, 165, 30, 180, 0, 0, "Arial", ' + codeArray},
+					  { '2':'165, 72, 30, 180, 0, 0, "Arial", ' + subcodeArr},					  
+					  { '3':'180, 42, 30, 180, 0, 0, "Arial", ' + testItem}					  
+	   	               ]};
+	var barcode ={'barcode':[
+                             { '0':'145, 130, 128, 55, 0, 180, 1, 1,' + seqArray}
+    						]};
+	if (numPrint == null || numPrint == '') {
+		numPrint = 1;
+	}
+	var label={'label': numPrint};
+	var pr = $.extend({}, printName,size,refe,cls,setup,barcode,head,label);
+	console.log(pr);
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	document.dispatchEvent(evt);
+}
+
+/**常规病理活体组织检查（外院）标识码打印——标本预处理——批量打印——历史标签打印*/
+function oldUnitPrintPathologySeq(dataArray, numPrint) {
+	var oldUnitSeqArray = new Array();
+	var newUnitSeqArray = new Array();
+	var customerNameArr = new Array();
+	for (i in dataArray) {
+		oldUnitSeqArray.push(dataArray[i].primaryPathologyNo); //原单位病理号
+		newUnitSeqArray.push((dataArray[i].resourceCode)); //现单位病理号
+		customerNameArr.push(dataArray[i].hospitalName); //外院名称
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 25 mm, 25 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'25, 25, 5, 13, 1, 2, 0'};
+	var	head ={'text':[{'0':'190, 180, 32, 180, 2, 0, "Arial", ' + oldUnitSeqArray},
+					  { '1':'185, 115, 34, 180, 0, 0, "Arial", ' + newUnitSeqArray},
+					  { '2':'200, 50, 26, 180, 0, 0, "Arial", ' + customerNameArr},
+	   	               ]};
+	if (numPrint == null || numPrint == '') {
+		numPrint = 1;
+	}
+	var label={'label': numPrint};
+	var pr = $.extend({}, printName,size,refe,cls,setup,head,label);
+	console.log(pr);
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	document.dispatchEvent(evt);
+}
+
+/**打印二维码，[标本预处理-批量打印-批量打印-玻片标识码、蜡块标识码]*/
+function printTwoDimensionCodeAndHeadArray(dataArray) {
+	var codeArray = new Array();
+	var headArray = new Array();
+	var seqArray = new Array();
+	for (i in dataArray) {
+		headArray.push(dataArray[i].head);
+		var barCode = dataArray[i].barCode;
+		if (barCode.length == 12){
+			barCode = barCode.substr(0,10);
+		}
+		codeArray.push("("+(dataArray[i].resourBarcode)+"-"+barCode+")");
+		seqArray.push(dataArray[i].resourBarcode);
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 25 mm, 25 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'25, 25, 5, 10, 1, 2, 0'};
+	var	head ={'text':[{'0':'185, 190, 30, 180, 0, 0, "Arial", ' + headArray},
+	   	               {'1':'187, 50, 36, 180, 2, 0, "Arial", ' + seqArray}
+	   	               ]};
+	//var qrcode ={'qrcode':'QRCODE 60, 60,L,4,A,0,M2,S3,"(' + seqCode + '-' + barcode +')"'};
+	var qrcode = {'qrcode':[
+	                         { '0':'QRCODE 60, 60,L,4,A,0,M2,S3,' + codeArray +''}
+	]};
+	//var seqcode ={'seqcode':'182, 50, 30, 180, 0, 0, "Arial", ' + seqCode};
+	var label={'label':"1"};
+	//var pr = $.extend({}, printName,setup,size,refe,cls,speed,rem,head1,qrcode,seqcode,label);
+	var pr = $.extend({}, printName,size,refe,cls,setup,qrcode,head,label);
+	console.log(pr);   
+	 
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+//免疫组化玻片标示码打印新方法
+function printImmuneHistoryArray(dataArray) {
+
+	var headArray = new Array();
+	var nowSeqArray = new Array();
+	var historySeqArray = new Array();
+	var testArray = new Array();
+	for (i in dataArray) {
+		headArray.push(dataArray[i].head);
+		nowSeqArray.push(dataArray[i].nowBarcode);	
+		historySeqArray.push(dataArray[i].historyBarcode);
+		testArray.push(dataArray[i].test);
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 25 mm, 25 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'25, 25, 5, 10, 1, 2, 0'};
+	var	head ={'text':[{'0':'5, 20, 32, 0, 2, 0, "Arial", ' + headArray},//行数:'X,Y,textSize,,加粗，下划线，'
+	   	               {'1':'10, 55, 39, 0, 2, 0, "Arial", ' + nowSeqArray},
+	   	               {'2':'10, 90, 36, 0, 0, 0, "Arial", ' + historySeqArray},
+	   	               {'3':'10, 130, 33, 0, 2, 0, "Arial", ' + testArray}
+	   	               ]};
+	//var qrcode ={'qrcode':'QRCODE 60, 60,L,4,A,0,M2,S3,"(' + seqCode + '-' + barcode +')"'};
+//	var qrcode = {'qrcode':[
+//	                         { '0':'QRCODE 60, 60,L,4,A,0,M2,S3,' + codeArray +''}
+//	]};
+	//var seqcode ={'seqcode':'182, 50, 30, 180, 0, 0, "Arial", ' + seqCode};
+	var label={'label':"1"};
+	//var pr = $.extend({}, printName,setup,size,refe,cls,speed,rem,head1,qrcode,seqcode,label);
+	var pr = $.extend({}, printName,size,refe,cls,setup,head,label);
+	console.log(pr);   
+	 
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+//免疫组化玻片标示码打印旧方法
+function printImmuneHistoryArrayOld(nowSeqCode, historySeqCode,test, head) {
+	isinstallAIR();
+	thisMovie("MyFlexApp").openport(printName);
+	thisMovie("MyFlexApp").clearbuffer();
+	thisMovie("MyFlexApp").setup("25", "25", "3", "10", "5", "2", "0");
+	thisMovie("MyFlexApp").sendcommand("SIZE 25 mm, 25 mm");
+	thisMovie("MyFlexApp").sendcommand("REFERENCE 0,0");
+	thisMovie("MyFlexApp").sendcommand("CLS");
+	thisMovie("MyFlexApp").windowsfont(5, 20, 32, 0, 2, 0, "Arial", head);
+	thisMovie("MyFlexApp").windowsfont(10, 55, 39, 0, 2, 0, "Arial", nowSeqCode);
+	thisMovie("MyFlexApp").windowsfont(10, 90, 36, 0, 0, 0, "Arial", historySeqCode);
+ 	thisMovie("MyFlexApp").windowsfont(10, 130, 33, 0, 2, 0, "Arial", test);
+	thisMovie("MyFlexApp").printlabel("1", "1");
+	thisMovie("MyFlexApp").closeport();
+	thisMovie("MyFlexApp").mustFinishMethod();
+	thisMovie("MyFlexApp").init();
+}
+/*
+ * 打印包埋盒
+ */
+function printTwoDimensionCodeAndHeadNew(json,barcode){
+	var codeArray = new Array();
+	var headArray = new Array();
+	var seqArray = new Array();
+	for (var i = 1; i < json.length; i++) {
+		codeArray.push("("+(json[i])+"-"+(barcode.substr(0, 10))+")");
+		headArray.push(json[0]);
+		seqArray.push(json[i]);
+	}
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 25 mm, 25 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var setup={'setup':'25, 25, 3, 10, 1, 2, 0'};
+	var	head ={'text':[{'0':'10, 20, 30, 0, 0, 0, "Arial", ' + headArray},
+	   	               {'1':'10, 160, 36, 0, 2, 0, "Arial", ' + seqArray}
+	   	               ]};
+	var qrcode = {'qrcode':[
+	                         { '0':'QRCODE 60, 60,L,4,A,0,M2,S3,' + codeArray +''}
+	]};
+	var label={'label':"1"};
+	var pr = $.extend({}, printName,size,refe,cls,setup,qrcode,head,label);
+	console.log(pr);   
+	 
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+}
+/**标本入库-打印条码**/
+function printSpecimenInArray(dateArray){
+	var evt = document.createEvent("CustomEvent");
+	var printName ={'printName':'TSC TTP-244 Plus'};
+	var size ={'size':'SIZE 50 mm, 20 mm'};
+	var refe ={'refe':'REFERENCE 0 ,0'};
+	var cls ={'cls':'CLS'};	//清楚打印机内部记忆体
+	var speed ={'speed':'SPEED 3'};	//打印速度
+	var setup={'setup':'50, 20, 3, 10, 1, 2, 0'};
+	var barcode ={'barcode':[{'0':'105,5,128,100,0,0,2,4,'+dateArray}]};
+	var head = {'text':[
+	                    { '0':'105, 100, 32, 0, 2, 0, "Arial", '+ dateArray +''}
+	                    ]};
+	var label={'label':'1'};
+	var pr = $.extend({}, printName,size,refe,cls,speed,setup,barcode,head,label);
+	console.log(pr);   
+	evt.initCustomEvent('myCustomEvent', true, false, pr);
+	// fire the event
+	document.dispatchEvent(evt);
+	
+}
+//
+function subStringByLen(str , len , identifier,putInIdentifier){
+	var returnStr = "";
+	var strLen = str.length;
+	if(len>strLen){
+		returnStr = str.substring(0,strLen);
+	}else{
+		var newStr = str.substring(0,len);
+		var newLen = newStr.lastIndexOf(identifier)+1;
+		returnStr = str.substring(0,newLen);
+		str = str.substring(newLen,strLen);//新的str
+		returnStr = returnStr +putInIdentifier+subStringByLen(str, len, identifier,putInIdentifier);
+	}
+	return returnStr;
+}
+//检测字符串的长度
+function strlen(str) {
+	var len = 0;
+	for ( var i = 0; i < str.length; i++) {
+		var c = str.charCodeAt(i);
+		//单字节加1 
+		if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+			len++;
+		} else {
+			len += 2;
+		}
+	}
+	return len;
+}
+//返回指定的字符串
+function subStrFor(str){
+	var sub = "";
+	if (str.length > 0) {
+		if (str.lastIndexOf("，") == (str.length - 1)) {
+			sub = str.substr(0, str.length - 1);
+		}else{
+			sub = str;
+		}
+	}
+	return sub;
+}

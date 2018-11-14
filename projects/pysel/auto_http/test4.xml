@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <title>查找无创退单接口</title>
+    <host>192.168.14.38</host>
+    <port>8383</port>
+    <No>[1001]</No>
+    <header>{"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"}</header>
+    <InterfaceList>
+        <params>
+            <name type="str">sdate</name>
+            <value>2018-08-10</value>
+            <must>1</must>
+        </params>
+        <params>
+            <name type="str">edate</name>
+            <value>2018-08-13</value>
+            <must>1</must>
+        </params>
+        <isList>0</isList>
+        <id>1001</id>
+        <name>无创退单</name>
+        <method>GET</method>
+        <url>nipWeiMon/findWuchuangRefundList.action</url>
+        <hope>{"refundRemark":"201808119600","refundDate":"2018-08-10 13:29:45","barCode":"201808119600"},{"refundRemark":"上的\r\n全部退单\r\n无创\r\n","refundDate":"2018-08-10 13:47:35","barCode":"201808108200"}</hope>
+       <login>user_id</login>
+        <isList>0</isList>
+    </InterfaceList>
+</root>

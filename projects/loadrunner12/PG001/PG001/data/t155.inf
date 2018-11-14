@@ -1,0 +1,11 @@
+[t155]
+FileName1=t155.html
+URL1=http://192.168.14.35/PG/spe/speReceiveScan.action
+Total=1
+RequestHeaderFile=t155_RequestHeader.txt
+RequestBodyFile=t155_RequestBody.txt
+ResponseHeaderFile=t155_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_155.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

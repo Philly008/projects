@@ -1,0 +1,104 @@
+
+#--------------------------下拉Grid专用样式-----------------------------
+
+.comboDiv{
+	height: 20px;
+	z-index:3;	
+	margin-right: 20px;
+}
+
+.comboDiv .textDiv{
+	width:100%;
+	height:100%;	
+	border:1px solid #8BA0BC;
+}
+.comboDiv .loadDiv{
+	height:20px;	
+	background:url("../images/loading.gif") no-repeat left;
+	/*background-color:green;*/
+}
+.gridDiv{
+	position:absolute;
+	background-color: white;
+	overflow: auto;
+	z-index:999;
+}
+
+.textDiv input{
+	height:18px;
+	border:0;
+	float: left;
+}
+.textDiv p{
+	clear: both;
+}
+.textDiv a.btn{
+	width:16px;
+	height:18px;
+	display:block;
+	background:url("../images/select-basic.jpg") no-repeat center;
+	float: left;
+}
+.textDiv a.btn:LINK{
+	background:url("../images/select-basic.jpg") no-repeat center;
+}
+.textDiv a.btn:HOVER{
+	background:url("../images/select-hover.jpg") no-repeat center;
+}
+.textDiv a.btn:ACTIVE{
+	background:url("../images/select-click.jpg") no-repeat center;
+}
+.textDiv a.clear{
+	width:16px;
+	height:18px;
+	display:block;
+	background:url("../images/clear-basic.jpg") no-repeat center;
+	float: left;
+}
+.textDiv a.clear:LINK{
+	background:url("../images/clear-basic.jpg") no-repeat center;
+}
+.textDiv a.clear:HOVER{
+	background:url("../images/clear-hover.jpg") no-repeat center;
+}
+.textDiv a.clear:ACTIVE{
+	background:url("../images/clear-click.jpg") no-repeat center;
+}
+#下拉Grid专用表格样式
+.superGrid{
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-bottom-color: #A3BBDC;
+	border-left-color: #A3BBDC;
+	text-align: center;
+	background-color: #FFFFFF;
+}
+.superGrid .contentDiv{
+	width:100%;
+	overflow: scroll;
+}
+.superGrid td {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-top-color: #A3BBDC;
+	border-right-color: #A3BBDC;
+	height: 21px;
+}
+.superGrid  table.title tr{
+	background-color: #d0dded;
+}
+.superGrid  table.content tr.selected{
+	background-color: #ECEFFF;
+}
+.superGrid  table.content tr.selected td.selected {
+	background-image: url(../images/ico_01.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+
+#--------------------------下拉Grid专用样式结束-----------------------------

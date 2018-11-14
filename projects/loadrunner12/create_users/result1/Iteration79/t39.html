@@ -1,0 +1,664 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>  
+	<link rel="stylesheet" type="text/css" href="/NIP/css/css.css" />
+	
+	<script type="text/javascript" src="/NIP/scripts/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(
+		function (){
+			searchdanger();
+			searchdelay();
+			searchRateContract();
+		}		
+	);
+	function menuLink(href)
+	{ 
+		$('#navigation > li > #left').stop().animate({'marginLeft':'-185px'},200);
+        $('#content').attr('src',href);
+	}
+	
+	function dangerblinklink() {
+		var blink = document.getElementById('blink');
+		if (!blink) { //因为权限的原因，可能没有该项
+			return;
+		}
+		var color = blink.style.color; //这里不能用jquery的方式（.css("color")），取到的是RBG的值
+
+		if (color == 'red') {
+			blink.style.color = "black";
+		} else {
+			blink.style.color = "red";
+		}	
+	    timer = setTimeout("dangerblinklink()", 500);
+	}
+	function delayblinklink() {
+		var blink1 = document.getElementById('blink1');
+		if (!blink1) { //因为权限的原因，可能没有该项
+			return;
+		}
+		var color = blink1.style.color;
+
+		if (color == 'red') {
+			blink1.style.color = "black";
+		} else {
+			blink1.style.color = "red";
+		}
+
+	    timer = setTimeout("delayblinklink()", 500);
+	}
+	function contractblinklink() {
+		var rateContract = document.getElementById('rateContract');
+		if (!rateContract) { //因为权限的原因，可能没有该项
+			return;
+		}
+		var color = rateContract.style.color;
+		
+		if (color == 'red') {
+			rateContract.style.color = "black";
+		} else {
+			rateContract.style.color = "red";
+		}
+
+	    timer = setTimeout("contractblinklink()", 500);
+	}
+	function searchdanger()
+	{
+		$('#blink').attr('onclick',"menuLink('/NIP/rpt/dangerWarning.action')"); 
+		$.ajax({
+			url: '/NIP/rpt/searchdanger.action',
+			type: "POST",
+	        success: function(result) {
+		        if(result=='1'){
+					dangerblinklink();
+				}
+	        },
+		});
+	}
+	
+	function searchdelay()
+	{
+		$.ajax({
+			url: '/NIP/rpt/searchdelay.action',
+			type: "POST",
+	        success: function(result) {
+			if(result=='1'){
+				$('#blink1').attr('onclick',"menuLink('/NIP/rpt/delayWarning.action')"); 
+				delayblinklink();
+				}
+	        },
+			});
+	}
+	function searchRateContract()
+	{
+		$.ajax({
+			url: '/NIP/ref/rateMatured.action',
+			type: "POST",
+	        success: function(result) {
+				if(result=='yes'){
+					contractblinklink();
+				}
+	        },
+			});
+	}
+	function stoptimer(flog) {
+		if(flog == 1){
+		    //clearTimeout(timer);
+		    document.getElementById('blink').style.color = "black";
+		}
+		else{
+			//clearTimeout(timer);
+		    document.getElementById('blink1').style.color = "black";	
+		}
+	}
+
+</script> 
+<script type="text/javascript">
+
+
+function logout(){
+	parent.window.location='/NIP/logout.action';
+}
+
+function updatePwd(){
+	    var modifyflog = 0;
+	    var dhxWins = parent.nipDhxWins;
+		dhxWins.enableAutoViewport(true);
+		var width = 400;
+		var height = 200;
+		var x = ($(parent.document.body).width() - width) / 2;
+		var y = ($(parent.document.body).height() - height) / 2;
+		var printWin = dhxWins.createWindow("modifyPwd", x, y, width, height);// 自定义位置和宽度、高度
+		printWin.setText("密码修改");
+		printWin.denyResize();
+		printWin.denyPark();
+		printWin.button("minmax1").hide();
+		printWin.button("park").hide();
+		
+		var url = '/NIP/ref/toModifyPwd.action?time='+new Date().getTime()+'&modifyflog='+modifyflog;
+		printWin.attachURL(url);
+		printWin.setModal(true);
+}
+
+function updateDepartment(){
+	var dhxWins = parent.nipDhxWins;
+	dhxWins.enableAutoViewport(true);
+	var width = 500;
+	var height = 350;
+	var x = ($(parent.document.body).width() - width) / 2;
+	var y = ($(parent.document.body).height() - height) / 2;
+	var printWin = dhxWins.createWindow("updateUserDepartment", x, y, width, height);// 自定义位置和宽度、高度
+	printWin.setText("职能选择");
+	//printWin.hideHeader();
+	//printWin.setModal(true);
+	printWin.denyResize();
+	printWin.denyPark();
+	printWin.button("minmax1").hide();
+	printWin.button("park").hide();
+	printWin.button("close").hide();
+	
+	var url = '/NIP/ref/toUpdateUserDepartment.action';
+	printWin.attachURL(url);
+	printWin.setModal(true);
+	/*
+	printWin.attachEvent("onClose", function(win){
+		window.parent.location.reload();
+	   });
+	   */	
+}
+
+function closeme(){
+	window.parent.opener=null;
+	window.parent.open('','_self');
+	parent.window.close();
+} 
+
+
+function sysInfo(){
+	var dhxWins = parent.nipDhxWins;
+	dhxWins.enableAutoViewport(true);
+	var width = 900;
+	var height = 550;
+	var x = ($(parent.document.body).width() - width) / 2;
+	var y = ($(parent.document.body).height() - height) / 2;
+	var printWin = dhxWins.createWindow("sysInfo", x, y, width, height);// 自定义位置和宽度、高度
+	printWin.setText("关于系统");
+	//printWin.hideHeader();
+	//printWin.setModal(true);
+	printWin.denyResize();
+	printWin.denyPark();
+	printWin.button("minmax1").hide();
+	printWin.button("park").hide();
+	printWin.button("close").hide();
+
+	var url = '/NIP/pages/common/sysInfo.jsp';
+	//var url = '/NIP/pages/welcome.jsp';
+	printWin.attachURL(url);
+	printWin.setModal(true);
+}
+
+//javascript:menuLink('/NIP/rpt/dangerWarning.action');
+//javascript:menuLink('/NIP/rpt/delayWarning.action')
+</script>
+</head>
+
+
+<body class="top">
+	<div class="top_div1">
+		<div class="top_div2">
+			<div style="margin-left:250px;margin-top:19px;float:left;width:7%;min-width:70px;height:25px;font-size: 20px;font-weight: bold;font-style:italic;color: rgb(255,167,5);">V3.0.0.0
+				<!-- <a href="javascript:sysInfo();" >style="font-size: 20px;font-weight: bold;font-style:italic;text-decoration: none;color: rgb(249,205,10);"
+					
+				</a> -->
+			</div>
+
+			<div style="float:right;width:50%;min-width:580px">
+				<div style="width:100%;margin-top:28px;font-size:13px;">
+					<div style="float:right;margin-left:10px;">
+						<a href="javascript:logout();">安全退出</a>
+					</div>
+					<div style="float:right;margin-left:10px;">
+						<a href="javascript:updatePwd();">密码修改</a>
+					</div>
+					<div style="float:right;margin-left:10px;">
+						<a href="javascript:updateDepartment();">职能选择</a>
+					</div>
+					
+					<!-- <div style="float:right;margin-left:10px;">
+						<a href="javascript:sysInfo();">关于系统</a>
+					</div> -->
+					<!-- <div style="float:right;margin-left:10px;">
+						<div id="currentTime"></div>
+					</div> -->
+					<div style="float:right;">
+						<span>实验室:广州达安临床检验中心;</span>
+					</div>
+					<div style="float:right;">
+						<span>调度中心:广州调度中心;</span>
+					</div>
+					<div style="float:right;">
+						<span>姓名:nliu089b;</span>
+					</div>
+				</div>
+			</div>
+			
+				<div style="float:right;margin-right:2px;margin-top:28px;font-size:13px;width:6%;min-width:60px;height:25px; ">
+					<span id="blink1" style="color:gray;cursor:pointer;" title="点击查看详细信息" >迟发提醒</span>
+				</div>
+			
+			
+				<div style="float:right;margin-right:2px;margin-top:28px;font-size:13px;width:4.5%;min-width:45px;height:25px; ">
+					<span id="blink" style="color:gray;cursor:pointer;" title="点击查看详细信息" >危急值</span>
+				</div>
+				<!DOCTYPE HTML>
+
+
+
+<head>
+<title>危急值提示弹出框</title>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<style type="text/css">
+#msg_win {
+	position: absolute;
+	right: 0px;
+	overflow: hidden;
+	z-index: 99;
+	border: 1px solid #1087B8;
+	background: #EEEEEE;
+	width: 430px;
+	font-size: 12px;
+	margin: 0px;
+	display: none;
+	top: 483px;
+	visibility: visible;
+	opacity: 1;
+}
+
+#msg_win .icos {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	z-index: 9;
+}
+
+.icos a {
+	float: left;
+	color: #FFFFFF;
+	margin: 1px;
+	text-align: center;
+	font-weight: bold;
+	width: 14px;
+	height: 22px;
+	line-height: 22px;
+	padding: 1px;
+	text-decoration: none;
+	font-family: webdings;
+}
+
+.icos a:hover {
+	color: #FFCC00;
+}
+
+#msg_title {
+	background: #54C4F2;
+	border-bottom: 1px solid #1087B8;
+	border-top: 1px solid #FFF;
+	border-left: 1px solid #FFF;
+	color: #FFFFFF;
+	height: 25px;
+	line-height: 25px;
+	text-indent: 5px;
+	font-weight: bold;
+}
+
+#msg_content {
+	margin: 5px;
+	margin-right: 0;
+	width: 420px;
+	height: 306px;
+	overflow: auto;
+}
+
+#msg_table {
+	text-align: left;
+	border-collapse: separate;
+	border-spacing: 5px;
+}
+
+td {
+	overflow: hidden;
+	word-break: keep-all;
+	text-overflow: ellipsis
+}
+
+</style>
+</head>
+<body>
+	<input type="hidden"id="dangerWarningWebSocketUrl" value="ws://202.116.104.165:8666/nip/websocket/dangerWarningWebsocket?token=53022492B575058761FD94CBD4091B5F&instIdWebSocket=20214,20246,20251,20237,20117,20243,20135,20244,20250,20172,20179,20201,20217,20229,20231,20207,20242,20228,20230,20218,20187,20191,20197,20194,20208,20234,20235,20238,20189,20241,20185,20184,20144,20206,20146,20270,20249,20153,20155,20164,20188,20106,20212,20199,20259,20262,20263,20220,2093,20100,20252,20168,20169,20173,20125,20165,20213,20202,20150,20152,20268,20254,20255,20272,20266,20267,20175,20200,20170,20148,20248,20221,20257,20265,2091,20182,20109,2096,20143,20102,2094,20130,2081,20178,20107,20258,20256,20139,20253,20162,20123,20126,2080,20127,20219,20128,20129,20210,20156,20120,20198,20118,20193,20233,20236,20163,20192,20205,2098,20111,20240,20186,20190,20145,2097,20101,20115,20119,20239,20245,4af4e8bd45b1d2d30145b71974f90110,20122,20154,20121,20177,20180,20181,40288ea65e79b26f015e7f5590fe019d,4af4e88a4723b58a01472480102a45b8,4af4e889497a15a80149888b441d530a,4af4e88a495621ea01495abbef096e60,4af4e889498a475e01499e2a69ac3c7a,4af4e88a4abf7c7c014ace3f7dfd1554,4af4e88a4abf7c7c014ace401039155a,4af4e88a4abf7c7c014ace40a7191560,4af4e88a4abf7c7c014ace411a061566,4af4e88a4abf7c7c014ace419167156c,4af4e88a4abf7c7c014ace4202701572,4af4e8894b0138dd014b0172646c10e3,4af4e8894b147189014b14af97ce3d02,4af4e889498a47360149a29c78242889,4af4e8894b0138dd014b016f714c1096,4af4e8894d00596b014d0326df6d0505,4af4e88a470f20940147190d77be36ed,4af4e88a483a9c3e014845020a2f418c,4af4e88a470f2094014715762d7d3bde,4af4e88a466817d901466a0f691b276e,4af4e88a4757222f0147623a03f23b7b,4af4e88a498362e601499861bc8f2ba4,4af4e88a498362e6014998645ba42fc8,4af4e88a498362e6014998d0f75a71ce,4af4e88a498362e601499860b1592ac2,4af4e88949a734350149a7cfedc7507c,4af4e88a49e654b50149eb645c2a178c,4af4e88a49faa68b014a0488b3443ecd,4af4e88a4a7bb69b014a809341571184,4af4e88a4a7bb69b014a8093d21d11f1,4af4e88a4a7bb69b014a80945e311221,4af4e88a4a7bb69b014a8094e43912ad,4af4e88a4f10b211014f159d06e12bd6,4af4e88a4e570dd6014e62978031620c,4af4e88a4e570dd6014e6298886a63b5,4af4e88a4e570dd6014e62994f1564f2,4af4e8894e099ab8014e2ede0f567472,4af4e88a46001a190146045aad6014c1,4af4e88a47857cb7014785cdb4ed0d29,f2b7c0b7589649e70158995d32ed0e82,f2b7c0b758f7a55c0159017752430018,f2b7c0b75907310801592057818d0428,f2b7c0b759abe95b0159b5c24ff32006,f2b7c0b75a89542b015ad0d8d8d77792,f2b7c0b75a89542b015ad0da09b677a6,f2b79f855b2951ae015b4150f0611c61,f2b7c0b75b42bdc3015b467158ac7b95,f2b7c0b75b42bdc3015b4671e6367b98,f2b7c0b75b42bdc3015b4672ac167b9a,f2b79f855b42bfa1015b56abd6fd57be,f2b79f855b42bfa1015b56ad67ee57ce,4af4e88a51bdaac30151ce1e535c369a,4af4e8895229e6ce01522fc8fb004a03,4af4e8895398edeb01539d51f5aa3d0a,4af4e88a4f58dd4d014f5de49efc102a,4af4e88950ae26f70150b2376f894992,4028908a5125f98e01516075e5203dd5,4af4e88a5392600e015397fc3f654129,4af4e88a5398e7d20153cbd5aed807d3,4af4e8894fbbe8a8014fd4f78f6e4320,4af4e8895276f4c201527c67cc4f6e2a,4028908a53d6db3c0153eedd43ad3033,4af4e88a53df21e50153f45098981ce7,4af4e889503aa1a801505b0a270c2892,4af4e889503aa1a801505b0b8bec28d9,4af4e88a51d632a00151d7b98e591981,4af4e88a5229df970152535e3e2d4166,4af4e88a5398e7d20153c13ed2606a2c,4af4e88a53c8174f0153ea9ca10b497a,4af4e88a548d66d501549dd76fb6480d,4af4e88a4665c719014667956d4d7521,5b0cfd2bb4907e42709d8f09,5b0f7111b4907e4a5068c786,5b5824d1b4907e61182ac901,4af4e8895125f80601513792931a1c59,4af4e88951f5c4240151f6d95e0109db,4af4e88a4fbbe2ce014fc9917b695ba2,4028908a551580a80155260feb3f4e9f,4028908a5558b165015572d22259142c,4028908a5558b165015572d22fd6142e,4028908a5558b165015572d238331430,4028908a551580a8015525f63e5f4360,4028908a55de9e6b0155e8951d3c29f8,4028908a56a0d5a80156b16540ab7d71,f2b79f8556ff267a015709043aa71242,4028908a559687ea0155a0401e15210b,4028908a559687ea0155a06261042d56,4028908a55de9e42015601e59e1f00ef,f2b7c0b75730bc2601573cb8cded7844,f2b79f8557b85c100157c253ea961487,f2b7c0b758bdf4dd0158cd0a68c770e3,f2b7c0b757cf87860157e5d7cffb1f33,f2b7c0b758a640fa0158aa46a3e60bb2,f2b7c0b758a640fa0158aa4a34630cbe,f2b7c0b759abe94e0159c4c5f8540f15,5b31a137b4907e20a198e09a,5b31a79bb4907e20a198e199,5b72489fb4907e7ec3ab5f56,f2b79f855cf34c84015d11ad483c660e,f2b79f855cf34c84015d122cf6061361,f2b7c0b75d311c7b015d34a390544e7c,f2b79f855b9f6f14015ba38541f20e94,f2b7c0b75bec2e2f015bf0e66d142965,f2b79f855c291f3a015c3475214e49a9,f2b7c0b75c2919ce015c62bd8c1a48f9,f2b7c0b75c2919ce015c62c1285c4904,4af4e88a49b29f390149bc26d7cc24cc,4af4e88a49b29f390149bc22246e2428,4af4e88a49b29f390149bc3de35534a9,4af4e88a49b29f390149bc40b6c836c5,4af4e88a49b29f390149bc44e269388d,4af4e88a49b29f390149bc46d7823b26,4af4e88949b299300149c2139bfc77ab,4af4e88949b299300149c21427f07856,4af4e88949b299300149c215612c794e,4af4e88949b299300149c2163a367aad,4af4e88949b299300149c216d6387b65,4af4e88949b299300149c217a81e7c45,4af4e88a49cce9d70149d15f9c010062,4af4e88a49e654b50149ea0682b424aa,4af4e88949b299300149c214a9e278cb,4af4e88a4a8b0d11014a9e6be6770dd8,4af4e88a4e099c66014e242402306473,4af4e88a4e3881ce014e70c4c52624d8,2c908c4f49a328560149a3288d6b0003,2c908c4f49a328560149a3288da90004,2c908c4f49a328560149a3288ca00001,2c908c4f49a328560149a3288cee0002,2c908c4f49a328560149a3288de80005,2c908c4f49a328560149a3288eb20008,2c908c4f49a328560149a3288f000009,2c908c4f49a328560149a3288f5e000a,2c908c4f49a328560149a3288f9c000b,2c908c4f49a328560149a3288fdb000c,2c908c4f49a328560149a3289077000d,2c908c4f49a328560149a32890e5000e,2c908c4f49a328560149a3289191000f,2c908c4f49a328560149a32891cf0010,2c908c4f49a328560149a328922d0011,2c908c4f49a328560149a328927b0012,2c908c4f49a328560149a32892e80013,2c908c4f49a328560149a32894010014,2c908c4f49a328560149a328943f0015,2c908c4f49a328560149a32894ac0016,2c908c4f49a328560149a32894fb0017,2c908c4f49a328560149a32895490018,2c908c4f49a328560149a32895c60019,2c908c4f49a328560149a3289633001a,2c908c4f49a328560149a32896b0001b,2c908c4f49a328560149a328970e001c,2c908c4f49a328560149a328975c001d,2c908c4f49a328560149a32897b9001e,2c908c4f49a328560149a3289807001f,2c908c4f49a328560149a3288e260006,2c908c4f49a328560149a3288e640007,2c908c4f49a328560149a32899020022,2c908c4f49a328560149a32899400023,2c908c4f49a328560149a328998e0024,2c908c4f49a328560149a32899cd0025,2c908c4f49a328560149a3289a1b0026,2c908c4f49a328560149a3289a690027,2c908c4f49a328560149a32898650020,2c908c4f49a328560149a32898b30021,2c908c4f49a328560149a3289af50028,2c908c4f49a328560149a3289b330029,2c908c4f49a328560149a3289ba1002a,2c908c4f49a328560149a3289bef002b,2c908c4f49a328560149a3289c3d002c,2c908c4f49a328560149a3289c8b002d,2c908c4f49a328560149a3289cc9002e,2c908c4f49a328560149a3289d37002f,2c908c4f49a328560149a3289d850030,2c908c4f49a328560149a3289dd30031,4028908a4a8b1223014a9af40e152f5c,4028908a4a84361e014a84e752fa100c,4028908a4dac7199014dadfe308c7353,4af4e8894ea91afc014eae8970e52373,4af4e88a54a499340154a95ac8e44ce6,4af4e88a50ebd0060150f5bb14df3194,4af4e88a5398e7dc01539da626047750,4af4e88a4f34c2b8014f3ec8ca8736d3,4af4e88a5398e7dc01539da591f1774e,f2b79f8557b85c100157c259a2b31525,f2b79f855cee4572015cf182b6aa3cb5,f2b7c0b75b42bc3a015b89defe7b73a6,f2b7c0b75b42bc3a015b89e0333373c2,f2b7c0b75b42bc3a015b89e0ae1f73d3,f2b7c0b75bf6fbbb015c09d2239f6001,f2b79f855cbf5f49015ccec2bae66863" />
+	<div id="msg_win">
+		<div class="icos">
+			<a id="msg_min" title="最小化" href="javascript:void 0">_</a>
+			<a id="msg_close" title="关闭" href="javascript:void 0">×</a>
+		</div>
+		<div id="msg_title">危急值预警</div>
+		<div id="msg_content">
+			<table id="msg_table">
+			</table>
+		</div>
+	</div>
+</body>
+
+<script language="javascript">
+var Message = {
+		set : function() {//最小化与恢复状态切换
+			var set = this.minbtn.status == 1 ? [ 0, 1, 'block', this.char[0], '最小化' ] : [ 1, 0, 'none', this.char[1], '恢复' ];
+			this.minbtn.status = set[0];
+			this.win.style.borderBottomWidth = set[1];
+			this.content.style.display = set[2];
+			this.minbtn.innerHTML = set[3];
+			this.minbtn.title = set[4];
+			this.win.style.top = this.getY().top;
+		},
+		close : function() {//关闭
+			this.win.style.display = 'none';
+			window.onscroll = null;
+		},
+		setOpacity : function(x) {//设置透明度
+			var v = x >= 100 ? '' : 'Alpha(opacity=' + x + ')';
+			this.win.style.visibility = x <= 0 ? 'hidden' : 'visible';//IE有绝对或相对定位内容不随父透明度变化的bug
+			this.win.style.filter = v;
+			this.win.style.opacity = x / 100;
+		},
+		show : function() {//渐显
+			clearInterval(this.timer2);
+			var me = this, fx = this.fx(0, 100, 0.1), t = 0;
+			this.timer2 = setInterval(function() {
+				t = fx();
+				me.setOpacity(t[0]);
+				if (t[1] == 0) {
+					clearInterval(me.timer2)
+				}
+			}, 6);//10 to 6
+		},
+		fx : function(a, b, c) {//缓冲计算
+			var cMath = Math[(a - b) > 0 ? "floor" : "ceil"], c = c || 0.1;
+			return function() {
+				return [ a += cMath((b - a) * c), a - b ]
+			}
+		},
+		getY : function() {//计算移动坐标
+			var d = document, b = document.body, e = document.documentElement;
+			var s = Math.max(b.scrollTop, e.scrollTop);
+			var h = /BackCompat/i.test(document.compatMode) ? b.clientHeight : e.clientHeight;
+			var h2 = this.win.offsetHeight;
+			return {
+				foot : s + h + h2 + 2 + 'px',
+				top : s + h - h2 - 2 + 'px'
+			}
+		},
+		moveTo : function(y) {//移动动画
+			clearInterval(this.timer);
+			var me = this, a = parseInt(this.win.style.top) || 0;
+			var fx = this.fx(a, parseInt(y));
+			var t = 0;
+			this.timer = setInterval(function() {
+				t = fx();
+				me.win.style.top = t[0] + 'px';
+				if (t[1] == 0) {
+					clearInterval(me.timer);
+					me.bind();
+				}
+			}, 6);//10 to 6
+		},
+		bind : function() {//绑定窗口滚动条与大小变化事件
+			var me = this, st, rt;
+			window.onscroll = function() {
+				clearTimeout(st);
+				clearTimeout(me.timer2);
+				me.setOpacity(0);
+				st = setTimeout(function() {
+					me.win.style.top = me.getY().top;
+					me.show();
+				}, 100);//600 mod 100
+			};
+			window.onresize = function() {
+				clearTimeout(rt);
+				rt = setTimeout(function() {
+					me.win.style.top = me.getY().top
+				}, 100);
+			}
+		},
+		init : function() {//创建HTML
+			function $(id) {
+				return document.getElementById(id)
+			};
+			this.win = $('msg_win');
+			var set = {
+				minbtn : 'msg_min',
+				closebtn : 'msg_close',
+				title : 'msg_title',
+				content : 'msg_content'
+			};
+			for ( var Id in set) {
+				this[Id] = $(set[Id])
+			}
+			;
+			var me = this;
+			this.minbtn.onclick = function() {
+				me.set();
+				this.blur()
+			};
+			this.closebtn.onclick = function() {
+				me.close()
+			};
+			this.char = navigator.userAgent.toLowerCase().indexOf('firefox') + 1 ? [ '_', '::', '×' ] : [ '0', '2', 'r' ];//FF不支持webdings字体
+			this.minbtn.innerHTML = this.char[0];
+			this.closebtn.innerHTML = this.char[2];
+			setTimeout(function() {//初始化最先位置
+				me.win.style.display = 'block';
+				me.win.style.top = me.getY().foot;
+				me.moveTo(me.getY().top);
+			}, 0);
+			return this;
+		}
+	};
+</SCRIPT>
+
+<script type="text/javascript">
+     var websocket = null;
+     //判断当前浏览器是否支持WebSocket
+     var url = $("#dangerWarningWebSocketUrl").val();
+     if (url != null && url != '' && 'WebSocket' in window) {
+    	 websocket = new WebSocket(url);
+    	 
+         //连接发生错误的回调方法
+         websocket.onerror = function () {
+        	 //alert("危急值预警提示连接服务发生错误");
+         };
+     
+         //连接成功建立的回调方法
+         websocket.onopen = function () {
+        	 $.ajax({
+     			type : "POST",
+     			async: false, 
+     			url : "/NIP/rpt/dangerWarningGetNotDispose.action?time="+ new Date().getTime(),
+     			success : function(result) {
+     				if(result != null && result != '') {
+     					var objs =  JSON.parse(result);
+     					for(var i = 0, l = objs.length; i < l; i++) {
+         					sendMessage(JSON.stringify( objs[i] ));
+     					}
+     				}
+     			}
+     		});
+         }
+     
+         //接收到消息的回调方法
+         websocket.onmessage = function (event) {
+        	 if(event == null || event.data == null) {
+        		 return;
+        	 }
+        	 if(getDisplay()) {
+        	 	Message.init();
+        	 }
+    		 var obj =  JSON.parse(event.data);
+    		 if(obj == null) {
+    			 return;
+    		 }
+    		 //如果消息只有ID则为删除行事件
+    		 var type = obj.type;
+    		 if (type == 'add') {
+    			 setMessageInnerHTML(obj.id, obj.instrumentName, obj.subBarCode, obj.itemName, obj.result);
+    		 }
+    		 if (type == 'delete') {
+    			 deleteTr(obj.id);
+    			//如果行全删除隐藏提示框
+    	        showTable();
+    		 }
+         }
+     
+         //连接关闭的回调方法
+         websocket.onclose = function () {
+             setMessageInnerHTMLToNull();
+             setDisplay();
+         }
+     
+         //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+         window.onbeforeunload = function () {
+             closeWebSocket();
+         }
+     
+         //将消息显示在网页上
+         function setMessageInnerHTML(id, instrumentName, subBarCode, itemName, result) {
+        	//选取你的table，添加一行
+            $("#msg_table").append(getTableTrHTML(id, instrumentName, subBarCode, itemName, result));
+         }
+         
+          //将消息显示在网页上
+         function setMessageInnerHTMLToNull() {
+        	//选取你的table，添加一行
+            $("#msg_table").append("");
+         }
+     
+         //关闭WebSocket连接
+         function closeWebSocket() {
+             websocket.close();
+         }
+     
+         //var userId = "5be53a98b4907e1ab2b6c341";
+         function confirm(trId) {
+        	 if(trId == null || trId == '')
+        		 return;
+        	 deleteTr(trId);
+        	 $.ajax({
+      			type : "POST",
+      			async: false,
+      			data : {id : trId},
+      			url : "/NIP/rpt/dangerWarningConfirm.action?time="+ new Date().getTime(),
+      			success : function(jsonData) {
+      				//更新确认人、时间成功，发送其他用户删除此ID数据广播消息
+      				if(jsonData != null && jsonData != '') {
+      					sendMessage(jsonData);
+      				}
+      			}
+      		});
+         }
+         
+         //发送消息
+         function sendMessage(message) {
+        	 websocket.send(message);
+         }
+       
+         function getDisplay() {
+        	 return $('#msg_win').css('display') == 'none';
+         }
+         
+         function setDisplay() {
+        	 Message.close();
+         }
+         
+         function getTableTrHTML(id, instName, subBarCode, itemName, result) {
+        	 deleteTr(id);
+        	 
+        	 var trow = "<tr name='"+ id +"'>"
+        	 +"	<td width='12%'>仪器：</td>"
+        	 +"	<td width='30%'>"+ instName +"</td>"
+        	 +"	<td width='15%' white-space='nowrap'>条码号：</td>"
+        	 +"	<td width='15%'>"+ subBarCode +"</td>"
+        	 +"	<td rowspan='2' style='display:table-cell; vertical-align:middle'><button style='height:25px;width:50px;' onclick=confirm('"+ id +"') >确定</button></td>"
+        	 +"</tr>"
+        	 +"<tr name='"+ id +"'>"
+        	 +"	<td>项目：</td>"        
+        	 +"	<td><font color='red'>"+ itemName +"</font></td>"
+        	 +"	<td>危急值：</td>"
+        	 +"	<td><font color='red'>"+ result +"</font></td>"
+        	 +"</tr>"
+        	 +"<tr name='"+ id +"'>"
+        	 +"	<td colspan='5'><hr/></td>"
+        	 +"</tr>";
+        	 return trow;
+         }
+         
+         //删除已确定的行
+         function deleteTr(trId) {
+    		$("tr[name="+trId+"]").remove();
+         }
+         
+    	function showTable() {
+    		var tab = document.getElementById("msg_table");
+    		//表格行数
+    		var rows = tab.rows.length;
+    		if(rows <= 0) {
+        		setDisplay();
+        	}
+    	}
+    	
+     } else {
+         //alert('当前浏览器 Not support websocket');
+     }
+</script>
+</html>
+			
+			
+			<div style="float:right;margin-right:2px;margin-top:28px;font-size:13px;width:4.5%;min-width:45px;height:25px; ">
+					<span id="rateContract" style="color:gray;cursor:pointer;" title="请到合同维护界面修改客户折扣结束时间" >折扣到期</span>
+				</div>
+			
+		</div>
+		
+	</div> 
+	
+</body>
+</html>

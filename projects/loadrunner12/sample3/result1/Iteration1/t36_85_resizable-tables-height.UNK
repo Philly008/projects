@@ -1,0 +1,65 @@
+function heightDrag(){
+	   var oBox = document.getElementById("main_right_2") , 
+	   oBottom = document.getElementById("qiehuan_01"), 
+	   oLine =document.getElementById("line");  
+	oLine.onmousedown=function(e){
+		var disY = (e || event).clientY;  
+		oLine.top = oLine.offsetTop;  
+		document.onmousemove = function(e) {  
+			var iT = oLine.top + ((e || event).clientY - disY);  
+			var maxT = oBox.offsetHeight - oLine.offsetHeight;  
+			oLine.style.margin = 0;  
+			iT < 0 && (iT = 0);  
+			iT > maxT && (iT = maxT);  
+			if((e || event).clientY>80&&(e || event).clientY<450){
+				$(".box_06").css("height",iT + "px");  
+				$("#msid").css("height",($(".box_06").height()/2));
+				$("#txtReportRemark").css("height",($(".box_06").height()/2)-3);
+				$("#txtReportBrief").css("height",($(".box_06").height()/2)-4);
+			}
+			return false;  
+		};  
+		document.onmouseup = function(e) {  
+			
+			document.onmousemove = null;  
+			document.onmouseup = null;  
+			oLine.releaseCapture && oLine.releaseCapture() ; 
+		};  
+			oLine.setCapture && oLine.setCapture();  
+			return false;  
+  };
+	/*oLine.onmouseup=function(ee){
+		mouseD=false;
+	};*/
+	/*document.onmouseup=function(e){
+		mouseD=false;
+	};*/
+	/*document.onmousemove=function(e){
+	    var e = e||window.event;
+	    var Y = e.clientY || e.pageY; //y:返回鼠标指针在当前网页的y坐标
+	    oLine.top = oLine.offsetTop;  
+	    var iT = oLine.top + ((e || event).clientY - Y);  
+	    var maxT = oBox.clientHeight - oLine.offsetHeight;  
+			if(mouseD==true){
+				if(Y>90&&Y<350){
+					$(".box_06").css("height", (event.clientY) + "px");
+					$("#onerow").css("height",($(".box_06").height()/2)-3);
+					$("#txtReportRemark").css("height",($(".box_06").height()/2)-3);
+					$("#txtReportBrief").css("height",($(".box_06").height()/2)-3);
+					//常规项  555 90
+					$("#qiehuan_01").css("height",(530-event.clientY-7)+"px");
+					$(".box_07").css("height",(530-event.clientY-7-25)+"px");
+					$("#itemOuterDiv").css("height",(530-event.clientY-7-50)+"px");
+					$("#itemlistdiv").css("height",(530-event.clientY-7-50)+ "px");
+					//微生物  555-24
+					var buttonHeight=(530-event.clientY)-50+"px";
+					$("#qiehuan_02").css("height",buttonHeight+"px");
+					$(".liandongbox_01").css("height",(buttonHeight-50)/3+"px");
+					$(".liandongbox_02").css("height",(buttonHeight-50)/3+"px");
+					$(".liandongbox_03").css("height",(buttonHeight-50)/3+"px");
+					
+				}
+			}
+    };*/
+}
+

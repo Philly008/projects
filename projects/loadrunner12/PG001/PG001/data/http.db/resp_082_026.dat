@@ -1,0 +1,148 @@
+1ff6
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<table width="788" border="0" cellspacing="0" cellpadding="0" style="margin:0px 1%">
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">姓　　名</td>
+		<td style="width: 17%;height: 30px;">
+		    <input id="txt_name" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="0511" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">性　　别</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_sex" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="男" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">出生日期</td>
+		<td style="width: 17%;height: 30px;">
+			<input id="txt_birthday" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="2013-11-05" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">年 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</td>
+		<td style="width: 17%;height: 30px;">
+		 	<input id="txt_age" disabled="disabled" type="text" name="textfield" style="width:59px; height:20px; background:#d0e7f5;" value="" />岁
+		 	
+		 	
+		 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VIP<input type="checkbox" disabled="disabled" id="vip" name="checkVip"/>
+		 	
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">固定电话</td>
+		<td style="width: 17%;height: 30px;">
+			<input id="txt_phone" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">省　　份</td>
+		<td style="width: 17%;height: 30px;">
+			<input id="txt_province" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="黑龙江省" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">城　　市</td>
+		<td style="width: 17%;height: 30px;">
+			<input id="txt_city" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="哈尔滨市" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">地　　区</td>
+		<td style="width: 17%;height: 30px;">
+			<input id="txt_region" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="道里区" />
+		</td>
+	 </tr>
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">手机号</td>
+		<td style="width: 17%;height: 30px;">
+			<input id="txt_mobilePhone" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="13554453456" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">客户详细地址</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_address" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">报告寄送地址</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_report_address" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="黑龙江省哈尔滨市道里区" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">家 &nbsp;族&nbsp; 史</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_family_history" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">发放区域</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_area" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="亮剑" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">下单客户</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_customer" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="杭州蓝胜健康咨询有限公司" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">机构/部门</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_agency" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">营 &nbsp;业&nbsp; 区</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_businessArea" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">出库签收人</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_sign_user" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="说到底" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">出库签收人电话</td>
+		<td style="width: 17%;height: 30px;">
+		 	<input id="txt_sign_phone" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="13556453456" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">采样日期</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_send_by_cus_date" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="2018-10-29" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">内勤接收时间</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_receive_date" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="2018-11-12 16:20:00" />
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">报告接收人</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_report_rec_by" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="www2" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">报告接收人电话</td>
+		<td style="width: 17%;height: 30px;">
+		 	<input id="txt_report_rec_pho" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="13456787656" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">出库快递单号</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_ob_express" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="22233444" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">回寄标本快递单号</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_sb_express" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="22233444" />
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">报告寄出时间</td>
+		<td style="width: 17%;height: 30px;">
+		  	<input id="txt_send_date" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">报告签收时间</td>
+		<td style="width: 17%;height: 30px;">
+		 	<input id="txt_sign_date" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">标本去向</td>
+		<td style="width: 17%;height: 30px;">
+			<input id="txt_plansArea" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="瑞博奥" />
+		</td>
+		<td style="width: 8%;height: 30px;text-align: left;">客
+27f
+户经理</td>
+		<td style="width: 17%;height: 30px;">
+		    <input id="txt_insuranceUser" disabled="disabled" type="text" name="textfield" style="width:125px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8%;height: 30px;text-align: left;">身份证号</td>
+		<td style="width: 17%;height: 30px;" colspan="3">
+		  	<input id="txt_id_card" disabled="disabled" type="text" name="textfield" style="width:325px; height:20px; background:#d0e7f5;" value="" />
+		</td>
+	</tr>
+</table>
+<div class="right_box_tc" style="height: 10%;">套餐:PAC防癌10项男<br/>报告书:报告未生成</div>
+0
+

@@ -1,0 +1,16 @@
+[sample_prepare]
+SnapshotIndex=I1_sample_prepare
+[relogin]
+SnapshotIndex=I1_relogin
+[sample_result]
+SnapshotIndex=I1_sample_result
+[sample_distribute]
+SnapshotIndex=I1_sample_distribute
+[vuser_init]
+SnapshotIndex=I1_vuser_init
+[sample_add]
+SnapshotIndex=I1_sample_add
+[sample_receive]
+SnapshotIndex=I1_sample_receive
+[sample_confirm]
+SnapshotIndex=I1_sample_confirm

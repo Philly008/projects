@@ -1,0 +1,9 @@
+-+
+-DCCI
+-D_IDA_XL
+-DWINNT
+-ID:\HP\exercises\NIP1109\create_users
+-ID:\HP\LR12\include
+-ed:\hp\exercises\nip1109\create_users\\logfile.log
+d:\hp\exercises\nip1109\create_users\\combined_create_users.c
+d:\hp\exercises\nip1109\create_users\\pre_cci.c

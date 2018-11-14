@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Server: nginx/1.14.0
+Date: Mon, 05 Nov 2018 05:30:51 GMT
+Content-Type: text/html;charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Accept-Encoding
+Set-Cookie: JSESSIONID=4F5CE2C78180109875988BD1CA8113D8; Path=/NIP/; HttpOnly
+Pragma: No-cache
+Cache-Control: no-cache
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+Content-Encoding: gzip
+

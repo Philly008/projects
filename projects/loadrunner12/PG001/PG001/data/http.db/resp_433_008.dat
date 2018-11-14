@@ -1,0 +1,1041 @@
+1ff8
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+
+
+<script src="/PG/scripts/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery.blockUI.js" type="text/javascript"></script>
+<script src="/PG/scripts/common.js" type="text/javascript"></script>
+<script src="/PG/scripts/input_common.js" type="text/javascript"></script>
+<script src="/PG/scripts/qcm_common.js" type="text/javascript"></script>
+<script src="/PG/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<script src="/PG/scripts/datepicker/WdatePicker.js" type="text/javascript"></script>
+<script src="/PG/scripts/aa.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
+<link rel="stylesheet" href="/PG/css/master.css" type="text/css" />
+<link href="/PG/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+
+<link href="/PG/pages/test/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/text_style.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/text_grid.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/newStyle.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/icon.css" />
+<style>
+	.operationLogShowDiv 
+</style>
+<script type="text/javascript">
+function errorHandle(XMLHttpRequest){
+	var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
+	if(sessionstatus == "timeout"){
+	   	   parent.location.href = ctx+"/login.action";
+	    }
+	var errirstatus = XMLHttpRequest.getResponseHeader("error");
+	if(errirstatus == "true"){
+		jAlert("系统错误,请联系管理员.","提示信息");
+	}
+}
+$.ajaxSetup({     
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",     
+    beforeSend: function(XMLHttpRequest){
+    	$.blockUI.defaults.title = null;
+    	blockUI();
+	},
+	error: function(xhr,status,error){
+	},
+    complete:function(XMLHttpRequest,textStatus){
+	    if($.blockUI.defaults.title == null){
+	    	$.unblockUI({ 
+		        onUnblock: function(){ 
+					errorHandle(XMLHttpRequest);
+		        } 
+			});
+	    }
+		
+    }
+});
+
+	//tableId：  table id
+	//     td: get td
+	// isNote: 0：非节点/1：节点
+	function operationNote(tableId,td,isNote,modleType){
+		var selectData = null;
+		if(isNote=="1"){//是节点就取id或者barcode查询
+			if(td=="id"){
+				selectData = $("#"+tableId+" tr[class='oddbg selectedbg'],#"+tableId+" tr[class='evenbg selectedbg']").attr("id");
+			}else{
+				selectData = $("#"+tableId+" tr[class='oddbg selectedbg'],#"+tableId+" tr[class='evenbg selectedbg']").children('td').eq(td).html();
+			}
+			
+			if(selectData==null || selectData==''){
+				showMsg("请先选中要查看日志的记录！");
+				return ;
+			}
+		}
+		$("#operationLogShowDiv").load("/PG/ref/pgOperationLog.action?time=" + new Date().getTime(), {id:selectData,isNote:isNote,modleType:modleType}, function(){
+			$("#operationLogShowDiv").show();
+			$('#operationLogShowDiv').dialog({
+			    title: '操作记录',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'关闭',
+					handler:function(){
+						$('#operationLogShowDiv').dialog( "close" );
+					}
+				}]
+			});
+		});
+	}
+	
+	//     td: get td
+	//     isNote: 0：非节点/1：节点
+	function operationNoteTwo(selectData,isNote,modleType){
+		if(isNote=="1"){
+			if(selectData==null || selectData==''){
+				showMsg("请先选中要查看日志的记录！");
+				return ;
+			}
+		}
+		$("#operationLogShowDiv").load("/PG/ref/pgOperationLog.action?time=" + new Date().getTime(), {id:selectData,isNote:isNote,modleType:modleType}, function(){
+			$("#operationLogShowDiv").show();
+			$('#operationLogShowDiv').dialog({
+			    title: '操作记录',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'关闭',
+					handler:function(){
+						$('#operationLogShowDiv').dialog( "close" );
+					}
+				}]
+			});
+		});
+	}
+
+	function pdfViewShow(printArgs){
+		
+		   $("#pdf_view_print").html('');
+			$("#pdfViewShowDiv").show();
+			$('#pdfViewShowDiv').dialog({
+			    title: '清单打印',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true
+			});
+			$("#pdfViewShowDiv").load("/PG/pdfViewShowDiv.action?time=" + new Date().getTime(), {}, function(){
+				embedPDF(printArgs,"pdf_view_print"); 
+			}); 
+			
+	}
+	function jingDongExcelShow(x,y,ids,cancelOrders,uploads){
+		var height=($(window).height()-y)/2;
+		var width=($(window).width()-x)/2;
+			$("#jingDongExcelDiv").load("/PG/spe/jingDongExcel.action?time=" + new Date().getTime(), 
+			{"ids":ids,"cancelOrders":cancelOrders,"uploads":uploads}, 
+			function(){
+				$("#jingDongExcelDiv").show();
+				$('#jingDongExcelDiv').dialog({
+				    title: '导出',
+				    left: width,
+				    top:height,
+				    width: x,
+				    height: y,
+				    closed: false,
+				    cache: false,
+				    modal: true
+				   /*  buttons:[{
+						text:'关闭',
+						handler:function(){
+							$('#jingDongExcelDiv').dialog( "close" );
+						}
+					}] */
+				});
+			});
+	}
+	
+	
+	function jingSupplyproductionorderShow(x,y,ids,cancelOrders){
+		var height=($(window).height()-y)/2;
+		var width=($(window).width()-x)/2;
+			$("#Supplyproductionorder").load("/PG/spe/jingDongSupplyproductionorder.action?time=" + new Date().getTime(), 
+			{"ids":ids}, 
+			function(){
+				$("#Supplyproductionorder").show();
+				$('#Supplyproductionorder').dialog({
+				    title: '生成领料单',
+				    left: width,
+				    top:height,
+				    width: x,
+				    height: y,
+				    closed: false,
+				    cache: false,
+				    modal: true
+				  
+				});
+			});
+	}
+	
+</script>
+<div id="operationLogShowDiv" title="操作记录" style="display: none;"></div>
+<div id="pdfViewShowDiv" title="清单打印 " style="display: none;"></div>
+<div id="jingDongExcelDiv" title="excel导出" style="display: none;"></div>
+<div id="Supplyproductionorder" title="生成领料单" style="display: none;"></div>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>领料申请</title>
+<link rel="stylesheet" href="/PG/css/tree/zTreeStyle.css" type="text/css" />
+<link href="/PG/css/easyUI.css" rel="stylesheet" type="text/css" />
+<style>
+html { overflow-x: hidden; overflow-y: auto; }
+</style>
+<script type="text/javascript">
+var selectedId; 
+var currentRowId;
+
+	$(document).ready(function(){
+		$("#leftPageDiv").load("/PG/spe/salesorderList.action");
+		$("#pageDiv_1").load("/PG/spe/salesorderInfo.action");
+		$("#pageDiv_2").load("/PG/spe/outBoundDetail.action");
+	});
+	
+	function tabPageClick(index){
+		var tabCount = $("li[id^=tabDiv_]").length;
+		if($("#tabDiv_"+index).hasClass("page_tabs-selected")){
+			return false;
+		}else{
+			//将页签置为高亮并显示数据DIV
+			for (var i = 1; i <= tabCount; i++) {
+				if (i == index) {
+					
+					$("#tabDiv_" + i).attr("class","page_tabs-selected");
+					$("#pageDiv_" + i).show();
+				} else {
+					$("#tabDiv_" + i).attr("class","page
+1ff8
+_tabs");
+					$("#pageDiv_" + i).hide();
+				}
+			}
+		}
+	}
+
+	function clearInfo(){
+		//$("#inputTable_id input").val("");
+		$("#orderName").val("");
+		$("#estimateArrivalTime").val("");
+		$("#remark").val("");
+		$("#signUserNameUpt").val("");
+		$("#signUserPhoneUpt").val("");
+		$("#receiveAddress").val("");
+		$("#applyNumber").val("");
+		$("#agency").val("");
+		$("#businessArea").val("");
+		ApplyAreaCombo.clear();
+		CustomersOrderCombo.clear();
+		
+		$("#orderid").val("");
+		$("#leftTable tr").removeClass("selectedbg");
+		//$("#ptoductsTable tr[class!='trTitle']").empty();
+		$("#ptoductsTable").empty();
+		var html='<tbody><tr class="trTitle"><td style="width:30px;"></td><td style="width:180px;">物料编码</td><td style="width:300px;">产品名称</td><td style="width:200px;">所属系列</td><td style="width:180px;">产品数量</td></tr></tbody>';
+		$("#ptoductsTable").append(html);
+	}
+	
+	//查询
+	function submitSearch(flag){
+		if(flag){
+			//直接查询时将表单的页数值修改为1
+			$("#pageNo").val("1");
+		}
+		var otherHeight = $(".group_left_one").outerHeight(true)+pageHeigh+queryTitle+buttonHeight+5;
+		var row = getRow(otherHeight+tableTitle+30);
+		var formParam = $("#pageForm").serialize();
+		$("#searchResult").load("/PG/spe/findSalesOrderByConditions.action",formParam+
+				"&searchdto.name="+$("#searchOrderName").val()+"&searchdto.state="+$("#searchOrderState").val()+"&row="+row,
+				function(){
+						$("#leftTable tr[class!='trTitle']").click(rowSelected);
+						$('.scrollDiv').height($(window).height()-otherHeight-25);
+						//$("#btnSearch").click(submitSearch);	
+						$("#checkAll").click(function() {
+		        		$('input[name="checkbutton"]').attr("checked",this.checked); 
+		     });
+		});
+		clearInfo();
+		refreshProductNum();
+	}
+	
+	function pageQuery(){
+		submitSearch();
+	} 
+
+	function pageQueryNew(){
+		var otherHeight = pageHeigh+queryTitle+40;
+		var row = getRow(otherHeight+tableTitle);
+		var formParam = $("#infoFormTwo").serialize()+"&orderId="+currentRowId+"&row="+row;
+		if(currentRowId !=undefined){
+			$("#outBoundData").load("/PG/spe/findOutBoundDetail.action",formParam,function(){});
+		}
+		
+	}
+	
+	//列表行选中
+	function rowSelected(e){
+		 
+		if(e.target.nodeName!="TD"){
+			return;
+		}
+		clearInfo();
+		$("#leftTable tr").removeClass("selectedbg");
+		$(this).addClass("selectedbg");
+		//显示详细信息
+		currentRowId = $(this).attr("id");
+		$("#salesdetail").load("/PG/spe/findSetmealDetailbyId.action", {'orderid':currentRowId});
+		var otherHeight = pageHeigh+queryTitle+40;
+		var row = getRow(otherHeight+tableTitle);
+		var formParam = $("#infoFormTwo").serialize()+"&orderId="+currentRowId+"&row="+row;
+		$("#outBoundData").load("/PG/spe/findOutBoundDetail.action",formParam,
+				function()
+				{
+			
+				});
+		GetSelectedId();
+		
+		/*
+		$.ajax({
+	        type: "POST", 
+	       	url: "/PG/spe/findSetmealDetailbyId.action?orderid="+currentRowId,
+	       	data:{id:currentRowId},
+	       	success : function(response) {
+				$("#infoPageDiv").html(response);
+			}
+	    });
+		
+		*/
+		
+		$.ajax({
+	        type: "POST", 
+	       	url: "/PG/spe/loadSalesOrderMessage.action",
+	       	data:{id:currentRowId},
+	        success: function(result) {
+	        	if(result!=null&&result!=""){
+	        		setValue(result);
+	        	}
+	        }
+	    });
+		
+		
+		function setValue(dto){
+			//隐藏域
+			$("#orderid").val(dto.id);
+			$("#setmealsList").val("");
+			$("#applyareaList").val(dto.areaid);
+			$("#applynameList").val(dto.applyUserid);
+			$("#customersorderList").val(dto.customersOrderid);
+			$("#orderName").val(dto.name);
+			$("#estimateArrivalTime").val(dto.estimateArrivalTime);
+			$("#remark").val(dto.remark);
+			$("#signUserNameUpt").val(dto.signUserName);
+			$("#signUserPhoneUpt").val(dto.signUserPhone);
+			$("#receiveAddress").val(dto.receiveAddress);
+			$("#applyNumber").val(dto.applyNumber);
+			$("#agency").val(dto.agency);
+			$("#businessArea").val(dto.businessArea);
+			
+			//下拉框
+			setTimeout( "ApplyAreaCombo.setValue('"+dto.areaid+"');"+
+					    "ApplyNameCombo.setValue('"+dto.applyUserid+"');"+
+					    "CustomersOrderCombo.setValue('"+dto.customersOrderid+"');"+
+						"setmealCombo.setValue('');",500);
+			
+			if(dto.state == 300){
+				enableInput();
+			}else{
+				disableInput();
+			}
+			if($("#financialAuditFunc").val()!='true'){
+				ApplyNameCombo.disable();
+			}else{
+				ApplyNameCombo.enable();
+			}
+		}
+
+	}
+	
+	function validata(phoneNum) {
+		var re1 = /^1[3578]\d{9}$/;
+		var re2 = /\d{3}-\d{8}|\d{4}-\d{7}/;
+		
+		var result1 = phoneNum.match(re1);
+		var result2 = phoneNum.match(re2);
+		if (result1 == null && result2 == null){
+			return false;
+		}
+		return true;
+	}
+	
+	function istell(str)
+	{	
+	var reMobile=/((^[0-9]{3})+([-])+([0-9]{8}$))|(^([0-9]{4})+([-])+([0-9]{7}$))/;
+	var rePhone=/((^[1-9]{1})+([0-9]{10}$))/;
+
+	if(reMobile.test(str) || rePhone.test(str)) 
+	{return true;}
+	else
+	{
+	return false;
+	}
+
+	}
+	
+	//保存
+	function saveSalesOrder(){
+		var i = 1;
+		var j = 0;
+		var plansInfo="";
+		var tab = document.getElementById("ptoductsTable");
+		var rows = tab.rows.length;
+		//获取明细表行id和套餐数量
+		 for( i ;i<rows;i++){
+		  var tbody = document.getElementById('ptoductsTable').tBodies[0];
+			  var id = tbody.rows[i].cells[0].getElementsByTagName('input')[0].value;//id
+			  var containsSeries = tbody.rows[i].cells[3].innerHTML;//系列
+			  var num = tbody.rows[i].cells[4].getElementsByTagName('input')[0].value;//套餐数量
+			  if(num==""||num==null||num=="0"){
+				  showMsg("产品数量不能为空","提示信息",function(){
+					  //获得焦点
+					  tbody.rows[i].cells[4].getElementsByTagName('input')[0].focus();
+				  });
+				  return;
+			  }
+			  if(num>999999999){
+				  showMsg("产品数量超出最大数量,请重新输入","提示信息",function(){
+					  //清空内容
+					  tbody.rows[i].cells[4].getElementsByTagName('input')[0].value="";
+					  //获得焦点
+					  tbody.rows[i].cells[4].getElementsByTagName('input')[0].focus();
+				  });
+				  return;
+			  }
+			  if(containsSeries ==""||containsSeries ==null){
+				  showMsg("含有没有维护系列的产品，不能添加");
+				  return;
+			  }
+			  if (num != '' && !checkPositiveInteger(num)) {
+				  showMsg("产品数量只允许输入正整数!","提示信息");
+				  return;
+			  }
+			  if(plansInfo==""){
+				  plansInfo = id + ":" + num;
+			  }else{
+				  plansInfo += "," + id + ":" + num;
+			  }
+	 	}
+		var selectedRow = $("#leftTable .selectedbg");
+		var currentRowId = $(selectedRow[0]).attr("id");
+	 	var templateName= trim($("#orderName").val());
+	 	var applyAreaText=ApplyAreaCombo.getText();
+	 	var ApplyNameText=ApplyNameCombo.getText();
+	 	var CustomerOrderIdText = CustomersOrderCombo.getText();
+	 	var signUserName = trim($("#signUserNameUpt").val());
+	 	var signUserPhone = trim($("#signUserPhoneUpt").val());
+	 	var receiveAddress = trim($("#receiveAddress").val());
+	 	var agency = trim($("#agency").val());
+	 	var businessArea = trim($("#businessArea").val());
+	 	
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test($("#applyNumber").val())){  
+			showMsg("领料申请单号格式为“年月日+4位序号，如201607160001”","提示信息");
+			return;
+	    }
+		if(templateName==""||templateName==null){
+			showMsg("订单名称名称不能为空","提示信息",function(){
+				//获得焦点
+				$("#orderName").focus();
+			});
+			return;
+		}else{
+			if(templateName.indexOf("，")!= -1||templateName.indexOf(",")!= -1){
+				showMsg("领料单名称不能含有逗号","提示信息",function(){
+				 	$("#orderName").focus();
+				});
+				return;
+			}
+		}
+		$("#orderName").val(trim($("#orderName").val()));
+		if (applyAreaText == "" || applyAreaText == null) {
+			showMsg("申请区域不能为空", "提示信息", function() {
+				ApplyAreaCombo.focus();
+			});
+			return;
+		}
+		if(trim(applyAreaText)!=""&&!ApplyAreaCombo.checkValue(false)){
+			showMs
+1ff8
+g("请从申请区域下拉框中选择数据","提示信息",function(){
+				ApplyAreaCombo.focus();
+			});
+			return false;
+		}
+		if (ApplyNameText == "" || ApplyNameText == null) {
+			showMsg("申请人不能为空", "提示信息", function() {
+				ApplyNameCombo.focus();
+			});
+			return;
+		}
+		if(trim(ApplyNameText)!=""&&!ApplyNameCombo.checkValue(false)){
+			showMsg("请从申请人下拉框中选择数据","提示信息",function(){
+				ApplyNameCombo.focus();
+			});
+			return false;
+		}
+		if (CustomerOrderIdText == "" || CustomerOrderIdText == null) {
+			showMsg("下单客户不能为空", "提示信息", function() {
+				CustomersOrderCombo.focus();
+			});
+			return;
+		}
+		if(trim(CustomerOrderIdText)!=""&&!CustomersOrderCombo.checkValue(false)){
+			showMsg("请从下单客户下拉框中选择数据","提示信息",function(){
+				CustomersOrderCombo.focus();
+			});
+			return false;
+		}
+		/* if (agency == null || agency == ''){
+			showMsg("机构/部门不能为空","提示信息",function(){
+				//获得焦点
+				$("#agency").focus();
+			});
+			return;
+		}
+		if (businessArea == null || businessArea == ''){
+			showMsg("营业区不能为空","提示信息",function(){
+				//获得焦点
+				$("#businessArea").focus();
+			});
+			return;
+		} */
+		if (signUserName == null || signUserName == ''){
+			showMsg("签收人不能为空","提示信息",function(){
+				//获得焦点
+				$("#signUserNameUpt").focus();
+			});
+			return;
+		}
+		if (signUserPhone == null || signUserPhone == ''){
+			showMsg("签收电话不能为空","提示信息",function(){
+				//获得焦点
+				$("#signUserPhoneUpt").focus();
+			});
+			return;
+		}
+		/*
+		if(!istell(signUserPhone))
+		{
+		showMsg("签收电话格式错误","提示信息",function(){
+			//获得焦点
+			$("#signUserPhoneUpt").focus();
+		});
+		return;
+		}
+		*/
+		
+		if (receiveAddress == null || receiveAddress == ''){
+			showMsg("收件地址不能为空","提示信息",function(){
+				//获得焦点
+				$("#receiveAddress").focus();
+			});
+			return;
+		}
+		/* if (!validata(signUserPhone)){
+			showMsg("请正确填写手机号或电话号码，电话号码格式为xxx-xxxxxxxx或xxxx-xxxxxxx");
+			return;
+		} */
+		if(plansInfo==""){
+			showMsg("产品系列不能为空","提示信息",function(){
+				$("#orderName").focus();
+				});
+			return;
+		}
+		var url;
+		var formParam = $("#infoForm").serialize();
+		if(selectedRow.size()>0){
+			//修改
+			url="/PG/spe/saveSalesOrder.action?dto.id="+currentRowId+"&plansInfo="+plansInfo+"&time=" + new Date().getTime();
+		}else{
+			//新增
+			url="/PG/spe/saveSalesOrder.action?dto.id="+"&plansInfo="+plansInfo+"&time=" + new Date().getTime();
+		}
+		$.ajax({
+			type : "POST",
+			url : url,
+			data:formParam,
+			success : function(result) {
+				if("0"==result){
+					showMsg("保存失败","提示信息");
+				}else if("2"==result){
+					showMsg("套餐重复,请重新选择","提示信息");
+				}else if("3"==result){
+					showMsg("领料单重复","提示信息");
+				}else if ("4"==result) {
+					showMsg("领料申请单号重复","提示信息");
+				}else{
+					showMsg("保存成功","提示信息");
+					submitSearch();
+					clearInfo();
+					refreshProductNum();
+				}
+			}
+		});
+	}
+	//审核
+	function FinancialAudit(){
+		//var CurrentState;
+		var array = new Array();
+		var checkFlag=false;
+		$("input[name='checkbutton']").each(function(){
+			if($(this).attr("checked")=="checked"){
+				checkFlag=true;
+				array.push($(this).parent().parent().attr("id"));
+				//CurrentState = $(this).parent().parent().children('.zhuangtai').find('span').find('input').val();
+			}
+		});
+		var arrayIds = array.sort().join(",");//获取ID
+		if(!checkFlag){
+			showMsg("请先勾选要审核的订单");
+			return;
+		}
+		$.ajax({
+			type : "POST",
+			url : "/PG/spe/findOrderStatusByIds.action?flag=audit&time=" + new Date().getTime(),
+			data:{arrayIds:arrayIds},
+			success : function(result) {
+				if(result == '1'){
+					showMsg("存在非【已申请】的数据，不能财务审核");
+					return;
+				}
+				jConfirm('确定要审核这些订单吗？','提示信息',function(choice){
+					if(choice){
+						$.ajax({
+							type : "POST",
+							url : "/PG/spe/FinancialAudit.action?time=" + new Date().getTime(),
+							data:{arrayIds:arrayIds},
+							success : function(result) {
+								 
+								if("0"==result){
+									showMsg("审核失败");
+								}else{
+									showMsg("审核成功");
+									submitSearch();
+								}
+							}
+						});
+					}
+				});
+				
+			}
+		});
+		
+	}
+	
+	//取消审核
+	function CancelAudit(){	
+		//var currentstate;
+		var array = new Array();
+		var checkFlag=false;
+		$("input[name='checkbutton']").each(function(){
+			if($(this).attr("checked")=="checked"){
+				checkFlag=true;
+				array.push($(this).parent().parent().attr("id"));
+				//currentstate = $(this).parent().parent().children('.zhuangtai').find('span').find('input').val();
+			}
+		});
+		
+		var arrayIds = array.sort().join(",");
+		if(!checkFlag){
+			showMsg("请先勾选要取消审核的订单");
+			return;
+		}
+		$.ajax({
+			type : "POST",
+			url : "/PG/spe/findOrderStatusByIds.action?flag=cancel&time=" + new Date().getTime(),
+			data:{arrayIds:arrayIds},
+			success : function(result) {
+				if(result == '2'){
+					showMsg("只有财务审核的条码才可以取消审核");
+					return;
+				}
+			}
+		});
+		jConfirm('确定要取消审核这些订单吗？','提示信息',function(choice){
+			if(choice){
+				$.ajax({
+					type : "POST",
+					url : "/PG/spe/CancelAudit.action?time=" + new Date().getTime(),
+					data:{arrayIds:arrayIds},
+					success : function(result) {
+						if("0"==result){
+							showMsg("取消审核失败","提示信息");
+						}else if("2"==result){
+							showMsg("订单已经采购，无法取消审核","提示信息");
+						}else{
+							fadeInMessage("取消审核成功");
+							submitSearch();
+						}
+					}
+				});
+			}
+		});
+	}
+
+	//导出
+	function exportExcel(exportType){
+		var array = new Array();
+		var checkFlag=false;
+		$("input[name='checkbutton']").each(function(){
+			if($(this).attr("checked")=="checked"){
+				checkFlag=true;
+				array.push($(this).parent().parent().attr("id"));
+			}
+		});
+		var arrayIds = array.sort().join(",");
+		$("#ids").val(arrayIds);
+		//导出部分
+		if(exportType == 1){
+			if(!checkFlag){
+				showMsg("请先勾选要导出的记录");
+				return;
+			}
+			$("#excelForm").submit();
+		}else{
+			//导出全部
+			if(checkFlag){
+				showMsg("导出全部请不要勾选记录");
+				return;
+			}
+			$("#pageForm").attr("action","/PG/spe/exportSalesOrderExcel.action?exportType=2"+
+					"&searchdto.name="+$("#searchOrderName").val()+"&searchdto.state="+$("#searchOrderState").val());
+			$("#pageForm").submit();
+			$("#pageForm").attr("action","");
+		}
+		
+	}
+
+	//批量导入(领料单)
+	function batchImport(){
+		$("#importPageDiv").show();
+		$.fn.window.defaults.zIndex=500;
+		$('#importPageDiv').dialog({
+		    title: '批量导入',
+		    left:230,
+		    top:10,
+		    width: 897,
+		    height: 495,
+		    closed: false,
+		    cache: false,
+		    modal: true,
+		    buttons:[{
+				text:'关闭',
+				handler:function(){
+					$('#importPageDiv').dialog( "close" );
+				}
+			}]
+		});
+	}
+	
+	function submitFile(){
+		var fileName = $("#excelFile").val();
+		var fileNameLength = fileName.length;
+		if (fileName == "") {
+			showMsg("请选择文件","提示信息");
+			return;
+		}
+		if (fileName.indexOf(".xls") != fileNameLength - 4
+				&& fileName.indexOf(".xlsx") != fileNameLength - 5) {
+			showMsg("只支持excel文件","提示信息");
+			return;
+		}
+		var fileSize = getFileSize("excelFile");
+		if (fileSize > 2*1024*1024) {
+			showMsg("导入文件大小不能超过2M，请拆分Excel文件后再进行导入。","提示信息");
+			return;
+		}
+		$("#excelFilePath").val(fileName);
+		$("#btnImport").unbind("click");
+		blockUI();
+		$("#batchImport").sub
+182b
+mit();
+		$("#btnImport").bind("click",submitFile);
+	}
+	
+	
+	
+	 function putIn() {
+			var event = window.event;
+			if (event.keyCode == 13) {
+				pageQuery();
+			}
+	 }
+	 
+	 //获取选中的套餐ID
+	 function GetSelectedId(){
+		 /* if(e.target.nodeName!="TD"){
+				return;
+			} */
+			$("#ptoductsTable tr").removeClass("selectedbg");
+			$(this).addClass("selectedbg");
+			
+			selectedId = $(this).attr("id");
+			return selectedId;
+	 }
+	 
+	 //删除套餐
+	 function delplansName(){
+			 //删除套餐,套餐列表删除,不删除数据库数据
+			 var id = $("#ptoductsTable .selectedbg").attr("id");
+				if (id == null || id == undefined || id == '') {
+					jAlert("请选择一条产品数据","提示信息");
+					return;
+				}
+				jConfirm("您是否确定要删除该记录吗?","提示信息",function(choice){
+					if(choice){
+
+						$("#"+id).remove();
+
+						var temp = [];
+						var j = 0;
+				
+						for (var i in orderDetails) {
+							if (orderDetails[i]["id"] == id) {
+								continue;
+							} else {
+								temp.push(orderDetails[i]);
+								j++;
+							}
+						}
+						orderDetails = temp;
+						count = j;
+						
+						refreshProductNum();
+					}
+				});
+			 
+		 }
+	 
+	 function enableInput(){
+			ApplyNameCombo.enable();
+			ApplyAreaCombo.enable();
+			CustomersOrderCombo.enable();
+			setmealCombo.enable();
+			
+			$("#orderName").attr("disabled", false);
+			$("#estimateArrivalTime").attr("disabled", false);
+			$("#remark").attr("disabled", false);
+			$("#plansNumbers").attr("disabled", false);
+			$("#deletePlans").attr("disabled", false);
+			$("#signUserNameUpt").attr("disabled", false);
+			$("#signUserPhoneUpt").attr("disabled", false);
+			$("#receiveAddress").attr("disabled", false);
+			$("#applyNumber").attr("disabled", false);
+			$("#agency").attr("disabled", false);
+			$("#businessArea").attr("disabled", false);
+		}
+	 
+	 
+	 function disableInput(){
+		 	ApplyNameCombo.disable();
+			ApplyAreaCombo.disable();
+			CustomersOrderCombo.disable();
+			setmealCombo.disable();
+			
+			$("#orderName").attr("disabled", true);
+			$("#estimateArrivalTime").attr("disabled", true);
+			$("#remark").attr("disabled", true);
+			$("#deletePlans").attr("disabled", true);
+			$("#signUserNameUpt").attr("disabled", true);
+			$("#signUserPhoneUpt").attr("disabled", true);
+			$("#receiveAddress").attr("disabled", true);
+			$("#applyNumber").attr("disabled", true);
+			//$("#plansNumbers").attr("disabled", true);
+			$("#agency").attr("disabled", true);
+			$("#businessArea").attr("disabled", true);
+			
+			if ($("input[id^=plansNumbers]")) {
+				$("input[id^=plansNumbers]").attr("disabled", true);
+			}
+			
+		}
+		
+	//初始化时间区间
+	 function initdate(){
+	 	var myDate = new Date();
+	 	var year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+	 	var month = myDate.getMonth() + 1; //获取月份
+	 	var day = myDate.getDate();
+	 	
+	 	//获取当前日(1-31)
+	 	if (month < 10) { //月份小于10，前面加上0
+	 		month = "0" + month;
+	 	}
+
+	 	if (day < 10) { //日小于10，前面加上0
+	 		day = "0" + day;
+	 	}
+
+	 	var dateInit = year + "-" + month + "-" + day;
+
+	 	$("#applyTime_start").val(dateInit + " 00:00:00");
+	 	$("#applyTime_end").val(dateInit + " 23:59:59");
+	 }
+	
+	//审核
+	function deleteSales(){
+		//定义id数组
+		var array = new Array();
+		//合法标识
+		var checkFlag=false;
+		//遍历勾引内容
+		$("input[name='checkbutton']").each(function(){
+			if($(this).attr("checked")=="checked"){
+				//合法
+				checkFlag=true;
+				//把获取到的id存放到数组中
+				array.push($(this).parent().parent().attr("id"));
+				//CurrentState = $(this).parent().parent().children('.zhuangtai').find('span').find('input').val();
+			}
+		});
+		//id字符串，每个id以','相隔
+		var arrayIds = array.sort().join(",");//获取ID
+		if(!checkFlag){
+			showMsg("请先勾选要删除的领料单！");
+			return;
+		}
+
+		//删除确认选择
+		jConfirm('确定要删除这些领料单吗？', '提示信息', function(choice) {
+			if (choice) {
+				$.ajax({
+					type : "POST",
+					url : "/PG/spe/deleteSales.action?time="
+							+ new Date().getTime(),
+					data : {
+						arrayIds : arrayIds
+					},
+					success : function(result) {
+						if ("0" == result) {
+							showMsg("删除失败！");
+						}else if("1"==result){
+							showMsg("存在非【已申请】的领料单，不能删除！");
+						} else {
+							showMsg("删除成功！");
+							submitSearch();
+						}
+					}
+				});
+			}
+		});
+	}
+</script>
+</head>
+
+<body>
+<form action="/PG/spe/exportSalesOrderExcel.action?exportType=1" method="post" id="excelForm">
+	<input type="hidden" id="ids" name="ids" />
+</form>
+<!--outArea开始-->
+  <div class="outArea">
+	<!--预留开始-->
+	<div class="public">
+	 <!--主区域开始-->
+	  <div class="box_main">
+		
+		<!--工作区域开始-->
+		<div class="box_main_main">
+
+		  <!--主区域Left开始-->
+		  <div id="leftPageDiv" class="left_one"></div>
+		  <!--主区域Left结束-->
+		  
+		  <!--主区域content开始-->
+		  <div id="infoPageDiv" class="content_oneLeft">
+		  	<div class="page_tabs-wrap">
+							<ul class="page_tabs" style="height: 26px;">
+								<li id="tabDiv_1" class="page_tabs-selected"><a class="page_tabs-inner" onclick="tabPageClick(1)">基本信息</a></li>
+								<li id="tabDiv_2" class="page_tabs"><a class="page_tabs-inner" onclick="tabPageClick(2)">出库详情</a></li>
+							</ul>
+						</div>
+						<div id="pageDiv_1" ></div>
+						<div id="pageDiv_2" style="display:none"></div>
+		  </div>
+		  <!--主区域content结束-->
+		  
+          <div class="midBlock"></div><!--区域打底控制-->
+
+		</div>
+		<!--工作区域结束-->
+		
+	  </div>
+	  <!--主区域结束-->
+	</div>
+	<!--预留结束-->
+	
+  </div>
+  <!--outArea结束-->
+  
+  <!--底部信息开始-->
+  <!--底部信息结束-->
+  	<input type="hidden" id="financialAuditFunc" value="false"></input>
+	
+		<script>$("#financialAuditFunc").val('true');</script>
+	
+</body>
+</html>
+
+0
+

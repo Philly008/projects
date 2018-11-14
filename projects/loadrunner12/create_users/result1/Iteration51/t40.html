@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="/NIP/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	var conTitleH = $(".conTitle").outerHeight(true);
+	var tabDivH =$(window).height()-conTitleH-20;
+	var dataTabH = $("#dataTab").height();
+	if(dataTab>tabDivH){
+		$(".tabDiv").height(tabDivH);
+	}
+	
+	noticeSearch();
+});
+function downPdf(obj){
+	var url = "PDF/"+obj+".pdf";
+	window.open(url)
+	//window.location.href =url;
+}
+
+//查询
+function noticeSearch(){
+	var url = "/NIP/ref/noticeNewSearch.action";
+	$.ajax({
+		type: "POST",
+		url: url,
+		success: function(result) {
+			var jsonData = eval('('+result+')');
+			$('#noticeContent').val(jsonData.noticeContent);
+			$('#noticeDept').val(jsonData.noticeDept);
+			$('#publicDate').val(jsonData.publicDate);
+			 if("false"==jsonData.isShow){
+				$('#noticeDiv').hide();
+			} 
+		},
+		error: function(result)
+		{
+			fadeInMessage(result);
+		}
+	});
+}
+</script>
+</head>
+<style>
+html,body {
+	font-size:12px;
+	font-family: "Verdana";
+	background-color:#E0E9F5;
+	height: 800px;
+}
+.updateTab tr td,th{
+	border:1px solid #b8cedc;
+}
+.updateTab{
+	border:1px solid #b8cedc;
+}
+.updateTab thead {
+	font-family: Futura Book, Arial, sans-serif; 
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+}
+.tdCenter {
+	text-align: center
+}
+
+.conTitle{
+	font-family: Futura Book, Arial, sans-serif; 
+	font-size: 30px; 
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	margin: 1%;
+}
+.tabDiv{
+	border:2px solid #b8cedc;
+	width: 50%;
+	margin: 0% 25%;
+	overflow:auto;
+}
+.noticeDiv{
+	border:2px solid #b8cedc;
+	margin: 2% 25%;
+	overflow:auto;
+	max-height:48%;
+	min-height:20%;
+}
+.noticeTitleDiv{
+    text-align: center;
+    font-size: 30px;
+	margin: 1% 25%;
+	overflow:auto;
+}
+.noticeContDiv{
+    text-indent:2em;
+    line-height:25px; 
+	margin: 1% 1%;
+}
+.noticeDownDiv{
+	margin: 1% 1%;
+	float: right;
+	line-height:25px; 
+}
+</style>
+	<div  class ="conTitle">本系统更新内容</div>
+	<div class = 'tabDiv'>
+		<table width="100%" border="0" cellspacing="0" cellpadding="4" border="0" class = "updateTab" id="dataTab">
+			<thead>
+				<tr>
+					<th width="25%">版本号</th>
+					<th width="25%">更新内容</th>
+					<th width="25%">更新人</th>
+					<th width="25%">发布日期</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="tdCenter" width="8%">V2.9.9</a>
+					<td><a onclick="downPdf('2.9.9')" href="#">下载</a></td>
+					<td width="8%" class="tdCenter">李清荣</td>
+					<td width="10%" class="tdCenter">2017-03-31</td>
+				</tr>
+				<tr>
+					<td class="tdCenter" width="8%">V2.9.8</a>
+					<!-- <td width="74%">1、病理结果录入,文字结果录入复制粘贴操作，出现html源码问题</td> -->
+					<td><a onclick="downPdf('V2.9.8')" href="#">下载</a></td>
+					<td width="8%" class="tdCenter">李清荣</td>
+					<td width="10%" class="tdCenter">2016-12-20</td>
+				</tr>
+				<tr>
+					<td class="tdCenter" width="8%">V2.9.7</a>
+					<!-- <td width="74%">1、病理结果录入,文字结果录入复制粘贴操作，出现html源码问题</td> -->
+					<td><a onclick="downPdf('V2.9.7')" href="#">下载</a></td>
+					<td width="8%" class="tdCenter">李清荣</td>
+					<td width="10%" class="tdCenter">2016-10-28</td>
+				</tr>
+				<tr>
+					<td class="tdCenter" width="8%">V2.9.6</a>
+					<!-- <td width="74%">1、病理结果录入,文字结果录入复制粘贴操作，出现html源码问题</td> -->
+					<td><a onclick="downPdf('V2.9.6')" href="#">下载</a></td>
+					<td width="8%" class="tdCenter">李清荣</td>
+					<td width="10%" class="tdCenter">2016-05-28</td>
+				</tr>
+				<!-- V1.7.0  -->
+				<!-- <tr>-->
+				<!--	<td class="tdCenter" width="8%">V1.7.0</a>
+					<!-- <td width="74%">1、病理结果录入,文字结果录入复制粘贴操作，出现html源码问题</td> -->
+				<!--	<td><a onclick="downPdf('V 1.7.0')" href="#">下载</a></td>
+					<td width="8%" class="tdCenter">吕荣璋</td>
+					<td width="10%" class="tdCenter">2014-10-19</td>
+				</tr> -->
+				<!-- <tr><td>2、病理结果录入,“年龄”回车后跳过“医院”，直接跳转到“科室”</td></tr>
+				<tr><td>3、标本预处理,修复批量打印时条码排序不对、有些条码有条码没有病理号的问题；另外玻片标签是倒着打出来</td></tr>
+				<tr><td>4、临检打印,在“已打印”列表中进行到导出、外部打印时，也会去检测异常信息是否是“打印”状态，若不是，则更新为“已打印”</td></tr>
+				<tr><td>5、临检报告打印,“已打印”列表，导出类型默认为“合并”</td></tr>
+				<tr><td>6、迟发管理,"迟发申请原因，根据登录用户的部门，判断加载“迟发申请原因-病理”还是“迟发申请原因-常规”的数据"</td></tr>
+				<tr><td>7、病理查询,增加“合并导出PDF”功能</td></tr>
+				<tr><td>8、样本对接,当医院传过来的项目含有基线组合A的时候，那么标本的病人类型为CDC类型</td></tr> -->
+				<!-- V1.6.5 -->
+				
+				<!--<tr>
+					<td class="tdCenter">V1.6.5</a>
+					<!-- <td>1、渠道维护，去掉电话和传真格式校验</td> -->
+				<!--	<td><a onclick="downPdf('V 1.6.5')" href="#">下载</a></td>
+					<td class="tdCenter">吕荣璋</td>
+					<td class="tdCenter">2014-07-13</td>
+				</tr>
+				<!-- <tr><td>2、渠道维护,去掉电话和传真格式校验</td></tr>
+				<tr><td>3、结果录入,更改细菌检测方法后，解决抗生素排序乱问题</td></tr>
+				<tr><td>4、样本录入,光标回车跳转时,不管医生和科室是否被锁住,光标都要跳到医生和科室内</td></tr>
+				<tr><td>5、结果录入、签字审核,抗生素增加排序功能</td></tr>
+				<tr><td>6、修复样本核收标本超过1000条报错</td></tr>
+				<tr><td>7、临检打印，修复核对清单查询不到当天标本</td></tr>
+				<tr><td>8、临检打印-已打印页面-修复报告交接单无法打印</td></tr>
+				<tr><td>9、查询打印,临检导出A5转A4,如果勾选，修复导出的全是A4问题</td></tr>
+				<tr><td>10、抗生素字典维护,保存抗生素时允许中文名重复</td></tr> -->
+				<!-- V1.6.0  -->
+				<!--<tr>
+					<td class="tdCenter">V1.6.0</a>
+					<!-- <td>LIMS 白 C/S 版本升级为 B/S 版本 (更新原因:为了适应公司及互联网的发展)</td> -->
+				<!--	<td><a onclick="downPdf('V 1.6.0')" href="#">下载</a></td>
+					<td class="tdCenter">许耀高</td>
+					<td class="tdCenter">2014-05-23</td>
+				</tr>-->
+			</tbody>
+		</table>
+	</div>
+	<div class="noticeDiv" id="noticeDiv">
+		<div class="noticeTitleDiv"><font color="red">公告信息</font></div>
+		<div class="noticeContDiv"><output id="noticeContent" name="noticeContent" ></output></div>
+		<div class="noticeDownDiv"><output id="noticeDept" name="noticeDept" ></output><br>
+		<output id="publicDate" name="publicDate" ></output></div>
+	</div>
+	

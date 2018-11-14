@@ -1,0 +1,13 @@
+[t94]
+FileName1=t94.html
+URL1=http://192.168.14.35/PG/spe/PlansComJson.action
+Total=2
+RequestHeaderFile=t94_RequestHeader.txt
+RequestBodyFile=t94_RequestBody.txt
+ResponseHeaderFile=t94_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_94.xml
+FileName2=t94_dd.jpg
+URL2=http://192.168.14.35/PG/images/dd.jpg
+[ProtocolInfo]
+ProtocolId=QTWeb

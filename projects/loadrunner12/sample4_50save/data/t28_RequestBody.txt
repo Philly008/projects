@@ -1,0 +1,1 @@
+"barCodes=201811059800&userID=4af4e88a47617eea0147625b464a05d6&password=123%40abc"

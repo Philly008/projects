@@ -1,0 +1,54 @@
+28 11 1542003729 2 165374296 -958366330 1699660
+28 4 sample4_50save 50 1542003729 0 sample4_50save localhost 0 1
+28 10 localhost 24 0 0
+28 4 sample4_50save 51 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 52 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 53 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 54 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 55 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 56 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 57 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 58 1542003729 0 sample4_50save localhost 0 1
+28 4 sample4_50save 59 1542003729 0 sample4_50save localhost 0 1
+28 0 sample4_50save 50 1542003729 0 localhost 0
+28 8 sample4_50save 50  0 0
+28 0 sample4_50save 51 1542003729 0 localhost 0
+28 8 sample4_50save 51  0 0
+28 0 sample4_50save 52 1542003730 0 localhost 0
+28 8 sample4_50save 52  0 0
+28 0 sample4_50save 53 1542003730 0 localhost 0
+28 8 sample4_50save 53  0 0
+28 0 sample4_50save 54 1542003730 0 localhost 0
+28 8 sample4_50save 54  0 0
+28 0 sample4_50save 55 1542003730 0 localhost 0
+28 8 sample4_50save 55  0 0
+28 0 sample4_50save 56 1542003730 0 localhost 0
+28 8 sample4_50save 56  0 0
+28 0 sample4_50save 57 1542003730 0 localhost 0
+28 8 sample4_50save 57  0 0
+28 0 sample4_50save 58 1542003730 0 localhost 0
+28 8 sample4_50save 58  0 0
+28 0 sample4_50save 59 1542003730 0 localhost 0
+28 8 sample4_50save 59  0 0
+28 2 sample4_50save 50 1542003730 0 p 0 0
+28 2 sample4_50save 51 1542003730 0 p 0 0
+28 2 sample4_50save 52 1542003740 0 p 0 0
+28 2 sample4_50save 53 1542003740 0 p 0 0
+28 2 sample4_50save 54 1542003750 0 p 0 0
+28 2 sample4_50save 55 1542003750 0 p 0 0
+28 2 sample4_50save 56 1542003760 0 p 0 0
+28 2 sample4_50save 57 1542003760 0 p 0 0
+28 2 sample4_50save 58 1542003770 0 p 0 0
+28 2 sample4_50save 59 1542003770 0 p 0 0
+28 7 样本录入_保存_集合点 1542003773 1542003812 100 10 10 0
+28 1 sample4_50save 53 1542003824 0 0
+28 1 sample4_50save 51 1542003824 0 0
+28 1 sample4_50save 56 1542003824 0 0
+28 1 sample4_50save 55 1542003824 0 0
+28 1 sample4_50save 54 1542003824 0 0
+28 1 sample4_50save 58 1542003824 0 0
+28 1 sample4_50save 57 1542003824 0 0
+28 1 sample4_50save 52 1542003824 0 0
+28 1 sample4_50save 59 1542003824 0 0
+28 1 sample4_50save 50 1542003824 0 0
+28 12 1542003824 1 1542003824 0 1542003824

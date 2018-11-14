@@ -1,0 +1,425 @@
+// Table 表头拉动JS --定义 class='resizable'
+// Resizable Table Columns.
+// version: 1.0
+// (c) 2006, lz
+// 25.12.2006:  first working prototype
+// 26.12.2006:  now works in IE as well but not in Opera (Opera is @#$%!)
+// 27.12.2006:  changed initialization, now just make class='resizable' in table and load script 
+//
+function preventEvent(e) {
+	var ev = e || window.event;
+	if (ev.preventDefault) ev.preventDefault();
+	else ev.returnValue = false;
+	if (ev.stopPropagation)
+		ev.stopPropagation();
+	return false;
+}
+
+function getStyle(x, styleProp) {
+	if (x.currentStyle)
+		var y = x.currentStyle[styleProp];
+	else if (window.getComputedStyle)
+		var y = document.defaultView.getComputedStyle(x,null).getPropertyValue(styleProp);
+	return y;
+}
+
+function getWidth(x) {
+	if (x.currentStyle)
+		// in IE
+		var y = x.clientWidth - parseInt(x.currentStyle["paddingLeft"]) - parseInt(x.currentStyle["paddingRight"]);
+		// for IE5: var y = x.offsetWidth;
+	else if (window.getComputedStyle)
+		// in Gecko
+		var y = document.defaultView.getComputedStyle(x,null).getPropertyValue("width");
+	return y || 0;
+}
+
+function setCookie (name, value, expires, path, domain, secure) {
+	document.cookie = name + "=" + escape(value) +
+		((expires) ? "; expires=" + expires : "") +
+		((path) ? "; path=" + path : "") +
+		((domain) ? "; domain=" + domain : "") +
+		((secure) ? "; secure" : "");
+}
+
+function getCookie(name) {
+	var cookie = " " + document.cookie;
+	var search = " " + name + "=";
+	var setStr = null;
+	var offset = 0;
+	var end = 0;
+	if (cookie.length > 0) {
+		offset = cookie.indexOf(search);
+		if (offset != -1) {
+			offset += search.length;
+			end = cookie.indexOf(";", offset)
+			if (end == -1) {
+				end = cookie.length;
+			}
+			setStr = unescape(cookie.substring(offset, end));
+		}
+	}
+	return(setStr);
+}
+
+	
+// main class prototype
+function ColumnResize(table) {
+	if (table.tagName != 'TABLE') return;
+	this.id = table.id;
+
+	// ============================================================
+	// private data
+	var self = this;
+
+	var dragColumns  = table.rows[0].cells; // first row columns, used for changing of width
+	if (!dragColumns) return; // return if no table exists or no one row exists
+
+	var dragColumnNo; // current dragging column
+	var dragX;        // last event X mouse coordinate
+
+	var saveOnmouseup;   // save document onmouseup event handler
+	var saveOnmousemove; // save document onmousemove event handler
+	var saveBodyCursor;  // save body cursor property
+
+	// ============================================================
+	// methods
+
+	// ============================================================
+	// do changes columns widths
+	// returns true if success and false otherwise
+	this.changeColumnWidth = function(no, w) {
+		if (!dragColumns) return false;
+
+		if (no < 0) return false;
+		if (dragColumns.length < no) return false;
+  
+		if (parseInt(dragColumns[no].style.width) <= -w) return false;
+		//if (dragColumns[no+1] && parseInt(dragColumns[no+1].style.width) <= w) return false;
+		dragColumns[no].style.width = parseInt(dragColumns[no].style.width) + w +'px';
+	 if(this.id=="gridMicBacterialHead"){
+		 $("#gridMicBacterialHead").width($("#gridMicBacterialHead").width()+w+'px');
+		 $("#gridMicBacterial").width($("#gridMicBacterialHead").width()+'px');
+		// document.getElementById('gridMicBacterial').style.width= parseInt(document.getElementById('resizable').style.width)+'px';
+		 var gridtable=document.getElementById('gridMicBacterial');	
+		 var rows = gridtable.getElementsByTagName("tr");
+		 //alert($("#gridMicBacterial tr").size()>0);
+	   if(rows.length>0){
+		 var gridColumns=gridtable.rows[0].cells; 
+		 gridColumns[no].style.width = parseInt(gridColumns[no].style.width)+w+'px';
+		   //防止其他TD晃动
+			var colWidth = new Array();
+			for (var i=0; i<dragColumns.length; i++)
+				colWidth[i] = parseInt( getWidth(dragColumns[i]) );
+			for (var i=0; i<gridColumns.length; i++) {
+				gridColumns[i].width = ""; // for sure
+				gridColumns[i].style.width = colWidth[i] + "px";
+				if(i==2){
+					for(var j in rows){
+				    	  if(rows[j].className=="tablelist_now"){
+				    		  $("#gridMicBacterial tr:eq("+j+") td:eq(2) > input").width($("#gridMicBacterial tr:eq("+j+") td:eq(2)").width()-2);
+				    	  }
+				     }
+				}
+			}	
+			$("#gridMicBacterial").css({"overflow-x":"hidden"});
+			$("#bacterial_div").css({"overflow-x":"hidden","width":$("#gridMicBacterial").width()});
+			$("#xijunid").width($("#gridMicBacterial").width()+'px');
+			$("#gridMicBacterial tr td").css({"white-space":"nowrap","overflow":"hidden"});
+	   }	
+	 }else{
+		//常规检测项
+		if(document.getElementById('gridTestItem').rows[0]){
+			var gridtable=document.getElementById('gridTestItem');
+			var rows = gridtable.getElementsByTagName("tr");
+			var gridColumns=gridtable.rows[0].cells; 
+			gridColumns[no].style.width = parseInt(gridColumns[no].style.width)+w+'px';
+			/*if (gridColumns[no+1])
+				gridColumns[no+1].style.width = parseInt(gridColumns[no+1].style.width) - w + 'px';*/
+			//防止其他TD晃动
+			var colWidth = new Array();
+			for (var i=0; i<dragColumns.length; i++)
+				colWidth[i] = parseInt( getWidth(dragColumns[i]) );
+			for (var i=0; i<gridColumns.length; i++) {
+				gridColumns[i].width = ""; // for sure
+				gridColumns[i].style.width = colWidth[i] + "px";
+				if(i==4){
+					for(var j in rows){
+					  $("#gridTestItem tr:eq("+j+") td:eq(4) >  input").width($("#gridTestItem tr:eq("+j+") td:eq(4) ").width());
+					}
+					//gridColumns[i].firstChild.style.width=parseInt(dragColumns[i].style.width)  +'px';
+				}else if(i==5){
+					for(var j in rows){
+				    	  if(rows[j].className=="tablelist_now"){
+				    		  $("#gridTestItem tr:eq("+j+") td:eq(5) > div").width($("#gridTestItem tr:eq("+j+") td:eq(5)").width());
+				    		  $("#gridTestItem tr:eq("+j+") td:eq(5) > div > div > input").width(parseInt(gridColumns[5].style.width)-17);
+				    	  }
+				     }
+				}else if(i==10){
+					for(var j in rows){
+				    		  $("#gridTestItem tr:eq("+j+") td:eq(10) >  input").width($("#gridTestItem tr:eq("+j+") td:eq(10)").width());
+				      }
+					//gridColumns[i].firstChild.style.width=parseInt(gridColumns[i].firstChild.style.width) + w +'px';//alert(gridColumns[no].innerHTML);
+				}
+			}
+			$("#itemlistdiv").width($("#gridTestItemHead").width());
+			$("#micItemOuterDiv ").width($("#gridMicTestItemHead ").width());
+		}
+		///微生物检测项
+		else if(document.getElementById('gridMicTestItem').rows[0]){
+			var gridtable=document.getElementById('gridMicTestItem');
+			var rows = gridtable.getElementsByTagName("tr");
+			var gridColumns=gridtable.rows[0].cells; 
+			gridColumns[no].style.width = parseInt(gridColumns[no].style.width) + w +'px';
+			/*if (gridColumns[no+1])
+				gridColumns[no+1].style.width = parseInt(gridColumns[no+1].style.width) - w + 'px';*/
+			//防止其他TD晃动
+			var colWidth = new Array();
+			for (var i=0; i<dragColumns.length; i++)
+				colWidth[i] = parseInt( getWidth(dragColumns[i]) );
+			for (var i=0; i<gridColumns.length; i++) {
+				gridColumns[i].width = ""; // for sure
+				gridColumns[i].style.width = colWidth[i] + "px";
+				if(i==5){
+					//alert(gridColumns[5].firstChild);
+				      for(var j in rows){
+				    	  if(rows[j].className=="tablelist_now"){
+				    		  $("#gridMicTestItem tr:eq("+j+") td:eq(5) > div").width(parseInt(gridColumns[5].style.width));
+				    		  $("#gridMicTestItem tr:eq("+j+") td:eq(5) > div > div > input").width(parseInt(gridColumns[5].style.width)-17);
+				    	  }
+				      }
+				}else if(i==6){
+				      for(var j in rows){
+				    	  if(rows[j].className=="tablelist_now"){
+				    		  $("#gridMicTestItem tr:eq("+j+") td:eq(6) > div").width(parseInt(gridColumns[6].style.width));
+				    		  $("#gridMicTestItem tr:eq("+j+") td:eq(6) > div > div > input").width(parseInt(gridColumns[6].style.width)-17);
+				    	  }
+				      }
+				}else if(i==7){
+					//alert(gridColumns[i].innerHTML);
+					for(var j in rows){
+				    		  $("#gridMicTestItem tr:eq("+j+") td:eq(7) > input").width($("#gridMicTestItem tr:eq("+j+") td:eq(7)").width());
+				      }
+					//gridColumns[i].firstChild.style.width= parseInt(gridColumns[i].firstChild.style.width)+ w +'px';
+				}
+			}
+			
+			$("#item_div ").width($("#gridMicTestItemHead ").width());
+			$("#micItemOuterDiv ").width($("#gridMicTestItemHead ").width());
+			
+		}
+		
+		}
+		return true;
+	}
+
+	// ============================================================
+	// do drag column width
+	this.columnDrag = function(e) {
+		var e = e || window.event;
+		var X = e.clientX || e.pageX;
+		if (!self.changeColumnWidth(dragColumnNo, X-dragX)) {
+			// stop drag!
+			self.stopColumnDrag(e);
+		}
+
+		dragX = X;
+		// prevent other event handling
+		preventEvent(e);
+		return false;
+	}
+
+	// ============================================================
+	// stops column dragging
+	this.stopColumnDrag = function(e) {
+		var e = e || window.event;
+		if (!dragColumns) return;
+
+		// restore handlers & cursor
+		document.onmouseup  = saveOnmouseup;
+		document.onmousemove = saveOnmousemove;
+		document.body.style.cursor = saveBodyCursor;
+
+		// remember columns widths in cookies for server side
+		var colWidth = '';
+		var separator = '';
+		for (var i=0; i<dragColumns.length; i++) {
+			colWidth += separator + parseInt( getWidth(dragColumns[i]) );
+			separator = '+';
+		}
+		var expire = new Date();
+		expire.setDate(expire.getDate() + 365); // year
+		document.cookie = self.id + '-width=' + colWidth +
+			'; expires=' + expire.toGMTString();
+
+		preventEvent(e);
+	}
+
+	// ============================================================
+	// init data and start dragging
+	this.startColumnDrag = function(e) {
+		var e = e || window.event;
+
+		// if not first button was clicked
+		//if (e.button != 0) return;
+
+		// remember dragging object
+		dragColumnNo = (e.target || e.srcElement).parentNode.parentNode.cellIndex;
+		dragX = e.clientX || e.pageX;
+
+		// set up current columns widths in their particular attributes
+		// do it in two steps to avoid jumps on page!
+		var colWidth = new Array();
+		for (var i=0; i<dragColumns.length; i++)
+			colWidth[i] = parseInt( getWidth(dragColumns[i]) );
+		for (var i=0; i<dragColumns.length; i++) {
+			dragColumns[i].width = ""; // for sure
+			dragColumns[i].style.width = colWidth[i] + "px";
+		}
+
+		saveOnmouseup       = document.onmouseup;
+		document.onmouseup  = self.stopColumnDrag;
+
+		saveBodyCursor             = document.body.style.cursor;
+		document.body.style.cursor = 'w-resize';
+
+		// fire!
+		saveOnmousemove      = document.onmousemove;
+		document.onmousemove = self.columnDrag;
+
+		preventEvent(e);
+	}
+
+	// prepare table header to be draggable
+	// it runs during class creation
+	for (var i=0; i<dragColumns.length; i++) {
+		dragColumns[i].innerHTML = "<div style='position:relative;height:100%;width:100%'>"+
+			"<div style='"+
+			"position:absolute;height:100%;width:5px;margin-right:-5px;"+
+			"left:100%;top:0px;cursor:w-resize;z-index:10;'>"+
+			"</div>"+
+			dragColumns[i].innerHTML+
+			"</div>";
+			// BUGBUG: calculate real border width instead of 5px!!!
+			dragColumns[i].firstChild.firstChild.onmousedown = this.startColumnDrag;
+		}
+}
+
+// select all tables and make resizable those that have 'resizable' class
+var resizableTables = new Array();
+function ResizableColumns() {
+
+	var tables = document.getElementsByTagName('table');
+	for (var i=0; tables.item(i); i++) {
+		if (tables[i].className.match(/resizable/)) {
+			// generate id
+			if (!tables[i].id) tables[i].id = 'table'+(i+1);
+			// make table resizable
+			resizableTables[resizableTables.length] = new ColumnResize(tables[i]);
+		}
+	}
+//	alert(resizableTables.length + ' tables was added.');
+}
+// init tables
+/*
+if (document.addEventListener)
+	document.addEventListener("onload", ResizableColumns, false);
+else if (window.attachEvent)
+	window.attachEvent("onload", ResizableColumns);
+*/
+try {
+	//window.addEventListener('load', ResizableColumns, false);
+} catch(e) {
+	//window.onload = ResizableColumns;
+}
+
+//重置表头宽度基本信息(常规项)
+function resetWidth(){
+	var Widths=['15px','20px','50px','40px','70px','100px','40px','100px','60px','75px','100px','60px','60px','0px','60px','60px','60px','auto'];
+	if(document.getElementById('gridTestItemHead').rows[0].cells){
+		$("#gridTestItemHead").width($("#itemlistdiv").width());
+		var headColumns=document.getElementById('gridTestItemHead').rows[0].cells;
+		for (var i=0; i<headColumns.length; i++) {
+			headColumns[i].style.width = Widths[i];
+		}
+	}
+	//重置td 带输入框的内容
+	if(document.getElementById('comboResultDetail')){
+		document.getElementById('comboResultDetail').style.width=100+'px';
+	}
+	if(document.getElementById('comboText5')){
+		document.getElementById('comboText5').style.width=83+'px';
+	}
+	if(document.getElementById('txtResultRemark')){
+		document.getElementById('txtResultRemark').style.width=98+'px';
+	}
+}
+
+//重置表头宽度基本信息  (微生物)
+function resetMicWidth(){
+	var Widths=['15px','28px','70px','40px','125px','70px','100px','70px','100px','70px','auto'];
+	if(document.getElementById('gridMicTestItemHead').rows[0].cells){
+		$("#gridMicTestItemHead").width($("#item_div").width());
+		var headColumns=document.getElementById('gridMicTestItemHead').rows[0].cells;
+		for (var i=0; i<headColumns.length; i++) {
+			headColumns[i].style.width = Widths[i];
+		}
+	}
+	//重置td 带输入框的内容
+	if(document.getElementById('comboResultDetail')){
+		document.getElementById('comboResultDetail').style.width=100+'px';
+	}
+	if(document.getElementById('comboText5')){
+		document.getElementById('comboText5').style.width=83+'px';
+	}
+	if(document.getElementById('comboText8')){
+		document.getElementById('comboText8').style.width=49+'px';
+	}
+	if(document.getElementById('txtProjectCode')){
+		document.getElementById('txtProjectCode').style.width=65+'px';
+	}
+}
+
+//重置表头宽度基本信息  (细菌)
+function resetgridMicBacterialHead(){
+	var Widths=['15px','230px','50px','auto'];
+	if(document.getElementById('gridMicBacterialHead').rows[0].cells){
+		var headColumns=document.getElementById('gridMicBacterialHead').rows[0].cells;
+		for (var i=0; i<headColumns.length; i++) {
+			headColumns[i].style.width = Widths[i];
+		}
+	}
+	//重置td 带输入框的内容
+	if(document.getElementById('txtBacterialCount')){
+		document.getElementById('txtBacterialCount').style.width=45+'px';
+	}
+	if(document.getElementById('bacterial_div')){
+		document.getElementById('bacterial_div').style.width=864+'px';
+	}
+	if(document.getElementById('gridMicBacterialHead')){
+		document.getElementById('gridMicBacterialHead').style.width=864+'px';
+	}
+	if(document.getElementById('gridMicBacterial')){
+		document.getElementById('gridMicBacterial').style.width=864+'px';
+	}
+	
+	
+}
+//document.body.onload = ResizableColumns;
+
+//============================================================
+//
+// Usage. In your html code just include the follow:
+//
+//============================================================
+// <table id='objectId'>
+// ...
+// </table>
+// < script >
+// var xxx = new ColumnDrag( 'objectId' );
+// < / script >
+//============================================================
+//
+// NB! spaces was used to prevent browser interpret it!
+//
+//============================================================

@@ -1,0 +1,461 @@
+1ff8
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>易感基因主页</title>
+<script src="/PG/scripts/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/common.js" type="text/javascript"></script>
+<script src="/PG/scripts/qcm_common.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="/PG/css/master.css" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="/PG/css/easyUI.css">
+<script type="text/javascript" src="/PG/scripts/jquery.easyui.min.js"></script>
+
+<script type="text/javascript">
+	function addPanel(id,title,url){
+		var contentDiv = createFrame(id);
+		if(!$('#tt').tabs('exists', title)){
+			$('#tt').tabs('add',{
+				title: title,
+				content: contentDiv,
+				closable: true
+			});
+			$("#"+id).attr("src",url);
+		}
+		else{
+			$('#tt').tabs('select', title);
+			$("#"+id).attr("src",url);
+		}
+	}
+	
+	function removePanel(){
+		var tab = $('#tt').tabs('getSelected');
+		if(tab){
+			var title = tab.panel('options').title;
+			$('#tt').tabs('close', title);
+		}
+	}
+	
+	function createFrame(id){
+		var frameHeight = $(window).height()-123;
+		var s = '<iframe id='+id+' scrolling="none" frameborder="0"  src="" style="width:1250px;height:'+frameHeight+'px"></iframe>';
+		//var s = '<iframe id='+id+' scrolling="none" frameborder="0"  src="" style="width:1250px;height:830px;"></iframe>'; 
+        //var s = '<iframe id='+id+' scrolling="none" frameborder="0"  src="" style="width:1250px;height:670px;"></iframe>';
+        //var s ='<iframe src="" id='+id+' name="iframepage" frameBorder=0 scrolling=no width="1250" height="100%" onLoad="iFrameHeight('+id+')" ></iframe>';
+        return s;  
+        //如果用div,整个系统就是一个页面,所以,不能用div
+        //var s = "<div id=\""+id+"\" style=\"width:100%;\"></div>";
+        //return s;
+        
+        
+        
+        
+        
+    }
+	
+	function iFrameHeight(iframepageId) {   
+        var ifm= document.getElementById(iframepageId);   
+        var subWeb = document.frames ? document.frames[iframepageId].document : ifm.contentDocument;   
+        if(ifm != null && subWeb != null) {
+           ifm.height = subWeb.body.scrollHeight;
+        }   
+    }   
+	
+	function testAPI(){
+		//var pp = $('#tt').tabs('getSelected');
+		//var tab = pp.panel('options').tab;
+		var tab = $('#tt').tabs('getSelected');
+	   	alert('Selected: '+tab.panel('options').title);
+	   	if('Tab3'  == tab.panel('options').title){
+	   		alert("33333");
+	   	}
+	}
+	
+</script>
+</head>
+<body>
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+
+<link rel="stylesheet" href="/PG/css/master.css" type="text/css" />
+<link rel="stylesheet" href="/PG/css/topmenu.css" type="text/css" />
+<link href="/PG/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+
+<script src="/PG/scripts/topmenu/superfish.js" type="text/javascript"></script>
+<script src="/PG/scripts/topmenu/custom.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery.blockUI.js" type="text/javascript"></script>
+<script src="/PG/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<script src="/PG/scripts/common.js" type="text/javascript"></script>
+<script src="/PG/scripts/qcm_common.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+// 注释掉这部分，因为现在由权限来进行菜单按钮的控制
+/* 	$(function(){
+		var url = '/PG/checkDept.action';
+		$.ajax({
+			type : "POST",
+			url : url,
+			data: {},
+			success : function(result) {
+				if(result != "财务部"){
+					$("#costomerCheckBtn").attr("style","display:none");
+					$("#overallTestCheckBtn").attr("style","display:none");
+				}
+			}
+		}); 
+	}); */
+
+	function logout(){
+		parent.window.location='/PG/logout.action';
+	}
+	//修改密码
+	function updatePwd(){
+		var modifyflog = 0;
+		$("#updatePwdDiv").show();
+		$.fn.window.defaults.zIndex=500;
+		$('#updatePwdDiv').dialog({
+		    title: '修改密码',
+		    href:ctx + '/ref/resetPassword.action?modifyflog='+modifyflog,
+		    left:800,
+		    top:250,
+		    width: 500,
+		    height: 300,
+		    closed: false,
+		    cache: false,
+		    modal: true,
+		    buttons:[{
+				text:'关闭',
+				handler:function(){
+					$('#updatePwdDiv').dialog( "close" );
+				}
+			}]
+		});
+	}
+</script>
+
+<div id="updatePwdDiv" title="修改密码" style="display:none;"></div>
+<div class="nav_box" id="header">
+  <div class="nav_left">
+    <h1 class="nav_logo"><!--系统名称--></h1>
+  </div>	
+  <div class="nav_right">
+  	<!--登录信息开始-->
+	  <div id="login_info">
+
+		  <ul>
+			<li id="welcome_txt">欢迎您！</li>
+			<li id="org_name">机构：广州达安</li>
+			<li id="user_name">姓名：信息部专用</li>
+			<!-- <li id="department">角色：主治医师</li> -->
+			<li id="updatePwd"><a href="javascript:updatePwd();">密码修改</a></li>
+			<li id="logout_pic"></li>
+			<li id="logout" title="注销"><a href="javascript:logout();">注销</a></li>
+		  </ul>
+
+	  </div>
+	<!--登录信息结束-->
+	<ul class="hospital_name">
+      <li></li><!--医院名称-->
+	</ul>
+	<!--new菜单start-->
+	<div id="nav_area" style="padding-right: 10px">
+	  <div id="nav_area_l"></div>
+	  <div id="nav_area_r"></div>
+	  <div id="nav_area_c">
+	    <!-- Start Top Menu -->
+           <div class="topmenu">
+               <!-- Start Dropdown Menu -->
+               <ul id="menu" class="menu-nav">
+               		  
+	               		<li class="parent"><a href="javascript:void(5)">基础信息设置</a>
+	                       <ul class="child">
+	                        	 
+	                            	<li><a href="javascript:addPanel('menu7001','机构维护','/PG/ref/organization.action');">机构维护</a></li>
+	                        	 
+	                        	 
+	                            	<li><a href="javascript:addPanel('menu7002','角色维护','/PG/ref/role.action');">角色维护</a></li>
+	                        	 
+	                        	 
+	                            	<li><a href="javascript:addPanel('menu7003','用户维护','/PG/ref/user.action');">用户维护</a></li>
+	                        	
+	                        </ul>
+	                   </li>
+                   	  
+               		
+	               		<li class="parent"><a href="javascript:void(2)">基础资料设置</a>
+	                       <ul class="child">
+	                        <!-- <li><a href="javascript:addPanel('menu0','示例','/PG/ref/role.action')">示例1</a></li> -->
+		                        
+									<li><a href="javascript:addPanel('menu1001','系统字典维护','/PG/ref/pgDictionary.action');">系统字典维护</a></li>
+								
+ 								
+									<li><a href="javascript:addPanel('menu1003','诊断模板','/PG/ref/pgDiagnosis.action');">诊断模板</a></li>
+	                            
+	                            
+	                            	<li><a href="javascript:addPanel('menu1004','仓库管理','/PG/ref/warehouse.action')">仓库管理</a></li>
+								
+								
+									
+1ff8
+<li><a href="javascript:addPanel('menu1005','区域维护','/PG/ref/area.action');">区域维护</a></li>
+	                            
+	                            
+	                            	<li><a href="javascript:addPanel('menu1006','下单客户维护','/PG/ref/customer.action');">下单客户维护</a></li>
+	                        	
+	                              
+	                            	<li id='costomerCheckBtn'><a href="javascript:addPanel('menu1008','下单客户审核','/PG/ref/customerCheck.action');">下单客户审核</a></li>
+	                        	  
+	                        	 
+	                            	<li><a href="javascript:addPanel('menu1007','位点编码维护','/PG/ref/position.action');">位点编码维护</a></li>
+	                        	 
+	                        	 
+	                            	<li><a href="javascript:addPanel('menu1009','指标维护','/PG/ref/pgPacindex.action');">指标维护</a></li>
+	                        	 
+	                        	 
+	                            	<li><a href="javascript:addPanel('menu1010','报告类型时效维护','/PG/ref/reporttypeDuration.action');">报告类型时效维护</a></li>
+	                        	 
+	                        	                       	
+	                                         
+	                        </ul>
+	                   </li>
+                   
+                   
+	                   <li class="parent"><a href="javascript:void(0)">医学检测设置</a>
+	                       <ul class="child">
+	                       		
+	                            	<li><a href="javascript:addPanel('menu2001','计算公式','/PG/ref/pgCalculateFormula.action');">计算公式</a></li>
+	                            
+	                            
+	                            	<li><a href="javascript:addPanel('menu2002','基因座维护','/PG/ref/gene.action');">基因座维护</a></li>
+	                            
+	                            
+	                            
+	                            	<li><a href="javascript:addPanel('menu2004','基因结果得分维护','/PG/ref/genescore.action');">基因结果得分维护</a></li>
+	                            
+	                            <!-- <li><hr size="5px"></li> -->
+	                            
+	                            	<li><a href="javascript:addPanel('menu2005','项目维护','/PG/ref/pgTestItem.action');">项目维护</a></li>
+	                            
+	                            
+	                            	<li><a href="javascript:addPanel('menu2006','组合对明细项目维护','/PG/ref/pgTestItemRelation.action');">组合对明细项目维护</a></li>
+	                            
+	                            
+	                            	<li><a href="javascript:addPanel('menu2007','套餐对组合维护','/PG/ref/pgPlans.action');">套餐对组合维护</a></li>
+	                            
+	                            
+	                            	<li><a href="javascript:addPanel('menu2008','系列维护','/PG/ref/pgSeries.action');">系列维护</a></li>
+	                       		
+	                       </ul>
+	                   </li>
+                   
+
+                   
+	                   <li class="parent"><a href="javascript:void(2)">样本检测</a>
+	                       <ul class="child">
+		                        
+		                            <li><a href="javascript:addPanel('menu3001','易感基因录入','/PG/spe/speInputMain.action');">易感基因录入</a></li>
+		                       	
+								
+	                        	 	<li><a href="javascript:addPanel('menu0000','实验室接收','/PG/spe/speReceiveMain.action');">实验室接收</a></li>
+	                       		
+	                       		
+		                            <li><a href="javascript:addPanel('menu4001','DNA分离样本准备','/PG/spe/spePrepareMain.action');">DNA分离样本准备</a></li>
+		                       	
+		                       	
+		                       		<li><a href="javascript:addPanel('menu4002','研究院审核结果','/PG/spe/speResultMain.action');">研究院审核结果</a></li>
+		                        
+		                            <!-- <li><hr size="5px"></li> -->
+		                        
+		                            <li><a href="javascript:addPanel('menu4003','总检平台','/PG/spe/overallTestPlatform.action');">总检平台</a></li>
+		                        
+		                        
+		                        	<li id='overallTestCheckBtn'><a href="javascript:addPanel('menu4008','总检后财务审核','/PG/spe/overallTestCheck.action');">总检后财务审核</a></li>
+	                        	
+		                        
+		                        	<li><a href="javascript:addPanel('menu4006','报告书下载','/PG/rpt/overallTestReport.action');">报告书下载</a></li>
+	                        	
+		                        
+		                        	<li><a href="javascript:addPanel('menu4004','总检平台(团检)','/PG/spe/overallTestTeam.action');">总检平台(团检)</a></li>
+		                        
+		                        
+		                        	<li><a href="javascript:addPanel('menu4005','团检查询','/PG/pages/spe/overallTestQueryTeam/overallTestQueryTeam.jsp');">团检查询</a></li>
+		                        
+		                         
+		                        	<li><a href="javascript:addPanel('menu4007','验单入库','/PG/spe/requestInMain.action');">验单入库</a></li>
+	                       		
+		                        
+		                        	<li><a href="javascript:addPanel('menu4009','标本外送信息录入','/PG/spe/speSendoutMain.action');">标本外送信息录入</a></li> 
+	                       		
+	                       		
+		                        	<li><a href="javascript:addPanel('menu4010','报告上传','/PG/rpt/reportUpload.action');">报告上传</a></li> 
+	                       		
+	                       		
+		                            <li><a href="javascript:addPanel('menu4011','总检平台(外检)','/PG/spe/overallTestPlatformExterInspe.action');">总检平台(外检)</a></li>
+		                        
+	                        </ul>
+	                   </li>
+                   
+                   
+	                   <li class="parent"><a href="javascript:void(3)">产品管理</a>
+	                       <ul class="child">
+		                       	
+		                            <li><a href="javascript:addPanel('menu3002','领料申请','/PG/spe/salesorder.action');">领料申请</a></li>
+		                       	
+	                       		
+		                            <li><a href="javascript:addPanel('menu5001','采购订单','/PG/spe/purchaseOrder.action');">采购订单</a></li>
+		                        
+		                        
+		                            <li><a href="javascript:addPanel('menu5002','产品入库','/PG/spe/productsWarehousing.action');">产品入库</a></li>
+		                       	
+		                        
+		                       	
+		                       		<li><a href="javascript:addPanel('menu5003','产品出库','/PG/spe/productsOutbound.action');">产品出库</a></li>
+	                        	
+		                       	
+		                       		<li><a href="javascript:addPanel('menu5004','库存管理','/PG/spe/warehouseStock.action');">库存管理</a></li>
+	                        	
+	                        	
+	                        </ul>
+	                   </li>
+                   
+                   
+	                   <li class="parent"><a href="javascript:void(4)">样本管理</a>
+	                       <ul class="child">
+	                       		
+		                            <li><a href="javascript:addPanel('menu6001','基本信息修改申请','/PG/spe/setmealModifyApply.action');">基本信息修改申请</a></li>
+		                        
+		                        
+		                            <li><a href="javascript:addPanel('menu6002','基本信息修改审核','/PG/spe/setme
+c00
+alModifyAudit.action');">基本信息修改审核</a></li>
+		                        
+		                        
+		                            <li><a href="javascript:addPanel('menu60012','基本信息批量修改','/PG/spe/setmealBatchModify.action');">基本信息批量修改</a></li>
+		                        
+		                        
+	                        		<li><a href="javascript:addPanel('menu60013','个人信息修改','/PG/spe/personInfoModify.action');">个人信息修改</a></li>
+	                       		
+		                           <!--  <li><hr size="5px"></li> -->
+		                        
+		                            <li><a href="javascript:addPanel('menu6003','异常标本反馈','/PG/spe/SpecimensAbnormalFeedback.action');">异常标本反馈</a></li>
+		                        
+		                       
+		                        
+		                        	<li><a href="javascript:addPanel('menu6007','报告书接收','/PG/spe/specimenReportReceive.action');">报告书接收</a></li>
+		                        
+		                        
+		                        	<li><a href="javascript:addPanel('menu6008','报告书寄送','/PG/spe/reportSending.action');">报告书寄送</a></li>
+		                        
+		                        
+		                        	<li><a href="javascript:addPanel('menu6009','报告书签收','/PG/spe/specimenReportSign.action');">报告书签收</a></li>
+		                        
+		                        
+		                        	<li><a href="javascript:addPanel('menu60010','报告解读管理','/PG/spe/specimenReportExplain.action');">报告解读管理</a></li>
+		                        
+		                        
+		                        	<li><a href="javascript:addPanel('menu6005','标本全流程跟踪','/PG/spe/specimenQuery.action');">标本全流程跟踪</a></li>
+	                        	
+	                        	
+		                        	<li><a href="javascript:addPanel('menu60011','总检统计','/PG/spe/workStatisticalPlatform.action');">总检统计</a></li>
+		                        
+	                        	
+	                        		<li><a href="javascript:addPanel('menu6006','退单管理','/PG/spe/chargeBack.action');">退单管理</a></li>
+	                       		
+	                        </ul>
+	                   </li>
+                   
+               </ul>
+               <!-- End Dropdown Menu -->
+           </div>
+           <!-- End Top Menu -->
+	  </div>
+	</div>
+	<!--new菜单结束-->
+  </div>
+</div>
+ <!--系统默认----->
+   <!---->
+   <div class="center">
+      <div class="center_1">
+      	<!--outArea开始-->
+		  <div class="outArea">
+			<!--预留开始-->
+			<div id="tt" class="easyui-tabs" data-options="tools:'#tab-tools'" style="margin-top:-8px;">
+			</div>
+			<!--预留结束-->
+			<!--底部信息开始-->
+			
+			<!--底部信息结束-->
+		  </div>
+		  <!--outArea结束-->
+      </div>
+   </div>
+     
+<!--系统默认----->
+
+  
+</body>
+</html>
+
+0
+

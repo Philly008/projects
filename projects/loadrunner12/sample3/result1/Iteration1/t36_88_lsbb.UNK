@@ -1,0 +1,13 @@
+//$("#historySampleBtn").click(historySampleBtnClick);			//历史标本
+//历史标本
+function historySampleBtnClick() {
+	if($("#gridList .tablelist_now .has_history").text()==""){
+		jAlert("没有历史标本！",'提示信息');
+		return;
+		};
+	var h = screen.height+ "px";
+	var w = screen.width + "px";
+	//window.showModalDialog("${ctx}/lab/specimenResultSampleWinNew.action?currentIsMic="+currentIsMic+"&subBarCode="+getSubarCode(),null, "dialogHeight:" + h + "; dialogWidth:" + w+ "; dialogLeft:0px;dialogTop:0px;scroll:no; status:no");
+	window.open("${ctx}/lab/specimenResultSampleWinNew.action?currentIsMic="+currentIsMic+"&subBarCode="+getSubarCode(),'fullscreen=yes');
+}
+

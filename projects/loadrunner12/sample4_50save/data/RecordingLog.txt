@@ -1,0 +1,635 @@
+[API Trapper      (14c0:4030)] Recording in 32-bit mode: C:\Program Files (x86)\Safari\Safari.exe
+[API Trapper      (42dc: 914)] Recording in 32-bit mode: C:\Program Files (x86)\Safari\Apple Application Support\WebKit2WebProcess.exe
+[Network Analyzer (42dc:46e8)] ------------------------------------------------------------------------------------------
+[Network Analyzer (42dc:46e8)] Load Network Traffic Analyzers:
+[Network Analyzer (42dc:46e8)]     Analyzer Module: WPLUS (value=)
+[Network Analyzer (42dc:46e8)]     Analyzer Module: WebBase (value=GetHttpProtocolAnalyzer:api_http_filter.dll)
+[Network Analyzer (42dc:46e8)]     + Network Analyzer: api_http_filter.dll @ GetHttpProtocolAnalyzer Loaded!
+[Network Analyzer (42dc:46e8)]     + Interception Auditors: WinInetWplusInterceptionAudit:api_http_filter.dll
+[Network Analyzer (42dc:46e8)]     Analyzer Module: QTWeb (value=GetWebSocketProtocolAnalyzer:WebSocketAnalyzer.dll)
+[Network Analyzer (42dc:46e8)]     + Network Analyzer: WebSocketAnalyzer.dll @ GetWebSocketProtocolAnalyzer Loaded!
+[Network Analyzer (42dc:46e8)] ------------------------------------------------------------------------------------------
+[Network Analyzer (42dc:3430)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  1)  PROXIED!
+[Web Request      (42dc:3430)] "GET /NIP/login.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 330 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 2511 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/pdfobject.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 381 bytes (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 5816 bytes  (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  2)  PROXIED!
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  3)  PROXIED!
+[Web Request      (42dc:3430)] "GET /NIP/scripts/jquery-1.8.2.min.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 388 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/css/css.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 387 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 2920 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 2702 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 13192 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/images/new/bgd_login_2.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 387 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/images/new/bgd_login3_0.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 388 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 14311 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/images/new/input.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 381 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 2438 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 6880 bytes  (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  4)  PROXIED!
+[Web Request      (42dc:3430)] "GET /NIP/images/new/btn_login.png"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 385 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 2920 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 6129 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /favicon.ico"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 315 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1157 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 535 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/login.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 32 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 345 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/home.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 464 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1743 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 405 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 8760 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 7635 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/common/top.jsp"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 433 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/common/left.jsp"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 434 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/welcome.jsp"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 437 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 2920 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 10843 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 225 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 4734 bytes  (Service=HTTP)
+[Network Analyzer (42dc: 914)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc: 914)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  5)  PROXIED!
+[Web Request      (42dc:3430)] "GET /NIP/scripts/pdfobject.js?_=1541395994665"   
+[Network Analyzer (42dc:3430)]   (Sid:  5) Client -> Server @ : 529 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 5816 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/jquery-1.8.2.min.js?_=1541395994666"   
+[Network Analyzer (42dc:3430)]   (Sid:  5) Client -> Server @ : 536 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 14600 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 1512 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/pdfobject.js?_=1541395994667"   
+[Network Analyzer (42dc:3430)]   (Sid:  5) Client -> Server @ : 529 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 5816 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/jquery-1.8.2.min.js?_=1541395994668"   
+[Network Analyzer (42dc:3430)]   (Sid:  5) Client -> Server @ : 536 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16112 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/jquery.blockUI.js?_=1541395994669"   
+[Network Analyzer (42dc:3430)]   (Sid:  5) Client -> Server @ : 534 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 4456 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/common.js?_=1541395994670"   
+[Network Analyzer (42dc:3430)]   (Sid:  5) Client -> Server @ : 526 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 5840 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 9786 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js?_=1541395994671"   
+[Network Analyzer (42dc:3430)]   (Sid:  5) Client -> Server @ : 554 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 13140 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  5) Server -> Client : 3255 bytes  (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.165:8666   (Service=)  (Sid=  6)  PROXIED!
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 421 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/images/new/main_top_bgd.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 387 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/images/new/main_top.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 383 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 12271 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/rpt/searchdanger.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 469 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 10868 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16314 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /nip/websocket/dangerWarningWebsocket?token=4F5CE2C78180109875988BD1CA8113D8&instIdWebSocket=4af4e88a4f10b211014f2f1af10f3a4a,4028908a4aecfb76014af08c734e247d,4028908a4b1494d0014b2614b21c6996,4028908a4b1494d0014b2616c6a469fa,4028908a4b34eceb014b3897a3d94ca7,4af4e88a4abf7c7c014ac84435e3131b,4af4e88a4abf7c7c014ac846a1e1135d,4af4e88a4abf7c7c014ac847a99d1444,4af4e88a4abf7c7c014ac848d413147d,4af4e88a4abf7c7c014ac849afbe1493,4af4e88a4abf7c7c014ac84abc7a14aa,4af4e88a4abf7c7c014ac84b886614b4,4af4e88a4abf7c7c014ac84c44ff14c7,4af4e88a4abf7c7c014ac84d611d1531,4af4e88a4abf7c7c014ac85a7ac023cd,4af4e88a4abf7c7c014ac85bc409241c,4af4e88a4abf7c7c014ac85d0718244d,4af4e88a4abf7c7c014ac85deeb924a2,4af4e88a4abf7c7c014ac85f587b2503,4af4e88a4abf7c7c014ac86035ac2525,4af4e88a4abf7c7c014ac8631823260a,4af4e88a4abf7c7c014ac865439e272e,4af4e88a4abf7c7c014ac8664d6d2759,4af4e88a4abf7c7c014ac867548c276e,4af4e88a4abf7c7c014ac8686754279a,4af4e88a4abf7c7c014ac869710327cf,4af4e88a4abf7c7c014ac86a8d0227ef,4af4e88a5392600e0153980e998355e5,4af4e88a5392600e0153980d312955c8,4af4e88a5392600e0153980e0f1655e2,4af4e889537871a4015379a2a1700c00,4028908a53d6db3c0153efed60a04b51,4028908a4e80a801014e9044eb6f5167,4028908a4d77c8d1014d8efffedd2867,4028908a5602ae8c0156117e004a51c0,f2b79f855c7cddcc015c819ffdb47f52,f2b7c0b757cf87860157e51735f40195,f2b7c0b757cf87860157e518a3ad0199,f2b7c0b757cf87860157e51a89a3019d,f2b7c0b757cf87860157e51c1c8801a5,f2b79f8557cdd6f70157d164e12226e3,f2b7c0b75ba9b985015bcd851d15576a,f2b7c0b75ba9b985015bcd85e01758fb,f2b7c0b75ba9b985015bcd8674965b02,20188,20106,20212,20199,20259,20262,20263,20220,2093,20100,20252,20168,20169,20173,20125,20165,20213,20202,20150,20152,20268,20254,20255,20272,20266,20267,20175,20200,20170,20148,20248,20221,20257,20265,2091,20182,20109,2096,20143,20102,2094,20130,2081,20178,20107,20258,20256,20139,20253,20162,20123,20126,2080,20127,20219,20128,20129,20210,20156,20120,20198,20118,20193,20233,20236,20163,20192,20205,2098,20111,20240,20186,20190,20145,2097,20101,20115,20119,20239,20245,4af4e8bd45b1d2d30145b71974f90110,20122,20154,20121,20177,20180,20181,40288ea65e79b26f015e7f5590fe019d,4af4e88a4723b58a01472480102a45b8,4af4e889497a15a80149888b441d530a,4af4e88a495621ea01495abbef096e60,4af4e889498a475e01499e2a69ac3c7a,4af4e88a4abf7c7c014ace3f7dfd1554,4af4e88a4abf7c7c014ace401039155a,4af4e88a4abf7c7c014ace40a7191560,4af4e88a4abf7c7c014ace411a061566,4af4e88a4abf7c7c014ace419167156c,4af4e88a4abf7c7c014ace4202701572,4af4e8894b0138dd014b0172646c10e3,4af4e8894b147189014b14af97ce3d02,4af4e889498a47360149a29c78242889,4af4e8894b0138dd014b016f714c1096,4af4e8894d00596b014d0326df6d0505,4af4e88a470f20940147190d77be36ed,4af4e88a483a9c3e014845020a2f418c,4af4e88a470f2094014715762d7d3bde,4af4e88a466817d901466a0f691b276e,4af4e88a4757222f0147623a03f23b7b,4af4e88a498362e601499861bc8f2ba4,4af4e88a498362e6014998645ba42fc8,4af4e88a498362e6014998d0f75a71ce,4af4e88a498362e601499860b1592ac2,4af4e88949a734350149a7cfedc7507c,4af4e88a49e654b50149eb645c2a178c,4af4e88a49faa68b014a0488b3443ecd,4af4e88a4a7bb69b014a809341571184,4af4e88a4a7bb69b014a8093d21d11f1,4af4e88a4a7bb69b014a80945e311221,4af4e88a4a7bb69b014a8094e43912ad,4af4e88a4f10b211014f159d06e12bd6,4af4e88a4e570dd6014e62978031620c,4af4e88a4e570dd6014e6298886a63b5,4af4e88a4e570dd6014e62994f1564f2,4af4e8894e099ab8014e2ede0f567472,4af4e88a46001a190146045aad6014c1,4af4e88a47857cb7014785cdb4ed0d29,f2b7c0b7589649e70158995d32ed0e82,f2b7c0b758f7a55c0159017752430018,f2b7c0b75907310801592057818d0428,f2b7c0b759abe95b0159b5c24ff32006,f2b7c0b75a89542b015ad0d8d8d77792,f2b7c0b75a89542b015ad0da09b677a6,f2b79f855b2951ae015b4150f0611c61,f2b7c0b75b42bdc3015b467158ac7b95,f2b7c0b75b42bdc3015b4671e6367b98,f2b7c0b75b42bdc3015b4672ac167b9a,f2b79f855b42bfa1015b56abd6fd57be,f2b79f855b42bfa1015b56ad67ee57ce,4af4e88a51bdaac30151ce1e535c369a,4af4e8895229e6ce01522fc8fb004a03,4af4e8895398edeb01539d51f5aa3d0a,4af4e88a4f58dd4d014f5de49efc102a,4af4e88950ae26f70150b2376f894992,4028908a5125f98e01516075e5203dd5,4af4e88a5392600e015397fc3f654129,4af4e88a5398e7d20153cbd5aed807d3,4af4e8894fbbe8a8014fd4f78f6e4320,4af4e8895276f4c201527c67cc4f6e2a,4028908a53d6db3c0153eedd43ad3033,4af4e88a53df21e50153f45098981ce7,4af4e889503aa1a801505b0a270c2892,4af4e889503aa1a801505b0b8bec28d9,4af4e88a51d632a00151d7b98e591981,4af4e88a5229df970152535e3e2d4166,4af4e88a5398e7d20153c13ed2606a2c,4af4e88a53c8174f0153ea9ca10b497a,4af4e88a548d66d501549dd76fb6480d,4af4e88a4665c719014667956d4d7521,4af4e8895125f80601513792931a1c59,4af4e88951f5c4240151f6d95e0109db,4af4e88a4fbbe2ce014fc9917b695ba2,4028908a551580a80155260feb3f4e9f,4028908a5558b165015572d22259142c,4028908a5558b165015572d22fd6142e,4028908a5558b165015572d238331430,4028908a551580a8015525f63e5f4360,4028908a55de9e6b0155e8951d3c29f8,4028908a56a0d5a80156b16540ab7d71,f2b79f8556ff267a015709043aa71242,4028908a559687ea0155a0401e15210b,4028908a559687ea0155a06261042d56,4028908a55de9e42015601e59e1f00ef,f2b7c0b75730bc2601573cb8cded7844,f2b79f8557b85c100157c253ea961487,f2b7c0b758bdf4dd0158cd0a68c770e3,f2b7c0b757cf87860157e5d7cffb1f33,f2b7c0b758a640fa0158aa46a3e60bb2,f2b7c0b758a640fa0158aa4a34630cbe,f2b7c0b759abe94e0159c4c5f8540f15,f2b79f855cf34c84015d11ad483c660e,f2b79f855cf34c84015d122cf6061361,f2b7c0b75d311c7b015d34a390544e7c,f2b79f855b9f6f14015ba38541f20e94,f2b7c0b75bec2e2f015bf0e66d142965,f2b79f855c291f3a015c3475214e49a9,f2b7c0b75c2919ce015c62bd8c1a48f9,f2b7c0b75c2919ce015c62c1285c4904,4028908a4cc07bfc014cc56ee8ef5c9d,4af4e88a4c7d9334014c81f95d88249e,4af4e88a4c7d9334014c81fa18b725bd,4af4e88a4c7d9334014c81facd9e263c,4af4e88a4c7d9334014c81fb4e452696,4af4e88a4c7d9334014c81fbd882273c,4af4e88a4c7d9334014c81fcbb8c2933,4af4e88a4cbb622e014cc03ec46172e9,4af4e88a4c7d9334014c81fddb3129fe,4af4e88a4c7d9334014c81fe59782aab,4af4e88a4cc0706a014cc18a3774225a,f2b7c0b758375bc5015841b6293b72ed,4028908a4ca6da5f014cb21224ce65da,4028908a54a4a48b0154c3e0c6800530,4028908a4f7cdcc8014fb0fe5c7b1e38,4af4e88a4ed97093014edd9205e3739e,4028908a564fe29b01565f689f033aae,f2b79f8557cdd6f70157d16110c1268e,5b0cfd2bb4907e42709d8f09,5b0f7111b4907e4a5068c786,20140828551255,20140828551289,20140828551285,20140828551266,20140828551283,20140828551286,20140828551262,20140828551265,20140828551252,20140828551280,20140828551290,20140828551281,20140828551278,20140828551276,20140828551256,20140828551254,20140828551267,20140828551273,20140828551264,20140828551279,20140828551261,20140828551260,20140828551272,20140828551258,20140828551288,20140828551270,20140828551269,20140828551282,20140828551287,20140828551271,20140828551274,20140828551284,20140828551292,4028908a4b1494d0014b1a995b962a23,4028908a4b1493ba014b1ad4480f0c0d,4028908b48af997f0148b162ebc31c69,4028908b491328b901491689bed43c95,4028908a4e388808014e7b3dfca56bdf,f2b79f8557cdd6f70157d167ab9c2711,f2b7c0b75ba9b987015bae5dc7b8643b,5b31a137b4907e20a198e09a,5b31a79bb4907e20a198e199,4af4e88a49b29f390149bc26d7cc24cc,4af4e88a49b29f390149bc22246e2428,4af4e88a49b29f390149bc3de35534a9,4af4e88a49b29f390149bc40b6c836c5,4af4e88a49b29f390149bc44e269388d,4af4e88a49b29f390149bc46d7823b26,4af4e88949b299300149c2139bfc77ab,4af4e88949b299300149c21427f07856,4af4e88949b299300149c215612c794e,4af4e88949b299300149c2163a367aad,4af4e88949b299300149c216d6387b65,4af4e88949b299300149c217a81e7c45,4af4e88a49cce9d70149d15f9c010062,4af4e88a49e654b50149ea0682b424aa,4af4e88949b299300149c214a9e278cb,4af4e88a4a8b0d11014a9e6be6770dd8,4af4e88a4e099c66014e242402306473,4af4e88a4e3881ce014e70c4c52624d8,2c908c4f49a328560149a3288d6b0003,2c908c4f49a328560149a3288da90004,2c908c4f49a328560149a3288cee0002,2c908c4f49a328560149a3288de80005,2c908c4f49a328560149a3288eb20008,2c908c4f49a328560149a3288f5e000a,2c908c4f49a328560149a3288f9c000b,2c908c4f49a328560149a3288fdb000c,2c908c4f49a328560149a3289077000d,2c908c4f49a328560149a32890e5000e,2c908c4f49a328560149a3289191000f,2c908c4f49a328560149a32891cf0010,2c908c4f49a328560149a328927b0012,2c908c4f49a328560149a32892e80013,2c908c4f49a328560149a32894010014,2c908c4f49a328560149a328943f0015,2c908c4f49a328560149a32894ac0016,2c908c4f49a328560149a32894fb0017,2c908c4f49a328560149a32895490018,2c908c4f49a328560149a32895c60019,2c908c4f49a328560149a3289633001a,2c908c4f49a328560149a32896b0001b,2c908c4f49a328560149a328970e001c,2c908c4f49a328560149a328975c001d,2c908c4f49a328560149a32897b9001e,2c908c4f49a328560149a3289807001f,2c908c4f49a328560149a3288e260006,2c908c4f49a328560149a3288e640007,2c908c4f49a328560149a32899020022,2c908c4f49a328560149a32899400023,2c908c4f49a328560149a328998e0024,2c908c4f49a328560149a32899cd0025,2c908c4f49a328560149a3289a1b0026,2c908c4f49a328560149a3289a690027,2c908c4f49a328560149a32898650020,2c908c4f49a328560149a32898b30021,2c908c4f49a328560149a3289af50028,2c908c4f49a328560149a3289b330029,2c908c4f49a328560149a3289bef002b,2c908c4f49a328560149a3289c3d002c,2c908c4f49a328560149a3289c8b002d,2c908c4f49a328560149a3289cc9002e,2c908c4f49a328560149a3289d37002f,2c908c4f49a328560149a3289d850030,2c908c4f49a328560149a3289dd30031,4028908a4a8b1223014a9af40e152f5c,4028908a4a84361e014a84e752fa100c,4028908a4dac7199014dadfe308c7353,4af4e8894ea91afc014eae8970e52373,4af4e88a54a499340154a95ac8e44ce6,4af4e88a50ebd0060150f5bb14df3194,4af4e88a5398e7dc01539da626047750,4af4e88a4f34c2b8014f3ec8ca8736d3,4af4e88a5398e7dc01539da591f1774e,f2b79f8557b85c100157c259a2b31525,f2b79f855cee4572015cf182b6aa3cb5,f2b7c0b75b42bc3a015b89defe7b73a6,f2b7c0b75b42bc3a015b89e0333373c2,f2b7c0b75b42bc3a015b89e0ae1f73d3,f2b7c0b75bf6fbbb015c09d2239f6001,f2b79f855cbf5f49015ccec2bae66863,5b5824d1b4907e61182ac901,5b72489fb4907e7ec3ab5f56,2c908c4f49a328560149a3288ca00001,2c908c4f49a328560149a3288f000009,2c908c4f49a328560149a328922d0011,2c908c4f49a328560149a3289ba1002a,20214,20246,20251,20237,20117,20243,20135,20244,20250,20172,20179,20201,20217,20229,20231,20207,20242,20228,20230,20218,20187,20191,20197,20194,20208,20234,20235,20238,20189,20241,20185,20184,20144,20206,20146,20270,20249,20153,20155,20164"   
+[Network Analyzer (42dc:3430)]   (Sid:  6) Client -> Server @ : 10061 bytes (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 248 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  6) Server -> Client : 206 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  6) Connection Terminated (by Server)
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  7)  PROXIED!
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  8)  PROXIED!
+[Web Request      (42dc:3430)] "POST /NIP/ref/rateMatured.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  7) Client -> Server @ : 468 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/rpt/searchdelay.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  8) Client -> Server @ : 468 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/ref/noticeNewSearch.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 478 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/iconUncheckAll.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 433 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line3.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 424 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 589 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 480 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line2.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 424 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 342 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 474 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus3.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 424 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 531 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus2.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 424 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/plus4.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 424 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 529 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 528 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  8) Server -> Client : 248 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  7) Server -> Client : 250 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/minus3.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 425 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/line1.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 424 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 534 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 478 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/sky_blue_sel_tree.png"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 422 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/dis/speInput.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 439 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 423 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 14600 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 2101 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 32 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 8 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 4380 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 12012 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/css/style.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 407 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/css/text_style.css?v=0.1.3"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 420 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/css/input_style.css?v=0.3.6"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 421 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 8 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 2161 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/css/text_grid.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  8) Client -> Server @ : 411 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 778 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 1277 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/css/newStyle.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  7) Client -> Server @ : 410 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  8) Server -> Client : 1039 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  7) Server -> Client : 1092 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/css/inputTips.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 400 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 32 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/jalert/jquery.alerts.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 415 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 997 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 8 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 813 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/input_common.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 391 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/common.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  8) Client -> Server @ : 385 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/jalert/jquery.alerts.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  7) Client -> Server @ : 399 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 150 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 14632 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  7) Server -> Client : 8547 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  8) Server -> Client : 15626 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/specimenInput/specimenInput.js?v=1.2.84"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 415 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/jquery.blockUI.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 393 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/nipDhtmlx.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 388 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 14600 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 2851 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 4456 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 5398 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/button01a.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 399 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/button02a.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 399 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 12127 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/line_01.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 397 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 12541 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 822 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/button_bg1a.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 401 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/ico_lock_2.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  8) Client -> Server @ : 400 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 9966 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  8) Server -> Client : 11467 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/select-basic.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 402 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/clear-basic.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 401 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1127 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/loading.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 397 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 1163 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 2729 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/dhtmlxcalendar_dhx_skyblue/bg_main.png"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 447 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 659 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/ico_01.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 396 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 889 bytes  (Service=HTTP)
+[User action                 ] StartTransactionEvent 保存 [Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 568 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputLoadDetailByBarCode.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 20 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 260 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/select-hover.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 402 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1158 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/select-click.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 402 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1154 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 565 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/speInputLocation.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 43 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 563 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 561 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 555 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/speInputCustomerInputTips.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  4) Client -> Server @ : 43 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/speInputDoctor.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 43 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/speInputItem.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  2) Client -> Server @ : 43 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  4) Server -> Client : 247 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 941 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 739 bytes  (Service=HTTP)
+[Network Analyzer (14c0:2aa0)] ------------------------------------------------------------------------------------------
+[Network Analyzer (14c0:2aa0)] Load Network Traffic Analyzers:
+[Network Analyzer (14c0:2aa0)]     Analyzer Module: WPLUS (value=)
+[Network Analyzer (14c0:2aa0)]     Analyzer Module: WebBase (value=GetHttpProtocolAnalyzer:api_http_filter.dll)
+[Network Analyzer (14c0:2aa0)]     + Network Analyzer: api_http_filter.dll @ GetHttpProtocolAnalyzer Loaded!
+[Network Analyzer (14c0:2aa0)]     + Interception Auditors: WinInetWplusInterceptionAudit:api_http_filter.dll
+[Network Analyzer (14c0:2aa0)]     Analyzer Module: QTWeb (value=GetWebSocketProtocolAnalyzer:WebSocketAnalyzer.dll)
+[Network Analyzer (14c0:2aa0)]     + Network Analyzer: WebSocketAnalyzer.dll @ GetWebSocketProtocolAnalyzer Loaded!
+[Network Analyzer (14c0:2aa0)] ------------------------------------------------------------------------------------------
+[Network Analyzer (14c0:4610)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 5840 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Server -> Client : 7360 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  7) Connection Terminated (by Client)
+[Network Analyzer (42dc:3430)]   (Sid:  8) Connection Terminated (by Client)
+[Network Analyzer (14c0:2aa0)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:3430)]   (Sid:  5) Connection Terminated (by Server)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 581 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputInfoTestItem.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 74 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 545 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/button_bg1b.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 401 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 9612 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/images/clear-hover.jpg"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 401 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1200 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/images/busy.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 383 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 585 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputValidateSetLab.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 2343 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1919 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 458 bytes  (Service=HTTP)
+[Net An. Warning  (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80 (Service=) Failed attempt #1. Unable to connect to remote server: rc = -1 , le = 10060)
+[User action                 ] EndTransactionEvent 保存 [User action                 ] StartTransactionEvent 信息审核 [Network Analyzer (42dc:3430)]   (Sid:  4) Connection Terminated (by Client)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 568 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputLoadDetailByBarCode.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 20 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1519 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  2) Connection Terminated (by Client)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 576 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 574 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputLocation.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 43 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputDoctor.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 43 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 941 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 739 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 567 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputVerifyAuditBarCode.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 36 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 252 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 558 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/${ctx}/dis/speInputListAudit.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 36 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 318 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 信息审核 [Net An. Warning  (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80 (Service=) Failed attempt #2. Unable to connect to remote server: rc = -1 , le = 10060)
+[User action                 ] StartTransactionEvent 样本核收 [Web Request      (42dc:3430)] "GET /NIP/dis/speCheck.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 439 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 2920 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 13781 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 8760 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 7632 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 4380 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 12012 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 5840 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 10552 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 14600 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1792 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 11680 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 12584 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/css/text_style.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 412 bytes (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 778 bytes  (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid=  9)  PROXIED!
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlxcommon.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 403 bytes (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid= 10)  PROXIED!
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 1460 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 15386 bytes  (Service=HTTP)
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid= 11)  PROXIED!
+[Network Analyzer (42dc:46e8)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[Network Analyzer (42dc:46e8)] Request Connection: Remote Server @ 202.116.104.161:80   (Service=)  (Sid= 12)  PROXIED!
+[Web Request      (42dc:3430)] "GET /NIP/pages/test/css/input_style.css"   
+[Network Analyzer (42dc:3430)]   (Sid:  9) Client -> Server @ : 413 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/css/style_notContainCombo.css"   
+[Network Analyzer (42dc:3430)]   (Sid: 10) Client -> Server @ : 412 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlxGrid/ext/dhtmlxgrid_srnd.js"   
+[Network Analyzer (42dc:3430)]   (Sid: 12) Client -> Server @ : 421 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/nip_common.js"   
+[Network Analyzer (42dc:3430)]   (Sid: 11) Client -> Server @ : 389 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlxGrid/dhtmlxgrid.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 412 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  9) Server -> Client : 1277 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 10) Server -> Client : 2101 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 11) Server -> Client : 16384 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlxGrid/dhtmlxgridcell.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 416 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 11) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 12) Server -> Client : 5135 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 11) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 11479 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 11) Server -> Client : 8710 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 13259 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlxGrid/dhtmlxtreegrid.js"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 416 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 16384 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 2542 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/dhx_skyblue/bg_top.png"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 431 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/dhx_skyblue/dhx_skyblue_top.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  3) Client -> Server @ : 440 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 428 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Server -> Client : 1233 bytes  (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/icons_greenfolders/sort_desc.gif"   
+[Network Analyzer (42dc:3430)]   (Sid:  9) Client -> Server @ : 441 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "GET /NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/sky_blue_grid.gif"   
+[Network Analyzer (42dc:3430)]   (Sid: 10) Client -> Server @ : 426 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  9) Server -> Client : 374 bytes  (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 10) Server -> Client : 864 bytes  (Service=HTTP)
+[Net An. Warning  (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80 (Service=) Failed attempt #3. Unable to connect to remote server: rc = -1 , le = 10060)
+[Net An. Error    (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80   (Service=)  NOT PROXIED! (REASON: Unable to connect to remote server: rc = -1 , le = 10060)
+[Network Analyzer (14c0:2aa0)] Address lookup for DESKTOP-V9QFJNI = 192.168.68.1
+[User action                 ] StartTransactionEvent 扫描条码 [Net An. Warning  (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80 (Service=) Failed attempt #1. Unable to connect to remote server: rc = -1 , le = 10060)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 542 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid: 11) Connection Terminated (by Client)
+[Network Analyzer (42dc:3430)]   (Sid: 12) Connection Terminated (by Client)
+[Web Request      (42dc:3430)] "POST /NIP/dis/speCheckScan.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 20 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 509 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 扫描条码 [Net An. Warning  (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80 (Service=) Failed attempt #2. Unable to connect to remote server: rc = -1 , le = 10060)
+[User action                 ] StartTransactionEvent 核收人 [Network Analyzer (42dc:3430)]   (Sid: 10) Connection Terminated (by Client)
+[Network Analyzer (42dc:3430)]   (Sid:  9) Connection Terminated (by Client)
+[Network Analyzer (42dc:3430)]   (Sid:  3) Connection Terminated (by Client)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 544 bytes (Service=HTTP)
+[Web Request      (42dc:3430)] "POST /NIP/dis/speCheckAffirm.action"   
+[Network Analyzer (42dc:3430)]   (Sid:  1) Client -> Server @ : 80 bytes (Service=HTTP)
+[Network Analyzer (42dc:3430)]   (Sid:  1) Server -> Client : 251 bytes  (Service=HTTP)
+[User action                 ] EndTransactionEvent 核收人 [Net An. Warning  (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80 (Service=) Failed attempt #3. Unable to connect to remote server: rc = -1 , le = 10060)
+[Net An. Error    (14c0:2aa0)] Request Connection: Remote Server @ 74.125.23.102:80   (Service=)  NOT PROXIED! (REASON: Unable to connect to remote server: rc = -1 , le = 10060)
+[User action                 ] EndTransactionEvent 样本核收 

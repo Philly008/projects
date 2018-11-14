@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<!-- 清除缓存 -->
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="0">
+<!-- Common -->
+
+
+<script src="/NIP/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/NIP/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<link href="/NIP/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+<script src="/NIP/scripts/jquery.blockUI.js" type="text/javascript"></script>
+
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nip_common.js?V=2.9.5.1" type="text/javascript"></script>
+<script src="/NIP/scripts/common.js" type="text/javascript"></script>
+<script src="/NIP/scripts/nipDhtmlx.js" type="text/javascript"></script>
+<script src="/NIP/scripts/pdfobject.js?v=2014103114211" type="text/javascript"></script>
+<script src="/NIP/scripts/dhtmlxSuite/dhtmlxGrid/ext/dhtmlxgrid_srnd.js" type="text/javascript"></script>
+<!-- NIP css -->
+<link rel="stylesheet" href="/NIP/css/style.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css" />
+<script type="text/javascript">
+var IMG_BASEPATH_GRID = "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/";
+var IMG_BASEPATH_TABBAR = "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/";
+var isIE=false; 
+function openDhtmlWin(id,title,url, width, height){
+	var dhxWins = parent.nipDhxWins;
+	dhxWins.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+	dhxWins.enableAutoViewport(true);
+	if(dhxWins.window(id)==null){
+		var printWin = dhxWins.createWindow(id, 0, 0, width, height);// 自定义位置和宽度、高度
+		printWin.setText(title);
+		printWin.center();
+		//printWin.hideHeader();
+		//printWin.denyResize();
+		//printWin.denyPark();
+		printWin.button("minmax1").hide();
+		printWin.button("park").hide();
+		//printWin.button("close").hide();
+		printWin.denyResize();
+		printWin.denyPark();
+		printWin.attachURL(url);
+		printWin.setModal(true);
+	}else{
+		dhxWins.window(id).show();
+	}
+	return dhxWins;
+	/* var s = 'dialogWidth:' + width + 'px; dialogHeight:' + height + 'px; dialogTop=' + y + 'px; dialogLeft=' + x + 'px; scroll:no;';
+	return window.showModalDialog(url,window,s); */
+}
+function openModalDialog(url, width, height){
+	var x = ($(parent.document.body).width() - width) / 2;
+	var y = ($(parent.document.body).height() - height) / 2;
+	var s = 'dialogWidth:' + width + 'px; dialogHeight:' + height + 'px; dialogTop=' + y + 'px; dialogLeft=' + x + 'px; scroll:no;';
+	return window.showModalDialog(url,window,s);
+}
+
+function getScreenCenterCss(w, h){
+	var l = (screen.width - w) / 2;
+	var t = (screen.height - h) / 2;
+	var s = 'dialogWidth:' + w + 'px; dialogHeight:' + h + 'px; dialogTop=' + t + 'px; dialogLeft=' + l + 'px; scroll:no;';
+	
+	return s;
+}
+
+function errorHandle(XMLHttpRequest){
+	//unblockUI();
+	var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
+	if(sessionstatus == "timeout"){
+	   	   parent.location.href = ctx+"/login.action";
+	    }
+	var errirstatus = XMLHttpRequest.getResponseHeader("error");
+	if(errirstatus == "true"){
+		//alert("系统错误,请联系管理员");
+	}
+}
+
+$.ajaxSetup({     
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",     
+    beforeSend: function(XMLHttpRequest){
+    	//blockUI();
+	},
+	error: function(xhr,status,error){
+		//alert("系统错误,请联系管理员");
+	},
+    complete:function(XMLHttpRequest,textStatus){
+		errorHandle(XMLHttpRequest);
+    }
+});
+
+
+dhtmlxError.catchError("ALL",function(a,b,data){
+    var str = data[0].responseText;
+    if(typeof(str) == "undefined")
+        return false;
+    if(str.indexOf("parent.location.href")>-1){
+   	  parent.location.href = ctx+"/login.action";
+    }
+    //alert("系统错误,请联系管理员");
+});
+</script> 
+<!-- isIE? -->
+<!--[if IE]> 
+<script type="text/javascript"> 
+	var isIE=true; 
+</script> 
+<![endif]-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>职能选择</title>
+
+<script>
+	var selectGrid, unselectGrid;
+	var unIsDefaultId = "";
+	var labIsDefaultId = "";
+	var userId;
+	var currentlabid="";
+	$(document).ready(function() {
+		userId ='5be53968308f2e3661de109b'; // window.dialogArguments;
+		selectGrid = new dhtmlXGridObject("datagrid2");
+		selectGrid.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+		selectGrid.setHeader("实验室名称,授权,默认,调度中心"); 
+		selectGrid.setInitWidthsP("60,20,20,0");
+		selectGrid.setColAlign("left,center,center,left");
+		selectGrid.setColTypes("ro,ch,ra,ro");
+		selectGrid.setColSorting("str,int,str,str");
+		selectGrid.init();
+		selectGrid.enableSmartRendering(true);
+		selectGrid.setSkin("dhx_skyblue");
+		selectGrid.attachEvent("onCheckbox", function(rId,cInd,nValue){
+			if(cInd == 1){
+				var chvalue=selectGrid.cells(rId,1).getValue();
+				if(0==chvalue){
+					selectGrid.cells(rId,2).setValue(0);
+				}
+			}
+			if(cInd == 2){
+				var radioval=selectGrid.cells(rId,2).getValue();
+				if(1==radioval){
+					selectGrid.cells(rId,1).setValue(1);
+				}
+			}
+		});
+		//加载数据
+		selectGrid.load(ctx+"/ref/userLaboratoryList.action?id="+userId, function(){
+			initLabData();
+		});
+
+		
+	});
+	
+	function clearDisRadio(){
+		var count = 0;
+		for ( var i = 0; i < unselectGrid.getRowsNum(); i++) {
+			var id = unselectGrid.getRowId(i);
+			var isCheck = unselectGrid.cells(id,1).getValue();
+			if(isCheck == 1){
+				count = count + 1;
+			}
+		}
+		if(count == 0){
+			for ( var i = 0; i < unselectGrid.getRowsNum(); i++) {
+				var id = unselectGrid.getRowId(i);
+				unselectGrid.cells(id,2).setValue(0);
+			}
+			unIsDefaultId = "";
+		}
+	}
+	
+	function clearLabRadio(){
+		var count = 0;
+		for ( var i = 0; i < selectGrid.getRowsNum(); i++) {
+			var id = selectGrid.getRowId(i);
+			var isCheck = selectGrid.cells(id,1).getValue();
+			if(isCheck == 1){
+				count = count + 1;
+			}
+		}
+		if(count == 0){
+			for ( var i = 0; i < selectGrid.getRowsNum(); i++) {
+				var id = selectGrid.getRowId(i);
+				selectGrid.cells(id,2).setValue(0);
+			}
+			labIsDefaultId = "";
+		}
+	}
+	
+	function initDisData(){
+		for ( var i = 0; i < unselectGrid.getRowsNum(); i++) {
+			var id = unselectGrid.getRowId(i);
+			var isDefault = unselectGrid.cells(id,2).getValue();
+			if(isDefault == 1){
+				unIsDefaultId = id;
+				break;
+			}
+		}
+	}
+	
+	function initLabData(){
+		for ( var i = 0; i < selectGrid.getRowsNum(); i++) {
+			var id = selectGrid.getRowId(i);
+			var isDefault = selectGrid.cells(id,2).getValue();
+			if(isDefault == 1){
+				labIsDefaultId = id;
+				break;
+			}
+		}
+	}
+	
+	//触发级联显示实验室
+	function distributeCentreSelected(){
+		selectGrid.clearAll();
+		selectGrid.loadXML(ctx + "/ref/userLaboratoryList.action");
+	}
+	
+	function save(){
+		var labObjs = [];
+		var chFlag=false;
+		var radioFlag = false;
+		var userName = $("#userName").val();
+		for ( var i = 0; i < selectGrid.getRowsNum(); i++) {
+			var id = selectGrid.getRowId(i);//实验室ID
+			var labName = selectGrid.cells(id,0).getValue();
+			var centreId=selectGrid.cells(id,3).getValue();//调度中心ID
+			var isCheck = selectGrid.cells(id,1).isChecked();//复选框
+			var radioval=selectGrid.cells(id,2).getValue();//单选框
+			if(1==radioval){
+				radioFlag=true;
+			}
+			if(isCheck){
+				if (centreId == null || centreId == "") {
+					fadeInMessage(labName+"未设置为任何调度中心临近实验室，请先设置！");
+					return;
+				}
+				chFlag=true;
+				//实验室对象
+				var obj = {"laboratory":"","isDefault":"", "distributeCentre" : ""} ;
+				obj.laboratory = id;
+				obj.distributeCentre = centreId;
+				obj.isDefault = radioval;
+				labObjs.push(obj);
+				//调度中心
+// 				var centreobj = {"id":"","isDefault":""} ;
+// 				centreobj.id = centreId;
+// 				centreobj.isDefault = radioval;
+// 				disObjs.diss.push(centreobj);
+			}
+		}
+		if(!chFlag){
+			fadeInMessage("请勾选授权");
+			return;
+		}
+		if(!radioFlag){
+			fadeInMessage("请配上一个默认实验室");
+			return;
+		}
+		labObjs = JSON.stringify(labObjs); 
+		$.ajax({
+			type: "POST",
+			url: ctx+"/ref/updateUserDepartment.action",
+			data:{labs:labObjs,id:userId,userName:userName},		
+			success: function(result) {
+				parent.parent.nipDhxWins.window("userDepartment").close();
+				//window.returnValue='1';
+				//window.close();
+			}
+		});
+	}
+	
+	function closeWin(){
+		parent.parent.nipDhxWins.window("userDepartment").close();
+//		window.close();
+	}
+	
+</script>
+
+
+</head>
+<body>
+    <input type="hidden" id="userName" name="userName" value="liu056b">
+    <input id="itemId" name="itemId" type="hidden" value="null"/>
+	<div style="width: 100%; height: 88%; margin: 5px; ">
+		<!-- <div style="width: 290px; height: 100%; float: left;">
+			<fieldset style="width: 92%; height: 95%;">
+				<legend>所属调度中心</legend>
+				<div id="datagrid1" style="width: 270px; height: 95%;"></div>
+			</fieldset>
+		</div> -->
+
+		<div style="width: 580px; height: 100%; float: left;">
+			<fieldset style="width: 92%; height: 95%;">
+				<legend>所属实验室</legend>
+				<div id="datagrid2" style="width: 570px; height: 95%;"></div>
+			</fieldset>
+		</div>
+	</div>
+	<div style="height: 12%; text-align: center; width: 98%;">
+		
+		<input type="button" value="保存" onclick="save();"/> &nbsp;&nbsp;
+		
+		<input type="button" value="取消" onclick="closeWin();" />
+	</div>
+
+</body>
+</html>

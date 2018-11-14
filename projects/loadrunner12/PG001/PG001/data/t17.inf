@@ -1,0 +1,13 @@
+[t17]
+FileName1=t17.html
+URL1=http://192.168.14.35/PG/spe/productsOutbound.action
+Total=2
+RequestHeaderFile=t17_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t17_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_17.xml
+FileName2=t17_productsOutbound.html
+URL2=http://192.168.14.35/PG/pages/spe/productsOutbound/scripts/productsOutbound.js?version=1.1.2
+[ProtocolInfo]
+ProtocolId=QTWeb

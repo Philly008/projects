@@ -1,0 +1,11 @@
+[t149]
+FileName1=t149.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/saveSpeInputSpecimen.action?ids=ff8080815d7e6a77015da76d0f690094,ff8080815d7e6a77015dac601524016e,ff8080815f48dc1e015f4c20dd73003d,ff8080815f48dc1e015f4c2df394005d,ff8080815f48dc1e015f4c319c640067,ff8080815f48dc1e015f4c38983c0079,ff8080815f4c6938015f4d2ead85027c&isDefault=y&customerName=%E6%9D%AD%E5%B7%9E%E8%93%9D%E8%83%9C%E5%81%A5%E5%BA%B7%E5%92%A8%E8%AF%A2%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8
+Total=1
+RequestHeaderFile=t149_RequestHeader.txt
+RequestBodyFile=t149_RequestBody.txt
+ResponseHeaderFile=t149_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_149.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

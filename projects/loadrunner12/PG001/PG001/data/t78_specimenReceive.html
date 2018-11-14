@@ -1,0 +1,395 @@
+/**
+ * 实验室接收js
+ */
+
+var trTmp=$("<tr>" +
+		"<td class='itemCheck'><input name='checkbutton' type='checkbox'/></td>"+
+		"<td></td>"+
+		"<td></td>"+
+		"<td></td>"+
+		"<td></td>"+
+		"<td></td>"+
+		"</tr>");
+
+/*接收人下拉*/
+var receiveUserCombo;
+var receiveUser_param = {
+		/*必填内容*/
+		div_id : "comboReceiveUser", 	//对应DIV的id
+		grid_id : "gridReceiveUser", 	//对应Grid的Id	
+		name:"searchDto.receiveUser",
+		width : 250, 		 //Combo的宽度
+		clearOff:false,		 //是否禁用clear按钮
+		columnShow:1,		 //将要在文本框中显示的列序号
+//		grid_onChange : onSetmealChange,
+		searchColumn:[2,1],
+		onEnter:function(){
+			$("#txtPassword").focus();
+		}
+	};
+
+/*接收人下拉*/
+var scanUserCombo;
+var scanUser_param = {
+		/*必填内容*/
+		div_id : "comboScanUser", 	//对应DIV的id
+		grid_id : "gridScanUser", 	//对应Grid的Id	
+		name:"searchDto.scanUser",
+		width : 250, 		 //Combo的宽度
+		clearOff:false,		 //是否禁用clear按钮
+		columnShow:1,		 //将要在文本框中显示的列序号
+//		grid_onChange : onSetmealChange,
+		searchColumn:[2,1],
+		onEnter:function(){
+			search();
+		}
+	};
+/*标本去向下拉*/
+var plansAreaCombo;
+var plansArea_param = {
+		/*必填内容*/
+		div_id : "comboPlansArea", 	//对应DIV的id
+		grid_id : "gridPlansArea", 	//对应Grid的Id	
+		name:"searchDto.plansArea",
+		width : 250, 		 //Combo的宽度
+		clearOff:false,		 //是否禁用clear按钮
+		columnShow:1,		 //将要在文本框中显示的列序号
+//		grid_onChange : onSetmealChange,
+		searchColumn:[1],
+		lockBy:[35,1087],
+		onEnter:function(){
+			search();
+		}
+	};
+var dataDivH = 0;
+$(function(){
+ 	var searchTab = $("#searchTab").outerHeight(true);
+ 	var btnTab = $("#btnTab").outerHeight(true);
+ 	var seachTitle = $("#seachTitle").outerHeight(true);
+ 	dataDivH = $(window).height()-searchTab-btnTab-seachTitle-10;
+ 	var DivH = $(window).height()-searchTab-btnTab+5;
+	$('#searchListDiv').height(DivH);
+	$('.scrollDiv').height(dataDivH+10);
+	$('#noScanDiv').height(dataDivH/2+50);
+	$('#areaDiv').height(dataDivH/2-90);
+	receiveUserCombo = new TextCombo(receiveUser_param);//初始化下拉GRID
+	scanUserCombo = new TextCombo(scanUser_param);//初始化下拉GRID
+	plansAreaCombo = new TextCombo(plansArea_param);//初始化下拉GRID
+	setTimeout("scanUserCombo.setValue($('#loginUserID').val());",800);
+	setTimeout("plansAreaCombo.setValue();",800);
+	setTimeout("receiveUserCombo.setValue($('#loginUserID').val());",800);
+	$("#areaListTable tr[class!='trTitle']").click(rowSelected);
+	$("#txtBarCode").focus(function(){
+		 $(this).select();
+	});
+	$("#txtBarCode").focus();
+});
+
+/**
+ * 条码回车,扫描条码
+ */
+function onBarCodeEnter(){
+	 var event = window.event;
+	 if(event.keyCode==13){
+			//验证条码号
+			var barCode = trim($("#txtBarCode").val());
+			var txtExpressNum = trim($("#txtExpressNum").val());
+			if (barCode == ""
+					|| (!(/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0][0]/
+							.test(barCode))) || trim(barCode).length != 12) {
+				showMsg("[条码号]为必填信息,且必须是以00结尾的12位连续数字","提示信息");
+				$("#txtBarCode").val(barCode);
+				return false;
+			}
+			$.post(ctx+"/spe/scanCheckSpecimen.action",{"barCode":barCode,"expressNum":txtExpressNum},function(data){
+				if(data!=null&&data!=""){
+					var json=eval("("+data+")");
+					if(json.msg!=null&&json.msg!=""){
+						showMsg(json.msg,"提示信息",function(){
+							$("#txtBarCode").select();
+						});
+						return;
+					}
+					if (txtExpressNum!=null&&txtExpressNum!=''&&txtExpressNum!=json.expressNum&&json.receiveDate!="0") {
+						jConfirm("该条码不属于当前快递单号,是否继续扫描？",'提示信息',function(choice){
+							$("body").keydown(function() {
+					             if (event.keyCode == "13") {
+					                 $('#popup_ok').click();
+					             }
+					         });
+							if(choice){
+								$.post(ctx+"/spe/speReceiveScan.action",{"barCode":barCode},function(data){
+									if(data!=null&&data!=""){
+										var json=eval("("+data+")");
+										$("#txtExpressNum").val(txtExpressNum);
+										$("#searchListDiv").load(ctx+"/spe/speReceiveList.action",{"barCode":barCode,"userID":scanUserCombo.getValue(),
+											"plansID":plansAreaCombo.getValue(),"expressNum":txtExpressNum},function(){
+											addSpecimen2Table(json);
+											$("#areaListTable tr[class!='trTitle']").click(rowSelected);
+											$("#checkAll").attr("checked",false);
+											$("#txtBarCode").select();
+										});
+									}
+								});
+							}
+						});
+					} else {
+						$.post(ctx+"/spe/speReceiveScan.action",{"barCode":barCode},function(data){
+							if(data!=null&&data!=""){
+								var json=eval("("+data+")");
+								$("#txtExpressNum").val(json.expressNum);
+								$("#searchListDiv").load(ctx+"/spe/speReceiveList.action",{"barCode":barCode,"userID":scanUserCombo.getValue(),
+									"plansID":plansAreaCombo.getValue(),"expressNum":json.expressNum},function(){
+									addSpecimen2Table(json);
+									$("#areaListTable tr[class!='trTitle']").click(rowSelected);
+									$("#checkAll").attr("checked",false);
+									$("#txtBarCode").select();
+								});
+							}
+						});
+					}
+				}
+			});
+	 }
+}
+
+/**
+ * 快递单号回车
+ */
+function onExpressNumEnter(){
+	 var event = window.event;
+	 if(event.keyCode==13){
+		 search();
+	 }
+}
+
+/**
+ * 查询
+ */
+function search(){
+	$("#searchListDiv").load(ctx+"/spe/speReceiveInfo.action",{"userID":scanUserCombo.getValue(),
+		"plansID":plansAreaCombo.getValue(),"expressNum":trim($("#txtExpressNum").val())},function(){
+			$("#areaListTable tr[class!='trTitle']").click(rowSelected);
+			$("#checkAll").attr("checked",false);
+			$("#txtBarCode").select();
+	});
+}
+
+function checkAllClick(){
+	var event=window.event;
+	var srcObj = ((event.srcElement)?event.srcElement:event.target);
+	$('#searchListTable input[name="checkbutton"]').attr("checked",srcObj.checked); 
+}
+
+//列表行选中
+function rowSelected(e){
+
+	if(e.target.nodeName!="TD"||$(this).hasClass("selectedbg")){
+		return;
+	}
+	$("#areaListTable tr").removeClass("selectedbg");
+	$(this).addClass("selectedbg");
+	//显示详细信息
+	var currentRowId = $(this).attr("id");
+	var areaName = $(this).children("td:nth-child(1)").text();
+	$("#dataDiv").load("${ctx}/spe/speReceiveScanlist.action",{"plansID":currentRowId,"userID":scanUserCombo.getValue()},function(){
+		initListCount(areaName);
+	});
+}
+
+function speArea() {
+	if ($("#areaListTable tr").hasClass("selectedbg")) {
+		 var orgname = $("#areaListTable .selectedbg td:nth-child(1)").text();
+		 var orgid = $("#areaListTable .selectedbg").attr("id");
+		 //var select = $("#areaListTable .selectedbg td:contains('"+orgname+"')");
+		 initListCount(orgname);
+		 $("#areaDiv").load("${ctx}/spe/speReceiveArea.action",{"userID":scanUserCombo.getValue()},function(){	
+			 $("#areaListTable tr[class!='trTitle']").click(rowSelected);
+			 if (orgid != null && orgid != "") {
+				 $("#"+orgid).addClass("selectedbg");
+			} else {
+				$("#areaListTable tr[class!='trTitle']:first").addClass("selectedbg");
+			}
+		});
+	} else {
+		initListCount($('#loginUserOrg').val());
+		 $("#areaDiv").load("${ctx}/spe/speReceiveArea.action",{"userID":scanUserCombo.getValue()},function(){	
+			 $("#areaListTable tr[class!='trTitle']").click(rowSelected);
+		});
+	}
+}
+
+/**
+ * 删除已扫
+ */
+function deleteBtnClick(){
+	if(!$("#searchListTable tr[class!='trTitle'] input:checked").size()>0){
+		 showMsg("请勾选条码","提示信息");
+		 return false;
+	}
+	jConfirm("是否要将所勾选条码退回未扫？  ",'提示信息',function(choice){
+		if(choice){
+			IDs=getCheckedTrIDs("searchListTable");
+			$.post(ctx+"/spe/speReceiveDeleteScan.action",{"IDs":IDs},function(data){
+				if(data!=null&&data!=""&&data!="null"){
+					 if(data.indexOf("MSG|")==0){
+						 //更新失败，提示信息
+						 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+						 return;
+					 }else{
+						 //删除流水号成功
+						 var json=eval("("+data+")");
+						 var successIDArray=json.success;
+						 var failBarCodeArray=json.fail;
+						 if(successIDArray!=null&&successIDArray.length>0){
+							 for(var i=0;i<successIDArray.length;i++){
+									$("#searchListTable #"+successIDArray[i]).remove();
+							 }
+						 }
+						 var barCodeStr="";
+						 if(failBarCodeArray!=null&&failBarCodeArray.length>0){
+							 barCodeStr+="其中条码 \n[";
+							 if(failBarCodeArray.length>5){
+								 barCodeStr+=failBarCodeArray.slice(0,5).join("\n");
+							 }else{
+								 barCodeStr+=failBarCodeArray.join("\n");
+							 }
+							 barCodeStr+="] \n等不是信息审核已扫状态，无法退回未扫状态,请刷新列表重试";
+						 }
+						 $("#noScanDiv").load("${ctx}/spe/speReceiveNoscan.action",{"expressNum":trim($("#txtExpressNum").val())},function(){
+							 speArea();
+						 });
+						 showMsg("删除成功！"+barCodeStr,"提示信息");
+					 }
+				}else{
+					 showMsg("数据异常,请刷新页面后重试","提示信息");
+				}
+			});
+		}else{
+			return false;
+		}
+	});
+}
+
+function receiveBtnClick(){
+
+	if(!$("#searchListTable tr[class!='trTitle'] input:checked").size()>0){
+		 showMsg("请勾选条码","提示信息");
+		 return false;
+	}
+	jConfirm("是否接收所勾选条码？  ",'提示信息',function(choice){
+		if(choice){
+			IDs=getCheckedTrIDs("searchListTable");
+			$.post(ctx+"/spe/speReceiveAcceptSpecimen.action",{"IDs":IDs,"userID":receiveUserCombo.getValue(),"password":$("#txtPassword").val()},function(data){
+				if(data!=null&&data!=""&&data!="null"){
+					 if(data.indexOf("MSG|")==0){
+						 //更新失败，提示信息
+						 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+						 return;
+					 }else{
+						 //研究院接收成功
+						 var json=eval("("+data+")");
+						 var successIDArray=json.success;
+						 var failBarCodeArray=json.fail;
+						 var noPlansBarCodeArray=json.noPlans;
+						 var barCodeStr="";
+						 if(successIDArray!=null&&successIDArray.length>0){
+							 for(var i=0;i<successIDArray.length;i++){
+									$("#searchListTable #"+successIDArray[i]).remove();
+							 }
+							 barCodeStr = "接收成功！";
+						 }else{
+						  	 barCodeStr="全部条码接收失败！";
+						 }
+						 if(failBarCodeArray!=null&&failBarCodeArray.length>0){
+							 barCodeStr+="其中条码 \n[";
+							 if(failBarCodeArray.length>5){
+								 barCodeStr+=failBarCodeArray.slice(0,4).join("\n");
+							 }else{
+								 barCodeStr+=failBarCodeArray.join("\n");
+							 }
+							 barCodeStr+="] \n等不是待接收状态，无法接收";
+						 }
+						 if(noPlansBarCodeArray!=null&&noPlansBarCodeArray.length>0){
+							 barCodeStr+="其中条码 \n[";
+							 if(noPlansBarCodeArray.length>5){
+								 barCodeStr+=noPlansBarCodeArray.slice(0,4).join("\n");
+							 }else{
+								 barCodeStr+=noPlansBarCodeArray.join("\n");
+							 }
+							 barCodeStr+="] \n等没有录入套餐，无法接收";
+						 }
+						 
+						 $("#searchListTable tr").removeClass("oddbg");
+						 $("#searchListTable tr").removeClass("evenbg");
+						 $("#searchListTable tr[class!='trTitle']:odd").addClass("oddbg");
+						 $("#searchListTable tr[class!='trTitle']:even").addClass("evenbg");
+						 speArea();
+						 receiveUserCombo.clear();
+						 $("#txtPassword").val("");
+						 $("#checkAll").attr("checked",false);
+						 showMsg(barCodeStr,"提示信息");
+						 setTimeout("receiveUserCombo.setValue($('#loginUserID').val());",800);
+					 }
+				}else{
+					 showMsg("数据异常,请刷新页面后重试","提示信息");
+				}
+			});
+		}else{
+			return false;
+		}
+	});
+
+
+
+}
+
+function next2Submit(){
+	var e=window.event;
+	if(e.keyCode==13){
+		$("#btnReceive").focus();
+	}
+}
+
+function getCheckedTrIDs(tableID){
+	 var checkBoxObj = $("#"+tableID+" tr[class!='trTitle'] input:checked");
+	 if(checkBoxObj.size()>0){
+		 var idsArray=new Array();
+			checkBoxObj.each(function(){
+				idsArray.push($(this).parent().parent().attr("id"));
+			});
+			return idsArray.join(",");
+	 }else{
+		 return "";
+	 }
+}
+
+function initListCount(e){
+	$("#listCountLabel").html("<font size='3' color='black'>"+e+" 待接收标本：共"+($("#searchListTable tr").size()-1)+"条</font>");
+	$("#noScanlistCountLabel").html("<font size='3' color='black'>实验室待扫描标本：共"+($("#noScanListTable tr").size()-1)+"条</font>");
+}
+
+function addSpecimen2Table(json){
+	var trObj=trTmp.clone(true);
+	trObj.attr("id",json.id);
+	$(trObj.children("td")[1]).attr("title",json.barCode);
+	$(trObj.children("td")[2]).attr("title",json.plans);
+	$(trObj.children("td")[3]).text("title",json.plansArea);
+	$(trObj.children("td")[4]).text("title",json.scanUser);
+	$(trObj.children("td")[5]).attr("title",json.testItem);
+	$(trObj.children("td")[1]).text(json.barCode);
+	$(trObj.children("td")[2]).text(json.plans);
+	$(trObj.children("td")[3]).text(json.plansArea);
+	$(trObj.children("td")[4]).text(json.scanUser);
+	$(trObj.children("td")[5]).text(json.testItem);
+	//$("#searchListTable").append(trObj);
+	$("#searchListTable tr:eq(0)").after(trObj);
+	if($(trObj).prev().hasClass("oddbg")){
+		$(trObj).addClass("evenbg");
+	}else{
+		$(trObj).addClass("oddbg");
+	}
+	$("#searchListTable tr").removeClass("selectedbg");
+	$(trObj).addClass("selectedbg");
+	initListCount($('#loginUserOrg').val());
+}

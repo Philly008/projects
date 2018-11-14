@@ -1,0 +1,2178 @@
+/**
+ * 易感基因录入js
+ * 
+ */
+var trTmp=$("<tr>" +
+		"<td class='itemCheck'><input name='checkbutton' type='checkbox'/></td>"+
+		"<td></td>"+
+		"<td></td>"+
+		"<td></td>"+
+		"<td></td>"+
+		"<td style='display:none;'></td>"+
+		"</tr>").click(rowSelected);
+
+	var currentBarCode="";
+	var noChecked=true;
+	var plan = "";
+	$(document).ready(function(){
+		$("#leftPageDiv").load("${ctx}/spe/speInputList.action",function(){
+			var otherHeight = $(".group_left_one").outerHeight(true)+buttonHeight+queryTitle;
+	         $('.scrollDiv').height($(window).height()-otherHeight-35);
+				$("#pendingTable tr[class!='trTitle']").click(rowSelected);
+				$("#checkedTable tr[class!='trTitle']").click(rowSelected);
+				$("#checkAllPending").click(function() {
+			         $('#pendingTable input[name="checkbutton"]').attr("checked",this.checked); 
+			         var size = $("#pendingTable tr[class!='trTitle'] input:checked").size();
+			         if(size>=2){
+						clearInfoAndFocus();
+						enableBtn("#batchUpdateBtn");
+					 }else {
+						disableBtn("#batchUpdateBtn");
+					}
+			     }); 
+				$("#checkAllChecked").click(function() {
+			         $('#checkedTable input[name="checkbutton"]').attr("checked",this.checked);
+			     });
+				$('#pendingTable input[name="checkbutton"]').click(function() {
+					var size = $("#pendingTable tr[class!='trTitle'] input:checked").size();
+					if(size>=2){
+						clearInfoAndFocus();
+						enableBtn("#batchUpdateBtn"); 
+					 }else {
+						disableBtn("#batchUpdateBtn");
+					}
+				});
+		});
+		$("#infoPageDiv").load("${ctx}/spe/speInputInfo.action");
+		
+	});
+	/**
+	 * 日期格式化
+	 * @param format
+	 * @returns
+	 */
+	Date.prototype.format = function(format){
+		var o = {
+		"M+" : this.getMonth()+1, //month
+		"d+" : this.getDate(), //day
+		"h+" : this.getHours(), //hour
+		"m+" : this.getMinutes(), //minute
+		"s+" : this.getSeconds(), //second
+		"q+" : Math.floor((this.getMonth()+3)/3), //quarter
+		"S" : this.getMilliseconds() //millisecond
+		};
+
+		if(/(y+)/.test(format)) {
+		format = format.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+		}
+
+		for(var k in o) {
+		if(new RegExp("("+ k +")").test(format)) {
+		format = format.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+		}
+		}
+		return format;
+		} ;
+		
+	function disableBtn(obj){
+		$(obj).attr("disabled", true);
+		$(".btnComment[disabled=disabled]").addClass("disabledBtn grey");
+		$(".btnComment[disabled=disabled]").removeClass("btnComment blue round");
+	}
+	
+	function enableBtn(obj){
+		$(obj).attr("disabled", false);
+		$(".disabledBtn").addClass("btnComment blue round");
+		$(".disabledBtn").removeClass("disabledBtn grey");
+	}
+		
+	/**
+	 * 左侧列表页签点击
+	 * @param index
+	 * @returns {Boolean}
+	 */
+	function tabPageListClick(index){
+		var tabCount = $("li[id^=tabDivList_]").length;
+		if($("#tabDivList_"+index).hasClass("page_tabs-selected")){
+			return false;
+		}else{
+			//将页签置为高亮并显示数据DIV
+			for (var i = 1; i <= tabCount; i++) {
+				if (i == index) {
+					
+					$("#tabDivList_" + i).attr("class","page_tabs-selected");
+					$("#listDiv_" + i).show();
+					$("#listBtn_" + i).show();
+				} else {
+					$("#tabDivList_" + i).attr("class","page_tabs");
+					$("#listDiv_" + i).hide();
+					$("#listBtn_" + i).hide();
+				}
+			}
+		}
+	}
+	
+	function resetTabPage(){
+		var tabCount = $("li[id^=tabDivList_]").length;
+		for(var i=1;i<=tabCount;i++){
+			if($("#tabDivList_" +i).hasClass("page_tabs-selected")){
+				$("#tabDivList_" +i).attr("class","page_tabs-selected");
+				$("#listDiv_" + i).show();
+				$("#listBtn_" + i).show();
+			}else{
+				$("#tabDivList_" + i).attr("class","page_tabs");
+				$("#listDiv_" + i).hide();
+				$("#listBtn_" + i).hide();
+			}
+		}
+	}
+
+	function clearInfo(){
+		$("#txtStatus").val("-1");
+		plan = "";
+		currentBarCode="";
+		var txtExpressNum=$("#txtExpressNum").val();
+		var txtsendBackDate=$("#txtSendBackDate").val();
+		var provinceValue=provinceCombo.getValue();
+		var cityValue=cityCombo.getValue();
+		var regionValue=regionCombo.getValue();
+		var txtReportAddress=$("#txtReportAddress").val();
+		var plansValue=plansCombo.getValue();
+		var txtReportReceiveBy=$("#txtReportReceiveBy").val();
+		var txtReportReceivePhone=$("#txtReportReceivePhone").val();
+		var txtAgency=$("#txtAgency").val();
+		var txtBusinessArea=$("#txtBusinessArea").val();
+		$("#inputTable_id input").val("");
+		$("#txtRemark").val("");
+		$("#txtPlansArea").val("");
+		$("#txtInsuranceUser").val("");
+		$("#txtAppendRemark").val("");
+		$("#txtAgency").val("");
+		$("#txtBusinessArea").val("");
+		//清空套餐下项目明细
+		$("#plansDetail .tablelist").html("");
+		$("#checkall").attr("checked", false);
+		planArr = [];     //把保存记录原有套餐明细的ids的数组清空
+		//---------
+		provinceCombo.clear();
+		sexTypeCombo.clear();
+		cityCombo.clear();
+		regionCombo.clear();
+		familyGroupsCombo.clear();
+		diseaseTypesCombo.clear();
+		customersCombo.clear();
+		testItemsCombo.clear();
+		reportSourcesCombo.clear();
+		reportSourcesCombo.setValue("pg");
+		$("#gridTestItem .tablelist").html("");
+		vipIsCheck(0);
+		if($("#lock_reportReceiveBy:checked").size()>0){
+			$("#txtReportReceiveBy").val(txtReportReceiveBy);
+		}
+		if($("#lock_reportReceivePhone:checked").size()>0){
+			$("#txtReportReceivePhone").val(txtReportReceivePhone);
+		}
+		if($("#lock_expressNum:checked").size()>0){
+			$("#txtExpressNum").val(txtExpressNum);
+		}
+		if($("#lock_SendBackDate:checked").size()>0){
+			$("#txtSendBackDate").val(txtsendBackDate);
+		}
+		if($("#lock_province:checked").size()>0){
+			provinceCombo.setValue(provinceValue);
+			//provinceCombo.setText(provinceText);
+		}
+		if($("#lock_city:checked").size()>0){
+			cityCombo.setValue(cityValue);
+			//cityCombo.setText(cityText);
+		}
+		if($("#lock_region:checked").size()>0){
+			regionCombo.setValue(regionValue);
+			//regionCombo.setText(regionText);
+		}
+		if($("#lock_reportAddress:checked").size()>0){
+			$("#txtReportAddress").val(txtReportAddress);
+		}
+		if($("#lock_agency:checked").size()>0){
+			$("#txtAgency").val(txtAgency);
+		}
+		if($("#lock_businessArea:checked").size()>0){
+			$("#txtBusinessArea").val(txtBusinessArea);
+		}
+		if($("#lock_plans:checked").size()>0){
+			plansCombo.setValue(plansValue);
+		}
+		$("#pendingTable tr").removeClass("selectedbg");
+		$("#checkedTable tr").removeClass("selectedbg");
+		var now = new Date();
+		var nowStr = now.format("yyyy-MM-dd hh:mm");
+		$("#txtReceiveDate").val(nowStr);
+		$("#txt_ReceiveDate").val(nowStr);
+	}
+	
+	function clearInfoAndFocus(){
+		//清除‘单项和组合’的table
+		$("#tableDXZH").html("");
+		var trHtml = "<tr class='trTitle'><td align='center'><input type='checkbox'  id=\'checkAllZHW\' onclick='checkAllZH();'/></td><td hidden='true'></td><td>组合项目名称</td><td>项目类型</td><td hidden='true'></td></tr>";
+		$("#tableDXZH").append(trHtml);
+		
+		$("#txtStatus").val("-1");
+		currentBarCode="";
+		plan = "";
+		var txtExpressNum=$("#txtExpressNum").val();
+		var txtsendBackDate=$("#txtSendBackDate").val();
+		var provinceValue=provinceCombo.getValue();
+		var cityValue=cityCombo.getValue();
+		var regionValue=regionCombo.getValue();
+		var txtReportAddress=$("#txtReportAddress").val();
+		var txtReportReceiveBy=$("#txtReportReceiveBy").val();
+		var txtReportReceivePhone=$("#txtReportReceivePhone").val();
+		var plansValue=plansCombo.getValue();
+		var customerValue = customersCombo.getValue();
+		var txtAgency=$("#txtAgency").val();
+		var txtBusinessArea=$("#txtBusinessArea").val();
+		$("#inputTable_id input").val("");
+		$("#txtRemark").val("");
+		$("#txtPlansArea").val("");
+		$("#txtInsuranceUser").val("");
+		$("#txtAppendRemark").val("");
+		$("#txtAgency").val("");
+		$("#txtBusinessArea").val("");
+		//套餐项目明细清除
+		$("#plansDetail .tablelist").html("");
+		$("#checkall").attr("checked", false);
+		planArr = [];     //把保存记录原有套餐明细的ids的数组清空
+		//----
+		provinceCombo.clear();
+		sexTypeCombo.clear();
+		cityCombo.clear();
+		regionCombo.clear();
+		familyGroupsCombo.clear();
+		diseaseTypesCombo.clear();
+		customersCombo.clear();
+		testItemsCombo.clear();
+		reportSourcesCombo.clear();
+		reportSourcesCombo.setValue("pg");
+		$("#gridTestItem .tablelist").html("");
+		if($("#lock_expressNum:checked").size()>0){
+			$("#txtExpressNum").val(txtExpressNum);
+		}
+		if($("#lock_SendBackDate:checked").size()>0){
+			$("#txtSendBackDate").val(txtsendBackDate);
+		}
+		if($("#lock_province:checked").size()>0){
+			provinceCombo.setValue(provinceValue);
+		}
+		if($("#lock_city:checked").size()>0){
+			cityCombo.setValue(cityValue);
+		}
+		if($("#lock_region:checked").size()>0){
+			regionCombo.setValue(regionValue);
+		}
+		if($("#lock_reportAddress:checked").size()>0){
+			$("#txtReportAddress").val(txtReportAddress);
+		}
+		if($("#lock_plans:checked").size()>0){
+			plansCombo.setValue(plansValue);
+		}
+		if($("#lock_reportReceiveBy:checked").size()>0){
+			$("#txtReportReceiveBy").val(txtReportReceiveBy);
+		}
+		if($("#lock_reportReceivePhone:checked").size()>0){
+			$("#txtReportReceivePhone").val(txtReportReceivePhone);
+		}
+		if($("#lock_comboCustomers:checked").size()>0){
+			customersCombo.setValue(customerValue);
+		}
+		if($("#lock_agency:checked").size()>0){
+			$("#txtAgency").val(txtAgency);
+		}
+		if($("#lock_businessArea:checked").size()>0){
+			$("#txtBusinessArea").val(txtBusinessArea);
+		}
+		$("#pendingTable tr").removeClass("selectedbg");
+		$("#checkedTable tr").removeClass("selectedbg");
+		var now = new Date();
+		var nowStr = now.format("yyyy-MM-dd hh:mm");
+		$("#txtReceiveDate").val(nowStr);
+		$("#txt_ReceiveDate").val(nowStr);
+		$("#txtBarCode").select();
+		vipIsCheck(0);
+		var data = "local";
+		customersCombo.loadingStart(function(){
+			$("#gridCustomers .tablelist").load("${ctx}/spe/speSendoutCustomersCombo.action",{"sourceOrg":data},function(){
+				customersCombo.loadingOver();
+			});
+		});
+	}
+	
+	/**
+	 * 左侧列表查询
+	 */
+	function submitSearch(){
+		var barCode=trim($("#barCodeSearch").val());
+		var keyword = trim($("#keywordSearch").val());//关键字
+		clearInfo();
+		$("#pendingTable tr[class!='trTitle']").remove();
+		$("#checkedTable tr[class!='trTitle']").remove();
+		initListCount();
+		if(keyword != "" && keyword != "未知"){
+			jConfirm("当前关键字栏内不是’未知’,本次查询将忽略关键字的内容,是否继续进行查询",'提示信息',function(choice){
+				if(choice){
+					queryByBarCode(barCode,keyword);
+				}else{
+					return;
+				}
+			});
+		}else{
+			queryByBarCode(barCode,keyword);
+		}
+		
+	}
+	/**
+	 * 根据条码查询
+	 * @param barCode 条码
+	 * @param keyword 关键字
+	 */
+	function queryByBarCode(barCode,keyword){
+		vipIsValue($("#vipSearch"));
+		if(barCode!=""&&keyword!="未知"){
+			loadSpecimenInfo(barCode,true);
+		}else{
+			if(trim(customerCombo.getText())!=""&&!customerCombo.checkValue(false)){
+				showMsg("请从[下单客户]下拉框选取数据","提示信息",function(){
+					customersCombo.focus();
+				});
+				return false;
+			}
+			if(trim(orgCombo.getText())!=""&&!orgCombo.checkValue(false)){
+				showMsg("请从[所属机构]下拉框选取数据","提示信息",function(){
+					orgCombo.focus();
+				});
+				return false;
+			}
+//			customerCombo.setValue(trim(customerCombo.getText()),customerCombo.getText());
+			$("#inputSpeList").load("${ctx}/spe/speInputListTable.action",
+					$("#pageForm").serializeArray(),
+					function(){
+						clearInfo();
+//						$("#tabDivList_1").trigger("click");
+						resetTabPage();
+						 var otherHeight = $(".group_left_one").outerHeight(true)+pageHeigh+queryTitle;
+				         $('.scrollDiv').height($(window).height()-otherHeight-35);
+						$("#pendingTable tr[class!='trTitle']").click(rowSelected);
+						$("#checkedTable tr[class!='trTitle']").click(rowSelected);
+						disableBtn("#batchUpdateBtn");
+						$("#checkAllPending").click(function() {
+					         $('#pendingTable input[name="checkbutton"]').attr("checked",this.checked); 
+					         var size = $("#pendingTable tr[class!='trTitle'] input:checked").size();
+					         if(size>=2){
+								clearInfoAndFocus();
+								enableBtn("#batchUpdateBtn");
+							 }else {
+								 disableBtn("#batchUpdateBtn");
+							}
+					     }); 
+						$("#checkAllChecked").click(function() {
+					         $('#checkedTable input[name="checkbutton"]').attr("checked",this.checked);
+					    });
+						$('#pendingTable input[name="checkbutton"]').click(function() {
+							var size = $("#pendingTable tr[class!='trTitle'] input:checked").size();
+							if(size>=2){
+								clearInfoAndFocus();
+								enableBtn("#batchUpdateBtn");
+							 }else {
+								 disableBtn("#batchUpdateBtn");
+							}
+						});
+					});
+		}
+	}
+	function onSearchBarCodeClick(){
+		var event = window.event;
+		if (event.keyCode == 13) {
+			submitSearch();
+		}
+	}
+//	function pageQuery(){
+//		var formParam = $("#pageForm").serialize();
+//		$("#leftPageDiv").load("${ctx}/ref/findCustomerbyName.action",
+//		formParam+"&dto.name="+$("#searchName").val()+"&dto.address="+$("#searchAddress").val(), 
+//		function(){
+//			clearInfo();
+//		});
+//	}
+	//列表行选中
+	function rowSelected(e){
+		plansChangeFlag = false;  //把下拉框是否改变标识置为false
+		plansChangeItem = "";     //设置保存下拉框改变的数目为空
+		
+		if(e.target.nodeName!="TD"||$(this).hasClass("selectedbg")){
+			return;
+		}
+		$("#pendingTable tr").removeClass("selectedbg");
+		$("#checkedTable tr").removeClass("selectedbg");
+		$(this).addClass("selectedbg");
+		//显示详细信息
+		var currentRowId = $(this).attr("id");
+		currentBarCode=$(this).children("td:nth-child(2)").text();
+		$.post("${ctx}/spe/getSpecimenORrg.action",{"barCode":currentBarCode},function(data){
+			 if(data!=null&&data!=""&&data!="null"){
+				 customersCombo.loadingStart(function(){
+						$("#gridCustomers .tablelist").load("${ctx}/spe/speSendoutCustomersCombo.action",{"sourceOrg":data},function(){
+							customersCombo.loadingOver();
+							loadSpecimenInfo(currentBarCode);
+						});
+					});
+			 }
+		 });
+	}
+	 function putIn() {
+			var event = window.event;
+			if (event.keyCode == 13) {
+				submitSearch();
+			}
+	 }
+	 
+	 
+	 //条码回车事件
+	 function onBarCodeEnter(){
+		 //回车把关于“套餐”和“单项和组合”有关的记录清空
+		 plansChangeFlag = false;
+		 plansChangeItem = "";
+		 planItems = "";
+		 planArr = [];
+		 planComboxArr = [];
+		 
+		 var event = window.event;
+		 if(event.keyCode==13){
+				//验证条码号
+				var barCode = trim($("#txtBarCode").val());
+				clearInfo();
+				if (barCode == ""
+						|| (!(/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0][0]/
+								.test(barCode))) || trim(barCode).length != 12) {
+					showMsg("[条码号]为必填信息,且必须是以00结尾的12位连续数字","提示信息",function(){
+						$("#txtBarCode").select();
+					});
+					$("#txtBarCode").val(barCode);
+					return false;
+				}
+				
+				loadSpecimenInfo(barCode,null,true);
+		 }
+	 }
+	 
+	 function onBirthdayEnter(){
+		 var event = window.event;
+		 if(event.keyCode==13){
+			 var year=new Date(trim($("#txtBirthday").val())).getFullYear();
+			 var age=new Date().getFullYear()-year;
+			 var month = new Date(trim($("#txtBirthday").val())).getMonth();
+			 var monthNow = new Date().getMonth();
+			 var day = new Date(trim($("#txtBirthday").val())).getDate();
+			 var dayNow = new Date().getDate();
+			 var mon = monthNow - month;
+			 var date = dayNow - day;
+			 if(age<0 || (age==0 && mon<0) || (age==0 && mon==0 && date<0)){
+				 showMsg("出生日期不能大于当前日期","提示信息",function(){
+					 $("#txtBirthday").select();
+				 });
+				 return;
+			 }
+			 if (age==0) {
+				 $("#txtAge").val(age);
+			} else {
+				if (month==monthNow) {
+					if (day<=dayNow) {
+						$("#txtAge").val(age);
+					} else {
+						$("#txtAge").val(age-1);
+					}
+				} else {
+					if (month<monthNow) {
+						$("#txtAge").val(age);
+					} else {
+						$("#txtAge").val(age-1);
+					}
+				}
+			}
+		 }
+	 }
+	 
+	 function onAgeEnter(){
+		 var event = window.event;
+		 if(event.keyCode==13 && trim($("#txtBirthday").val()) == ''){
+			 var age=trim($("#txtAge").val());
+			 if(age!=""){
+				var date =new Date();
+				var year = date.getFullYear();
+				var nowStr = date.format("yyyy-MM-dd"); 
+				 if(checkIntegerAndRange(age,0,200)){
+					 $("#txtBirthday").val((year-age)+"-01-01");
+				 }else if(age == "未知"){
+					 $("#txtBirthday").val(nowStr);
+				 }else{
+					 showMsg("年龄必须为0-200 之间正整数，或者是未知","提示信息",function(){
+						 $("#txtAge").select();
+					 });
+					 return;
+				 }
+			 }
+		 }
+	 }
+	 
+	 /**
+	  * 根据条码加载详细信息
+	  * @param barCode 条码号
+	  * @param leftSearch 是否左侧列表条码查询
+	  * @param barCodeEnter 是否右侧条码回车
+	  */
+	 function loadSpecimenInfo(barCode,leftSearch,barCodeEnter){
+		 $.post("${ctx}/spe/speInputLoadSpecimenInfo.action",{"barCode":barCode},function(data){
+			 if(data!=null&&data!=""&&data!="null"){
+				 if(data.indexOf("MSG|")==0){
+					 clearInfo();
+					 initListCount();
+					 currentBarCode="";
+					 if(leftSearch!=null&&leftSearch){
+						 showMsg(data.substring(data.indexOf("|")+1),"提示信息",function(){
+							 $("#barCodeSearch").select();
+						 });
+					 }else{
+						 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+					 }
+					 return;
+				 }
+				 
+				 //条码找到，并可操作
+				 var json=eval("("+data+")");
+				 if(leftSearch!=null&&leftSearch&&json.status<110){
+					 //左侧条码查询的结果,并且查出的条码还没有录入过
+					 showMsg("条码还未录入，请先录入","提示信息");
+					 return;
+				 }
+				 if(json.status=='999'){
+					 showMsg("该条码已退单","提示信息");
+					 return;
+				 }
+				 if(leftSearch!=null&&leftSearch&&json.status>140){
+					 //条码查询的结果,并且查出的条码状态大于内勤接收，则不允许操作
+					 //showMsg("条码实验室已接收，此处无法操作","提示信息");
+					 return;
+				 }
+				 clearInfo();
+				 currentBarCode=json.barCode;
+				 //根据情况返回ID
+				 if (json.plans != null &&json.plans != "") {
+					 var pid = getParentID(json.plans);
+					 initSpecimenInfo(json,barCodeEnter,pid);
+					 //显示套餐项目详情
+					 if(pid == json.plans){
+						//默认套餐 预设套餐全部勾选
+						loadPlansDetail(pid,json.cardOrderNum,json.patientName,json.isAllselect);
+					 }else{
+						//非预设套餐勾选选中的 
+						loadNotPrePlansDetail(json.plans,pid,json.cardOrderNum);
+					 }
+				}
+				 initSpecimenInfo(json,barCodeEnter,json.plans);
+				 updateSpecimen2LeftTable(json);
+				 if (json.taiKangCount != null && json.taiKangCount != "" && json.taiKangCount > 1) {
+						$("#taiKangInfoDiv").show();
+						$.fn.window.defaults.zIndex=110;
+						$('#taiKangInfoDiv').dialog({
+						    title: '查询列表',
+						    href:ctx + '/spe/speTaiKangInfoTable.action?barCode='+json.barCode,
+						    left:190,
+						    top:100,
+						    width: 1000,
+						    height: 500,
+						    closed: false,
+						    closable: false,
+						    cache: false,
+						    modal: true,
+						    buttons:[{
+								text:'关闭',
+								handler:function(){
+									var isSelect = $("#taiKangListTable tr[class!='trTitle']").hasClass("selectedbg");
+									var tag = $("#taiKangListTable .selectedbg");
+									if(!isSelect){
+										showMsg("请选择一条记录","提示信息");
+									} else {
+										//显示详细信息
+										$("#txtTaiKangId").val(tag.children("td:nth-child(1)").text());
+										$("#txtPatientName").val(tag.children("td:nth-child(3)").text());
+										$("#txtBirthday").val(tag.children("td:nth-child(5)").text());
+										$("#txtAge").val(tag.children("td:nth-child(6)").text());
+										$("#txtMobileNumber").val(tag.children("td:nth-child(7)").text());
+										$("#txtMobilePhone").val(tag.children("td:nth-child(8)").text());
+										$("#txtIdCardNum").val(tag.children("td:nth-child(9)").text());
+										$("#txtExpressNum").val(tag.children("td:nth-child(10)").text());
+										$("#txtSendBackDate").val(tag.children("td:nth-child(11)").text());
+										$("#txtReportReceiveBy").val(tag.children("td:nth-child(12)").text());
+										$("#txtReportReceivePhone").val(tag.children("td:nth-child(13)").text());
+										$("#txtReportAddress").val(tag.children("td:nth-child(14)").text());
+										sexTypeCombo.setValue(tag.children("td:nth-child(15)").text());
+										$('#taiKangInfoDiv').dialog( "close" );
+									}
+								}
+							}]
+						});
+				}
+				 disableBtn("#batchUpdateBtn");
+				 if (leftSearch==null && barCodeEnter) {
+					 checkByBarCodeState(barCode);
+				}
+			 }else{
+				 showMsg("数据异常,请刷新页面后重试","提示信息");
+				 clearInfo();
+				 initListCount();
+				 currentBarCode="";
+			 }
+		 });
+	 }
+	 
+	 /**
+	  * 保存条码信息
+	  */
+	 function save(){
+		 var barCode=trim($("#txtBarCode").val());
+		 var patientName = trim($("#txtPatientName").val());
+		 var mobileNumber = trim($("#txtMobileNumber").val());
+		 var mobilePhone = trim($("#txtMobilePhone").val());
+		 var reportReceivePhone = trim($("#txtReportReceivePhone").val());
+		 if(barCode==""){
+				showMsg("请输入条码号","提示信息",function(){
+					$("#txtBarCode").select();
+				});
+				return;
+		 }
+		 if(currentBarCode==null||currentBarCode==""||barCode!=currentBarCode){
+			 	//输入条码没有回车，或者录入的是新条码
+				showMsg("输入条码后请回车","提示信息",function(){
+					$("#txtBarCode").select();
+				});
+				return;
+		 }
+		 if(!noChecked){
+			 	//条码已信息审核，不能保存
+				showMsg("条码已研究院接收，无法修改！","提示信息");
+				return;
+		 }
+		 //验证必填字段
+		 if(patientName==""){
+				showMsg("[姓名]为必填信息","提示信息",function(){
+					$("#txtPatientName").select();
+				});
+				return;
+		 }
+		 //检验套餐
+		 if(trim(sexTypeCombo.getText())==""){
+			showMsg("[性别]为必填信息","提示信息",function(){
+		 		sexTypeCombo.focus();
+			});
+			return false;
+		 }
+		 if(!sexTypeCombo.checkValue(false)){
+		 	showMsg("您所填的[性别]不存在,请用下拉框选取数据","提示信息",function(){
+		 		sexTypeCombo.focus();
+			});
+			return false;
+		 }
+//		 if(mobileNumber=="" || mobileNumber ==null){
+//				showMsg("[联系电话]为必填信息","提示信息",function(){
+//					$("#txtMobileNumber").select();
+//				});
+//				return;
+//		 }
+//		 if (mobileNumber!=null&&mobileNumber!=""&&!checkTelOrMobile(mobileNumber)) {
+//			 showMsg("[联系电话]格式不正确","提示信息",function(){
+//					$("#txtMobileNumber").select();
+//				});
+//				return;
+//		}
+		 if (mobileNumber!=null&&mobileNumber!=""&&!checkTel(mobileNumber)) {
+			 showMsg("[固定电话]格式不正确","提示信息",function(){
+					$("#txtMobileNumber").select();
+				});
+				return;
+		}
+		 
+		 if(mobilePhone=="" || mobilePhone ==null){
+				showMsg("[手机号]为必填信息","提示信息",function(){
+					$("#txtMobilePhone").select();
+				});
+				return;
+		 }
+		 if (mobilePhone!=null&&mobilePhone!=""&&!checkMobile(mobilePhone)) {
+			 showMsg("[手机号]格式不正确","提示信息",function(){
+					$("#txtMobilePhone").select();
+				});
+				return;
+		}
+		 if(trim($("#txtBirthday").val())==""){
+				showMsg("[出生日期]为必填信息","提示信息",function(){
+					$("#txtBirthday").select();
+				});
+				return;
+		 }
+		 var birthDay=new Date(trim($("#txtBirthday").val())).getTime();
+		 var nowDay=new Date().getTime();
+		 if(birthDay>nowDay){
+				showMsg("[出生日期]不能大于当前日期","提示信息",function(){
+					$("#txtBirthday").select();
+				});
+				return;
+		 }
+		 var age=trim($("#txtAge").val());
+		 if(age!=""&&!checkIntegerAndRange(age,0,200)){
+			 if(age != "未知"){
+				 showMsg("年龄只能是0-200的正整数，或者是未知","提示信息",function(){
+				 $("#txtAge").select();
+				 });
+				 return ;
+			 }
+		 }
+		 if(trim($("#txtExpressNum").val())==""){
+				showMsg("[快递单号]为必填信息","提示信息",function(){
+					$("#txtExpressNum").select();
+				});
+				return;
+		 }
+		if(!trim($("#txtExpressNum").val())==''&&checkInput2($("#txtExpressNum").val())){
+			showMsg("快递单号只能输入数字或字母", "提示信息",function(){
+				$("#txtExpressNum").select();
+			});
+			return;
+		}
+		if(!validateFieldLength()){
+			return;
+		}
+		if(trim($("#txtSendBackDate").val())==""){
+			showMsg("[采样时间]为必填信息","提示信息",function(){
+				$("#txtSendBackDate").select();
+			});
+			return;
+	 }
+		 var sbd=trim($("#txtSendBackDate").val());
+		 var rd=trim($("#txtReceiveDate").val());
+		 $("#txt_SendBackDate").val(sbd==""?"":sbd);
+		 $("#txt_ReceiveDate").val(rd==""?"":(rd+":00"));
+		 if(trim($("#txtSendBackDate").val())!=''&&trim($("#txtReceiveDate").val())!=''){
+			 var sbDate=new Date(trim($("#txtSendBackDate").val())+" 00:00").getTime();
+			 var rDate=new Date(trim($("#txtReceiveDate").val())).getTime();
+			 if(sbDate>rDate){
+					showMsg("[采样时间]不能大于[内勤接收时间]","提示信息",function(){
+						$("#txtSendBackDate").select();
+					});
+					return;
+			 }
+		 }
+		var idCardNum = $("#txtIdCardNum").val();
+		if (idCardNum!=null && idCardNum!=""&& !isIdCardNum(idCardNum)) {
+			showMsg("身份证号格式不正确","提示信息",function(){
+				$("#txtIdCardNum").select();
+			});
+			return;
+		}
+		if (idCardNum!=null && idCardNum!=""&& (sexTypeCombo.getText() == "男" || sexTypeCombo.getText() == "女")) {	
+			if (!checkSex(sexTypeCombo.getText(),idCardNum)) {
+				showMsg("身份证号码与条码性别不一致","提示信息",function(){
+					$("#txtIdCardNum").select();
+				});
+				return;
+			} 
+		} 
+		
+		if(trim(provinceCombo.getText())==""){
+			showMsg("[省]为必填信息","提示信息",function(){
+				provinceCombo.focus();
+			});
+			return false;
+		}
+		if(trim(provinceCombo.getText())!=""&&!provinceCombo.checkValue(false)){
+			showMsg("请在[省]下拉框选取数据","提示信息",function(){
+				provinceCombo.focus();
+			});
+			return false;
+		}
+		if(trim(cityCombo.getText())==""){
+			showMsg("[地市]为必填信息","提示信息",function(){
+				cityCombo.focus();
+			});
+			return false;
+		}
+		if(trim(cityCombo.getText())!=""&&!cityCombo.checkValue(false)){
+			showMsg("请在[地市]下拉框选取数据","提示信息",function(){
+				cityCombo.focus();
+			});
+			return false;
+		}
+		if(trim(regionCombo.getText())==""){
+			showMsg("[县/区]为必填信息","提示信息",function(){
+				regionCombo.focus();
+			});
+			return false;
+		}
+		if(trim(regionCombo.getText())!=""&&!regionCombo.checkValue(false)){
+			showMsg("请在[县/区]下拉框选取数据","提示信息",function(){
+				regionCombo.focus();
+			});
+			return false;
+		}
+		if(trim($("#txtReportReceiveBy").val())==""){
+			showMsg("[报告接收人]为必填信息","提示信息",function(){
+				$("#txtReportReceiveBy").select();
+			});
+			return;
+		}
+		if(reportReceivePhone==""){
+			showMsg("[报告接收人电话]为必填信息","提示信息",function(){
+				$("#txtReportReceivePhone").select();
+			});
+			return;
+		}
+		if (reportReceivePhone!=null&&reportReceivePhone!=""&&!checkTelOrMobile(reportReceivePhone)) {
+			 showMsg("[报告接收人电话]格式不正确","提示信息",function(){
+					$("#txtReportReceivePhone").select();
+				});
+				return;
+		}
+		if(trim($("#txtReportAddress").val())==""){
+				showMsg("[报告寄送地址]为必填信息","提示信息",function(){
+					$("#txtReportAddress").select();
+				});
+				return;
+		 }
+		//寄送地址去空格
+		$("#txtReportAddress").val(trim($("#txtReportAddress").val()));
+		if(trim(customersCombo.getText())==""){
+			showMsg("[下单客户]为必填信息","提示信息",function(){
+				customersCombo.focus();
+			});
+			return false;
+		}
+		if(trim(customersCombo.getText())!=""&&!customersCombo.checkValue(false)){
+			showMsg("您所填的[下单客户]不存在,请用下拉框选取数据","提示信息",function(){
+				customersCombo.focus();
+			});
+			return false;
+		}
+		/*if(trim($("#txtAgency").val())==""){
+			showMsg("[机构/部门]为必填信息","提示信息",function(){
+				$("#txtAgency").select();
+			});
+			return;
+		}
+		if(trim($("#txtBusinessArea").val())==""){
+			showMsg("[营业区]为必填信息","提示信息",function(){
+				$("#txtBusinessArea").select();
+			});
+			return;
+		}*/
+		//检验套餐
+		/*if(trim(plansCombo.getText())==""){
+			showMsg("[套餐]为必填信息","提示信息",function(){
+				plansCombo.focus();
+			});
+			return false;
+		}*/
+		//检验套餐是否可以修改
+		if(plan != "" && $("#txtStatus").val() > 110 && plan != trim(plansCombo.getValue())){
+			showMsg("当前条码[套餐]不允许修改","提示信息",function(){
+				//plansCombo.setValue(plan);
+				plansCombo.focus();
+			});
+			return false;
+		}
+		if(trim(plansCombo.getText())!=""&&!plansCombo.checkValue(false)){
+			showMsg("您所填的[套餐]不存在,请用下拉框选取数据","提示信息",function(){
+				plansCombo.focus();
+			});
+			return false;
+		}
+		
+		//没有选中项目
+		if(trim(plansCombo.getText())!=""&&getchackIds() == "" ){
+			showMsg("选择套餐项目","提示信息",function(){});
+			return false;
+		}
+		
+		//报告来源
+		if(trim(reportSourcesCombo.getText())==""){
+			showMsg("[报告来源]为必填信息","提示信息",function(){
+				reportSourcesCombo.focus();
+			});
+			return false;
+		}
+		if(trim(reportSourcesCombo.getText())!=""&&!reportSourcesCombo.checkValue(false)){
+			showMsg("您所填的[报告来源]不存在,请用下拉框选取数据","提示信息",function(){
+				reportSourcesCombo.focus();
+			});
+			return false;
+		}
+		
+		provinceCombo.setValue(provinceCombo.getText(),provinceCombo.getText());
+		cityCombo.setValue(cityCombo.getText(),cityCombo.getText());
+		regionCombo.setValue(regionCombo.getText(),regionCombo.getText());
+		var customerName = customersCombo.getText();
+		//生成备注
+		createPlansRemark();
+		//选中项目
+		var ids = getchackIds();
+		var itemNum = $("#plansDetail input[name = 'chkItem']:checked").length;
+		var count=0;
+		$("#plansDetail [name = chkItem]:checkbox").each(
+				function(){
+					if($(this).attr("checked")=="checked" && $(this).parent().next().next().html().indexOf("耳聋")<0){
+						count++;
+					}
+				}
+			);
+		if (count>0&&count<itemNum) {
+			showMsg("耳聋项目与其它项目不能在同一套餐中");
+			return;
+		}
+		//是否与默认数量一致
+		var isDefault = isDefaultPlans(ids);
+		vipIsValue($("#vip"));
+		$.post("${ctx}/spe/checkTestItemSex.action?ids="+ids+"&planId="+plansCombo.getValue()+"&patientSex="+sexTypeCombo.getValue(),function(data){
+			if(data!=null&&data!=""&&data!="null"){
+				if (data == "保存失败，套餐性别与病人性别不符！") {
+					//保存失败，提示信息
+					 showMsg(data,"提示信息");
+					 return;
+				} else {
+					jConfirm(data,'提示信息',function(choice){
+						if(choice){
+							//$.post("${ctx}/spe/speInputSaveSpecimen.action?ids="+ids+"&isDefault="+isDefault+"&customerName="+customerName,$("#infoForm").serializeArray(),function(data){
+							$.post("${ctx}/spe/saveSpeInputSpecimen.action?ids="+ids+"&isDefault="+isDefault+"&customerName="+customerName,$("#infoForm").serializeArray(),function(data){	 
+								if(data!=null&&data!=""&&data!="null"){
+									 if(data.indexOf("MSG|")==0){
+										 //保存失败，提示信息
+										 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+										 return;
+									 }else{
+										 //保存成功
+										 var json=eval("("+data+")");
+										 updateSpecimen2LeftTable(json);
+										 clearInfoAndFocus();
+										 $("#txtBarCode").select();
+										 plansCombo.loadingStart(function(){
+												$("#gridPlans .tablelist").load("${ctx}/spe/speInputPlansCombo.action",function(){
+													plansCombo.loadingOver();
+												});
+										});
+										$('#pendingTable input[name="checkbutton"]').click(function() {
+											var size = $("#pendingTable tr[class!='trTitle'] input:checked").size();
+											if(size>=2){
+												clearInfoAndFocus();
+												enableBtn("#batchUpdateBtn"); 
+											}else {
+												disableBtn("#batchUpdateBtn");
+											}
+										});
+									 }
+								 }else{
+									 showMsg("数据异常,请刷新页面后重试","提示信息");
+									 clearInfoAndFocus();
+									 currentBarCode="";
+								 }
+							 });
+						}else{
+							return false;
+						}
+					});
+				}
+			} else {
+				//$.post("${ctx}/spe/speInputSaveSpecimen.action?ids="+ids+"&isDefault="+isDefault+"&customerName="+customerName,$("#infoForm").serializeArray(),function(data){
+				$.post("${ctx}/spe/saveSpeInputSpecimen.action?ids="+ids+"&isDefault="+isDefault+"&customerName="+customerName,$("#infoForm").serializeArray(),function(data){	 
+					if(data!=null&&data!=""&&data!="null"){
+						 if(data.indexOf("MSG|")==0){
+							 //保存失败，提示信息
+							 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+							 return;
+						 }else{
+							 //保存成功
+							 var json=eval("("+data+")");
+							 updateSpecimen2LeftTable(json);
+							 clearInfoAndFocus();
+							 $("#txtBarCode").select();
+							 plansCombo.loadingStart(function(){
+									$("#gridPlans .tablelist").load("${ctx}/spe/speInputPlansCombo.action",function(){
+										plansCombo.loadingOver();
+									});
+							});
+							$('#pendingTable input[name="checkbutton"]').click(function() {
+								var size = $("#pendingTable tr[class!='trTitle'] input:checked").size();
+								if(size>=2){
+									clearInfoAndFocus();
+									enableBtn("#batchUpdateBtn"); 
+								}else {
+									disableBtn("#batchUpdateBtn");
+								}
+							});
+						 }
+					 }else{
+						 showMsg("数据异常,请刷新页面后重试","提示信息");
+						 clearInfoAndFocus();
+						 currentBarCode="";
+					 }
+				 });
+			}
+		});
+	 }
+	 
+	 /**
+	  * @param VIP复选框赋值
+	  */
+	 function vipIsValue(object) {
+		 var result = object.is(":checked") ? 1 : 0;
+		 object.val(result);
+	 }
+	 
+	 /**
+	  * @param VIP复选框是否选中
+	  */
+	 function vipIsCheck(value) {
+		 if(value == 1) {
+			 $("#vip").attr("checked", true);
+			 return;
+		 }
+		 $("#vip").attr("checked", false);
+	 }
+	 
+	 /**
+	  * 验证字段长度
+	  * @returns {Boolean}
+	  */
+	 function validateFieldLength(){
+		if ($("#txtMobileNumber").val().length > 20) {
+			showMsg("联系电话不能超过20个字","提示信息",function(){
+				$("#txtMobileNumber").focus();
+			});
+			return false;
+		}
+		if ($("#txtExpressNum").val().length > 50) {
+			showMsg("回寄标本快递单号不能超过50个字","提示信息",function(){
+				$("#txtExpressNum").focus();
+			});
+			return false;
+		}
+		if ($("#txtCustomerAddress").val().length > 300) {
+			showMsg("客户详址不能超过300个字","提示信息",function(){
+				$("#txtCustomerAddress").focus();
+			});
+			return false;
+		}
+		if ($("#txtReportReceiveBy").val().length > 15) {
+			showMsg("报告接收人不能超过15个字","提示信息",function(){
+				$("#txtReportReceiveBy").focus();
+			});
+			return false;
+		}
+		if ($("#txtReportAddress").val().length > 300) {
+			showMsg("报告寄送地址不能超过300个字","提示信息",function(){
+				$("#txtReportAddress").focus();
+			});
+			return false;
+		}
+		if ($("#txtRemark").val().length > 1000) {
+			showMsg("备注不能超过1000个字","提示信息",function(){
+				$("#txtRemark").focus();
+			});
+			return false;
+		}
+
+		 return true;
+
+	 }
+	 
+	 /**
+	  * 加载条码详细信息
+	  * @param json
+	  */
+	 function initSpecimenInfo(json,considerLock,superPlansID){
+		 var plan = json.plans;
+		 if(plan != superPlansID){
+			 plan = superPlansID;
+		 }
+		 sexTypeCombo.clear();
+		 $("#txtStatus").val(json.status);
+		 $("#txtTaiKangId").val(json.taiKangId);
+		 $("#txtID").val(json.id);
+		 $("#txtBarCode").val(json.barCode);
+		 $("#txtPatientName").val(json.patientName);
+		 sexTypeCombo.setValue(json.sex);
+		 $("#txtMobileNumber").val(json.mobileNumber);
+		 $("#txtMobilePhone").val(json.mobilePhone);
+		 $("#txtBirthday").val(json.birthdayView);
+		 $("#txtAge").val(json.age);
+		 $("#plansCombo").find("input").attr('disabled','disabled');
+		 if(considerLock){
+			 	var province = json.province;
+			 	var city = json.city;
+				if(!($("#lock_expressNum:checked").size()>0&&(json.expressNum==""||json.expressNum==null))){
+					$("#txtExpressNum").val(json.expressNum);
+				}
+				if(!($("#lock_SendBackDate:checked").size()>0&&(json.sendBackDateView==""||json.sendBackDateView==null))){
+					$("#txtSendBackDate").val(json.sendBackDateView);
+				}
+				if(!($("#lock_province:checked").size()>0&&(json.province==""||json.province==null))){
+					provinceCombo.setValue(json.province,json.province);
+					cityCombo.loadingStart(function(){
+						$("#gridCity .tablelist").load("${ctx}/spe/getCityByProvince.action",{"province":province},function(){
+							cityCombo.loadingOver();
+						});
+					 });
+				}
+				if(!($("#lock_city:checked").size()>0&&(json.city==""||json.city==null))){
+					cityCombo.setValue(json.city,json.city);
+					 regionCombo.loadingStart(function(){
+						$("#gridRegion .tablelist").load("${ctx}/spe/getRegionByCity.action",{"city":city,"province":province},function(){
+							regionCombo.loadingOver();
+						});
+					 });
+				}
+				if(!($("#lock_region:checked").size()>0&&(json.region==""||json.region==null))){
+					regionCombo.setValue(json.region,json.region);
+				}
+				if(!($("#lock_plans:checked").size()>0&&(json.plans==""||json.plans==null))){
+//					plansCombo.setValue(json.plans);
+					plansCombo.setValue(plan);
+				}
+				if(!($("#lock_reportAddress:checked").size()>0&&(json.reportAddress==""||json.reportAddress==null))){
+					 $("#txtReportAddress").val(json.reportAddress);
+				}
+				if(!($("#lock_reportReceiveBy:checked").size()>0&&(json.reportReceiveBy==""||json.reportReceiveBy==null))){
+					 $("#txtReportReceiveBy").val(json.reportReceiveBy);
+				}
+				if(!($("#lock_reportReceivePhone:checked").size()>0&&(json.reportReceivePhone==""||json.reportReceivePhone==null))){
+					 $("#txtReportReceivePhone").val(json.reportReceivePhone);
+				}
+				if(!($("#lock_agency:checked").size()>0&&(json.agency==""||json.agency==null))){
+					 $("#txtAgency").val(json.agency);
+				}
+				if(!($("#lock_businessArea:checked").size()>0&&(json.businessArea==""||json.businessArea==null))){
+					 $("#txtBusinessArea").val(json.businessArea);
+				}
+		 }else{
+			 $("#txtExpressNum").val(json.expressNum);
+			 $("#txtSendBackDate").val(json.sendBackDateView);
+			 plansCombo.clear();
+			 provinceCombo.clear();
+			 cityCombo.clear();
+			 regionCombo.clear();
+			 customersCombo.clear();
+//			 plansCombo.setValue(json.plans);
+			 customersCombo.setValue(json.customer);
+			 plansCombo.setValue(plan);
+			 provinceCombo.setValue(json.province,json.province);
+			 var province = json.province;
+			 cityCombo.loadingStart(function(){
+				$("#gridCity .tablelist").load("${ctx}/spe/getCityByProvince.action",{"province":province},function(){
+					cityCombo.loadingOver();
+					cityCombo.setValue(json.city,json.city);
+				});
+			 });
+			 var city = json.city;
+			 regionCombo.loadingStart(function(){
+				$("#gridRegion .tablelist").load("${ctx}/spe/getRegionByCity.action",{"city":city,"province":province},function(){
+					regionCombo.loadingOver();
+					regionCombo.setValue(json.region,json.region);
+				});
+			 });
+			 $("#txtPlansArea").val(json.plansArea);
+			 $("#txtReportAddress").val(json.reportAddress);
+			 $("#txtReportReceiveBy").val(json.reportReceiveBy);
+			 $("#txtReportReceivePhone").val(json.reportReceivePhone);
+			 $("#txtAgency").val(json.agency);
+			 $("#txtBusinessArea").val(json.businessArea);
+		 }
+		 testItemsCombo.loadingStart(function(){
+				$("#gridTestItem .tablelist").load("${ctx}/spe/getTestItem.action",{"plansid":plansCombo.getValue()},function(){
+					testItemsCombo.loadingOver();
+				});
+			});
+		 customersCombo.clear();
+		 customersCombo.setValue(json.customer);
+		 $("#txtPlansArea").val(json.plansArea);
+		 $("#txtReceiveDate").val(json.receiveDateView);
+		 $("#txtRemark").val(json.remark);
+		 $("#txtIdCardNum").val(json.idCardNum);
+		 $("#txtCustomerAddress").val(json.customerAddress);
+		 $("#txtFamilyHistory").val(json.familyHistory);
+		 vipIsCheck(json.vip);
+		 $("#txtInsuranceUser").val(json.insuranceUser);
+		 $("#txtAppendRemark").val(json.appendRemark);
+		 reportSourcesCombo.clear();
+		 reportSourcesCombo.setValue(json.reportSource);
+		 //$("#txtPatientName").focus();
+		 if (json.cardOrderNum != null && json.cardOrderNum !="") {
+			 customersCombo.disable();
+			 sexTypeCombo.disable();
+			 plansCombo.disable();
+			 disableBtn("#select");
+			 $("#checkall").attr("disabled",true);
+		}else {
+			customersCombo.enable();
+			sexTypeCombo.enable();
+			 plansCombo.enable();
+			 enableBtn("#select");
+			 $("#checkall").attr("disabled",false);
+		}
+	 }
+	 
+	 /**
+	  * 条码更新至左侧列表
+	  * @param json
+	  */
+	 function updateSpecimen2LeftTable(json){
+		$("#pendingTable tr").removeClass("selectedbg");
+		$("#checkedTable tr").removeClass("selectedbg");
+		 if($("#inputSpeList #"+json.id).size()<=0){
+			 //列表中没有该条码
+				var trObj=trTmp.clone(true);
+				trObj.attr("id",json.id);
+				$(trObj.children("td")[1]).attr("title",json.barCode==null?"":json.barCode);
+				$(trObj.children("td")[2]).attr("title",json.patientName==null?"":json.patientName);
+				$(trObj.children("td")[3]).attr("title",json.expressNum==null?"":json.expressNum);
+				$(trObj.children("td")[4]).attr("title",json.orgname==null?"":json.orgname);
+				$(trObj.children("td")[5]).attr("title",json.orgid==null?"":json.orgid);
+				$(trObj.children("td")[1]).text(json.barCode==null?"":json.barCode);
+				$(trObj.children("td")[2]).text(json.patientName==null?"":json.patientName);
+				$(trObj.children("td")[3]).text(json.expressNum==null?"":json.expressNum);
+				$(trObj.children("td")[4]).text(json.orgname==null?"":json.orgname);
+				$(trObj.children("td")[5]).text(json.orgid==null?"":json.orgid);
+			 if(json.status==110){
+				 //已录入状态才加入左侧待审列表显示
+				 $("#pendingTable").append(trObj);
+				 $("#pendingTable tr").removeClass("oddbg");
+				 $("#pendingTable tr").removeClass("evenbg");
+				 $("#pendingTable tr[class!='trTitle']:odd").addClass("oddbg");
+				 $("#pendingTable tr[class!='trTitle']:even").addClass("evenbg");
+			 }else if(json.status>110){
+				 //大于或等于信息审核
+				 $("#checkedTable").append(trObj);
+				 $("#checkedTable tr").removeClass("oddbg");
+				 $("#checkedTable tr").removeClass("evenbg");
+				 $("#checkedTable tr[class!='trTitle']:odd").addClass("oddbg");
+				 $("#checkedTable tr[class!='trTitle']:even").addClass("evenbg");
+			 }
+		 }else{
+			 refreshSpecimen(json);
+		 }
+		 if(json.status<120){
+			 //小于内勤接收
+			 noChecked=true;
+			 $("#tabDivList_1").trigger("click");
+		 }else{
+			 //大于或等于信息审核
+			 $("#tabDivList_2").trigger("click"); 
+		 }
+		 if(json.status>140){
+			 noChecked=false;
+		 }
+		$("#inputSpeList #"+json.id).addClass("selectedbg");
+		initListCount();
+	 }
+	 
+	 function changeBatchNum(){
+		 $('#id_batchNum').val("");
+		 if(!$("#pendingTable tr[class!='trTitle'] input:checked").size()>0){
+			 showMsg("请勾选条码","提示信息");
+			 return false;
+		 }
+		 $('#dialog_batchNum').show();
+			$('#dialog_batchNum').dialog({
+			    title: '维护批号',
+			    left:600,
+			    top:100,
+			    width: 350,
+			    height: 250,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'确定',
+					handler:function(){
+						var batchNum=trim($('#id_batchNum').val());
+						if(batchNum==''){
+							showMsg("批号不能为空！","提示信息");
+							return ;
+						}
+						
+						jConfirm("是否确认要将所选条码的批号更改为： " + batchNum,'提示信息',function(choice){
+							if(choice){
+								//此处更新批号
+								var idString=getCheckedSpecimenIDs("pendingTable");
+								$.post("${ctx}/spe/speInputChangeBatchNum.action",{"currentID":idString,"batchNum":batchNum},function(data){
+									if(data!=null&&data!=""&&data!="null"){
+										 if(data.indexOf("MSG|")==0){
+											 //更新失败，提示信息
+											 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+											 return;
+										 }else{
+											 //保存成功
+											 var jsonArray=eval("("+data+")");
+											 if(jsonArray!=null&&jsonArray.length>0){
+												 for(var i=0;i<jsonArray.length;i++){
+													 refreshSpecimen(jsonArray[i]);
+												 }
+											 }
+											 showMsg("保存成功！","提示信息");
+										 }
+									}else{
+										 showMsg("数据异常,请刷新页面后重试","提示信息");
+										 clearInfo();
+										 currentBarCode="";
+									}
+									$('#dialog_batchNum').dialog( "close" );
+								});
+							}else{
+								return false;
+							}
+						});
+					}
+				},{
+					text:'取消',
+					handler:function(){
+						$('#dialog_batchNum').dialog( "close" );
+					}
+				}]
+			});
+	 }
+	 
+	 /**
+	  * 批量导入按钮点击事件
+	  */
+	 function openBatchImportWin(){
+		// $("#dialog_batchImport").load("${ctx}/spe/speInputBatchImport.action",null,function(){
+			
+			 $('#dialog_batchImport').show();
+			 //$("#btnSubmitFile").unbind("click");
+			// $("#btnSubmitFile").bind("click",submitFile);
+			 $.fn.window.defaults.zIndex=500;
+				$('#dialog_batchImport').dialog({
+				    title: '批量导入',
+				    href:ctx + '/spe/speInputBatchImport.action',
+				    left:230,
+				    top:10,
+				    width: 897,
+				    height: 495,
+				    closed: false,
+				    cache: false,
+				    modal: true,
+				    buttons:[{
+						text:'关闭',
+						handler:function(){
+							$('#dialog_batchImport').dialog( "close" );
+						}
+					}]
+				});
+		// });
+	 }
+	 
+		/**
+		 * 获取文件名
+		 */
+		function submitFile() {
+			var fileName = $("#excelFile").val();
+			var fileNameLength = fileName.length;
+			if(fileName==""){
+				showMsg("请选择文件","提示信息");
+				return;
+			}
+			if (fileName.indexOf(".xls") != fileNameLength - 4
+					&& fileName.indexOf(".xlsx") != fileNameLength - 5) {
+				showMsg("只支持excel文件","提示信息");
+				return;
+			}
+			var fileSize = getFileSize("excelFile");
+			if (fileSize > 2*1024*1024) {
+				showMsg("导入文件大小不能超过2M，请重新选择。<br>注：如果您上传的文件是Excel 2003的版本，建议另存为Excel 2007（或以上）版本；如果已是Excel 2007（或以上）版本，或者转换之后文件仍过大，请拆分Excel文件后再进行导入。","提示信息");
+				return;
+			}
+			$("#excelFilePath").val(fileName);
+//			$.post("${ctx}/spe/speInputBatchImportFromExcel.action",$("#batchImport").serializeArray(),function(){
+//				
+//			});
+			blockUI();
+			$("#batchImport").submit();
+		}
+	 
+	 /**
+	  * 内勤接收
+	  * @returns {Boolean}
+	  */
+	 function auditSpecimen(){
+		 if(!$("#pendingTable tr[class!='trTitle'] input:checked").size()>0){
+			 showMsg("请勾选条码","提示信息");
+			 return false;
+		 }
+			jConfirm("是否确认内勤接收所选条码 ?",'提示信息',function(choice){
+				if(choice){
+					//此处更新批号
+					var idString=getCheckedSpecimenIDs("pendingTable");
+					$.post("${ctx}/spe/speInputAuditSpecimen.action",{"currentID":idString},function(data){
+						if(data!=null&&data!=""&&data!="null"){
+							 if(data.indexOf("MSG|")==0){
+								 //更新失败，提示信息
+								 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+								 return;
+							 }else{
+								 //审核成功
+								 var IDsArray=eval("("+data+")");
+								 if(IDsArray!=null&&IDsArray.length>0){
+									 for(var i=0;i<IDsArray.length;i++){
+											var trobj = $("#pendingTable #"+IDsArray[i]).clone(true);
+											$("#pendingTable #"+IDsArray[i]).remove();
+											trobj.appendTo($("#checkedTable"));
+									 }
+								 }
+								 
+								 $("#checkedTable tr").removeClass("oddbg");
+								 $("#checkedTable tr").removeClass("evenbg");
+								 $("#checkedTable tr[class!='trTitle']:odd").addClass("oddbg");
+								 $("#checkedTable tr[class!='trTitle']:even").addClass("evenbg");
+								 
+								 $("#pendingTable tr").removeClass("oddbg");
+								 $("#pendingTable tr").removeClass("evenbg");
+								 $("#pendingTable tr[class!='trTitle']:odd").addClass("oddbg");
+								 $("#pendingTable tr[class!='trTitle']:even").addClass("evenbg");
+								 initListCount();
+								 clearInfo();
+								 $("#checkAllPending").attr("checked",false);
+								 showMsg("内勤接收成功！","提示信息");
+							 }
+						}else{
+							 showMsg("数据异常,请刷新页面后重试","提示信息");
+							 clearInfo();
+							 currentBarCode="";
+						}
+					});
+				}else{
+					return false;
+				}
+			});
+	 }
+	 
+	 /**
+	  * 取消接收
+	  * @returns {Boolean}
+	  */
+	 function reAuditSpecimen(){
+		 if(!$("#checkedTable tr[class!='trTitle'] input:checked").size()>0){
+			 showMsg("请勾选条码","提示信息");
+			 return false;
+		 }
+			jConfirm("是否确认要取消接收所选条码 ?",'提示信息',function(choice){
+				if(choice){
+					//此处更新批号
+					var idString=getCheckedSpecimenIDs("checkedTable");
+					$.post("${ctx}/spe/speInputReAuditSpecimen.action",{"currentID":idString},function(data){
+						if(data!=null&&data!=""&&data!="null"){
+							 if(data.indexOf("MSG|")==0){
+								 //更新失败，提示信息
+								 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+								 return;
+							 }else{
+								 //退审成功
+								 var json=eval("("+data+")");
+								 var successIDArray=json.success;
+								 var failBarCodeArray=json.fail;
+								 var all_fail=false;
+								 if(successIDArray!=null&&successIDArray.length>0){
+									 for(var i=0;i<successIDArray.length;i++){
+											var trobj = $("#checkedTable #"+successIDArray[i]).clone(true);
+											$("#checkedTable #"+successIDArray[i]).remove();
+											trobj.appendTo($("#pendingTable"));
+									 }
+								 }else{
+									 all_fail=true;
+								 }
+								 var barCodeStr="";
+								 if(failBarCodeArray!=null&&failBarCodeArray.length>0){
+									 barCodeStr+="其中条码 \n[";
+									 if(failBarCodeArray.length>5){
+										 barCodeStr+=failBarCodeArray.slice(0,4).join("\n");
+									 }else{
+										 barCodeStr+=failBarCodeArray.join("\n");
+									 }
+									 barCodeStr+="] \n等不是内勤接收状态，无法取消接收";
+								 }
+								 
+								 $("#checkedTable tr").removeClass("oddbg");
+								 $("#checkedTable tr").removeClass("evenbg");
+								 $("#checkedTable tr[class!='trTitle']:odd").addClass("oddbg");
+								 $("#checkedTable tr[class!='trTitle']:even").addClass("evenbg");
+								 
+								 $("#pendingTable tr").removeClass("oddbg");
+								 $("#pendingTable tr").removeClass("evenbg");
+								 $("#pendingTable tr[class!='trTitle']:odd").addClass("oddbg");
+								 $("#pendingTable tr[class!='trTitle']:even").addClass("evenbg");
+								 initListCount();
+								 clearInfo();
+								 $("#checkAllChecked").attr("checked",false);
+								 showMsg((all_fail?"":"取消接收成功！")+barCodeStr,"提示信息");
+							 }
+						}else{
+							 showMsg("数据异常,请刷新页面后重试","提示信息");
+							 clearInfo();
+							 currentBarCode="";
+						}
+					});
+				}else{
+					return false;
+				}
+			});
+	 }
+	 
+	 function getCheckedSpecimenIDs(tableID){
+		 var checkBoxObj = $("#"+tableID+" tr[class!='trTitle'] input:checked");
+		 if(checkBoxObj.size()>0){
+			 var idsArray=new Array();
+				checkBoxObj.each(function(){
+					idsArray.push($(this).parent().parent().attr("id"));
+//					subBarCodesArray.push($(this).attr("id"));
+				});
+				return idsArray.join(",");
+		 }else{
+			 return "";
+		 }
+	 }
+	 
+	 function refreshSpecimen(json){
+		 	var trObj=$("#inputSpeList #"+json.id);
+			$(trObj.children("td")[1]).attr("title",json.barCode==null?"":json.barCode);
+			$(trObj.children("td")[2]).attr("title",json.patientName==null?"":json.patientName);
+			$(trObj.children("td")[3]).attr("title",json.expressNum==null?"":json.expressNum);
+			$(trObj.children("td")[4]).attr("title",json.orgname==null?"":json.orgname);
+			$(trObj.children("td")[5]).attr("title",json.orgid==null?"":json.orgid);
+			$(trObj.children("td")[1]).text(json.barCode==null?"":json.barCode);
+			$(trObj.children("td")[2]).text(json.patientName==null?"":json.patientName);
+			$(trObj.children("td")[3]).text(json.expressNum==null?"":json.expressNum);
+			$(trObj.children("td")[4]).text(json.orgname==null?"":json.orgname);
+			$(trObj.children("td")[5]).text(json.orgid==null?"":json.orgid);
+	 }
+	 
+	 /**
+	  * 重置左侧列表条码计数
+	  */
+	 function initListCount(){
+		 $('#pendingTable input[name="checkbutton"]').attr("checked",false); 
+		 $('#checkedTable input[name="checkbutton"]').attr("checked",false); 
+		 $("#pendingCountLabel").text("查询列表(共"+$("#pendingTable tr[class!='trTitle']").size()+"条)");
+		 $("#checkedCountLabel").text("查询列表(共"+$("#checkedTable tr[class!='trTitle']").size()+"条)");
+	 }
+	 
+	function dateOnFcusStart(obj){
+		WdatePicker({dateFmt:obj});
+	}
+	
+	function checkByBarCodeState(barCode) {
+		$.ajax({
+			"url" : "${ctx}/spe/getBarCodeState.action",
+			"type" : "POST",
+			data: {"searchBarCode":barCode},
+			"success" : function(data) {
+				if (data == '100' || data == '110') {
+					$("#txtPatientName").focus();
+				} else {
+					$("#txtBarCode").select();
+				}
+			}
+		});
+	}	
+	//回车光标跳转
+	function enterJump(){
+		//必填信息的光标跳转
+		//姓名-->性别
+		$("#txtPatientName").keyup(function(event){
+			if(event.keyCode==13){
+				sexTypeCombo.focus();
+			}
+		});
+		
+		
+		//性别-->出生日期  
+		$("#comboSexType").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtBirthday").focus();
+			}
+		});
+		
+		//出生日期-->年龄
+		$("#txtBirthday").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtAge").focus();
+			}
+		});
+		
+		//年龄-->固定电话
+		$("#txtAge").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtMobileNumber").focus();
+			}
+		});
+		
+		//固定电话-->手机号
+		$("#txtMobileNumber").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtMobilePhone").focus();
+			}
+		});
+		
+		//手机号-->套餐
+		$("#txtMobilePhone").keyup(function(event){
+			if(event.keyCode==13){
+				$("#comboPlans input:text").select();
+			}
+		});
+		
+		//套餐-->客户经理
+		$("#comboPlans").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtInsuranceUser").focus();
+			}
+		});
+		
+		//客户经理-->身份证号
+		$("#txtInsuranceUser").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtIdCardNum").focus();
+			}
+		});
+		
+		//身份证号-->附加备注
+		$("#txtIdCardNum").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtAppendRemark").focus();
+			}
+		});
+		
+		//附加备注-->快递单号
+		$("#txtAppendRemark").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtExpressNum").select();
+			}
+		});
+		
+		//快递单号-->省份
+		$("#txtExpressNum").keyup(function(event){
+			if(event.keyCode==13){
+				$("#comboProvince input:text").select();
+//				provinceCombo.focus();
+			}
+		});
+		
+		//省份-->城市
+		$("#comboProvince").keyup(function(event){
+			if(event.keyCode==13){
+//				cityCombo.focus();
+				$("#comboCity input:text").select();
+			}
+		});
+		
+		//城市-->地区
+		$("#comboCity").keyup(function(event){
+			if(event.keyCode==13){
+//				regionCombo.focus();
+				$("#comboRegion input:text").select();
+			}
+		});
+		
+		//地区--> 报告寄送地址
+		$("#comboRegion").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtReportAddress").select();
+			}
+		});
+		
+		//报告寄送地址--> 报告接收人
+		$("#txtReportAddress").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtReportReceiveBy").select();
+			}
+		});
+		
+		//报告接收人-->报告接收人电话
+		$("#txtReportReceiveBy").keyup(function(event){
+			if(event.keyCode==13){
+				var type = 1;
+				var reportReceiveByText = $("#txtReportReceiveBy").val();
+				$.ajax({
+					  type: 'POST',
+					  url: "${ctx}/spe/getSpeInputSize.action",
+					  data: {"condition":reportReceiveByText,"type":type},
+					  success: function(data){
+						 if ("0" == data || "-1" == data) {
+							$("#txtReportReceivePhone").select();
+						} else {
+							$("#reportInfoDiv").show();
+							$.fn.window.defaults.zIndex=120;
+							$('#reportInfoDiv').dialog({
+							    title: '查询列表',
+							    href:ctx + '/spe/speInputTable.action?condition='+reportReceiveByText+'&type='+type,
+							    left:400,
+							    top:120,
+							    width: 500,
+							    height: 500,
+							    closed: false,
+							    cache: false,
+							    modal: true,
+							    buttons:[{
+									text:'关闭',
+									handler:function(){
+										$('#reportInfoDiv').dialog( "close" );
+									}
+								}]
+							});
+						}
+					  }
+				});
+			}
+		});
+		
+		//报告接收人电话-->报告寄送地址
+		$("#txtReportReceivePhone").keyup(function(event){
+			if(event.keyCode==13){
+				var type = 2;
+				var reportReceivePhoneText = $("#txtReportReceivePhone").val();
+				$.ajax({
+					  type: 'POST',
+					  url: "${ctx}/spe/getSpeInputSize.action",
+					  data: {"condition":reportReceivePhoneText,"type":type},
+					  success: function(data){
+						 if ("0" == data || "-1" == data) {
+							$("#txtSendBackDate").select();
+						} else {
+							$("#reportInfoDiv").show();
+							$.fn.window.defaults.zIndex=120;
+							$('#reportInfoDiv').dialog({
+							    title: '查询列表',
+							    href:ctx + '/spe/speInputTable.action?condition='+reportReceivePhoneText+'&type='+type,
+							    left:400,
+							    top:120,
+							    width: 500,
+							    height: 500,
+							    closed: false,
+							    cache: false,
+							    modal: true,
+							    buttons:[{
+									text:'关闭',
+									handler:function(){
+										$('#reportInfoDiv').dialog( "close" );
+									}
+								}]
+							});
+						}
+					  }
+				});
+			}
+		});
+		
+		//采样日期-->下单客户
+		$("#txtSendBackDate").keyup(function(event){
+			if(event.keyCode==13){
+//				customersCombo.focus();
+				$("#comboCustomers input:text").select();
+			}
+		});
+		
+		//下单客户-->机构/部门
+		$("#comboCustomers").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtAgency").select();
+			}
+		});
+		
+		//机构/部门-->营业区
+		$("#txtAgency").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtBusinessArea").select();
+			}
+		});
+		
+		//营业区-->家庭人群
+		$("#txtBusinessArea").keyup(function(event){
+			if(event.keyCode==13){
+				familyGroupsCombo.focus();
+			}
+		});
+		
+		//家庭人群-->病种
+		$("#comboFamilyGroups").keyup(function(event){
+			if(event.keyCode==13){
+				diseaseTypesCombo.focus();
+			}
+		});
+		
+		//病种-->家族史
+		$("#comboDiseaseTypes").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtFamilyHistory").focus();
+			}
+		});
+		
+		//家族史-->客户详细地址
+		$("#txtFamilyHistory").keyup(function(event){
+			if(event.keyCode==13){
+				$("#txtCustomerAddress").focus();
+			}
+		});
+		
+	}
+	
+	/**
+	 * 加载套餐信息
+	 * 条码输入回车，左侧条码点击
+	 */
+	function loadPlansDetail(plansID,cardOrderNum,name,isAllselect){
+		$.ajax({
+			  type: 'POST',
+			  url: "${ctx}/spe/plansdeatil.action",
+			  data: {"plansid":plansID},
+			  success: function(data){
+				 planArr = [];
+				 if(data == "0"){
+					 return false;
+				 }
+				 var json=eval("("+data+")");
+				  		var table = "<table id='tcmx' witdh='100%' cellspacing='0' cellpadding='0'>";
+				  		if ((name==null || name =="") && isAllselect != '1') {
+							$("#checkall").attr("checked", false);
+				  			for(var i = 0;i < json.length;i++  ){
+								table += "<tr>"+
+										 	"<td style='width: 15px; text-align: center;'><input type='checkbox' id='"+json[i].id+"' name = 'chkItem'></td>"+
+										 	"<td style='width: 250px;'>"+json[i].cnName+"</td>"+
+										 	"<td hidden='true'>"+json[i].itemTypeName+"</td>"+
+										 "</tr>";	
+								planArr[i] = json[i].id;   //把套餐项目明细的id添加到数组planArr中
+						  	}
+						} else {
+							$("#checkall").attr("checked", true);
+							for(var i = 0;i < json.length;i++  ){
+								table += "<tr>"+
+										 	"<td style='width: 15px; text-align: center;'><input type='checkbox' id='"+json[i].id+"' name = 'chkItem' checked='check'></td>"+
+										 	"<td style='width: 250px;'>"+json[i].cnName+"</td>"+
+										 	"<td hidden='true'>"+json[i].itemTypeName+"</td>"+
+										 "</tr>";	
+								planArr[i] = json[i].id;   //把套餐项目明细的id添加到数组planArr中
+						  	}
+						}
+					  	table += "</table>";
+					  	$("#plansDetail .tablelist").html(table);
+					  	planItems = json.length;
+					  	if (cardOrderNum != null && cardOrderNum !="") {
+					  		$('#tcmxList input[name="chkItem"]').attr("disabled",true);
+						} else {
+							$('#tcmxList input[name="chkItem"]').attr("disabled",false);
+						}
+				  }
+			 // dataType: json
+			});
+	}
+	
+	/**
+	 * 加载非预设套餐信息
+	 * 条码输入回车，左侧条码点击
+	 * plansID 非预设套餐ID
+	 * superID 预设套餐ID
+	 */
+	function loadNotPrePlansDetail(plansID,superID,cardOrderNum){
+		var father = "";
+		var son = "";
+		//先找父ID
+		$.ajax({
+			  async : false,
+			  type: 'POST',
+			  url: "${ctx}/spe/plansdeatil.action",
+			  data: {"plansid":superID},
+			  success: function(data){
+				  if(data == "0"){
+						 return false;
+				  	}
+				 var json=eval("("+data+")");
+				 var table = "<table id='tcmx' witdh='100%' cellspacing='0' cellpadding='0'>";
+				  		for(var i = 0;i < json.length;i++  ){
+							table += "<tr>"+
+									 	"<td style='width: 15px; text-align: center;'><input type='checkbox' id='"+json[i].id+"' name = 'chkItem' ></td>"+
+									 	"<td style='width: 250px;'>"+json[i].cnName+"</td>"+
+									 	"<td hidden='true'>"+json[i].itemTypeName+"</td>"+
+									 "</tr>";	
+							
+					  	}
+					  	table += "</table>";
+					  	$("#plansDetail .tablelist").html(table);
+					  	if (cardOrderNum != null && cardOrderNum !="") {
+					  		$('#tcmxList input[name="chkItem"]').attr("disabled",true);
+						} else {
+							$('#tcmxList input[name="chkItem"]').attr("disabled",false);
+						}
+				  }
+			});
+		 //查子类
+		$.ajax({
+			  async : false,
+			  type: 'POST',
+			  url: "${ctx}/spe/plansdeatil.action",
+			  data: {"plansid":plansID},
+			  success: function(data){
+				  if(data == "0"){
+						 return false;
+					 }
+				 var json=eval("("+data+")");
+				  son = json;
+				  }
+			});
+		if(son != ""){
+			for(var i = 0;i<son.length;i++){
+				$("#plansDetail [name = chkItem]:checkbox").each(
+						function(){
+							if($(this).attr("id")==son[i].id){
+								$(this).attr("checked", true);
+							}
+						}
+					);
+			}
+		}
+	}
+	
+	/**
+	 * 判断套餐是否为预设项目
+	 * 条码输入回车，左侧条码点击
+	 */
+	function getParentID(plansID){
+		var id = "";
+		$.ajax({
+			  async : false,
+			  type: 'POST',
+			  url: "${ctx}/spe/getPlansInfo.action",
+			  data: {"plansid":plansID},
+			  success: function(data){
+				  	var json=eval("("+data+")");
+				  	/*if(!(json.isPreset)){
+				 		id = json.superId;
+				 	}else{
+				 		id = plansID;
+				 	}*/
+				  	id = plansID;
+			   }
+			});
+		return id;
+	}
+
+	//回退
+	function returnSpecimen(){
+		//var CurrentState;
+		var array = new Array();
+		var checkFlag=false;
+		$("#pendingTable tr[class!='trTitle'] input[name='checkbutton']").each(function(){
+			if($(this).attr("checked")=="checked"){
+				checkFlag=true;
+				array.push($(this).parent().parent().children("tr td:nth-child(2)").text());
+			}
+		});
+		var arrayCodes = array.sort().join(",");//获取ID
+		if(!checkFlag){
+			showMsg("请先勾选要回退的条码！");
+			return;
+		}
+		$.ajax({
+			type : "POST",
+			url : "${ctx}/spe/speInputReturnSpecimen.action",
+			data:{arrayCodes:arrayCodes},
+			success : function(data) {
+				if (data!=null&&data!=""&&data!="null") {
+					if(data.indexOf("MSG|")==0){
+						 //更新失败，提示信息
+						 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+						 return;
+					 }else{
+						 //研究院接收成功
+						 var json=eval("("+data+")");
+						 var failBarCodeArray=json.fail;
+						 var successBarCodeArray=json.success;
+						 var barCodeStr="";
+						 var all_fail=false;
+						 if (successBarCodeArray!=null&&successBarCodeArray.length>0) {
+							 all_fail=false;
+						} else {
+							all_fail=true;
+						}
+						 if(failBarCodeArray!=null&&failBarCodeArray.length>0){
+							 barCodeStr+="其中条码 \n[";
+							 if(failBarCodeArray.length>5){
+								 barCodeStr+=failBarCodeArray.slice(0,4).join("\n");
+							 }else{
+								 barCodeStr+=failBarCodeArray.join("\n");
+							 }
+							 barCodeStr+="] \n等是本地标本，不能回退";
+						 }
+						 showMsg((all_fail?"":"回退成功！")+barCodeStr,"提示信息");
+						 submitSearch();
+					 }
+				} else {
+					showMsg("回退失败","提示信息");
+					return;
+				}
+			}
+		});
+	}
+	
+	/**
+	  * 批量修改
+	  *
+	  */
+	 function batchUpdate(){
+		 /*if(!$("#pendingTable tr[class!='trTitle'] input:checked").size()>0){
+			 showMsg("请勾选条码","提示信息");
+			 return false;
+		 }*/
+		 var sbd=trim($("#txtSendBackDate").val());
+		 //var rd=trim($("#txtReceiveDate").val());
+		 /*if(sbd==""){
+			showMsg("[采样时间]为必填信息","提示信息",function(){
+				$("#txtSendBackDate").select();
+			});
+			return;
+		 }*/
+		 $("#txt_SendBackDate").val(sbd==""?"":sbd+" 00:00:00");
+		 /*$("#txt_ReceiveDate").val(rd==""?"":(rd+":00"));
+		 if(sbd !='' && rd !=''){
+			 var sbDate=new Date(sbd).getTime();
+			 var rDate=new Date(rd).getTime();
+			 if(sbDate>rDate){
+				showMsg("[采样时间]不能大于[内勤接收时间]","提示信息",function(){
+					$("#txtSendBackDate").select();
+				});
+				return;
+			 }
+		 }*/
+			 
+		/*if(trim(provinceCombo.getText())==""){
+			showMsg("[省]为必填信息","提示信息",function(){
+				provinceCombo.focus();
+			});
+			return false;
+		}
+		if(trim(cityCombo.getText())==""){
+			showMsg("[地市]为必填信息","提示信息",function(){
+				cityCombo.focus();
+			});
+			return false;
+		}
+		if(trim(regionCombo.getText())==""){
+			showMsg("[县/区]为必填信息","提示信息",function(){
+				regionCombo.focus();
+			});
+			return false;
+		}*/
+		 if(trim(provinceCombo.getText())!=""&&!provinceCombo.checkValue(false)){
+			showMsg("请在[省]下拉框选取数据","提示信息",function(){
+				provinceCombo.focus();
+			});
+			return false;
+		}
+		 if(trim(cityCombo.getText())!=""&&!cityCombo.checkValue(false)){
+			showMsg("请在[地市]下拉框选取数据","提示信息",function(){
+				cityCombo.focus();
+			});
+			return false;
+		}
+		 if(trim(regionCombo.getText())!=""&&!regionCombo.checkValue(false)){
+			showMsg("请在[县/区]下拉框选取数据","提示信息",function(){
+				regionCombo.focus();
+			});
+			return false;
+		}
+		var mobileNumber = trim($("#txtMobileNumber").val());
+		if (mobileNumber!=null&&mobileNumber!=""&&!checkTelOrMobile(mobileNumber)) {
+			 showMsg("[固定电话]格式不正确","提示信息",function(){
+					$("#txtMobileNumber").select();
+				});
+				return;
+		}
+		if ($("#txtReportReceiveBy").val().length > 15) {
+			showMsg("报告接收人不能超过15个字","提示信息",function(){
+				$("#txtReportReceiveBy").focus();
+			});
+			return false;
+		}
+		var reportReceivePhone = trim($("#txtReportReceivePhone").val());
+		if (reportReceivePhone!=null&&reportReceivePhone!=""&&!checkTelOrMobile(reportReceivePhone)) {
+			 showMsg("[报告接收人电话]格式不正确","提示信息",function(){
+				$("#txtReportReceivePhone").select();
+			});
+			return;
+		}
+		/*if(trim($("#txtReportAddress").val())==""){
+			showMsg("[报告寄送地址]为必填信息","提示信息",function(){
+				$("#txtReportAddress").select();
+			});
+			return;
+		 }*/
+		if ($("#txtReportAddress").val().length > 300) {
+			showMsg("报告寄送地址不能超过300个字","提示信息",function(){
+				$("#txtReportAddress").focus();
+			});
+			return false;
+		}
+		//寄送地址去空格
+		$("#txtReportAddress").val(trim($("#txtReportAddress").val()));
+		//检验下单客户
+		/*if(trim(customersCombo.getText())==""){
+			showMsg("[下单客户]为必填信息","提示信息",function(){
+				customersCombo.focus();
+			});
+			return false;
+		}*/
+		if(trim(customersCombo.getText())!=""&&!customersCombo.checkValue(false)){
+			showMsg("您所填的[下单客户]不存在,请用下拉框选取数据","提示信息",function(){
+				customersCombo.focus();
+			});
+			return false;
+		}
+		provinceCombo.setValue(provinceCombo.getText(),provinceCombo.getText());
+		cityCombo.setValue(cityCombo.getText(),cityCombo.getText());
+		regionCombo.setValue(regionCombo.getText(),regionCombo.getText());
+		var customerName = customersCombo.getText();
+		jConfirm("是否确认批量修改所选条码 ?",'提示信息',function(choice){
+			if(choice){
+				//此处更新批号
+				var idString=getCheckedSpecimenIDs("pendingTable");			
+				$.post("${ctx}/spe/batchUpdateSpeInputSpecimen.action?ids="+idString+"&customerName="+customerName,$("#infoForm").serializeArray(),function(data){	 
+					if(data!=null&&data!=""&&data!="null"){
+						 if(data.indexOf("MSG|")==0){
+							 //保存失败，提示信息
+							 showMsg(data.substring(data.indexOf("|")+1),"提示信息");
+							 return;
+						 }else{
+							 //保存成功
+							 clearInfoAndFocus();
+							 showMsg("批量修改成功！","提示信息");
+							 $("#txtBarCode").select();
+						 }
+					 }else{
+						 showMsg("数据异常,请刷新页面后重试","提示信息");
+						 clearInfoAndFocus();
+						 currentBarCode="";
+					 }
+				 });
+			}else{
+				return false;
+			}
+		});
+	 }
+	 
+	//列表行选中
+	function rowOnClick(e){
+		if(e.target.nodeName!="TD"||$(this).hasClass("selectedbg")){
+			return;
+		}
+		$("#taiKangListTable tr").removeClass("selectedbg");
+		$(this).addClass("selectedbg");
+	}
+	

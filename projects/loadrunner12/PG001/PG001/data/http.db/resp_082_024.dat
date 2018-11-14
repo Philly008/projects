@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<script type="text/javascript">
+</script>
+<table id="table_list" class="tm_table" width="100%" bgcolor="#FFFFFF" border="0" cellspacing="1" cellpadding="0">
+	<tr bgcolor="#9dcdfa" >
+		<td style="width: 20px;height: 28px;margin: auto;text-align: center;"><input id="checkbox_all" type="checkbox" /></td>
+		<td style="width: 60px;height: 28px;margin: auto;text-align: center;">序号</td>
+		<td style="width: 120px;height: 28px;margin: auto;text-align: center;">条码号</td>
+		<td style="width: 80px;height: 28px;margin: auto;text-align: center;">姓名</td>
+		<td style="width: 80px;height: 28px;margin: auto;text-align: center;"onclick="btnSearch('date')">内勤接收时间<div id="receiveDateSort"></div></td>
+		<td style="width: 80px;height: 28px;margin: auto;text-align: center;"onclick="btnSearch('seq')">流水号<div id="seqSort"></div></td>
+		<td style="width: 100px;height: 28px;margin: auto;text-align: center;"onclick="btnSearch('status')">状态<div id="statusSort"></div></td>
+		<td style="width: 200px;height: 28px;margin: auto;text-align: center;">套餐</td>
+		<td style="width: 200px;height: 28px;margin: auto;text-align: center;">所属机构</td>
+		<td style="width: 200px;height: 28px;margin: auto;text-align: center;">目标机构</td>
+	</tr>
+	
+</table>

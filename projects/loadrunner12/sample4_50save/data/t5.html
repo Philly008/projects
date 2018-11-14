@@ -1,0 +1,583 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.css"/> 
+
+<script type="text/javascript" src="/NIP/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/NIP/scripts/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/NIP/scripts/common.js"></script>
+<script type="text/javascript" src="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/dhtmlx.js"></script>
+
+<style type="text/css">
+    html, body {
+        width: 100%;
+        height: 100%; 
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+    }
+	
+	a{ text-decoration:none; color:#333} 
+	a:hover{ text-decoration:underline;}
+</style>
+
+<script type="text/javascript">	
+	$(document).ready(function(){
+		parent.myTree = dhtmlXTreeFromHTML("treeboxbox_tree"); // for script conversion 
+		parent.myTree.setSkin('dhx_skyblue'); 
+		parent.myTree.attachEvent("onSelect", function(id){
+			var menuContent = parent.myTree.getSelectedItemText();
+			var href = $(menuContent).attr("href");
+			if(href){
+				href = href.substring(href.indexOf("(")+2,href.indexOf(")")-1);
+				//alert(href);
+				menuLink(href);
+			}
+		});
+		
+	});
+	
+	function menuLink(href)
+	{ 
+		/*
+        $.blockUI({ 
+            message: '', 
+            overlayCSS: {opacity:0},
+            timeout: 500 
+        }); 
+		parent.dhxLayout.cells("c").attachURL(href); 
+		*/
+		
+		$('#navigation > li > #left').stop().animate({'marginLeft':'-185px'},200);
+        $('#content').attr('src',href);
+	}
+
+</script> 
+</head>
+<body>
+	<div class="dhtmlxTree" id="treeboxbox_tree" setImagePath="/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/csh_bluebooks/" style="width:100%; height:100%; margin:0px; padding:0px; overflow:auto; background:#E0E9F5;" enableTreeImages="false">
+		<ul>
+			
+			<li>基本信息
+				<ul>
+					
+					<li>基础资料
+						<ul>
+							
+							<li><a href="javascript:menuLink('/NIP/ref/dictionaryMain.action');">系统字典库设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/distributeCentre.action');">调度中心维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/laboratory.action');">实验室维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/fieldLine.action');">外勤线路维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/logisticsArea.action');">物流区域维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/priceArea.action');">价格区域维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/role.action');">角色维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/organization.action');">组织机构维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/user.action');">用户信息</a></li>
+							
+							<!-- <li><a href="javascript:menuLink('/NIP/ref/initLocalSeting.action');">本地参数维护</a></li> -->
+							<!-- 上云之后，取消内部打印功能配置 -->
+							<!--<li><a href="javascript:menuLink('/NIP/rpt/printServer.action');">批次打印服务器配置</a></li>-->
+							<!--<li><a href="javascript:menuLink('/NIP/rpt/userPrintServer.action');">用户打印服务器配置</a></li>-->
+							<!-- <li><a href="javascript:menuLink('/NIP/rpt/localPrintServer.action');">本地批次打印服务器配置</a></li> -->	
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/notice.action');">公告信息</a></li>
+							
+						</ul>
+					</li>
+					
+					
+					
+					<li>医学检测
+						<ul>
+							
+							<li><a href="javascript:menuLink('/NIP/ref/testCenterItem.action');">中心检测项目设置</a></li> 
+							 
+							
+							<li><a href="javascript:menuLink('/NIP/ref/testItem.action');">检验项目设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/testItemGroup.action');">组合项目设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/testItemSet.action');">套餐项目设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/diagnosisTemplate.action');">项目诊断模板设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/ruleFormula.action');">规则计算公式设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/inputTemplate.action');">系统自定义模板设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/instrument.action');">仪器设备信息维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/antibioticGroup.action');">药敏分类维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/antibiotic.action');">抗生素字典维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/antibioticReference.action');">抗生素药敏标准维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/organismGroup.action');">细菌分类维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/organism.action');">细菌字典维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/drawerType.action');">验单柜维护</a></li>	
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/testItemBatch.action');">项目分组设置</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/initMedication.action');">项目用药字典</a></li>
+							
+						</ul>
+					</li>
+					
+					
+					
+					<li>渠道管理
+						<ul> 
+							
+							<li><a href="javascript:menuLink('/NIP/ref/customer.action');">渠道维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/customerUsbKey.action');">USB-KEY用户维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/customerAssist.action');">渠道辅助维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/customerFinancialAudit.action');">渠道财务审核维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/location.action');">开单科室维护</a></li>
+							
+							
+							<li><a href="javascript:menuLink('/NIP/ref/doctor.action');">开单医生维护</a></li>
+							
+								
+							<li><a href="javascript:menuLink('/NIP/ref/contract.action');">合同维护</a></li>
+										
+							<!--
+							<li><a href="javascript:menuLink('lab/customerAssist.html');">客户资料维护辅助</a></li>
+							<li><a href="javascript:menuLink('lab/customerDiscount.html');">客户折扣维护</a></li>
+							---->
+						</ul>
+					</li>
+					
+				</ul>
+			</li>
+			
+			
+			
+			<li>分包物流
+				<ul> 
+				<!-- 
+					
+					
+					
+				 -->	
+					
+					<li><a href="javascript:menuLink('/NIP/dis/specimenBatchImport.action');">批量导入</a></li>
+					
+					<!-- 
+					
+					<li>批量导入(新)
+						<ul>
+							
+							<li><a href="javascript:menuLink('/NIP/dis/conference.action');">会议录入</a></li>
+							
+					
+							
+							<li><a href="javascript:menuLink('/NIP/dis/specimenBatchImportNew.action');">批量导入</a></li>
+							
+								
+							
+							<li><a href="javascript:menuLink('/NIP/dis/batchImportException.action');">批量导入异常处理</a></li>
+							
+						</ul>
+					</li>
+					
+					 -->
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/auditing.action');">样本对接</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/kingMedInit.action');">金域对接</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/outOrganizationInit.action');">上海儿童医院对接</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/outsideHospitalInterfaceInit.action');">外送医院对接</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/kangHuaSpecimenInit.action?orgCode=KF-1001');">康华-公卫对接</a></li>
+					
+
+
+
+					
+					
+					<!-- <li><a href="javascript:menuLink('/NIP/dis/specimenInput.action');">样本录入</a></li> -->
+					<li><a href="javascript:menuLink('/NIP/dis/speInput.action');">样本录入</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyBarCodeInputInfo.action');">病理条码录入</a></li> 
+					
+					<!-- 
+					
+					<li><a href="javascript:menuLink('/NIP/dis/specimenInputImageInfo.action');">图像录入</a></li>
+					
+					 -->
+					
+					<li><a href="javascript:menuLink('/NIP/dis/speCheck.action');">样本核收</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/specimenSplit.action');">样本分瓶</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/specimenDispatch.action');">样本分发</a></li>
+					
+					
+					<!--
+					
+					<li><a href="javascript:menuLink('/NIP/dis/specimenBottle.action');">特殊分瓶</a></li>
+					
+					-->
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/samplePack.action');">样本打包</a></li>
+					
+					
+                    <li><a href="javascript:menuLink('/NIP/dis/pathologySpecimenSamplePackInfo.action');">病理打包</a></li>
+                    
+					<!-- 分子病理菜单start -->
+					
+					<li><a href="javascript:menuLink('/NIP/dis/fzPathologySpecimenInput.action');">分子病理标本录入</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/fzblSpecimenSplit.action');">分子病理分瓶</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/dis/fzPathologySpecimenDispatch.action');">分子病理分发</a></li>
+					
+					<!-- 分子病理菜单 end -->
+					
+				</ul>
+			</li>
+			
+			
+			<li><a href="javascript:menuLink('/NIP/lab/fzPathologySpecimenReceive.action');">分子病理实验室接收</a></li>
+			
+			
+            <li><a href="javascript:menuLink('/NIP/lab/pathologySpecimenReceive.action');">病理实验室接收</a></li>
+            
+			
+			<li><a href="javascript:menuLink('/NIP/lab/specimenReceiveNew.action');">实验室接收</a></li>
+			
+			
+			<li><a href="javascript:menuLink('/NIP/lab/specimenReceive.action');">实验室接收查询</a></li>
+			
+			<!-- 
+			
+				<li><a href="javascript:menuLink('/NIP/lab/molpathologyAuditInit.action');">分子病理审核</a></li>
+            
+             -->
+
+			
+			<li>样本检测
+				<ul> 
+					
+					<li><a href="javascript:menuLink('/NIP/lab/samplePrint.action');">打印标签</a></li> 
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/samplePrepare.action');">样本准备</a></li>
+					
+					 
+					 
+					
+					<li><a href="javascript:menuLink('/NIP/lab/specimenPhotograph.action');">样本拍图</a></li>
+					
+					
+					
+						<!-- <li><a href="javascript:menuLink('/NIP/lab/specimenResultMain.action');">结果录入</a></li> -->
+						<li><a href="javascript:menuLink('/NIP/lab/speResult.action');">结果录入</a></li>
+					
+					
+						<li><a href="javascript:menuLink('/NIP/lab/speTemResult.action');">临时结果查询</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/specimenAuditMain.action');">签字审核</a></li>
+					
+					
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/specialSurveyUploadPDF.action');">特检报告上传</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/specialSurveyProcess.action');">特检处理</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/specialistAuditMain.action');">专家审核</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/specimenExpertsApprovalMain.action');">专家审批</a></li>
+					
+				</ul>
+			</li>
+			
+			
+			
+			<li>病理管理
+				<ul> 
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologySeqInit.action');">核收生成病理号</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyPretreatment.action');">标本预处理</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyPicture.action');">病理图像录入</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyResult.action');">病理结果录入</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyApplyPhotograph.action');">病理申请单拍照</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/fzblResourcesPrintInit.action');">分子病理资源码打印</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/fzblResultInit.action');">分子病理结果录入</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/physicianReview.action');">医师复核</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/fzblPathologyTotalResult.action');">总检录入</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyQuery.action');">病理查询</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyTypeMaintain.action');">病理维护</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyBorrowApply.action');">病理档案借阅申请</a></li> 
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyBorrowAudit.action');">病理档案借阅审核</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologySlideaApply.action');">病理玻片申请单管理</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/pathologyRequestApplyList.action');">病理申请单管理</a></li>
+					
+				</ul>
+			</li>
+			
+			
+			
+			<li>样本管理
+				<ul>
+					
+				    <li><a href="javascript:menuLink('/NIP/spe/getCancelAuditPage.action');">申请取消样本审核</a></li>
+				    
+				    
+				    <li><a href="javascript:menuLink('/NIP/spe/getCancelAuditListPage.action');">取消审核列表</a></li>
+				    
+				    
+				    <li><a href="javascript:menuLink('/NIP/spe/specimenModifyInfoApply.action');">申请基本信息修改</a></li>
+				    
+				    
+				    <li><a href="javascript:menuLink('/NIP/spe/specimenModifyInfoAudit.action');">基本信息修改列表</a></li>
+				    
+				    
+				    <li><a href="javascript:menuLink('/NIP/spe/specimenIntegratedQuery.action');">样本综合查询</a></li>
+				    
+				    
+					
+					<li><a href="javascript:menuLink('/NIP/lab/specialSurveyQueryPDF.action');">特检报告查询</a></li>
+					
+				<!--  
+				    
+				-->
+				    
+				    <li><a href="javascript:menuLink('/NIP/spe/specimenReDistributeApply.action');">申请退回待分发</a></li>
+				    
+				    
+				    <li><a href="javascript:menuLink('/NIP/spe/specimenReDistributeAudit.action');">退回待分发审核</a></li>
+				    
+				    
+				    <li><a href="javascript:menuLink('/NIP/spe/specimenReview.action');">复查标本管理</a></li>
+				    
+				    
+					<li id="refund"><a href="javascript:menuLink('/NIP/spe/specimenRefund.action');">退单管理</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/spe/specimenDelay.action');">迟发管理</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/spe/requestInNew.action');">验单入库</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/spe/requestInCap.action');">验单入库(Cap)</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/spe/specimenIn.action');">标本入库</a></li>		
+					
+					<li><a href="javascript:menuLink('/NIP/spe/outsourceMain.action');">外包清单打印</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/customBarCodePrint.action');">自定义条码打印</a></li> 
+					
+					
+					<li><a href="javascript:menuLink('/NIP/lab/historySampleSelection.action');">同名历史标本查询</a></li>
+					
+				</ul>
+			</li>
+			
+			
+			
+			
+			<li>查询打印
+				<ul> 
+					
+					<li><a href="javascript:menuLink('/NIP/rpt/cusSpecSelectList.action');">样本查询</a></li>
+					 
+					
+					<li><a href="javascript:menuLink('/NIP/rpt/ctrPrint.action');">临检报告打印</a></li>
+					
+					
+					
+					<li><a href="javascript:menuLink('/NIP/rpt/fzblReportPrint.action');">分子病理报告打印</a></li>
+					
+					
+					
+					<!-- <li><a href="javascript:menuLink('/NIP/rpt/reportTemplate.action');">报表模板维护</a></li>-->
+				</ul>
+			</li>
+			
+			
+			
+			
+			
+			<li>财务管理
+				<ul> 
+				    <!--  
+					
+					<li><a href="javascript:menuLink('/NIP/fin/accountManagement.action');">出账管理</a></li> 
+					
+					-->
+					
+					<li><a href="javascript:menuLink('/NIP/fin/ex/accountManagement.action');">新出账管理</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/fin/batchBillGenerationInit.action');">批量出账</a></li>
+					
+					
+					<li><a href="javascript:menuLink('/NIP/fin/cashInput.action');">现金录入</a></li> 	
+					
+					
+					<li><a href="javascript:menuLink('/NIP/fin/cashReceive.action');">现金财务接收</a></li> 													
+					
+					
+					<li><a href="javascript:menuLink('/NIP/fin/ex/financialAuditManagement.action');">财务审核</a></li> 													
+					
+					<!--  <li><a href="javascript:menuLink('/NIP/qcm/qcLogin.action');">广州质控单点登录</a></li>-->
+				</ul>
+			</li>
+			
+			
+                  <li><a href="http://qct.daanhealth.com/QCT/login.action">质控单点登录</a></li>
+      
+			
+			 <li><a href="javascript:window.open('http://cx.daanhealth.com','').focus();
+      $('#content').attr('src','/NIP/pages/welcome.jsp');">统计查询登录</a></li>
+      		 
+     		 <li><a href="javascript:menuLink('/NIP/stat/businessReport.action');">业务报表</a></li>
+     		
+     		 
+      		<li>报表统计
+				<ul> 
+					
+						 <li><a href="javascript:menuLink('/NIP/stat/specimenTimeOut.action');">实验室标本超时统计</a></li>
+					
+				</ul>
+		  </li>
+		
+		</ul>
+	</div>
+</body>
+</html>

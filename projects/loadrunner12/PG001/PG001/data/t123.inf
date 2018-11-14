@@ -1,0 +1,11 @@
+[t123]
+FileName1=t123.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundDataLoad.action
+Total=1
+RequestHeaderFile=t123_RequestHeader.txt
+RequestBodyFile=t123_RequestBody.txt
+ResponseHeaderFile=t123_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_123.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

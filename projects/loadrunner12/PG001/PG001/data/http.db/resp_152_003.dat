@@ -1,0 +1,295 @@
+1ff8
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+
+
+<script src="/PG/scripts/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery.blockUI.js" type="text/javascript"></script>
+<script src="/PG/scripts/common.js" type="text/javascript"></script>
+<script src="/PG/scripts/input_common.js" type="text/javascript"></script>
+<script src="/PG/scripts/qcm_common.js" type="text/javascript"></script>
+<script src="/PG/scripts/jalert/jquery.alerts.js" type="text/javascript"></script>
+<script src="/PG/scripts/datepicker/WdatePicker.js" type="text/javascript"></script>
+<script src="/PG/scripts/aa.js" type="text/javascript"></script>
+<script src="/PG/scripts/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
+<link rel="stylesheet" href="/PG/css/master.css" type="text/css" />
+<link href="/PG/scripts/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+
+<link href="/PG/pages/test/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/text_style.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/text_grid.css" rel="stylesheet" type="text/css" />
+<link href="/PG/pages/test/css/newStyle.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/icon.css" />
+<style>
+	.operationLogShowDiv 
+</style>
+<script type="text/javascript">
+function errorHandle(XMLHttpRequest){
+	var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
+	if(sessionstatus == "timeout"){
+	   	   parent.location.href = ctx+"/login.action";
+	    }
+	var errirstatus = XMLHttpRequest.getResponseHeader("error");
+	if(errirstatus == "true"){
+		jAlert("系统错误,请联系管理员.","提示信息");
+	}
+}
+$.ajaxSetup({     
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",     
+    beforeSend: function(XMLHttpRequest){
+    	$.blockUI.defaults.title = null;
+    	blockUI();
+	},
+	error: function(xhr,status,error){
+	},
+    complete:function(XMLHttpRequest,textStatus){
+	    if($.blockUI.defaults.title == null){
+	    	$.unblockUI({ 
+		        onUnblock: function(){ 
+					errorHandle(XMLHttpRequest);
+		        } 
+			});
+	    }
+		
+    }
+});
+
+	//tableId：  table id
+	//     td: get td
+	// isNote: 0：非节点/1：节点
+	function operationNote(tableId,td,isNote,modleType){
+		var selectData = null;
+		if(isNote=="1"){//是节点就取id或者barcode查询
+			if(td=="id"){
+				selectData = $("#"+tableId+" tr[class='oddbg selectedbg'],#"+tableId+" tr[class='evenbg selectedbg']").attr("id");
+			}else{
+				selectData = $("#"+tableId+" tr[class='oddbg selectedbg'],#"+tableId+" tr[class='evenbg selectedbg']").children('td').eq(td).html();
+			}
+			
+			if(selectData==null || selectData==''){
+				showMsg("请先选中要查看日志的记录！");
+				return ;
+			}
+		}
+		$("#operationLogShowDiv").load("/PG/ref/pgOperationLog.action?time=" + new Date().getTime(), {id:selectData,isNote:isNote,modleType:modleType}, function(){
+			$("#operationLogShowDiv").show();
+			$('#operationLogShowDiv').dialog({
+			    title: '操作记录',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'关闭',
+					handler:function(){
+						$('#operationLogShowDiv').dialog( "close" );
+					}
+				}]
+			});
+		});
+	}
+	
+	//     td: get td
+	//     isNote: 0：非节点/1：节点
+	function operationNoteTwo(selectData,isNote,modleType){
+		if(isNote=="1"){
+			if(selectData==null || selectData==''){
+				showMsg("请先选中要查看日志的记录！");
+				return ;
+			}
+		}
+		$("#operationLogShowDiv").load("/PG/ref/pgOperationLog.action?time=" + new Date().getTime(), {id:selectData,isNote:isNote,modleType:modleType}, function(){
+			$("#operationLogShowDiv").show();
+			$('#operationLogShowDiv').dialog({
+			    title: '操作记录',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'关闭',
+					handler:function(){
+						$('#operationLogShowDiv').dialog( "close" );
+					}
+				}]
+			});
+		});
+	}
+
+	function pdfViewShow(printArgs){
+		
+		   $("#pdf_view_print").html('');
+			$("#pdfViewShowDiv").show();
+			$('#pdfViewShowDiv').dialog({
+			    title: '清单打印',
+			    left:230,
+			    top:10,
+			    width: 890,
+			    height: 515,
+			    closed: false,
+			    cache: false,
+			    modal: true
+			});
+			$("#pdfViewShowDiv").load("/PG/pdfViewShowDiv.action?time=" + new Date().getTime(), {}, function(){
+				embedPDF(printArgs,"pdf_view_print"); 
+			}); 
+			
+	}
+	function jingDongExcelShow(x,y,ids,cancelOrders,uploads){
+		var height=($(window).height()-y)/2;
+		var width=($(window).width()-x)/2;
+			$("#jingDongExcelDiv").load("/PG/spe/jingDongExcel.action?time=" + new Date().getTime(), 
+			{"ids":ids,"cancelOrders":cancelOrders,"uploads":uploads}, 
+			function(){
+				$("#jingDongExcelDiv").show();
+				$('#jingDongExcelDiv').dialog({
+				    title: '导出',
+				    left: width,
+				    top:height,
+				    width: x,
+				    height: y,
+				    closed: false,
+				    cache: false,
+				    modal: true
+				   /*  buttons:[{
+						text:'关闭',
+						handler:function(){
+							$('#jingDongExcelDiv').dialog( "close" );
+						}
+					}] */
+				});
+			});
+	}
+	
+	
+	function jingSupplyproductionorderShow(x,y,ids,cancelOrders){
+		var height=($(window).height()-y)/2;
+		var width=($(window).width()-x)/2;
+			$("#Supplyproductionorder").load("/PG/spe/jingDongSupplyproductionorder.action?time=" + new Date().getTime(), 
+			{"ids":ids}, 
+			function(){
+				$("#Supplyproductionorder").show();
+				$('#Supplyproductionorder').dialog({
+				    title: '生成领料单',
+				    left: width,
+				    top:height,
+				    width: x,
+				    height: y,
+				    closed: false,
+				    cache: false,
+				    modal: true
+				  
+				});
+			});
+	}
+	
+</script>
+<div id="operationLogShowDiv" title="操作记录" style="display: none;"></div>
+<div id="pdfViewShowDiv" title="清单打印 " style="display: none;"></div>
+<div id="jingDongExcelDiv" title="excel导出" style="display: none;"></div>
+<div id="Supplyproductionorder" title="生成领料单" style="display: none;"></div>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/PG/scripts/jquery-easyui-1.3.6/themes/icon.css" />
+<script src="/PG/scripts/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
+
+
+<script type="text/javascript" src="/PG/pages/spe/purchaseOrder/scripts/purchaseOrder.js?version=1.13" type="text/javascript"></script>
+<title>采购订单维护</title>
+<style>
+html { overflow-x: hidden; overflow-y: auto; }
+</style>
+</head>
+<body>
+<form action="/PG/spe/purchaseOrderExportExcel.action" id="excelForm">
+	<input type="hidden" id="ids" name="ids" /><!-- 导出数据用 -->
+	<input type="hidden" id="starttime" name="starttime"/>
+	<input type="hidden" id="endtime" name="endtime"/>
+	<input type="hidden" id="applyperson" name="applyperson"/>
+	<input type="hidden" id="ordername" name="ordername"/>
+	<input type="hidden" id="saleordername" name=
+395
+"saleordername"/>
+	<input type="hidden" id="orderstatus" name="orderstatus"/>
+	<input type="hidden" id="seriesname" name="seriesname"/>
+</form>
+	<!--outArea开始-->
+	<div class="outArea">
+		<!--预留开始-->
+		<div class="public">
+			<!--主区域开始-->
+			<div class="box_main">
+
+				<!--工作区域开始-->
+				<div class="box_main_main">
+
+					<!--主区域Left开始-->
+					<div id="leftPageDiv" class="left_one"></div>
+					<!--主区域Left结束-->
+					
+					<!--主区域content开始-->
+					<div id="infoPageDiv" class="content_oneLeft"></div>
+					<!--主区域content结束-->
+
+					<div class="midBlock"></div>
+					<!--区域打底控制-->
+
+				</div>
+				<!--工作区域结束-->
+
+			</div>
+			<!--主区域结束-->
+		</div>
+		<!--预留结束-->
+
+	</div>
+	<!--outArea结束-->
+
+	<!--底部信息开始-->
+	<!--底部信息结束-->
+</body>
+</html>
+
+0
+

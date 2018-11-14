@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/NIP/scripts/pdfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var ctx = "/NIP";
+	var basePath = "http"+"://"+"202.116.104.161"+":"+"80"; 
+	var printType = "2"; //2:new print_barcode
+</script>
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title></title>
+
+<script type="text/javascript">
+     var tree,level;	
+	$(document).ready(function () {
+		window.dhx_globalImgPath = "/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/"; 
+	  	 //create Tree
+		  tree = new dhtmlXTreeObject("treeboxbox_tree", "100%", "100%", 0);
+          tree.setSkin('dhx_skyblue');
+          tree.setImagePath("/NIP/scripts/dhtmlxSuite/dhtmlx_std_full/imgs/");
+          tree.enableDragAndDrop(false);
+          tree.enableTreeImages(0);
+          tree.loadXML("/NIP/ref/distributeCentreList.action");
+          tree.attachEvent("onSelect", function(rowId,cellIndex){
+        	   userGrid.getGridObject().clearAll();
+        	   mediDeptGrid.clear();
+        	   $("#userName").val("");
+       		   $("#name").val("");
+       		   $("#userEmail").val("");
+       		   $("#userPhone").val("");     		   
+       		   $("#sales").prop("checked", false);
+       		   $("#active").prop("checked", false);
+    		   $("#lockFlag").prop("checked", false);
+    		   $("#fakeUser").prop("checked", false);
+    		   $("#isSupperDoctor").prop("checked", false);
+//        		   hiddenDiv.style.display = "none";
+       		   level=tree.getLevel(rowId);
+       		
+			if(level==3|level=="3"){				
+				userGrid.getGridObject().setColWidth(4, 0);
+				userGrid.getGridObject().setColWidth(5, 16);
+				/* document.getElementById("sale1").style.display="none";
+				document.getElementById("sales").style.display="none";
+				document.getElementById("isSupperDoctor1").style.display="block";
+				document.getElementById("isSupperDoctor").style.display="block"; */
+// 				hiddenDiv.style.display = "none";
+			}else{
+				userGrid.getGridObject().setColWidth(4, 8);
+				userGrid.getGridObject().setColWidth(5, 8);
+				/* document.getElementById("sale1").style.display="block";
+				document.getElementById("sales").style.display="block";
+				document.getElementById("isSupperDoctor1").style.display="none";
+				document.getElementById("isSupperDoctor").style.display="none"; */
+// 				hiddenDiv.style.display = "inline";
+			}
+			currentRowId=rowId;
+			userGrid.loadByJson(function(){
+				userGrid.getGridObject().selectRow(0,true,true,true);
+			});
+			
+       		//userGrid.loadXML("/NIP/ref/userDetailList.action?Id="+rowId+"&level="+level) ;
+          });
+      
+	});
+
+</script>
+</head>
+<body>
+
+<div style="width:100%;height:100%;float:left;">
+	<div id="treeboxbox_tree" style="width:100%; height:100%;"></div>
+</div>
+</body>
+</html>

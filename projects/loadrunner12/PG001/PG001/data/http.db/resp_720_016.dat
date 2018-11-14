@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var ctx = "/PG";
+	var basePath = "http"+"://"+"192.168.14.35"+":"+"80";
+	var pageHeigh = 29;
+	var queryTitle = 30;
+	var tableTitle = 25;
+	var buttonHeight = 28;
+	function getRow(otherHeight){
+		var frameHeight = $(window).height();
+		return Math.floor((frameHeight - otherHeight)/25);
+	}
+</script>
+
+<script type="text/javascript">
+var orderdetail = [];
+var count = 0;
+
+$(document).ready(function(){
+	$("#ptoductsTable tr[class!='trTitle']").click(GetSelectedId);
+	
+	$('#area_comm_id').height($('.group_right_two_oneLeft').height()-tableTitle-7);
+	$('#div_plans').height($('.group_right_two_oneLeft').height()-tableTitle-15);
+	
+	refreshProductNum();
+});
+
+/* function refreshProductNum(){
+	var table = document.getElementById("ptoductsTable");
+	$("#productsNum").html("领料产品(总数 " + table.rows.length-1 + ")" );
+} */
+
+</script>
+<!--组开始-->
+<form id="infoForm" >
+<input type="hidden" name="dto.productId" id="setmealsList">
+<input type="hidden" name="dto.customersOrderid" id="customersorderList">
+<input type="hidden" name="dto.areaid" id="applyareaList">
+<input type="hidden" name="dto.applyUserid" id="applynameList">
+<!--组开始-->
+
+	<!--组开始-->
+  <div class="tab_bg_5" style="width:auto">
+	<span id="productsNum">领料产品</span>
+  </div>
+  <div class="area_comm">
+	<div class="area_comm" style="width:750px;position:relative;" id="area_comm_id">
+		<div style="width:740px;overflow:scroll;" id="div_plans">
+				<table id="ptoductsTable" class="dataTable" style="width:710px;top:0; left:0;">
+					<tr class="trTitle">
+						<td style="width:30px;"></td>
+						<td style="width:180px;">物料编码</td>
+						<td style="width:300px;">产品名称</td>
+						<td style="width:200px;">所属系列</td>
+						<td style="width:180px;">产品数量</td>
+					</tr>
+					  	
+						  	
+						  		<tr id="ff80808166ce6340016707518fa80373" class="oddbg">
+						  	
+						  	
+						  		<td style="width:5px;"><input type="hidden" value="ff8080815d7e6a77015da74e239e0059"><div align="center"><img src="../images/dd.jpg" width="10" height="10"/></div></td>
+						  		<td style="width:100px;"></td>
+								<td style="width:100px;">PZ</td>
+								<td style="width:100px;">PAC系列</td>
+								<td style="width:100px;"><input id="plansNumbers" type="text" name="highLimit" value="2" style="width: 85px; display: inline-block;" onchange="textChange()"></td>
+					       	</tr>
+				       	
+					</table>
+			</div>
+		</div>	
+	</div> 	
+<!--组结束-->
+
+
+<!--组结束-->				
+			
+</form>

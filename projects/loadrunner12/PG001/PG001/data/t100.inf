@@ -1,0 +1,11 @@
+[t100]
+FileName1=t100.html
+URL1=http://192.168.14.35/PG/spe/findSetmealDetailbyId.action
+Total=1
+RequestHeaderFile=t100_RequestHeader.txt
+RequestBodyFile=t100_RequestBody.txt
+ResponseHeaderFile=t100_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_100.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

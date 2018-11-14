@@ -1,0 +1,15 @@
+[t14]
+FileName1=t14.html
+URL1=http://202.116.104.161/NIP/dis/${ctx}/dis/speInputLoadDetailByBarCode.action
+Total=3
+RequestHeaderFile=t14_RequestHeader.txt
+RequestBodyFile=t14_RequestBody.txt
+ResponseHeaderFile=t14_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_14.xml
+FileName2=t14_select-hover.jpg
+URL2=http://202.116.104.161/NIP/pages/test/images/select-hover.jpg
+FileName3=t14_select-click.jpg
+URL3=http://202.116.104.161/NIP/pages/test/images/select-click.jpg
+[ProtocolInfo]
+ProtocolId=QTWeb

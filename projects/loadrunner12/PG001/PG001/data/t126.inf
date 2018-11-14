@@ -1,0 +1,11 @@
+[t126]
+FileName1=t126.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundSalesOrderChange.action?time=1542010557536
+Total=1
+RequestHeaderFile=t126_RequestHeader.txt
+RequestBodyFile=t126_RequestBody.txt
+ResponseHeaderFile=t126_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_126.xml
+[ProtocolInfo]
+ProtocolId=QTWeb

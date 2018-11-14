@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VugenScriptMetadata>
+  <ScriptName>sample3</ScriptName>
+  <Protocol>Web - HTTP/HTML</Protocol>
+  <ActionFiles>
+    <FileEntry Name="vuser_init.c" Filter="2" />
+    <FileEntry Name="sample_add.c" Filter="2" />
+    <FileEntry Name="sample_receive.c" Filter="2" />
+    <FileEntry Name="sample_distribute.c" Filter="2" />
+    <FileEntry Name="sample_prepare.c" Filter="2" />
+    <FileEntry Name="sample_result.c" Filter="2" />
+    <FileEntry Name="relogin.c" Filter="2" />
+    <FileEntry Name="sample_confirm.c" Filter="2" />
+    <FileEntry Name="vuser_end.c" Filter="2" />
+  </ActionFiles>
+  <GeneralFiles>
+    <FileEntry Name="sample3.usr" Filter="4" />
+    <FileEntry Name="default.cfg" Filter="4" />
+    <FileEntry Name="default.usp" Filter="4" />
+    <FileEntry Name="sample2.prm" Filter="2" />
+    <FileEntry Name="globals.h" Filter="2" />
+    <FileEntry Name="barCode_add(1).dat" Filter="2" />
+    <FileEntry Name="password.dat" Filter="2" />
+    <FileEntry Name="barcode.dat" Filter="2" />
+    <FileEntry Name="ScriptUploadMetadata.xml" Filter="2" />
+    <FileEntry Name="Bookmarks.xml" Filter="2" />
+    <FileEntry Name="Breakpoints.xml" Filter="2" />
+    <FileEntry Name="CompilerLogMetadata.xml" Filter="2" />
+    <FileEntry Name="ReplaySummaryReport.xml" Filter="2" />
+    <FileEntry Name="UserTasks.xml" Filter="2" />
+    <FileEntry Name="userName.dat" Filter="2" />
+    <FileEntry Name="combined_sample2.c" Filter="2" />
+    <FileEntry Name="combined_sample3.c" Filter="2" />
+    <FileEntry Name="pre_cci.c" Filter="2" />
+    <FileEntry Name="11143619644.idx" Filter="1" />
+    <FileEntry Name="15704007844.idx" Filter="1" />
+    <FileEntry Name="15948478844.idx" Filter="1" />
+    <FileEntry Name="20815007344.idx" Filter="1" />
+    <FileEntry Name="20815007344_6bF.661.idx" Filter="1" />
+    <FileEntry Name="20815007344_6Jr.41.idx" Filter="1" />
+    <FileEntry Name="20815007344_b9y.85.idx" Filter="1" />
+    <FileEntry Name="20815007344_bfR.155.idx" Filter="1" />
+    <FileEntry Name="20815007344_EDn.501.idx" Filter="1" />
+    <FileEntry Name="20815007344_fXL.7.idx" Filter="1" />
+    <FileEntry Name="20815007344_h4V.65.idx" Filter="1" />
+    <FileEntry Name="20815007344_HIj.751.idx" Filter="1" />
+    <FileEntry Name="20815007344_IQU.475.idx" Filter="1" />
+    <FileEntry Name="20815007344_JhP.127.idx" Filter="1" />
+    <FileEntry Name="20815007344_mp5.981.idx" Filter="1" />
+    <FileEntry Name="20815007344_nRR.641.idx" Filter="1" />
+    <FileEntry Name="20815007344_nxq.747.idx" Filter="1" />
+    <FileEntry Name="20815007344_Ov9.287.idx" Filter="1" />
+    <FileEntry Name="20815007344_pXV.627.idx" Filter="1" />
+    <FileEntry Name="20815007344_qRV.619.idx" Filter="1" />
+    <FileEntry Name="20815007344_QUc.411.idx" Filter="1" />
+    <FileEntry Name="20815007344_sm1.511.idx" Filter="1" />
+    <FileEntry Name="20815007344_UDu.385.idx" Filter="1" />
+    <FileEntry Name="20815007344_Z8T.827.idx" Filter="1" />
+    <FileEntry Name="22352155544.idx" Filter="1" />
+    <FileEntry Name="22749007444.idx" Filter="1" />
+    <FileEntry Name="23351586744.idx" Filter="1" />
+    <FileEntry Name="25040613244.idx" Filter="1" />
+    <FileEntry Name="7669629244.idx" Filter="1" />
+    <FileEntry Name="barCode_add.dat" Filter="1" />
+    <FileEntry Name="custom_body_variables.txt" Filter="1" />
+    <FileEntry Name="logfile.log" Filter="1" />
+    <FileEntry Name="lrw_custom_body.h" Filter="1" />
+    <FileEntry Name="mdrv.log" Filter="1" />
+    <FileEntry Name="mdrv_cmd.txt" Filter="1" />
+    <FileEntry Name="options.txt" Filter="1" />
+    <FileEntry Name="output.bak" Filter="1" />
+    <FileEntry Name="output.txt" Filter="1" />
+    <FileEntry Name="sample2.c.pickle" Filter="1" />
+    <FileEntry Name="sample2.ci" Filter="1" />
+    <FileEntry Name="sample2.prm.bak" Filter="1" />
+    <FileEntry Name="sample2.sdf" Filter="1" />
+    <FileEntry Name="sample3.c.pickle" Filter="1" />
+    <FileEntry Name="sample3.ci" Filter="1" />
+    <FileEntry Name="sample3.sdf" Filter="1" />
+    <FileEntry Name="sample_add_receive_barcode.dat" Filter="1" />
+    <FileEntry Name="sample_add_receive_barcode_1.dat" Filter="1" />
+    <FileEntry Name="sample_add_receive_password.dat" Filter="1" />
+    <FileEntry Name="sample_add_receive_password_1.dat" Filter="1" />
+    <FileEntry Name="sample_add_receive_userName.dat" Filter="1" />
+    <FileEntry Name="sample_add_receive_userName_1.dat" Filter="1" />
+    <FileEntry Name="ThumbnailsCache.tmp" Filter="1" />
+    <FileEntry Name="data\" Filter="1" />
+    <FileEntry Name="result1\" Filter="1" />
+  </GeneralFiles>
+</VugenScriptMetadata>

@@ -1,0 +1,14 @@
+POST http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/productsOutboundPlansCombo.action HTTP/1.1
+Host: 192.168.14.35
+Proxy-Connection: keep-alive
+Content-Length: 13
+Accept: text/html, */*; q=0.01
+Origin: http://192.168.14.35
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36
+Content-Type: application/x-www-form-urlencoded;charset=UTF-8
+Referer: http://192.168.14.35/PG/spe/productsOutbound.action
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: JSESSIONID=C82A4F4C22202E4E82F216B1887F4BEB.tomcat1
+

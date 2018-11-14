@@ -1,0 +1,15 @@
+[t130]
+FileName1=t130.html
+URL1=http://192.168.14.35/PG/spe/$%7Bctx%7D/spe/speInputInfo.action
+Total=3
+RequestHeaderFile=t130_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t130_ResponseHeader.txt
+ContentType=text/html
+SnapshotXmlFile=snapshot_130.xml
+FileName2=t130_jquery.ztree.core-3.5.html
+URL2=http://192.168.14.35/PG/scripts/tree/jquery.ztree.core-3.5.js?_=1542010590915
+FileName3=t130_jquery.ztree.excheck-3.5.html
+URL3=http://192.168.14.35/PG/scripts/tree/jquery.ztree.excheck-3.5.js?_=1542010590916
+[ProtocolInfo]
+ProtocolId=QTWeb
