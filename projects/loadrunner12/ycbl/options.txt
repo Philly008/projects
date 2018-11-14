@@ -1,0 +1,9 @@
+-+
+-DCCI
+-D_IDA_XL
+-DWINNT
+-ID:\HP\exercises\ycbl
+-ID:\HP\LR12\include
+-ed:\hp\exercises\ycbl\\logfile.log
+d:\hp\exercises\ycbl\\combined_ycbl.c
+d:\hp\exercises\ycbl\\pre_cci.c

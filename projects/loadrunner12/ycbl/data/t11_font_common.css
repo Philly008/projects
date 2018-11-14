@@ -1,0 +1,32 @@
+﻿        #tabsBar .tabs-title{
+            font-size:14px;
+            letter-spacing:1px;
+        }
+        .datagrid-header .datagrid-cell span {
+            font-size:14px;
+        }
+        .l-btn-text {
+            font-size:14px;
+        }
+        .datagrid-cell, .datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber {
+            font-size:14px;
+        }
+        .pagination span {
+             font-size:14px;
+        }
+        .pagination-info {
+            font-size:14px;
+        }
+        .panel-title {
+            font-size:14px;
+            letter-spacing:1px;
+        }
+        .panel-body {
+            font-size:14px;
+        }
+        .m_content {
+            font-size: 14px;
+        }
+        .m_content select{
+            font-size: 14px;
+        }

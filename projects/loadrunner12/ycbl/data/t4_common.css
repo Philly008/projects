@@ -1,0 +1,137 @@
+body
+{   margin:0;
+    padding:0;
+    font-size: .85em;
+    /*原本的字体*/
+    /*font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;*/
+    font-family: "Microsoft YaHei", PMingLiU, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #232323;
+}
+
+header,
+footer,
+nav,
+section {
+    display: block;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset 
+{
+    border:1px solid #ddd;
+    padding:0 1.4em 1.4em 1.4em;
+    margin:0 0 1.5em 0;
+}
+
+legend 
+{
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+textarea 
+{
+    min-height: 75px;
+    font-size:14px;
+}
+
+.editor-label 
+{
+    margin: 1em 0 0 0;
+}
+
+.editor-field 
+{
+    margin:0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+
+input {
+    border: 1px solid #95B8E7;
+    margin: 0;
+    padding: 0 2px;
+    font-size:14px;
+    vertical-align: middle;
+    height:20px;
+    width:150px;
+    font-family: "Microsoft YaHei", PMingLiU, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /*color:#333;*/
+}
+
+.m_content
+{
+    font-size:14px;
+    }
+    
+    .ftitle
+{
+    font-size:14px;
+	font-weight:bold;
+	color:#666;
+	padding:5px 0;
+	margin-bottom:20px;
+	border-bottom:1px solid #ccc;
+    }
+
+.fitem
+{
+    margin-bottom:15px;
+    }
+
+.fitem label
+{
+    display:inline-block;
+	min-width:6px;
+	text-align:right;
+	vertical-align:top;
+	margin-top:2px;
+    }
+.fitem input
+{
+    width:150px;
+    height:auto;
+    }
+ .fitem select
+ {
+     width:150px;
+     height:auto;
+     }
+ .fitem  textarea
+ {
+     width:300px;
+     height:200px;
+     }
+
+

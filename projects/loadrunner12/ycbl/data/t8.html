@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="病理" />
+    <meta name="description" content="远程病理" />
+    <title>登录</title>
+
+    <meta http-equiv="X-UA-Compatible" content="edge" />
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="/Scripts/common/EasyUI/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../Content/login/css/css.css" />
+  <style type="text/css">
+        .validation-summary-errors, .field-validation-error
+        {
+            font-size: 8pt;
+            
+            color: Red;
+            padding: 1px 1px;
+        }
+    </style>
+    <script type="text/javascript">
+        function isLoadPlug_in() {
+                var oJson = { "function": "" };
+                var sJson = JSON.stringify(oJson);
+
+                $.ajax(
+                {
+                    url: 'http://127.0.0.1:17681',
+                    data: 'json=' + sJson,
+                    dataType: "jsonp",
+                    jsonp: "callback",
+                    jsonpCallback: "jsonpcallback",
+                    cache: false,
+                    timeout: 1000,
+                    error: function () {
+                        $("#btnLogin").css("background-color", "gray")
+                        $("#btnLogin").css("border", "1px solid gray")
+                        $("#btnLogin").css("disabled","true")
+                        alert("请按提示下载浏览器组件并手动安装！然后刷新页面登录");
+                        window.location.href = "../LockFile/cdll8x.exe";//下载控件            
+                    },
+                    success: function (msg) {
+                        //alert('控件加载成功');
+                    }
+                });
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        var checkSystem = 0;
+
+        function detectOS() {
+            var sUserAgent = navigator.userAgent;
+            var isWin = (navigator.platform == "Win32") || (navigator.platform == "Windows");
+            if (isWin) {
+                checkSystem = 1;
+                document.getElementById("randlock32").value = checkSystem;
+            }
+        }
+
+        if (self.location != top.location) {
+            top.location.href = "/user/login";
+        }
+
+        $(function () {
+            detectOS();
+            getRand();
+            if (checkSystem == 1)
+            {
+                isLoadPlug_in();
+            }
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            //alert(userAgent);
+            if (userAgent.indexOf("Chrome") > -1) {
+                //alert("it is Chrome");
+                $('#IEWarring').css("display","none");
+            }
+            else {
+                //alert("it is not Chrome!");
+                $('#IEWarring').css("display", "block");
+            }
+
+            $("#valiCode").bind("click", function () {
+                this.src = "/User/GetValidateCode?time=" + (new Date()).getTime();
+            });
+        });
+
+
+        function getRand() {
+            $.ajax({
+                url: '/User/getRandom',
+                type: "post",
+                dataType: "JSON",
+                async: true,
+                data: {},
+                success: function (result) {
+                    $("#rand").val(result.rand);
+                }
+            });
+        }
+      
+        var checkId = 0;
+        var validate = false;   //是否已经得到加密锁返回值，启动页面时，默认为false;
+
+        function Lock32_Function(rand, sn) {
+            var sn = 0; //默认第一把锁
+            var oJson = { "function": "InitiateLock", "sn": sn };
+            var sJson = JSON.stringify(oJson);
+
+            var sStatus;
+            $.ajax(
+            {
+                url: 'http://127.0.0.1:17681',
+                data: 'json=' + sJson,
+                dataType: "jsonp",
+                jsonp: "callback",
+                jsonpCallback: "jsonpcallback",
+            }).
+            done(function (ojson) {
+                if (ojson[0].ret == true) {
+                    var oJsonLock = { "function": "Lock32_Function", "sn": sn, "rand": rand };
+                    var sJsonLock = JSON.stringify(oJsonLock);
+                    $.ajax(
+                    {
+                        url: 'http://127.0.0.1:17681',
+                        data: 'json=' + sJsonLock,
+                        dataType: "jsonp",
+                        jsonp: "callback",
+                        jsonpCallback: "jsonpcallback",
+                    }).
+                    done(function (ojson) {
+                        var sjson = JSON.stringify(ojson[0]);
+                        sStatus += sjson;
+                        socket_suciz_lock32 = ojson[0].lock;
+
+                        ////ajax得到加密锁返回值后，设置validate,并模拟一次点击
+                        //当再次进入sub()时，由validate已被设置，会把表单提交到服务器
+                        validate = true;
+                        document.getElementById("randlock32").value = socket_suciz_lock32;
+                        document.getElementById("btnLogin").click();
+                    }).error(function (err) {
+                        alert(err.data);
+                    });
+                }
+            }).error(function (err) {
+                alert(err.data);
+            });
+        }
+
+        var username;
+        var password;
+        function sub() {
+            if (checkSystem == 1) {
+                if (validate) {
+                    //如果validate为真，表示已经获取加密锁信息，可以提交到服务器；
+                    return true;
+                } else {
+                    //点击登录时，如果validate为false,表示需要获取加密锁信息
+                    Lock32_Function(document.getElementById("rand").value, 0);
+                    return false;
+                }
+            }
+            else {
+                return true;
+            }
+
+        }
+
+    </script>
+</head>
+
+<body style="background-color: White;">
+<header class="site-header" style="border:none;padding:0;">
+    <div id = "IEWarring" class="site-top" style="border:none;display:none;padding:0 1px;">
+        <div class="container clearfix" style="width:100%">
+            <p style="padding-left:37px;margin:0 auto;text-align:center;border:1px solid red;line-height:60px;font-size:24px;color:#3366ff;background:url('../../Content/login/img/warning.png') no-repeat top left;">亲爱的用户,为了最佳的体验效果,请使用chrome（谷歌）浏览器!</p>
+        </div>
+    </div>
+</header>
+
+<header class="site-header" style="border:none;padding:0;">
+    <div class="site-top" style="border:none;padding:0;">
+        <div class="container clearfix">
+           <a href="/YKPathology/Index" alt="" style="display:inline-block;width:300px;"><div class="logo" style="height:50px;padding:25px 0 25px 0;background:url('../../Content/login/img/logo.png') no-repeat center left;"></div></a><a style="margin-top:50px;float:right;text-decoration:none;color:#000;font-size:14px;" href="/YKPathology/Index" alt="">返回首页</a>
+
+        </div>
+    </div>
+</header>
+
+<section class="login_banner">
+    <div class="container rel" style="width:900px;padding-top:15px;overflow:hidden;zoom:1;">
+        <div style="width:52%;height:370px;float:left;">
+            <h3 style="font-size:34px;color:#0b9c9e;line-height:30px;margin:30px 0;">远程病理会诊平台</h3>
+            <p style="font-size:14px;color:#888888;line-height:24px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作为中山大学医学科技服务体系的核心成员及主要执行单位，达安健康秉承高端科技服务地方民生健康的理念，依托国际国内顶级病理专家资源与丰富的第三方独立实验室运营服务经验，为解决各区域病理医疗资源分布不均，实现优质医疗资源的基层可及，构建了云康远程病理会诊平台。</p>
+            <p style="color:blue;margin-top:165px;font-size:18px;">客服电话：400-830-3621</p>
+        </div>
+        <div class="login_box" style="width:282px;height:355px;float:right; position:relative;">
+            <div style="width:100%;height:100%; background: #fff;filter:Alpha(opacity=80);-moz-opacity: 0.8; opacity: 0.8;position:absolute;top:0;left:0;z-index:-10;"></div>
+            <form id="loginForm" method="post" >
+                <input id="rand" name="rand" type="hidden"/>
+                <!-- 保存$.get获得的随机数这里使用css来模拟隐藏的表单域 -->
+                
+                <input id="randlock32" name="randlock32" type="hidden" value="" />
+                <!-- 保存lock32function的结果 -->
+                <h1 style="text-align:center;">用户登录</h1>
+                <div style="border:1px solid #ccc;border-radius:4px;margin-bottom:18px;overflow:hidden;">
+                <label style="display:inline-block;width:27px;height:39px;vertical-align:top;background:url('../../Content/login/img/user.png') 5px center no-repeat;"></label><input class="user" id="LoginAccount" name="LoginAccount" placeholder="用户名" type="text" value="" />
+                </div>
+                <div style="border:1px solid #ccc;border-radius:4px;margin-bottom:18px;overflow:hidden;">
+                <label style="display:inline-block;width:27px;height:39px;vertical-align:top;background:url('../../Content/login/img/pass.png') 5px center no-repeat;"></label><input class="pass" id="Password" name="Password" placeholder="密码" type="password" />
+                </div>
+                <div style="margin-bottom:18px">
+                    <input name="verifyCode" style="background-color: transparent;width:85px;padding-left:5px;height:35px" id="verifyCode" type="text" placeholder="验证码">
+                    <img id="valiCode" style="cursor: pointer;position:absolute;margin-left:15px;margin-top:5px;" src="/User/GetValidateCode" alt="验证码" />
+                </div>
+                <div><input id="ckbRemeber" type="checkbox">记住账号</div>
+                <div><input type="submit" id="btnLogin" value="登录" onclick="return sub();" /></div>
+             
+            </form>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div></div>
+        </div>
+
+
+    </div>
+</section>
+
+<script src="../../Content/login/js/footermenu.js"></script>
+
+</body>
+
+
+
+</html>

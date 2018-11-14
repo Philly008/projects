@@ -1,0 +1,200 @@
+
+/*首页页头样式*/
+.topHeader 
+{
+    height: 60px;
+    background-color: #38bc8c;
+    /*overflow: hidden;*/
+ }
+ 
+ 
+ #logobox {
+    float:left;
+    width: 250px;
+    height: 30px;
+    line-height:30px;
+    margin-top: 13px;
+    margin-left:10px;
+    padding-left:10px;
+    border-left:1px solid #fff;
+}
+
+#logobox a
+{
+    text-decoration:none;
+    }
+
+#logobox a strong span {
+    font-size: 18px;
+    color: #ffffff;
+    font-family: 宋体;
+    font-weight:500;
+}
+
+
+#admininfo 
+{
+    float:right;
+    margin-top: 14px;
+    padding-right: 15px;
+    font-size:12px;
+}
+
+#topright {
+    float: right;
+    height: 100%;
+    color: #fff;
+    text-align: right;
+}
+
+#topright div {
+    font-size:14px;
+    line-height:38px;
+    /*font-family: 隶书;*/
+}
+
+#toprightbar {
+    margin-top: 4px;
+    float: right;
+    text-align: right;
+    padding-right: 30px;
+}
+#toprightbar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.toprightButton
+{
+    float:right;
+    margin-top:9px;
+    width:60px;
+    height:20px;
+    text-align:center;
+    cursor:pointer;
+    padding-bottom:20px;
+    }
+  .toprightButton:hover
+  {
+      cursor:pointer;
+  }
+  .toprightButton div img
+  {
+   width:15px;
+   height:15px;
+  }  
+.toprightButton  .buttonname
+{
+margin-top:-10px;
+    }
+    
+
+
+/*首页左侧目录树样式*/
+.leftTreeBox {
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.leftTreeBox ul
+{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    background-color: #ececec;
+}
+
+.leftTreeBox a
+{
+    
+    cursor: pointer;
+    text-decoration: none;
+    height:30px;
+    line-height: 30px;
+    color:#2b7dbc;
+    font-size: 17px;
+    display: block;
+    padding-left: 50px;
+}
+
+.leftTreeBox>ul>li>a:hover
+{
+    color: #2b7dbc;
+}
+
+.leftTreeBox a.sqfloor1{background:url(/Content/themes/default/home/img/sqfloor1.png) 25px 7px no-repeat;font-weight:bold;}
+.leftTreeBox a.sqfloor2{background:url(/Content/themes/default/home/img/sqfloor2.png) 25px 7px no-repeat;font-weight:bold;}
+.leftTreeBox a.sqfloor3{background:url(/Content/themes/default/home/img/sqfloor3.png) 25px 7px no-repeat;font-weight:bold;}
+.leftTreeBox a.sqfloor4{background:url(/Content/themes/default/home/img/sqfloor4.png) 25px 7px no-repeat;font-weight:bold;}
+.leftTreeBox a.sqfloor5{background:url(/Content/themes/default/home/img/sqfloor5.png) 25px 7px no-repeat;font-weight:bold;}
+
+.leftTreeBox a img {
+    vertical-align: text-bottom;
+    margin: 0px 10px;
+}
+
+.leftTreeBox ul ul
+{
+    background-color:#f5f5f5;
+}
+
+.leftTreeBox ul ul a
+{
+    padding-left: 60px;
+    background:url(/Content/themes/default/home/img/grayPoint.png) 50px 10px no-repeat;
+    color: #333;
+    line-height: 26px;
+    height: 26px;
+    font-size: 15px;
+    text-decoration:none;
+}
+
+.leftTreeBox ul ul a.cur
+{
+    background:url(/Content/themes/default/home/img/greenPoint.png) 50px 10px no-repeat;
+    /*color:#38bc8b;*/
+    color:#2b7dbc;
+    font-size:15px;
+    font-weight:100;
+    padding-left:65px;
+}
+.leftTreeBox ul ul a:hover{
+    font-size: 15px;
+    color:#2b7dbc;padding-left:65px;
+}
+
+.leftTreeBox ul ul ul a {
+    padding-left: 45px;
+    line-height: 24px;
+    font-size: 14px;
+}
+
+
+/*动态生成的按钮列样式*/
+.btnDiv
+{
+    margin:10px 0;
+}
+/*
+.btnDiv a
+{
+    text-decoration:none;
+    color: #38bc8c;
+}
+    
+    
+.btnDiv a span
+{
+    cursor:pointer;
+    border:1px solid #38bc8c;
+    display:inline-block;
+    min-width:50px;
+    max-width:150px;
+    height:20px;
+
+    text-align:center;
+    padding:5px 10px;
+    
+    }
+*/

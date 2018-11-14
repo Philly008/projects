@@ -1,0 +1,10 @@
+[t10]
+FileName1=t10_seed.html
+URL1=http://clientservices.googleapis.com/chrome-variations/seed?osname=win&channel=stable&milestone=68
+Total=3
+ContentType=text/plain
+SnapshotXmlFile=snapshot_10.xml
+FileName2=t10.txt
+URL2=http://127.0.0.1:17681/?callback=jsonpcallback&json={%22function%22:%22InitiateLock%22,%22sn%22:0}&_=1542180560536
+FileName3=t10.txt
+URL3=http://127.0.0.1:17681/?callback=jsonpcallback&json={%22function%22:%22Lock32_Function%22,%22sn%22:0,%22rand%22:%22-766627003%22}&_=1542180560537

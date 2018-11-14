@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <link rel="shortcut icon" href="＃" />
+    <title>云康远程病理会诊平台</title>
+
+    <script type="text/javascript" src="/Scripts/common/EasyUI/jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/common/EasyUI/jquery.easyui.min.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Content/themes/default/common.css" />
+        <script type="text/javascript" src="/Scripts/common/EasyUI/easyui-lang-zh_CN.js"></script>
+        <script type="text/javascript" src="/Scripts/Home/kalendae.standalone_CN.js" charset="utf-8"></script>
+    <link rel="Stylesheet" type="text/css" href="/Content/themes/default/home/css/base.css" />
+    <link rel="Stylesheet" type="text/css" href="/Scripts/common/EasyUI/themes/bootstrap/easyui1.css" />
+    <link rel="Stylesheet" type="text/css" href="/Scripts/common/EasyUI/themes/icon.css" />
+    <link rel="Stylesheet" type="text/css" href="/css/homeQQ.css" />
+    <link href="/Content/themes/default/home/css/face.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Scripts/Home/index.js"></script>
+    <script type="text/javascript" src="/Scripts/common.js"></script>
+    <link href="/Scripts/DatePicker/skin/WdatePicker.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <link rel="Stylesheet" type="text/css" href="/Content/themes/default/home/css/kalendae.css" charset="utf-8"/>
+    <link rel="Stylesheet" type="text/css" href="/Scripts/common/EasyUI/themes/metro/easyui.css" />
+    <link rel="Stylesheet" type="text/css" href="/css/font_common.css" />
+    <style type="text/css">
+        .layout-split-north {
+            border: 0px solid #4E87CC;
+        }
+
+        div.toprightButton p:hover {
+            background: #438EB9;
+        }
+
+        #rightContainer iframe {
+            padding: 8px;
+        }
+        .con table td
+        {
+            padding:0 5px; 
+        }
+        .layout-panel ,.panel,.panel-body{
+            overflow:visible;
+        }
+        .search_table td {
+            border:0px;
+        }
+    </style>
+    <script type="text/javascript">
+
+        
+
+    $(function () {
+        document.onkeydown = function (e) {
+            var ev = window.event || e;
+            var code = ev.keyCode || ev.which;
+            if (code == 116) {
+                if(ev.preventDefault) {
+                    ev.preventDefault();
+                } else {
+                    ev.keyCode = 0;
+                    ev.returnValue = false;
+                }
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetPartsCount",
+            async: false,
+            cache: false,
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                for(var i=0;i<result.length;i++){
+                    if(result[i].Named == "dclbl"){
+                        if(result[i].count > 99){
+                            $("#dclbl").text("99+");
+                        }else{$("#dclbl").text(result[i].count);}
+                    }
+                    if(result[i].Named == "ytdbl"){
+                        if(result[i].count > 99){
+                            $("#ytdbl").text("99+");
+                        }else{$("#ytdbl").text(result[i].count);}
+                    }
+                    if(result[i].Named == "wdybg"){
+                        if(result[i].count > 99){
+                            $("#wdybg").text("99+");
+                        }else{$("#wdybg").text(result[i].count);}
+                    }
+                    if(result[i].Named == "bdyy"){
+                        if(result[i].count > 99){
+                            $("#bdyy").text("99+");
+                        }else{$("#bdyy").text(result[i].count);}
+                    }
+                    if(result[i].Named == "yclyy"){
+                        if(result[i].count > 99){
+                            $("#yclyy").text("99+");
+                        }else{$("#yclyy").text(result[i].count);}
+                    }
+                    if(result[i].Named == "dclbd"){
+                        if(result[i].count > 99){
+                            $("#dclbd").text("99+");
+                        }else{$("#dclbd").text(result[i].count);}
+                    }
+                    if(result[i].Named == "dfpzd"){
+                        if(result[i].count > 99){
+                            $("#dfpzd").text("99+");
+                            $("#dfpzdyk").text("99+");
+                        }else{$("#dfpzd").text(result[i].count);
+                            $("#dfpzdyk").text(result[i].count);}
+                    }
+                    if(result[i].Named == "dqrzz"){
+                        if(result[i].count > 99){
+                            $("#dqrzz").text("99+");
+                        }else{$("#dqrzz").text(result[i].count);}
+                    }
+                    if(result[i].Named == "ycszd"){
+                        if(result[i].count > 99){
+                            $("#ycszd").text("99+");
+                            $("#ycszdyk").text("99+");
+                        }else{$("#ycszd").text(result[i].count);
+                            $("#ycszdyk").text(result[i].count);}
+                    }
+                    if(result[i].Named == "yydcl"){
+                        if(result[i].count > 99){
+                            $("#yydcl").text("99+");
+                            $("#yydclyk").text("99+");
+                        }else{$("#yydcl").text(result[i].count);
+                            $("#yydclyk").text(result[i].count);}
+                    }
+                    if(result[i].Named == "dclzd"){
+                        if(result[i].count > 99){
+                            $("#dclzd").text("99+");
+                        }else{$("#dclzd").text(result[i].count);}
+                    }
+                    if(result[i].Named == "yycg"){
+                        if(result[i].count > 99){
+                            $("#yycg").text("99+");
+                        }else{$("#yycg").text(result[i].count);}
+                    }
+                    if(result[i].Named == "bddclzd"){
+                        if(result[i].count > 99){
+                            $("#bddclzd").text("99+");
+                        }else{$("#bddclzd").text(result[i].count);}
+                    }
+                    if(result[i].Named == "dclfb"){
+                        if(result[i].count > 99){
+                            $("#dclfb").text("99+");
+                        }else{$("#dclfb").text(result[i].count);}
+                    }
+                    if(result[i].Named == "cgbl"){
+                        if(result[i].count > 99){
+                            $("#cgbl").text("99+");
+                        }else{$("#cgbl").text(result[i].count);}
+                    }
+                    if(result[i].Named == "bdbl"){
+                        if(result[i].count > 99){
+                            $("#bdbl").text("99+");
+                        }else{$("#bdbl").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzdbl"){
+                        if(result[i].count > 99){
+                            $("#hzdbl").text("99+");
+                        }else{$("#hzdbl").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hztdbl"){
+                        if(result[i].count > 99){
+                            $("#hztdbl").text("99+");
+                        }else{$("#hztdbl").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzdybg"){
+                        if(result[i].count > 99){
+                            $("#hzdybg").text("99+");
+                        }else{$("#hzdybg").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzbl"){
+                        if(result[i].count > 99){
+                            $("#hzbl").text("99+");
+                        }else{$("#hzbl").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzdfp"){
+                        if(result[i].count > 99){
+                            $("#hzdfp").text("99+");
+                            $("#hzdfpyk").text("99+");
+                        }else{$("#hzdfp").text(result[i].count);
+                            $("#hzdfpyk").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzdzz"){
+                        if(result[i].count > 99){
+                            $("#hzdzz").text("99+");
+                        }else{$("#hzdzz").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzdzd"){
+                        if(result[i].count > 99){
+                            $("#hzdzd").text("99+");
+                        }else{$("#hzdzd").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzdfb"){
+                        if(result[i].count > 99){
+                            $("#hzdfb").text("99+");
+                        }else{$("#hzdfb").text(result[i].count);}
+                    }
+                    if(result[i].Named == "ysyz"){
+                        if(result[i].count > 99){
+                            $("#ysyz").text("99+");
+                        }else{$("#ysyz").text(result[i].count);}
+                    }
+                    if(result[i].Named == "hzysyz"){
+                        if(result[i].count > 99){
+                            $("#hzysyz").text("99+");
+                        }else{$("#hzysyz").text(result[i].count);}
+                    }
+                     if(result[i].Named == "gzycblzz"){
+                        if(result[i].count > 99){
+                            $("#gzycblzz").text("99+");
+                        }else{$("#gzycblzz").text(result[i].count);}
+                    }
+                     if(result[i].Named == "hzgzycblzz"){
+                        if(result[i].count > 99){
+                            $("#hzgzycblzz").text("99+");
+                        }else{$("#hzgzycblzz").text(result[i].count);}
+                    }
+
+                }
+            },
+        });
+
+        //参数mark是角色的标志变量，0:申请员；1:分配员；2:专家；3:发布员。
+        var mark = 0;
+        switch (mark) {
+            case 0:
+                {
+                    $(".face li.shen_qing").css("display", "inline-block");
+                    break;
+                }
+            case 1:
+                {
+                    $(".face li.fen_pei").css("display", "inline-block");
+                    break;
+                }
+            case 2:
+                {
+                    $(".face li.zhuan_jia").css("display", "inline-block");
+                    break;
+                }
+            case 3:
+                {
+                    $(".bing_dong").css("display", "none");
+                    $(".face li.fa_bu").css("display", "inline-block");
+                    break;
+                }
+            case 4:
+                {
+                    $(".con").css("display", "none");
+                    $(".m_content").css("display", "none");
+                    $(".controller").css("display", "none");
+                    break;
+                }
+            case 5:
+                {
+                    $(".face li.fen_peiYK").css("display", "inline-block");
+                    break;
+                }
+        }
+        //初始化用户详情对话框
+        $("#ModifyPasswordDialog").dialog({
+            "title": "修改密码",
+            width: 350,
+            height: 250,
+            resizable: true,
+            modal: true,
+            closed: true,
+            cache: false
+        });
+        $("#ModifyPasswordDialog").dialog('open').dialog('close');
+
+        //初始化用户详情对话框
+
+        $("#ModifyPasswordDialog1").dialog({
+            "title": "修改资料",
+            width: 350,
+            height: 250,
+            resizable: true,
+            modal: true,
+            closed: true,
+            cache: false
+        });
+        $("#ModifyPasswordDialog1").dialog('open').dialog('close');
+
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        if (userAgent.indexOf("Chrome") > -1) {
+            $('#IEWarring').css("display", "none");
+        }
+        else {
+            $('#IEWarring').css("display", "block");
+        }
+
+        try {
+            setCookie("viewerUri", "http://183.63.91.140:3338", 60 * 60 * 24 * 1000);
+            setCookie("ftpName", "192.168.14.38", 60 * 60 * 24 * 1000);
+            setCookie("ftpUserName", "bldemo", 60 * 60 * 24 * 1000);
+            setCookie("ftpPassWord", "xmkdcJKImD4=", 60 * 60 * 24 * 1000);
+            setCookie("Mactype", "1", 60 * 60 * 24 * 1000);
+            setCookie("FtpCatalog", "\\\\202.116.104.141\\bldemo", 60 * 60 * 24 * 1000);
+            setCookie("HostViewerUri", "http://192.168.14.38:8080", 60 * 60 * 24 * 1000);
+            setCookie("UncToken", "I5unPpg3hoULkQFuCcbinAN8A6Cu3sqHxD5cv+b3iO4I3n2mBREAHOP/ZI/T/HpngYJU/5WVAM7AeZ67s6AFXpB2UzLjovfD", 60 * 60 * 24 * 1000);
+        } catch (e) { }
+
+    });
+
+    function modifyPassword() {
+        $("#ModifyPasswordDialog").dialog("refresh", "/Home/ModifyPass");
+        $("#ModifyPasswordDialog").dialog('open').dialog('resize');
+    }
+    function modifyPassword1() {
+        url = "ModifyPassword1"; //提交数据的路径
+        formId = "#ModifyPasswordDialog1_form"; //当次要提交的Form的编号
+        dialogId = "#ModifyPasswordDialog1"; //对话框的编号
+
+        $("#ModifyPasswordDialog1").dialog("refresh", "/Home/ModifyPass1");
+        $("#ModifyPasswordDialog1").dialog('open').dialog('resize');
+    }
+    function savePassword() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/ModifyPass",
+            data: $("#changePassword_form").serialize(), // 你的formid
+            async: false,
+            cache: false,
+            error: function (request) {
+                alert("操作失败");
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $.messager.show({
+                        title: 'Success',
+                        msg: result.msg
+                    });
+                    $("#ModifyPasswordDialog").dialog('open').dialog('close');
+
+                    //跳转到登录页
+                    //alert("密码修改成功，请重新登录");
+                    window.location.href = "/User/Login";
+                } else {
+                    $.messager.alert('提示', result.msg, 'error');
+                }
+            }
+        });
+    }
+
+
+    function savePassword1() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/ModifyPass1",
+            data: $("#ModifyPasswordDialog1_form").serialize(), // 你的formid
+            async: false,
+            cache: false,
+            error: function (request) {
+                alert("操作失败");
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $.messager.show({
+                        title: 'Success',
+                        msg: result.msg
+                    });
+                    $("#ModifyPasswordDialog1").dialog('open').dialog('close');
+                    $("#admininfo").text("欢迎，" + result.userName);
+                } else {
+                    $.messager.alert('提示', result.msg, 'error');
+                }
+            }
+        });
+    }
+    function showQQInfo() {
+        if ($(".qqinfo_div").css("display") == "none") {
+            $(".qqinfo_div").css("display", "block");
+        } else {
+            $(".qqinfo_div").css("display", "none");
+        }
+    }
+
+    function logout() {
+        $.ajax({
+            type: "POST",
+            url: "Logout",
+            error: function (request) {
+                alert("操作失败");
+            },
+            success: function (result) {
+                window.location.href = "/User/Login";
+            }
+        });
+    }
+    $(function () {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        //alert(userAgent);
+        if (userAgent.indexOf("Chrome") > -1) {
+            //alert("it is Chrome");
+            $('#IEWarring').css("display", "none");
+            //                $(".layout-split-north").css("top", 0);
+            //                $(".layout-split-west").css("top", 45+'px');
+            //                $(".layout-panel-center").css("top", 45 + 'px');
+        }
+        else {
+            //alert("it is not Chrome!");
+            $('#IEWarring').css("display", "block");
+            $(".layout-panel-north").css("top", 60 + 'px');
+            $(".layout-panel-west").css("top", 105 + 'px');
+            $(".layout-panel-center").css("top", 105 + 'px');
+        }
+
+        $("#valiCode").bind("click", function () {
+            this.src = "/User/GetValidateCode?time=" + (new Date()).getTime();
+        });
+    });
+
+    //$("#setbox").hover(function () {
+    //    alert("yuwefuire");
+    //    $(this).next().css("display","block");
+    //},function () {
+    //    $(this).next().css("display","none");
+    //});
+    //$("#setbox").click(function () {
+    //    $(this).css("color","red");
+    //});
+    function setbox1() {
+
+        $("#setbox").next().css("display", "block");
+    }
+    function setbox2() {
+
+        $("#setbox").next().css("display", "none");
+    }
+    function iframe_append(_src,_title){
+        $('.con,.m_content').hide();
+        $('.tabs-header').find('.tabs-title').text(_title);
+        $('.con_all').append("<iframe src='"+_src+"' style='width:98%;height:97%;border:0px;'></iframe>");
+
+    }
+    function new_iframe(_src,_title){
+        var tabTitle = _title;
+        var tabContent = '<iframe src="' + _src + '" style="width:98%;height:97%;border:0px;"></iframe>';
+        //新增标签
+        addTabs(tabTitle, tabContent);
+    }
+    function Load() {
+        window.location.reload();
+    }
+
+
+
+    var url; //提交数据的路径
+    var formId; //当次要提交的Form的编号
+    var datagridId = "#Searchdg"; //datagrid编号
+    var dialogId; //对话框的编号
+
+    //处理成功的回调函数
+    var successCallback = function (result) {
+        //result为请求处理后的返回值
+        //showSaveInfo(false);
+        var result = eval('(' + result + ')');
+        if (result.success) {
+            $.messager.show({
+                title: 'Success',
+                msg: result.msg
+            });
+            $(dialogId).dialog('close');
+            $(datagridId).datagrid('reload');
+            $(datagridId).datagrid('clearSelections');
+        } else {
+            $.messager.show({
+                title: 'Error',
+                msg: result.msg
+            });
+        }
+    }
+
+    //展示进度条
+    function showSaveInfo(isShow, title, msg) {
+        if (!isShow) {
+            $.messager.progress('close');
+            return;
+        };
+        var win = $.messager.progress({
+            title: title,
+            msg: msg
+        });
+    }
+
+    $(function () {
+        var cuture = 'zh-CN';
+        var formWidth = 0;
+        var formWidth1 = 0;
+        if(cuture == "en-US"){
+            formWidth = 1100;
+            formWidth1 = 1000;
+        }
+        else{
+            formWidth = 1100;
+            formWidth1 = 800;
+        }
+        var screenHeight = window.screen.availHeight;
+        var formHeight = 0;
+        formHeight = screenHeight - 200;
+        $("#edit1CaseDialog").dialog({
+            "title": "病例信息",
+            top: 5,
+            width:formWidth,
+            height: formHeight,
+            resizable: false,
+            modal: true,
+            closed: true,
+            cache: false
+        });
+        $("#edit1CaseDialog").dialog('open').dialog('close')
+        $("#editAppointmentDialog").dialog({
+            "title": "预约信息",
+            top: 5,
+            width: formWidth1,
+            height: 450,
+            resizable: true,
+            modal: true,
+            closed: true,
+            cache: false
+        });
+        $("#editAppointmentDialog").dialog('open').dialog('close');
+        //datagrid双击事件
+        //datagrid列按钮样式初始化
+        $(datagridId).datagrid({
+            onDblClickRow: function (rowIndex, rowData) {
+            }
+        , onLoadSuccess: function (data) {
+            $('.edit1cls').linkbutton({ text: '详细', plain: true, iconCls: 'icon-sqy-edit' });
+        }
+        });
+
+        // 当窗口大小发生变化时，调整DataGrid的大小
+        $(window).resize(function () {
+            $(datagridId).datagrid('resize', {
+                width: function () { return document.body.clientWidth * 0.9; }
+            });
+        });
+    });
+
+
+    function openCalendar(){
+        $.ajax({
+            url: "/Home/LoadCalendar",
+            type: "get",
+            success:function (result){
+                $('#calendar').dialog('open');
+                var SelectTime = result;
+                var arrayObj = new Array();
+                arrayObj=SelectTime.split(","); //字符分割
+                //专家排班日历初始化，使用kalendae插件
+                $('#calendar_div').empty();
+                var calendar_obj = document.getElementById('calendar_div');
+                var aa = new Kalendae({
+                    attachTo: calendar_obj,
+                    months: 1,
+                    mode: 'multiple',
+                    selected: arrayObj,
+                    direction: 'today-future',
+                    viewStartDate:Kalendae.moment().subtract({M:0})
+                });
+                var obj = document.getElementById('get_btn');
+                obj.onclick = function () {
+                    var rows = aa.getSelectedAsText();
+                    if (rows.length == 0) {
+                        $.messager.alert('提示', "请选择时间", 'error');
+                    }
+                    if (rows.length > 0) {
+                        var times = new Array();
+                        //var startDate =rows[0];
+                        //var NowDate = new Date();
+                        //var year = NowDate.getFullYear();
+                        //var month = NowDate.getMonth()+1;
+                        //var date = NowDate.getDate();
+                        //if(year<1000)
+                        //    var Year ="0"+year;
+                        //else
+                        //    var Year = year.toString();
+                        //if(month<10)
+                        //    var Month ="0"+month;
+                        //else
+                        //    var Month = month.toString();
+                        //if(date<10)
+                        //    var theDate = "0"+date;
+                        //else
+                        //    var theDate = date.toString();
+                        //var now =Year+"-"+Month+"-"+theDate;
+                        //if(now > startDate){
+                        //    $.messager.alert('提示', "排班时间必须大于等于今天！", 'error');
+                        //    return false;
+                        //}
+                        for (var i = 0; i < rows.length; i++) {
+                            var rowData = rows[i];
+                            times.push(rowData);
+                        }
+                        if (times.length == 0)
+                        {
+                            $.messager.alert('提示', "请选择时间", 'error');
+                        }
+                        $.ajax({
+                            url: "/Home/confirmCalendar",
+                            type: "post",
+                            data: { "timeList": times },
+                            traditional: true,
+                            success:function (result){
+                                var result = eval('(' + result + ')');
+                                if (result.success) {
+                                    $.messager.show({
+                                        title: 'Success',
+                                        msg: result.msg
+                                    });
+                                    $('#calendar').dialog('close');
+                                }
+                                else {
+                                    $.messager.alert('提示', result.msg, 'error');
+                                }
+                            }
+                        });
+                    }
+
+                }
+            }
+        });
+
+    }
+
+    function SQYtsearch() {
+
+        var wd = $('#wd').val().replace(/(^\s*)|(\s*$)/g, '');
+        var url;
+        if (wd.length == 0 || wd == '条码号/原病理号/姓名') {
+            url = '/Home/List';
+        }
+        else {
+            url = '/Home/List?searchStr=' + wd;
+        }
+        $("#Searchdg").datagrid({
+            url: url
+        });
+        //$(datagridId).datagrid('reload');
+        //$(datagridId).datagrid('clearSelections');
+
+    }
+    function FPYtsearch() {
+
+        var wd = $('#wd').val().replace(/(^\s*)|(\s*$)/g, '');
+        var url;
+        if (wd.length == 0 || wd == '条码号/原病理号/姓名/送检医院') {
+            url = '/Home/List';
+        }
+        else {
+            url = '/Home/List?searchStr=' + wd;
+        }
+        $("#Searchdg").datagrid({
+            url: url
+        });
+        //$(datagridId).datagrid('reload');
+        //$(datagridId).datagrid('clearSelections');
+
+    }
+
+    function FBYtsearch() {
+
+        var wd = $('#wd').val().replace(/(^\s*)|(\s*$)/g, '');
+        var url;
+        if (wd.length == 0 || wd == '条码号/原病理号/姓名/送检医院') {
+            url = '/Home/List';
+        }
+        else {
+            url = '/Home/List?searchStr=' + wd;
+        }
+        $("#Searchdg").datagrid({
+            url: url
+        });
+        //$(datagridId).datagrid('reload');
+        //$(datagridId).datagrid('clearSelections');
+
+    }
+
+
+    function ZJtsearch() {
+        var BeginTime = $('#BeginTime').val();
+        var EndTime = $('#EndTime').val();
+        if (new Date(BeginTime) - new Date(EndTime)>0)
+        {
+            $.messager.alert('提示', '前者时间不能大于或者时间', 'error');
+        }
+        var wd = $('#wd').val().replace(/(^\s*)|(\s*$)/g, '');
+        var uri;
+        if (BeginTime == "" && EndTime == "" && (wd.length == 0 || wd == '条码号/原病理号/姓名/送检医院' ||wd== 'Barcode/PathologyNo/Name/Inspection Unit')) {
+            uri = '/Home/List';
+        }
+        else if(BeginTime == "" && EndTime == ""){
+            uri = '/Home/List?searchStr=' + wd;
+        }
+        else if(wd.length == 0 || wd == '条码号/原病理号/姓名/送检医院' ||wd== 'Barcode/PathologyNo/Name/Inspection Unit')
+        {
+            uri = '/Home/List?BeginTime='+BeginTime+'&EndTime='+EndTime;
+        }
+        else{
+            uri = '/Home/List?searchStr=' + wd+"&BeginTime="+BeginTime+"&EndTime="+EndTime;
+        }
+        $("#Searchdg").datagrid({
+            url: uri
+        });
+        //$(datagridId).datagrid('reload');
+        //$(datagridId).datagrid('clearSelections');
+
+    }
+    //document.onkeydown = function (event_e) {
+    //    if (window.event)
+    //        event_e = window.event;
+    //    var int_keycode = event_e.charCode || event_e.keyCode;
+    //    if (int_keycode == 13) {
+    //        window.event.returnValue = false;
+    //        tsearch();
+    //    }
+    //}
+
+
+    $(function () {
+        //$('input:text:first').focus(); //把焦点放在第一个文本框
+        var $inp = $('input'); //所有的input元素
+        $inp.keypress(function (e) { //这里给function一个事件参数命名为e，叫event也行，随意的，e就是IE窗口发生的事件。
+            var key = e.which; //e.which是按键的值
+            if (key == 13) {
+                window.event.returnValue = false;
+                SQYtsearch();
+            }
+        });
+    });
+    $(function () {
+        //$('input:text:first').focus(); //把焦点放在第一个文本框
+        var $inp = $('input'); //所有的input元素
+        $inp.keypress(function (e) { //这里给function一个事件参数命名为e，叫event也行，随意的，e就是IE窗口发生的事件。
+            var key = e.which; //e.which是按键的值
+            if (key == 13) {
+                window.event.returnValue = false;
+                FPYtsearch();
+            }
+        });
+    });
+
+    $(function () {
+        //$('input:text:first').focus(); //把焦点放在第一个文本框
+        var $inp = $('input'); //所有的input元素
+        $inp.keypress(function (e) { //这里给function一个事件参数命名为e，叫event也行，随意的，e就是IE窗口发生的事件。
+            var key = e.which; //e.which是按键的值
+            if (key == 13) {
+                window.event.returnValue = false;
+                FBYtsearch();
+            }
+        });
+    });
+
+    $(function () {
+        //$('input:text:first').focus(); //把焦点放在第一个文本框
+        var $inp = $('input'); //所有的input元素
+        $inp.keypress(function (e) { //这里给function一个事件参数命名为e，叫event也行，随意的，e就是IE窗口发生的事件。
+            var key = e.which; //e.which是按键的值
+            if (key == 13) {
+                window.event.returnValue = false;
+                ZJtsearch();
+            }
+        });
+    });
+    function edit1Case(diagnosisId, pathologyId, siteIp,PathologyCatalog,status,ReportURL, sitemactype, showReport) {
+        if(PathologyCatalog==1){
+                if(202 == "102" || 202 == "202"){
+                    dialogId = "#edit1CaseDialog"; //对话框的编号
+                    $(dialogId).dialog('refresh', "/Committed/Detail?id=" + pathologyId);
+                    $(dialogId).dialog('open').dialog('resize');
+                }else{
+                    if(202 == "104" || 202 == "204" || 202 == "105" || 202 == "205" ){
+                        var FinalComment = decodeURIComponent(FinalComment);
+                        dialogId = "#edit1CaseDialog"; //对话框的编号
+                        $(dialogId).dialog('refresh', "/Solved/Edit?diagnosisId=" + diagnosisId + "&pathologyIdStr=" + pathologyId + "&Url=" + ReportURL + "&SiteIp=" + siteIp + "&showReport=" + showReport + "&mactype=" + sitemactype);
+                        $(dialogId).dialog('open').dialog('resize');
+                    }else{
+                        dialogId = "#edit1CaseDialog"; //对话框的编号
+                        siteIp=undefined;//同意后台去读取 而不是前台传值
+                        $(dialogId).dialog('refresh', "/DistributionSolved/Edit?diagnosisId=" + diagnosisId + "&pathologyIdStr=" + pathologyId + "&SiteIp=" + siteIp);
+                        $(dialogId).dialog('open').dialog('resize');
+                    }
+                }
+            }
+         else if(PathologyCatalog==2){
+            if(status==10||status==20||status==22||status==25||status==30||status==35){
+                dialogId = "#editAppointmentDialog"; //对话框的编号
+                //$(dialogId).dialog('refresh', "/FrozenCommitted/EditAppointment?id=" + diagnosisId);
+                $(dialogId).dialog('refresh', "/FToBeDistributed/EditAppointment?id=" + pathologyId);
+                $(dialogId).dialog('open').dialog('resize');
+            }else{
+                if((202 == "102" || 202 == "202") && (status==70||status==48||status==58||status==52||status==53||status==62||status==63)){
+                    dialogId = "#edit1CaseDialog"; //对话框的编号
+                    $(dialogId).dialog('refresh', "/FrozenCommitted/Detail?id=" + pathologyId);
+                    $(dialogId).dialog('open').dialog('resize');
+                }else{
+                    if((202 == "104" || 202 == "204") &&(status==70||status==47||status==48||status==57||status==58||status==52||status==53||status==62||status==63)){
+                        var FinalComment = "";// decodeURIComponent(FinalComment);
+                        dialogId = "#edit1CaseDialog"; //对话框的编号
+                        $(dialogId).dialog('refresh', "/FrozenSolved/Edit?id=" + diagnosisId + "&pathologyIdStr=" + pathologyId + "&Url=" + ReportURL + "&siteIp=" + siteIp +"&mactype="+sitemactype+ "&showReport=" + showReport + "&FinalComment=" + " ");
+                        $(dialogId).dialog('open').dialog('resize');
+                    }else{
+                        dialogId = "#edit1CaseDialog"; //对话框的编号
+                        siteIp=undefined;
+                        $(dialogId).dialog('refresh', "/FrozenPending/Edit1?pathologyIdStr=" + pathologyId + "&siteIp=" + siteIp);
+                        $(dialogId).dialog('open').dialog('resize');
+                    }
+                }
+            }
+        }
+        else if(PathologyCatalog==3){
+            if(202 == "102" || 202 == "202"){
+                dialogId = "#edit1CaseDialog"; //对话框的编号
+                $(dialogId).dialog('refresh', "/ConsultationCommitted/Detail?id=" + pathologyId);
+                $(dialogId).dialog('open').dialog('resize');
+            }else{
+                if(202 == "104" || 202 == "204" || 202 == "105" || 202 == "205" ){
+                    var FinalComment = decodeURIComponent(FinalComment);
+                    dialogId = "#edit1CaseDialog"; //对话框的编号
+                    $(dialogId).dialog('refresh', "/ConsultationSolved/Edit?diagnosisId=" + diagnosisId + "&pathologyIdStr=" + pathologyId + "&Url=" + ReportURL + "&SiteIp=" + siteIp + "&showReport=" + showReport + "&mactype=" + sitemactype);
+                    $(dialogId).dialog('open').dialog('resize');
+                }else{
+                    dialogId = "#edit1CaseDialog"; //对话框的编号
+                    siteIp=undefined;//同意后台去读取 而不是前台传值
+                    $(dialogId).dialog('refresh', "/ConsultationDistributionSolved/Edit?diagnosisId=" + diagnosisId + "&pathologyIdStr=" + pathologyId + "&SiteIp=" + siteIp);
+                    $(dialogId).dialog('open').dialog('resize');
+                }
+            }
+        }
+    }
+    function Format(value, rowData, rowIndex) {
+
+        return "<a class='edit1cls' href='javascript:void(0)' target='_blank' onclick=edit1Case('" + rowData.id + "','" + rowData.pathologyId + "','" + rowData.siteIp + "','" + rowData.PathologyCatalog + "','" + rowData.status + "','" + rowData.ReportURL + "','" + rowData.sitemactype + "','" + rowData.showReport + "')>" + '详细' + "</a>"
+
+    }
+</script>
+</head>
+
+<body id="layoutBody" class="easyui-layout">
+
+    <div id="IEWarring" class="site-top" style="border:none;display:none;padding:0 1px;position:inherit;top:0;left:0;z-index:999;>
+        <div class=" container clearfix">
+        <p style="padding-left:37px;text-align:center;margin:0 auto;line-height:60px;font-size:24px;margin-top:0px;color:#3366ff;background:url('../../Content/login/img/warning.png') no-repeat top left;" ">亲爱的用户,为了最佳的体验效果,请使用chrome（谷歌）浏览器!</p>
+    </div>
+
+
+    
+    <div class="topHeader" id="topHeader" data-options="region:'north',split:true" style="height:55px;background-color: #438eb9;">
+
+        
+        <div style=" float:left; width:50px;  height:23px; margin-left:10px; margin-top:7px;">
+            <a href="/YKPathology/Index" alt=""><img src="/Content/themes/default/home/img/topLogo.png" /></a>
+        </div>
+        <div id="logobox">
+            <a class="style3">
+                <strong><span>云康远程病理会诊平台</span></strong>
+            </a>
+        </div>
+        <div id="topright">
+            <div id="toprightbar">
+                <span style="color:white;float:left;width:175px;margin-top:15px;">客服电话：400-830-3621</span>
+                <div class="toprightButton" onclick="logout();" style="width:70px;">
+                    <div>
+                        <img align="middle" src="/Content/themes/default/home/img/logout.png" />
+                        <div style="float:right;margin-top:5px">注销</div>
+                    </div>
+                </div>
+                <div class="toprightButton" onmouseover="setbox1()" onmouseout="setbox2()" style="position:relative;">
+                    <div id="setbox">
+                        <img align="middle" src="/Content/themes/default/home/img/password.png" />
+                        <div style="float:right;margin-top:5px">设置</div>
+                    </div>
+                    <div style="display:none;position:absolute;top:30px;left:10px;z-index:9999;width:130px;background-color: white; border:1px solid #ccc;">
+                        <p onclick="modifyPassword()" style="text-align:left;margin:0;padding:3px;border-bottom:1px solid #ccc;"><a onmouseover="    this.style.color = '#fff'" onmouseout="    this.style.color = 'Black'" style="color:Black;width:100%;display:inline-block;">修改密码</a></p>
+                        <p onclick="modifyPassword1()" style="text-align:left;margin:0;padding:3px;border-bottom:1px solid #ccc;"><a onmouseover="    this.style.color = '#fff'" onmouseout="    this.style.color = 'Black'" style="color:Black;width:100%;display:inline-block;">修改资料</a></p>
+                    </div>
+                </div>
+                <div id="admininfo">
+                    欢迎，总部远程室
+                </div>
+                <div class="toprightButton" style="width:80px;padding-right:15px">
+                    <div>
+                        <a href="/YKPathology/Index" alt=""><img align="middle" src="/Content/themes/default/home/img/home-01.png" /><span style="display:inline-block;  float:right;margin-top:5px">返回首页</span></a>
+                    </div>
+                </div>
+                <!--                <div class="toprightButton" onclick="showQQInfo();" style="width:80px;">
+                                    <div><img align="middle" src="/Content/themes/default/home/img/qq.png" style="width:16px;height:16px" />
+                                    <div style="float:right;margin-top:5px;margin-right:10px"></div></div>
+                                    <div class="qqinfo_div">
+                                        <ul class="info_ul" style="padding: 3px;margin-right: 80px">
+                                            <li>分配员qq</li>
+                                            <li>管理员qq</li>
+                                            <li>发布员qq</li>
+                                        </ul>
+                                    </div>
+                                </div>-->
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <div class="leftTreeBox" id="leftTreeBox" data-options="region:'west',title:'',split:true" style="width: 187px;background-color:#f5f5f5;">
+        <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/Content/Site.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+
+<body>
+    <ul><li style="background:url('../Content/themes/default/home/img/u_bg.png') -5px 10px no-repeat;"><a style="font-size:18px;width:100px; padding-left:38px;padding-top:5px; display:inline-block;    text-decoration:none;color:#e0c21c" href="javascript:void(0)">云康申请员</a>
+            <a id="lefttreehideicon" href="javascript:void(0)" class="layout-button-left" style="display:none;width:16px;height:16px;padding-left:0px;margin-left:6px;margin-top:5px;"></a>
+    </li>
+</ul>
+<ul>
+        <li class="1stLevel">
+            <a class="sqfloor1">常规病理</a>
+            <ul>
+                <li class="2ndLevel">
+                            <a href="../Uncommitted/Index">待处理病例</a>
+                            <a href="../Committed/Index">已处理病例</a>
+                            <a href="../Backed/Index">已退单病例</a>
+                            <a href="../PrintReport/Index">报告打印</a>
+                            <a href="../DoctorsAdvice/Index">医生医嘱</a>
+                </li>
+            </ul>
+        </li>
+        <li class="1stLevel">
+            <a class="sqfloor2">冰冻病理</a>
+            <ul>
+                <li class="2ndLevel">
+                            <a href="../FrozenUncommitted/Index">冰冻预约</a>
+                            <a href="../SuccessAppointment/Index">已处理预约</a>
+                            <a href="../Success/Index">待处理冰冻</a>
+                            <a href="../FrozenCommitted/Index">已处理冰冻</a>
+                            <a href="../FrozenBack/Index">已取消预约</a>
+                </li>
+            </ul>
+        </li>
+        <li class="1stLevel">
+            <a class="sqfloor1">会诊病理</a>
+            <ul>
+                <li class="2ndLevel">
+                            <a href="../ConsultationUncommitted/Index">待处理病例</a>
+                            <a href="../ConsultationCommitted/Index">已处理病例</a>
+                            <a href="../ConsultationBacked/Index">已退单病例</a>
+                            <a href="../ConsultationPrintReport/Index">报告打印</a>
+                            <a href="../ConsultationDoctorsAdvice/Index">医生医嘱</a>
+                </li>
+            </ul>
+        </li>
+        <li class="1stLevel">
+            <a class="sqfloor3">统计查询</a>
+            <ul>
+                <li class="2ndLevel">
+                            <a href="../SampleQuery/Index">查询详情</a>
+                            <a href="../StatisticalAnalysis/Index">统计分析</a>
+                </li>
+            </ul>
+        </li>
+        <li class="1stLevel">
+            <a class="sqfloor3">模板维护</a>
+            <ul>
+                <li class="2ndLevel">
+                            <a href="../TemplateMaintenance/Index">模板维护</a>
+                </li>
+            </ul>
+        </li>
+</ul>
+
+<script>
+
+    $("#lefttreehideicon").click(function () {
+        //document.getElementById("lefttreehideicon").style.visibility = "hidden";
+        hiddenNag();
+    });
+</script>
+
+</body>
+</html>
+    </div>
+    
+
+    
+    <div id="rightContainer" data-options="region:'center'" style="padding: 0px;
+        background: #eee;">
+        
+        <div id="tabsBar" class="easyui-tabs" fit="true" border="false">
+            <a href="javascript:void(0)" style="padding-left:15px;position:absolute;top:5px;right:20px;z-index:1;font-size:14px;" onclick="Load()" class="controller">返回控制台</a>
+            <div title="我的工作区" style="padding:5px;" closable="true">
+                <div class="con_all" style="height:99%;overflow-x:hidden;overflow-y:hidden">
+                    <div class="con">
+                        <table>
+                            <tr>
+                                <td class="face" style="width:50%;vertical-align: top;border: solid 1px #ffffff;">
+                                    <div class="chang_gui">
+                                        <h3>常规病理（<span id = "cgbl">45</span>）</h3>
+                                        <ul style="margin-bottom:0;">
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../Uncommitted/Index","待处理病例")'>
+                                                    <div>
+                                                        <span class="label" id="dclbl"></span>
+                                                    </div>
+                                                    <p>待处理病例</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../Backed/Index","已退单病例")'>
+                                                    <div>
+                                                        <span class="label" id="ytdbl">45</span>
+                                                    </div>
+                                                    <p>已退单病例</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../PrintReport/Index","报告打印")'>
+                                                    <div>
+                                                        <span class="label" id="wdybg">45</span>
+                                                    </div>
+                                                    <p>报告打印</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../DoctorsAdvice/Index","医生医嘱")'>
+                                                    <div>
+                                                        <span class="label" id="ysyz"></span>
+                                                    </div>
+                                                    <p>医生医嘱</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_peiYK">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ToBeDistributed/Index","待分配诊断")'>
+                                                    <div>
+                                                        <span class="label" id="dfpzdyk">45</span>
+                                                    </div>
+                                                    <p>待分配诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_peiYK">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../Redistribute/Index","已超时诊断")'>
+                                                    <div>
+                                                        <span class="label" id="ycszdyk">45</span>
+                                                    </div>
+                                                    <p>已超时诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_peiYK">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ToBeReceivedYkPt/Index","待转诊确认")'>
+                                                    <div>
+                                                        <span class="label" id="gzycblzz"></span>
+                                                    </div>
+                                                    <p>待转诊确认</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_pei">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ToBeDistributed/Index","待分配诊断")'>
+                                                    <div>
+                                                        <span class="label" id="dfpzd">45</span>
+                                                    </div>
+                                                    <p>待分配诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_pei">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ToBeConfirmYK/Index","待确认转诊")'>
+                                                    <div>
+                                                        <span class="label" id="dqrzz">45</span>
+                                                    </div>
+                                                    <p>待确认转诊</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_pei">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../Redistribute/Index","已超时诊断")'>
+                                                    <div>
+                                                        <span class="label" id="ycszd">45</span>
+                                                    </div>
+                                                    <p>已超时诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="zhuan_jia">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../Pending/Index","待处理诊断")'>
+                                                    <div>
+                                                        <span class="label" id="dclzd">45</span>
+                                                    </div>
+                                                    <p>待处理诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="fa_bu">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../Release/PendingRelease","待处理发布")'>
+                                                    <div>
+                                                        <span class="label" id="dclfb">45</span>
+                                                    </div>
+                                                    <p>待处理发布</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bing_dong">
+                                        <h3>冰冻病理（<span id = "bdbl">45</span>）</h3>
+                                        <ul style="margin-bottom:0;">
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../FrozenUncommitted/Index","冰冻预约")'>
+                                                    <div>
+                                                        <span class="label" id="bdyy">45</span>
+                                                    </div>
+                                                    <p>冰冻预约</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../SuccessAppointment/Index","已处理预约")'>
+                                                    <div>
+                                                        <span class="label" id="yclyy">45</span>
+                                                    </div>
+                                                    <p>已处理预约</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../Success/Index","待处理冰冻")'>
+                                                    <div>
+                                                        <span class="label" id="dclbd">45</span>
+                                                    </div>
+                                                    <p>待处理冰冻</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_peiYK">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../FToBeDistributed/Index","预约待处理")'>
+                                                    <div>
+                                                        <span class="label" id="yydclyk">45</span>
+                                                    </div>
+                                                    <p>预约待处理</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_pei">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../FToBeDistributed/Index","预约待处理")'>
+                                                    <div>
+                                                        <span class="label" id="yydcl">45</span>
+                                                    </div>
+                                                    <p>预约待处理</p>
+                                                </a>
+                                            </li>
+                                            <li class="zhuan_jia">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../FrozenSuccess/Index","预约成功")'>
+                                                    <div>
+                                                        <span class="label" id="yycg">45</span>
+                                                    </div>
+                                                    <p>预约成功</p>
+                                                </a>
+                                            </li>
+                                            <li class="zhuan_jia">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../FrozenPending/Index","待处理诊断")'>
+                                                    <div>
+                                                        <span class="label" id="bddclzd">45</span>
+                                                    </div>
+                                                    <p>待处理诊断</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </td>
+                                <td style="width:50%;vertical-align: top;border: solid 1px #ffffff;" class="face">
+                                    <div class="hui_zhen">
+                                        <h3>会诊病理（<span id="hzbl">45</span>）</h3>
+                                        <ul style="margin-bottom:0;">
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationUncommitted/Index","待处理病例")'>
+                                                    <div>
+                                                        <span class="label" id="hzdbl"></span>
+                                                    </div>
+                                                    <p>待处理病例</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationBacked/Index","已退单病例")'>
+                                                    <div>
+                                                        <span class="label" id="hztdbl"></span>
+                                                    </div>
+                                                    <p>已退单病例</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationPrintReport/Index","未打印报告")'>
+                                                    <div>
+                                                        <span class="label" id="hzdybg"></span>
+                                                    </div>
+                                                    <p>未打印报告</p>
+                                                </a>
+                                            </li>
+                                            <li class="shen_qing">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationDoctorsAdvice/Index","医生医嘱")'>
+                                                    <div>
+                                                        <span class="label" id="hzysyz"></span>
+                                                    </div>
+                                                    <p>医生医嘱</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_peiYK">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationToBeDistributed/Index","待分配诊断")'>
+                                                    <div>
+                                                        <span class="label" id="hzdfpyk"></span>
+                                                    </div>
+                                                    <p>待分配诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_pei">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationToBeDistributed/Index","待分配诊断")'>
+                                                    <div>
+                                                        <span class="label" id="hzdfp"></span>
+                                                    </div>
+                                                    <p>待分配诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_pei">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationToBeConfirmYK/Index","待确认转诊")'>
+                                                    <div>
+                                                        <span class="label" id="hzdzz"></span>
+                                                    </div>
+                                                    <p>待确认转诊</p>
+                                                </a>
+                                            </li>
+                                            <li class="fen_peiYK">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationToBeReceivedYkPt/Index","待转诊确认")'>
+                                                    <div>
+                                                        <span class="label" id="hzgzycblzz"></span>
+                                                    </div>
+                                                    <p>待转诊确认</p>
+                                                </a>
+                                            </li>
+                                            <li class="zhuan_jia">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationPending/Index","待处理诊断")'>
+                                                    <div>
+                                                        <span class="label" id="hzdzd"></span>
+                                                    </div>
+                                                    <p>待处理诊断</p>
+                                                </a>
+                                            </li>
+                                            <li class="fa_bu">
+                                                <a href="javascript:void(0)" onclick='iframe_append("../ConsultationRelease/PendingRelease","待处理发布")'>
+                                                    <div>
+                                                        <span class="label" id="hzdfb"></span>
+                                                    </div>
+                                                    <p>待处理发布</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                    <div class="m_content">
+                        <form>
+                            <table class="search_table" style="border:0px;">
+                                <tbody>
+                                    <tr>
+                                        
+                                  
+                                        <td>
+                                            <input id="wd" class="jkn_sear_box" type="text" style="color: #c7c7c7;width:300px" maxlength="30" name="wd" value="条码号/原病理号/姓名" autocomplete="off" onfocus="    this.style.color = '#333'; if (this.value == '条码号/原病理号/姓名') { this.value = '' }"
+                                                   onblur="if (this.value == '') { this.value = '条码号/原病理号/姓名'; this.style.color = '#c7c7c7' }" />
+                                        </td>
+                                        <td><a class="easyui-linkbutton" id="SQYa_search" iconcls="icon-sqy-search" onclick="SQYtsearch()">查询</a></td>
+
+                                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <table id="Searchdg" class="easyui-datagrid" style="width:auto;"
+                               loadmsg="loading……" toolbar="#toolbar" pagination="true" data-options="url:'/Home/List?Fot=null'"
+                               rownumbers="true" fitcolumns="true" singleselect="true"
+                               pagesize="6" pagelist="[6]">
+                            <thead>
+                                <tr>
+                                    <th field="pathologyId" hidden></th>
+                                        
+                                    <th field="hzId" width="50">原病理号</th>
+                                    <th field="Name" width="50">姓名</th>
+                                    <th field="gender" width="50">性别</th>
+                                    <th field="age" width="50">年龄</th>
+                                    <th field="partDate" width="50">送检时间</th>
+                                    <th field="photo" width="50">切片数量</th>
+                                    <th field="Status" width="100">状态</th>
+                                    <th field="opt" width="200" formatter="Format">操作</th>
+                                    
+                                </tr>
+                            </thead>
+                        </table>
+                        <div id="edit1CaseDialog" class="easyui-dialog" closed="true" buttons="#edit1CaseDialog-buttons" style="padding:0;">
+                        </div>
+                        <div id="edit1CaseDialog-buttons">
+                            <a href="#" class="easyui-linkbutton" iconcls="icon-sqy-cancel" onclick="javascript:$('#edit1CaseDialog').dialog('close')">关闭</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+    
+    
+
+    <div id="ModifyPasswordDialog" class="easyui-dialog" closed="true" buttons="#ModifyPasswordDialog-buttons" style="padding:10px 20px">
+    </div>
+    <div id="ModifyPasswordDialog-buttons">
+        <a href="#" class="easyui-linkbutton" iconcls="icon-sqy-save" onclick="savePassword();">保存</a>
+        <a href="#" class="easyui-linkbutton" iconcls="icon-sqy-cancel" onclick="javascript:$('#ModifyPasswordDialog').dialog('close')">关闭</a>
+    </div>
+    <div id="ModifyPasswordDialog1" class="easyui-dialog" closed="true" buttons="#ModifyPasswordDialog1-buttons" style="padding:10px 20px">
+    </div>
+    <div id="ModifyPasswordDialog1-buttons">
+        <a href="#" class="easyui-linkbutton" iconcls="icon-sqy-save" onclick="savePassword1();">保存</a>
+        <a href="#" class="easyui-linkbutton" iconcls="icon-sqy-cancel" onclick="javascript:$('#ModifyPasswordDialog1').dialog('close')">关闭</a>
+    </div>
+    <div id="editAppointmentDialog" class="easyui-dialog" closed="true" buttons="#editAppointmentDialog-buttons" style="padding:0;">
+    </div>
+    <div id="editAppointmentDialog-buttons">
+        <a href="#" class="easyui-linkbutton" iconcls="icon-sqy-cancel" onclick="javascript:$('#editAppointmentDialog').dialog('close')">关闭</a>
+    </div>
+	<div id="calendar" class="easyui-dialog" title="专家排班" data-options="closed:'true'" style="width:320px;height:340px;padding:10px">
+		<div id="calendar_div" style="width:260px;display:block;margin:0 auto;"></div>
+        <p style="margin-bottom:0;padding-right:20px;"><a href="#" class="easyui-linkbutton" id="get_btn" style="color:#444;float:right;">确认</a></p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿  @charset "utf-8";
+
+  body,ul,li,p,h3,th,td{ margin:0; padding:0; font-family:"微软雅黑";}
+  a{ text-decoration:none; }
+  li{ list-style-type:"none";}
+  .con{ width:1200px; height:auto;}
+  .con table{ border-collapse:collapse; width:100%;}
+  .con ul{ margin-left:30px;}
+  .con h3{ font-size:18px; font-weight:normal; padding-left:5px; margin-bottom:15px; border-bottom:2px solid #666;}
+  .con li{ margin:0 30px; display:none;}
+  .con li div{ width:60px; height:60px; margin:0 auto; border:1px solid #666; border-radius:10px; background:url('../img/bg.png') no-repeat center center; position:relative;}
+  .con li a{ display:inline-block; text-decoration:none; }
+  .con li p{ color:#000; font-size:14px; padding-top:5px;margin-bottom:15px; text-align:center; line-height:20px; }
+  .con li .label{ color:#fff; font-size:12px; text-align:center; line-height:26px; width:26px; height:26px; border-radius:30px; background:#cc6600; position:absolute; top:-10px; right:-10px;}
+  
+  .con .search{ width:auto; height:380px; margin:0 auto;}
+#disableDiv p{
+    margin:12px 0;
+}
+#EditApp p ,#tab1 p{
+    margin:12px 0;
+}
+.m_content .pagination td{
+    padding:0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

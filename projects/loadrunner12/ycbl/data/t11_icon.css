@@ -1,0 +1,264 @@
+.icon-blank{
+	background:url('icons/blank.gif') no-repeat center center;
+}
+.icon-add{
+	background:url('icons/edit_add.png') no-repeat center center;
+}
+.icon-edit{
+	background:url('icons/pencil.png') no-repeat center center;
+}
+.icon-remove{
+	background:url('icons/edit_remove.png') no-repeat center center;
+}
+.icon-save{
+	background:url('icons/filesave.png') no-repeat center center;
+}
+.icon-cut{
+	background:url('icons/cut.png') no-repeat center center;
+}
+.icon-ok{
+	background:url('icons/ok.png') no-repeat center center;
+}
+.icon-no{
+	background:url('icons/no.png') no-repeat center center;
+}
+.icon-cancel{
+	background:url('icons/cancel.png') no-repeat center center;
+}
+.icon-reload{
+	background:url('icons/reload.png') no-repeat center center;
+}
+.icon-search{
+	background:url('icons/search.png') no-repeat center center;
+}
+.icon-print{
+	background:url('icons/print.png') no-repeat center center;
+}
+.icon-help{
+	background:url('icons/help.png') no-repeat center center;
+}
+.icon-undo{
+	background:url('icons/undo.png') no-repeat center center;
+}
+.icon-redo{
+	background:url('icons/redo.png') no-repeat center center;
+}
+.icon-back{
+	background:url('icons/back.png') no-repeat center center;
+}
+.icon-sum{
+	background:url('icons/sum.png') no-repeat center center;
+}
+.icon-tip{
+	background:url('icons/tip.png') no-repeat center center;
+}
+.icon-filter{
+	background:url('icons/filter.png') no-repeat center center;
+}
+
+
+.icon-mini-add{
+	background:url('icons/mini_add.png') no-repeat center center;
+}
+.icon-mini-edit{
+	background:url('icons/mini_edit.png') no-repeat center center;
+}
+.icon-mini-refresh{
+	background:url('icons/mini_refresh.png') no-repeat center center;
+}
+
+.icon-large-picture{
+	background:url('icons/large_picture.png') no-repeat center center;
+}
+.icon-large-clipart{
+	background:url('icons/large_clipart.png') no-repeat center center;
+}
+.icon-large-shapes{
+	background:url('icons/large_shapes.png') no-repeat center center;
+}
+.icon-large-smartart{
+	background:url('icons/large_smartart.png') no-repeat center center;
+}
+.icon-large-chart{
+	background:url('icons/large_chart.png') no-repeat center center;
+}
+
+/* ****************三审医生图标**************** */
+/* 提交发布 */
+.icon-3sys-tjfb{
+	background:url('icons/3sys/tjfb.png') no-repeat center center;
+}
+/* 退单 */
+.icon-3sys-td{
+	background:url('icons/3sys/td.png') no-repeat center center;
+}
+/* 诊断迟发 */
+.icon-3sys-zdcf{
+	background:url('icons/3sys/zdcf.png') no-repeat center center;
+}
+
+/* ****************初审医生图标**************** */
+/* 提交发布 */
+.icon-csys-tjfb{
+	background:url('icons/csys/tjfb.png') no-repeat center center;
+}
+/* 提交复审 */
+.icon-csys-tjfs{
+	background:url('icons/csys/tjfs.png') no-repeat center center;
+}
+/* 退单 */
+.icon-csys-td{
+	background:url('icons/csys/td.png') no-repeat center center;
+}
+/* 诊断迟发 */
+.icon-csys-zdcf{
+	background:url('icons/csys/zdcf.png') no-repeat center center;
+}
+/* 转云康 */
+.icon-csys-zyk{
+	background:url('icons/csys/zyk.png') no-repeat center center;
+}
+/* 批量处理诊断 */
+.icon-csys-plclzd{
+	background:url('icons/csys/plclzd.png') no-repeat center center;
+}
+
+/* ****************发布员图标**************** */
+/* 保存报告 */
+.icon-fby-bcbg{
+	background:url('icons/fby/bcbg.png') no-repeat center center;
+}
+/* 发布报告 */
+.icon-fby-fbbg{
+	background:url('icons/fby/fbbg.png') no-repeat center center;
+}
+/* 取消发布 */
+.icon-fby-qxfb{
+	background:url('icons/fby/qxfb.png') no-repeat center center;
+}
+/* 退回报告 */
+.icon-fby-thbg{
+	background:url('icons/fby/thbg.png') no-repeat center center;
+}
+/* 报表 */
+.icon-fby-baobiao{
+	background:url('icons/fby/baobiao.png') no-repeat center center;
+}
+
+/* ****************分配员图标**************** */
+/* 分配 */
+.icon-fpy-fp{
+	background:url('icons/fpy/fp.png') no-repeat center center;
+}
+/* 分配初审医生 */
+.icon-fpy-fpcsys{
+	background:url('icons/fpy/fpcsys.png') no-repeat center center;
+}
+/* 分配复审医生 */
+.icon-fpy-fpfsys{
+	background:url('icons/fpy/fpfsys.png') no-repeat center center;
+}
+/* 分配三审医生 */
+.icon-fpy-fp3sys{
+	background:url('icons/fpy/fp3sys.png') no-repeat center center;
+}
+/* 确认点名专家 */
+.icon-fpy-qrdmzj{
+	background:url('icons/fpy/qrdmzj.png') no-repeat center center;
+}
+/* 退回 */
+.icon-fpy-th{
+	background:url('icons/fpy/th.png') no-repeat center center;
+}
+/* 重新分配初审医生 */
+.icon-fpy-cxfpcsys{
+	background:url('icons/fpy/cxfpcsys.png') no-repeat center center;
+}
+/* 重新分配复审医生 */
+.icon-fpy-cxfpfsys{
+	background:url('icons/fpy/cxfpfsys.png') no-repeat center center;
+}
+/* 重新分配三审医生 */
+.icon-fpy-cxfp3sys{
+	background:url('icons/fpy/cxfp3sys.png') no-repeat center center;
+}
+/* 转云康 */
+.icon-fpy-zyk{
+	background:url('icons/fpy/zyk.png') no-repeat center center;
+}
+/* 确认分配 */
+.icon-fpy-qrfp{
+	background:url('icons/fpy/qrfp.png') no-repeat center center;
+}
+/* 批量确认分配 */
+.icon-fpy-plqr{
+	background:url('icons/fpy/plqr.png') no-repeat center center;
+}
+/* 重新分配 */
+.icon-fpy-cfp{
+	background:url('icons/fpy/cfp.png') no-repeat center center;
+}
+/* 爱心 */
+.icon-fpy-aixin{
+	background:url('icons/fpy/aixin.png') no-repeat center center;
+}
+/* ****************复审医生图标**************** */
+/* 提交发布 */
+.icon-fsys-tjfb{
+	background:url('icons/fsys/tjfb.png') no-repeat center center;
+}
+/* 提交三审 */
+.icon-fsys-tj3s{
+	background:url('icons/fsys/tj3s.png') no-repeat center center;
+}
+/* 退单 */
+.icon-fsys-td{
+	background:url('icons/fsys/td.png') no-repeat center center;
+}
+/* 诊断迟发 */
+.icon-fsys-zdcf{
+	background:url('icons/fsys/zdcf.png') no-repeat center center;
+}
+/* 转云康 */
+.icon-fsys-zyk{
+	background:url('icons/fsys/zyk.png') no-repeat center center;
+}
+
+
+/* ****************申请员图标**************** */
+/* 增加 */
+.icon-sqy-add{
+	background:url('icons/sqy/add.png') no-repeat center center;
+}
+/* 删改 */
+.icon-sqy-edit{
+	background:url('icons/sqy/edit.png') no-repeat center center;
+}
+/* 删除 */
+.icon-sqy-remove{
+	background:url('icons/sqy/remove.png') no-repeat center center;
+}
+/* 点名专家 */
+.icon-sqy-dmzj{
+	background:url('icons/sqy/dmzj.png') no-repeat center center;
+}
+/* 打印报告 */
+.icon-sqy-printReport{
+	background:url('icons/sqy/printReport.png') no-repeat center center;
+}
+/* 保存 */
+.icon-sqy-save{
+	background:url('icons/sqy/save.png') no-repeat center center;
+}
+/* 关闭 */
+.icon-sqy-cancel{
+	background:url('icons/sqy/cancel.png') no-repeat center center;
+}
+/* 搜索 */
+.icon-sqy-search{
+	background:url('icons/sqy/search.png') no-repeat center center;
+}
+/*开关*/
+.icon-sqy-stop{
+	background:url('icons/sqy/stop.png') no-repeat center center;
+}

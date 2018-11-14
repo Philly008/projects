@@ -1,0 +1,17 @@
+[t9]
+FileName1=t9.html
+URL1=http://192.168.14.38:88/User/getRandom
+Total=4
+RequestHeaderFile=t9_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t9_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_9.xml
+FileName2=t9_erweima1.jpg
+URL2=http://192.168.14.38:88/Content/login/img/erweima1.jpg
+FileName3=t9_erweima2.jpg
+URL3=http://192.168.14.38:88/Content/login/img/erweima2.jpg
+FileName4=t9.txt
+URL4=http://127.0.0.1:17681/?callback=jsonpcallback&json={%22function%22:%22%22}&_=1542180560535
+[ProtocolInfo]
+ProtocolId=QTWeb
